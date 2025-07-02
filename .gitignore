@@ -1,0 +1,24 @@
+# Rider
+.idea/
+.run/
+
+global.json
+
+# Visual Studio
+.vs/
+
+# Compilation
+[Bb]in/
+[Oo]bj/
+
+# Repository
+*.temp.*
+
+# Windows
+[Dd]esktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
