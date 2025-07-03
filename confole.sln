@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "confole", "confole\confole.fsproj", "{AD740823-01D7-480B-A55D-7E1D05334CD2}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "confole.example", "confole.example\confole.example.fsproj", "{12279A7D-8DD0-4966-B7D3-6D6EDCB23499}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{AD740823-01D7-480B-A55D-7E1D05334CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD740823-01D7-480B-A55D-7E1D05334CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD740823-01D7-480B-A55D-7E1D05334CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12279A7D-8DD0-4966-B7D3-6D6EDCB23499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12279A7D-8DD0-4966-B7D3-6D6EDCB23499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12279A7D-8DD0-4966-B7D3-6D6EDCB23499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12279A7D-8DD0-4966-B7D3-6D6EDCB23499}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49CC3C73-2AF4-4A8C-8F50-1D95E78D5D62}
 	EndGlobalSection
 EndGlobal
