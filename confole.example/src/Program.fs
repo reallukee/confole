@@ -7,16 +7,16 @@ open Reallukee.Confole
 module Program =
     [<EntryPoint>]
     let main _ =
-        Rule.initRules ()
+        Rule.init ()
+        |> Rule.hideCursorBlinking
         |> Rule.hideCursor
-        |> Rule.applyRules
+        |> Rule.applyAll
 
-        Format.initFormat ()
-        |> Format.foregroundColor (Color.HEX ("10", "AA", "FF"))
-        |> Format.backgroundColor (Color.HEX ("DD", "00", "CC"))
-        |> Format.applyFormats "Hello, World!"
+        printfn "Hello, World!"
 
         do Console.ReadKey(false)
         |> ignore
+
+        Rule.reset ()
 
         0

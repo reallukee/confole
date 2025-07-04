@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="confole.example/confole.example.fsproj" />
-  <Project Path="confole/confole.fsproj" />
+    <Project Path="confole.example/confole.example.fsproj" />
+    <Project Path="confole/confole.fsproj" />
 </Solution>

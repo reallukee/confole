@@ -1,0 +1,62 @@
+(*
+    -------
+    Confole
+    -------
+
+    Una libreria funzionale per applicazioni console F#
+
+    File name   : Cursor.fs
+
+    Title       : CURSOR
+    Description : Cursor
+
+    Author      : Luca Pollicino
+                  (https://github.com/reallukee)
+    Version     : 1.0.0
+    License     : MIT
+*)
+
+namespace Reallukee.Confole
+
+open Color
+
+module Cursor =
+    type Cursor =
+        | Up of int
+        | Down of int
+        | Next of int
+        | Previous of int
+        | NextLine of int
+        | PreviousLine of int
+
+    type Cursors = Cursor List
+
+    let init () : Cursors =
+        []
+
+    let up n cursors = Up n :: cursors
+    let down n cursors = Down n :: cursors
+    let next n cursors = Next n :: cursors
+    let previous n cursors = Previous n :: cursors
+    let nextLine n cursors = NextLine n :: cursors
+    let previousLine n cursors = PreviousLine n :: cursors
+
+    let apply cursor =
+        match cursor with
+        | Up n -> printf "\x1b[A%d" n
+        | Down n -> printf "\x1b[B%d" n
+        | Next n -> printf "\x1b[C%d" n
+        | Previous n -> printf "\x1b[D%d" n
+        | NextLine n -> printf "\x1b[E%d" n
+        | PreviousLine n -> printf "\x1b[F%d" n
+
+    let applyAll cursors =
+        cursors
+        |> List.rev
+        |> List.iter (fun cursor ->
+            apply cursor
+        )
+
+    let reset () =
+        []
+        |> applyAll

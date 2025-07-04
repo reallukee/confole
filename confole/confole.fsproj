@@ -34,6 +34,8 @@
         <Compile Include="src\Color.fs" />
         <Compile Include="src\Rule.fsi" />
         <Compile Include="src\Rule.fs" />
+        <Compile Include="src\Cursor.fsi" />
+        <Compile Include="src\Cursor.fs" />
         <Compile Include="src\Format.fsi" />
         <Compile Include="src\Format.fs" />
     </ItemGroup>

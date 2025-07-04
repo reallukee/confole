@@ -22,35 +22,60 @@ open Color
 
 module Format =
     type Format =
+        | Bold      | NoBold
+        | Faint     | NoFaint
+        | Italic    | NoItalic
+        | Underline | NoUnderline
+        | Blinking  | NoBlinking
+        | Reverse   | NoReverse
+        | Hidden    | NoHidden
+        | Strikeout | NoStrikeout
         | ForegroundColor of Color
         | BackgroundColor of Color
 
     type Formats = Format List
 
-    val initFormat :
+    val init :
         unit ->
         Formats
 
-    val foregroundColor :
-        color   : Color ->
-        formats : Formats ->
-        Formats
+    val bold : formats : Formats -> Formats
+    val noBold : formats : Formats -> Formats
 
-    val backgroundColor :
-        color   : Color ->
-        formats : Formats ->
-        Formats
+    val faint : formats : Formats -> Formats
+    val noFaint : formats : Formats -> Formats
 
-    val applyFormat :
+    val italic : formats : Formats -> Formats
+    val noItalic : formats : Formats -> Formats
+
+    val underline : formats : Formats -> Formats
+    val noUnderline : formats : Formats -> Formats
+
+    val blinking : formats : Formats -> Formats
+    val noBlinking : formats : Formats -> Formats
+
+    val reverse : formats : Formats -> Formats
+    val noReverse : formats : Formats -> Formats
+
+    val hidden : formats : Formats -> Formats
+    val noHidden : formats : Formats -> Formats
+
+    val strikeout : formats : Formats -> Formats
+    val noStrikeout : formats : Formats -> Formats
+
+    val foregroundColor : color : Color -> formats : Formats -> Formats
+    val backgroundColor : color : Color -> formats : Formats -> Formats
+
+    val apply :
         text   : string ->
         format : Format ->
         unit
 
-    val applyFormats :
+    val applyAll :
         text    : string ->
         formats : Formats ->
         unit
 
-    val resetFormats :
+    val reset :
         text : string ->
         unit

@@ -26,49 +26,27 @@ module Rule =
         | HideCursorBlinking
         | ShowCursor
         | HideCursor
-        | ForegroundColor of Color
-        | BackgroundColor of Color
 
     type Rules = Rule List
 
-    val initRules :
+    val init :
         unit ->
         Rules
 
-    val showCursorBlinking :
-        rules : Rules ->
-        Rules
+    val showCursorBlinking : rules : Rules -> Rules
+    val hideCursorBlinking : rules : Rules -> Rules
 
-    val hideCursorBlinking :
-        rules : Rules ->
-        Rules
+    val showCursor : rules : Rules -> Rules
+    val hideCursor : rules : Rules -> Rules
 
-    val showCursor :
-        rules : Rules ->
-        Rules
-
-    val hideCursor :
-        rules : Rules ->
-        Rules
-
-    val foregroundColor :
-        color : Color ->
-        rules : Rules ->
-        Rules
-
-    val backgroundColor :
-        color : Color ->
-        rules : Rules ->
-        Rules
-
-    val applyRule :
+    val apply :
         rule : Rule ->
         unit
 
-    val applyRules :
+    val applyAll :
         rules : Rules ->
         unit
 
-    val resetRules :
+    val reset :
         unit ->
         unit
