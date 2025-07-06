@@ -1,0 +1,31 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "**/*.fsi"
+      - "**/*.fs"
+      - "**/*.fsx"
+      - "**/*.fsproj"
+      - "**/*.sln"
+      - "**/*.slnx"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore project
+        run: dotnet restore confole
+
+      - name: Build project
+        run: dotnet build confole --no-restore --configuration Release

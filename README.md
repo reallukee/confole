@@ -5,8 +5,8 @@
 # Confole
 
 ![License](https://img.shields.io/github/license/reallukee/confole)
-![NuGet](https://img.shields.io/nuget/v/Reallukee.Confole)
 ![.NET](https://img.shields.io/badge/.net-standard_2.0-512bd4)
+![Build](https://img.shields.io/github/actions/workflow/status/reallukee/confole/build.yml)
 
 🎨 Una libreria funzionale per applicazioni console F#
 
@@ -22,6 +22,9 @@
 
 
 
+> [!IMPORTANT]
+> **JUST 4 FUN**
+
 # Uso
 
 * [`Rule`](#rule)
@@ -33,38 +36,8 @@
 ## `Rule`
 
 ```fsharp
-(*
-    F# Script
-
-    dotnet fsi rules.fsx
-*)
-
-// Necessary for F# Interactive
-#r @"../confole/bin/Release/netstandard2.0/confole.dll"
-
-open Reallukee.Confole
-
-Rule.init ()
-|> Rule.hideCursorBlinking
-|> Rule.hideCursor
-|> Rule.applyAll
-
-printfn "Hello, World!"
-
-Rule.reset ()
-```
-
-Oppure
-
-```fsharp
-(*
-    F# Script
-
-    dotnet fsi rules2.fsx
-*)
-
-// Necessary for F# Interactive
-#r @"../confole/bin/Release/netstandard2.0/confole.dll"
+// Import Confole in F# Interactive
+#r @"./confole/bin/Release/netstandard2.0/confole.dll"
 
 open Reallukee.Confole
 
@@ -72,6 +45,23 @@ let rules =
     Rule.init ()
     |> Rule.hideCursorBlinking
     |> Rule.hideCursor
+    |> Rule.defaultForegroundColor (Color.RGB (255, 255, 255))
+    |> Rule.defaultBackgroundColor (Color.RGB (0, 0, 0))
+    |> Rule.defaultCursorColor     (Color.RGB (255, 255, 255))
+
+printfn "Hello, World!"
+
+Rule.reset ()
+
+(* Oppure *)
+
+Rule.init ()
+|> Rule.hideCursorBlinking
+|> Rule.hideCursor
+|> Rule.defaultForegroundColor (Color.RGB (255, 255, 255))
+|> Rule.defaultBackgroundColor (Color.RGB (0, 0, 0))
+|> Rule.defaultCursorColor     (Color.RGB (255, 255, 255))
+|> Rule.applyAll
 
 Rule.applyAll rules
 
@@ -80,13 +70,67 @@ printfn "Hello, World!"
 Rule.reset ()
 ```
 
+
+
 ## `Cursor`
 
-> Coming soon...
+```fsharp
+// Import Confole in F# Interactive
+#r @"./confole/bin/Release/netstandard2.0/confole.dll"
+
+open Reallukee.Confole
+
+let cursors =
+    Cursor.init ()
+    |> Cursor.move (Position.ColRow (4, 2))
+
+Cursor.applyAll false cursors
+
+printfn "Hello, World!"
+
+Cursor.reset ()
+
+(* Oppure *)
+
+Cursor.init ()
+|> Cursor.move (Position.ColRow (4, 2))
+|> Cursor.applyAll false
+
+printfn "Hello, World!"
+
+Cursor.reset ()
+```
+
+
 
 ## `Format`
 
-> Coming soon...
+```fsharp
+// Import Confole in F# Interactive
+#r @"./confole/bin/Release/netstandard2.0/confole.dll"
+
+open Reallukee.Confole
+
+let formats =
+    Format.init ()
+    |> Format.italic true
+    |> Format.foregroundColor (Color.RGB (255, 0, 0))
+    |> Format.backgroundColor (Color.RGB (0, 0, 255))
+
+Format.applyAll true "Hello, World!" formats
+
+Format.reset ""
+
+(* Oppure *)
+
+Format.init ()
+|> Format.italic true
+|> Format.foregroundColor (Color.RGB (255, 0, 0))
+|> Format.backgroundColor (Color.RGB (0, 0, 255))
+|> Format.applyAll true "Hello, World!"
+
+Format.reset ""
+```
 
 
 
@@ -114,7 +158,7 @@ git clone https://github.com/reallukee/confole.git
 ## 2. Compila
 
 ```
-cd confole/confole.example
+cd confole/confole
 
 dotnet build
 ```
