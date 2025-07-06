@@ -19,6 +19,7 @@
 namespace Reallukee.Confole
 
 open Color
+open Position
 
 module Cursor =
     type Cursor =
@@ -28,6 +29,7 @@ module Cursor =
         | Previous of int
         | NextLine of int
         | PreviousLine of int
+        | Move of Position
 
     type Cursors = Cursor List
 
@@ -39,14 +41,19 @@ module Cursor =
     val down : n : int -> cursors : Cursors -> Cursors
     val next : n : int -> cursors : Cursors -> Cursors
     val previous : n : int -> cursors : Cursors -> Cursors
+
     val nextLine : n : int -> cursors : Cursors -> Cursors
     val previousLine : n : int -> cursors : Cursors -> Cursors
 
+    val move : position : Position -> cursors : Cursors -> Cursors
+
     val apply :
-        cursor : Cursor ->
+        newLine : bool ->
+        cursor  : Cursor ->
         unit
 
     val applyAll :
+        newLine : bool ->
         cursors : Cursors ->
         unit
 

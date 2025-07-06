@@ -19,17 +19,19 @@
 namespace Reallukee.Confole
 
 open Color
+open Position
 
 module Format =
     type Format =
-        | Bold      | NoBold
-        | Faint     | NoFaint
-        | Italic    | NoItalic
-        | Underline | NoUnderline
-        | Blinking  | NoBlinking
-        | Reverse   | NoReverse
-        | Hidden    | NoHidden
-        | Strikeout | NoStrikeout
+        | Restore
+        | Bold      of bool
+        | Faint     of bool
+        | Italic    of bool
+        | Underline of bool
+        | Blinking  of bool
+        | Reverse   of bool
+        | Hidden    of bool
+        | Strikeout of bool
         | ForegroundColor of Color
         | BackgroundColor of Color
 
@@ -38,29 +40,16 @@ module Format =
     let init () : Formats =
         []
 
-    let bold formats = Bold :: formats
-    let noBold formats = NoBold :: formats
+    let restore formats = Restore :: formats
 
-    let faint formats = Faint :: formats
-    let noFaint formats = NoFaint :: formats
-
-    let italic formats = Italic :: formats
-    let noItalic formats = NoItalic :: formats
-
-    let underline formats = Underline :: formats
-    let noUnderline formats = NoUnderline :: formats
-
-    let blinking formats = Blinking :: formats
-    let noBlinking formats = NoBlinking :: formats
-
-    let reverse formats = Reverse :: formats
-    let noReverse formats = NoReverse :: formats
-
-    let hidden formats = Hidden :: formats
-    let noHidden formats = NoHidden :: formats
-
-    let strikeout formats = Strikeout :: formats
-    let noStrikeout formats = NoStrikeout :: formats
+    let bold flag formats = Bold flag :: formats
+    let faint flag formats = Faint flag :: formats
+    let italic flag formats = Italic flag :: formats
+    let underline flag formats = Underline flag :: formats
+    let blinking flag formats = Blinking flag :: formats
+    let reverse flag formats = Reverse flag :: formats
+    let hidden flag formats = Hidden flag :: formats
+    let strikeout flag formats = Strikeout flag :: formats
 
     let foregroundColor color formats =
         ForegroundColor color :: formats
@@ -68,81 +57,59 @@ module Format =
     let backgroundColor color formats =
         BackgroundColor color :: formats
 
-    let apply text format =
+    let apply newLine text format =
         match format with
-        | Bold        -> printf "\x1b[1m%s" text
-        | NoBold      -> printf "\x1b[22m%s" text
-        | Faint       -> printf "\x1b[2m%s" text
-        | NoFaint     -> printf "\x1b[22%s" text
-        | Italic      -> printf "\x1b[3m%s" text
-        | NoItalic    -> printf "\x1b[23m%s" text
-        | Underline   -> printf "\x1b[4m%s" text
-        | NoUnderline -> printf "\x1b[24m%s" text
-        | Blinking    -> printf "\x1b[5m%s" text
-        | NoBlinking  -> printf "\x1b[25%s" text
-        | Reverse     -> printf "\x1b[7m%s" text
-        | NoReverse   -> printf "\x1b[27m%s" text
-        | Hidden      -> printf "\x1b[8m%s" text
-        | NoHidden    -> printf "\x1b[28m%s" text
-        | Strikeout   -> printf "\x1b[9m%s" text
-        | NoStrikeout -> printf "\x1b[29m%s" text
+        | Restore -> printf "\x1b[0m%s" text
+
+        | Bold      flag -> printf "\x1b[%dm%s" (if flag then 1 else 22) text
+        | Faint     flag -> printf "\x1b[%dm%s" (if flag then 2 else 22) text
+        | Italic    flag -> printf "\x1b[%dm%s" (if flag then 3 else 23) text
+        | Underline flag -> printf "\x1b[%dm%s" (if flag then 4 else 24) text
+        | Blinking  flag -> printf "\x1b[%dm%s" (if flag then 5 else 25) text
+        | Reverse   flag -> printf "\x1b[%dm%s" (if flag then 7 else 27) text
+        | Hidden    flag -> printf "\x1b[%dm%s" (if flag then 8 else 28) text
+        | Strikeout flag -> printf "\x1b[%dm%s" (if flag then 9 else 29) text
+
         | ForegroundColor color ->
-            match color with
-            | XTerm (color) ->
-                printf "\x1b[38;5;%dm%s" color text
-            | XTermColor (color) ->
-                printf "\x1b[38;5;%dm%s" color.id text
-            | RGB (red, green, blue) ->
+            colorRGB color
+            |> fun (red, green, blue) ->
                 printf "\x1b[38;2;%d;%d;%dm%s" red green blue text
-            | RGBColor (color) ->
-                printf "\x1b[38;2;%d;%d;%dm%s" color.red color.green color.blue text
-            | HEX (red, green, blue) ->
-                let red, green, blue = hexToRGB red green blue
-
-                printf "\x1b[38;2;%d;%d;%dm%s" red green blue text
-            | HEXColor (color) ->
-                let color = hexColorToRGBColor color
-
-                printf "\x1b[38;2;%d;%d;%dm%s" color.red color.green color.blue text
         | BackgroundColor color ->
-            match color with
-            | XTerm (color) ->
-                printf "\x1b[48;5;%dm%s" color text
-            | XTermColor (color) ->
-                printf "\x1b[48;5;%dm%s" color.id text
-            | RGB (red, green, blue) ->
+            colorRGB color
+            |> fun (red, green, blue) ->
                 printf "\x1b[48;2;%d;%d;%dm%s" red green blue text
-            | RGBColor (color) ->
-                printf "\x1b[48;2;%d;%d;%dm%s" color.red color.green color.blue text
-            | HEX (red, green, blue) ->
-                let red, green, blue = hexToRGB red green blue
 
-                printf "\x1b[48;2;%d;%d;%dm%s" red green blue text
-            | HEXColor (color) ->
-                let color = hexColorToRGBColor color
+        | _ -> failwith "Not yet implemented!"
 
-                printf "\x1b[48;2;%d;%d;%dm%s" color.red color.green color.blue text
+        if newLine then
+            printfn ""
 
-    let applyAll text formats =
+    let applyAll newLine text formats =
         formats
         |> List.rev
         |> List.iter (fun item ->
-            apply "" item
+            apply false "" item
         )
 
         printf "%s\x1b[0m" text
 
+        if newLine then
+            printfn ""
+
     let reset text =
         [
-            NoBold
-            NoFaint
-            NoItalic
-            NoUnderline
-            NoBlinking
-            NoReverse
-            NoHidden
-            NoStrikeout
+            Restore
+
+            Bold      false
+            Faint     false
+            Italic    false
+            Underline false
+            Blinking  false
+            Reverse   false
+            Hidden    false
+            Strikeout false
+
             ForegroundColor (RGB (255, 255, 255))
             BackgroundColor (RGB (0, 0, 0))
         ]
-        |> applyAll text
+        |> applyAll false text

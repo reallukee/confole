@@ -19,15 +19,17 @@
 namespace Reallukee.Confole
 
 open Color
+open Position
 
 module Cursor =
     type Cursor =
-        | Up of int
-        | Down of int
-        | Next of int
+        | Up       of int
+        | Down     of int
+        | Next     of int
         | Previous of int
-        | NextLine of int
+        | NextLine     of int
         | PreviousLine of int
+        | Move of Position
 
     type Cursors = Cursor List
 
@@ -38,25 +40,46 @@ module Cursor =
     let down n cursors = Down n :: cursors
     let next n cursors = Next n :: cursors
     let previous n cursors = Previous n :: cursors
+
     let nextLine n cursors = NextLine n :: cursors
     let previousLine n cursors = PreviousLine n :: cursors
 
-    let apply cursor =
+    let move position cursors = Move position :: cursors
+
+    let apply newLine cursor =
         match cursor with
-        | Up n -> printf "\x1b[A%d" n
-        | Down n -> printf "\x1b[B%d" n
-        | Next n -> printf "\x1b[C%d" n
+        | Up       n -> printf "\x1b[A%d" n
+        | Down     n -> printf "\x1b[B%d" n
+        | Next     n -> printf "\x1b[C%d" n
         | Previous n -> printf "\x1b[D%d" n
-        | NextLine n -> printf "\x1b[E%d" n
+
+        | NextLine     n -> printf "\x1b[E%d" n
         | PreviousLine n -> printf "\x1b[F%d" n
 
-    let applyAll cursors =
+        | Move position ->
+            let col, row =
+                match position with
+                | ColRow (col, row) -> col + 1, row + 1
+                | Cell cell -> cell.col + 1, cell.row + 1
+                | _ -> failwith "Unsupported position format"
+
+            printf "\x1b[%d;%dH" row col
+
+        | _ -> failwith "Not yet implemented!"
+
+        if newLine then
+            printfn ""
+
+    let applyAll newLine cursors =
         cursors
         |> List.rev
         |> List.iter (fun cursor ->
-            apply cursor
+            apply false cursor
         )
+
+        if newLine then
+            printfn ""
 
     let reset () =
         []
-        |> applyAll
+        |> applyAll false

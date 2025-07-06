@@ -39,8 +39,8 @@ module Color =
         | XTerm of int
         | XTermColor of XTermColor
         | RGB of int * int * int
-        | HEX of string * string * string
         | RGBColor of RGBColor
+        | HEX of string * string * string
         | HEXColor of HEXColor
 
     let rgbToHEX (red : int) (green : int) (blue : int) : string * string * string =
@@ -108,3 +108,23 @@ module Color =
             green = green
             blue  = blue
         }
+
+    let colorRGB color =
+        match color with
+        | RGB (red, green, blue) -> red, green, blue
+        | RGBColor color -> color.red, color.green, color.blue
+        | HEX (red, green, blue) -> hexToRGB red green blue
+        | HEXColor color ->
+            hexColorToRGBColor color
+            |> fun color -> color.red, color.green, color.blue
+        | _ -> failwith "Unsupported color format"
+
+    let colorHEX color =
+        match color with
+        | RGB (red, green, blue) -> rgbToHEX red green blue
+        | RGBColor color ->
+            rgbColorToHEXColor color
+            |> fun color -> color.red, color.green, color.blue
+        | HEX (red, green, blue) -> red, green, blue
+        | HEXColor color -> color.red, color.green, color.blue
+        | _ -> failwith "Unsupported color format"

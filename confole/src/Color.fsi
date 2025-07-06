@@ -39,8 +39,8 @@ module Color =
         | XTerm of int
         | XTermColor of XTermColor
         | RGB of int * int * int
-        | HEX of string * string * string
         | RGBColor of RGBColor
+        | HEX of string * string * string
         | HEXColor of HEXColor
 
     val rgbToHEX :
@@ -62,3 +62,11 @@ module Color =
     val hexColorToRGBColor :
         color : HEXColor ->
         RGBColor
+
+    val colorRGB :
+        color : Color ->
+        int * int * int
+
+    val colorHEX :
+        color : Color ->
+        string * string * string

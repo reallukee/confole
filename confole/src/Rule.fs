@@ -19,6 +19,7 @@
 namespace Reallukee.Confole
 
 open Color
+open Position
 
 module Rule =
     type Rule =
@@ -26,6 +27,9 @@ module Rule =
         | HideCursorBlinking
         | ShowCursor
         | HideCursor
+        | DefaultForegroundColor of Color
+        | DefaultBackgroundColor of Color
+        | DefaultCursorColor of Color
 
     type Rules = Rule List
 
@@ -38,23 +42,54 @@ module Rule =
     let showCursor rules = ShowCursor :: rules
     let hideCursor rules = HideCursor :: rules
 
-    let apply rule =
+    let defaultForegroundColor color rules = DefaultForegroundColor color :: rules
+    let defaultBackgroundColor color rules = DefaultBackgroundColor color :: rules
+    let defaultCursorColor color rules = DefaultCursorColor color :: rules
+
+    let apply newLine rule =
         match rule with
         | ShowCursorBlinking -> printf "\x1b[?12h"
         | HideCursorBlinking -> printf "\x1b[?12l"
+
         | ShowCursor -> printf "\x1b[?25h"
         | HideCursor -> printf "\x1b[?25l"
 
-    let applyAll rules =
+        | DefaultForegroundColor color ->
+            colorHEX color
+            |> fun (red, green, blue) ->
+                printf "\x1b]10;rgb:%s/%s/%s\x1b\\" red green blue
+        | DefaultBackgroundColor color ->
+           colorHEX color
+            |> fun (red, green, blue) ->
+                printf "\x1b]11;rgb:%s/%s/%s\x1b\\" red green blue
+        | DefaultCursorColor color ->
+           colorHEX color
+            |> fun (red, green, blue) ->
+                printf "\x1b]12;rgb:%s/%s/%s\x1b\\" red green blue
+
+        | _ -> failwith "Not yet implemented!"
+
+        if newLine then
+            printfn ""
+
+    let applyAll newLine rules =
         rules
         |> List.rev
         |> List.iter (fun item ->
-            apply item
+            apply false item
         )
+
+        if newLine then
+            printfn ""
 
     let reset () =
         [
             ShowCursorBlinking
+
             ShowCursor
+
+            DefaultForegroundColor (RGB (255, 255, 255))
+            DefaultBackgroundColor (RGB (0, 0, 0))
+            DefaultCursorColor     (RGB (255, 255, 255))
         ]
-        |> applyAll
+        |> applyAll false

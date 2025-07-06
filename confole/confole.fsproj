@@ -32,6 +32,8 @@
     <ItemGroup>
         <Compile Include="src\Color.fsi" />
         <Compile Include="src\Color.fs" />
+        <Compile Include="src\Position.fsi" />
+        <Compile Include="src\Position.fs" />
         <Compile Include="src\Rule.fsi" />
         <Compile Include="src\Rule.fs" />
         <Compile Include="src\Cursor.fsi" />

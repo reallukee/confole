@@ -19,6 +19,7 @@
 namespace Reallukee.Confole
 
 open Color
+open Position
 
 module Rule =
     type Rule =
@@ -26,6 +27,9 @@ module Rule =
         | HideCursorBlinking
         | ShowCursor
         | HideCursor
+        | DefaultForegroundColor of Color
+        | DefaultBackgroundColor of Color
+        | DefaultCursorColor of Color
 
     type Rules = Rule List
 
@@ -39,12 +43,18 @@ module Rule =
     val showCursor : rules : Rules -> Rules
     val hideCursor : rules : Rules -> Rules
 
+    val defaultForegroundColor : color : Color -> rules : Rules -> Rules
+    val defaultBackgroundColor : color : Color -> rules : Rules -> Rules
+    val defaultCursorColor : color : Color -> rules : Rules -> Rules
+
     val apply :
-        rule : Rule ->
+        newLine : bool ->
+        rule    : Rule ->
         unit
 
     val applyAll :
-        rules : Rules ->
+        newLine : bool ->
+        rules   : Rules ->
         unit
 
     val reset :
