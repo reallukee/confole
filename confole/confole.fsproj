@@ -11,7 +11,8 @@
         <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
         <FSharpPrefer64BitTools>False</FSharpPrefer64BitTools>
 
-        <PackageId>confole</PackageId>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <PackageId>Reallukee.Confole</PackageId>
         <Title>Confole</Title>
         <Version>1.0.0</Version>
         <Authors>Luca Pollicino</Authors>
@@ -43,26 +44,54 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\assets\confole.ico">
-            <Link>Resources\icon.ico</Link>
+        <None Include="..\examples\rules.fsx">
+            <Link>examples\rules.fsx</Link>
         </None>
 
+        <None Include="..\examples\rules2.fsx">
+            <Link>examples\rules2.fsx</Link>
+        </None>
+
+        <None Include="..\examples\cursor.fsx">
+            <Link>examples\cursor.fsx</Link>
+        </None>
+
+        <None Include="..\examples\cursor2.fsx">
+            <Link>examples\cursor2.fsx</Link>
+        </None>
+
+        <None Include="..\examples\format.fsx">
+            <Link>examples\format.fsx</Link>
+        </None>
+
+        <None Include="..\examples\format2.fsx">
+            <Link>examples\format2.fsx</Link>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\assets\confole.ico">
+            <Link>resources\icon.ico</Link>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="..\assets\confole.png">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
-            <Link>Resources\Package\icon.ico</Link>
+            <Link>resources\package\icon.ico</Link>
         </None>
 
         <None Include="..\README.md">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
-            <Link>Resources\Package\README.md</Link>
+            <Link>resources\package\README.md</Link>
         </None>
 
         <None Include="..\LICENSE">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
-            <Link>Resources\Package\LICENSE</Link>
+            <Link>resources\package\LICENSE</Link>
         </None>
     </ItemGroup>
 

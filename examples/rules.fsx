@@ -5,11 +5,15 @@
 *)
 
 // Necessary for F# Interactive
-#r @"../confole/bin/Release/netstandard2.0/confole.dll"
+// #r @"../confole/bin/Release/netstandard2.0/confole.dll"
+// dotnet build confole --configuration Release
+// dotnet pack confole --configuration Release
+#r @"nuget: Reallukee.Confole, 1.0.0"
 
 open Reallukee.Confole
 
 Rule.init ()
+|> Rule.title                  "Confole"
 |> Rule.hideCursorBlinking
 |> Rule.hideCursor
 |> Rule.defaultForegroundColor (Color.RGB (255, 255, 255))

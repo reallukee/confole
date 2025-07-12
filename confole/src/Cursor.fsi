@@ -23,13 +23,16 @@ open Position
 
 module Cursor =
     type Cursor =
-        | Up of int
-        | Down of int
-        | Next of int
-        | Previous of int
-        | NextLine of int
+        | Reverse
+        | Save
+        | Restore
+        | Up           of int
+        | Down         of int
+        | Next         of int
+        | Previous     of int
+        | NextLine     of int
         | PreviousLine of int
-        | Move of Position
+        | Move         of Position
 
     type Cursors = Cursor List
 
@@ -37,12 +40,16 @@ module Cursor =
         unit ->
         Cursors
 
-    val up : n : int -> cursors : Cursors -> Cursors
-    val down : n : int -> cursors : Cursors -> Cursors
-    val next : n : int -> cursors : Cursors -> Cursors
+    val reverse : cursors : Cursors -> Cursors
+    val save    : cursors : Cursors -> Cursors
+    val restore : cursors : Cursors -> Cursors
+
+    val up       : n : int -> cursors : Cursors -> Cursors
+    val down     : n : int -> cursors : Cursors -> Cursors
+    val next     : n : int -> cursors : Cursors -> Cursors
     val previous : n : int -> cursors : Cursors -> Cursors
 
-    val nextLine : n : int -> cursors : Cursors -> Cursors
+    val nextLine     : n : int -> cursors : Cursors -> Cursors
     val previousLine : n : int -> cursors : Cursors -> Cursors
 
     val move : position : Position -> cursors : Cursors -> Cursors

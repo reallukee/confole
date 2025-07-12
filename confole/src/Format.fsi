@@ -24,14 +24,14 @@ open Position
 module Format =
     type Format =
         | Restore
-        | Bold      of bool
-        | Faint     of bool
-        | Italic    of bool
-        | Underline of bool
-        | Blinking  of bool
-        | Reverse   of bool
-        | Hidden    of bool
-        | Strikeout of bool
+        | Bold            of bool
+        | Faint           of bool
+        | Italic          of bool
+        | Underline       of bool
+        | Blinking        of bool
+        | Reverse         of bool
+        | Hidden          of bool
+        | Strikeout       of bool
         | ForegroundColor of Color
         | BackgroundColor of Color
 
@@ -43,13 +43,13 @@ module Format =
 
     val restore : formats : Formats -> Formats
 
-    val bold : bool -> formats : Formats -> Formats
-    val faint : bool -> formats : Formats -> Formats
-    val italic : bool -> formats : Formats -> Formats
+    val bold      : bool -> formats : Formats -> Formats
+    val faint     : bool -> formats : Formats -> Formats
+    val italic    : bool -> formats : Formats -> Formats
     val underline : bool -> formats : Formats -> Formats
-    val blinking : bool -> formats : Formats -> Formats
-    val reverse : bool -> formats : Formats -> Formats
-    val hidden : bool -> formats : Formats -> Formats
+    val blinking  : bool -> formats : Formats -> Formats
+    val reverse   : bool -> formats : Formats -> Formats
+    val hidden    : bool -> formats : Formats -> Formats
     val strikeout : bool -> formats : Formats -> Formats
 
     val foregroundColor : color : Color -> formats : Formats -> Formats
@@ -57,8 +57,8 @@ module Format =
 
     val apply :
         newLine : bool ->
-        text   : string ->
-        format : Format ->
+        text    : string ->
+        format  : Format ->
         unit
 
     val applyAll :

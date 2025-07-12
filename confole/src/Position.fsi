@@ -26,4 +26,4 @@ module Position =
 
     type Position =
         | ColRow of int * int
-        | Cell of Cell
+        | Cell   of Cell

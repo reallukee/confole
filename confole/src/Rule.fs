@@ -23,18 +23,21 @@ open Position
 
 module Rule =
     type Rule =
+        | Title                  of string
         | ShowCursorBlinking
         | HideCursorBlinking
         | ShowCursor
         | HideCursor
         | DefaultForegroundColor of Color
         | DefaultBackgroundColor of Color
-        | DefaultCursorColor of Color
+        | DefaultCursorColor     of Color
 
     type Rules = Rule List
 
     let init () : Rules =
         []
+
+    let title value rules = Title value :: rules
 
     let showCursorBlinking rules = ShowCursorBlinking :: rules
     let hideCursorBlinking rules = HideCursorBlinking :: rules
@@ -48,6 +51,8 @@ module Rule =
 
     let apply newLine rule =
         match rule with
+        | Title value -> printf "\x1b]0;%s\x07" value
+
         | ShowCursorBlinking -> printf "\x1b[?12h"
         | HideCursorBlinking -> printf "\x1b[?12l"
 
@@ -59,11 +64,11 @@ module Rule =
             |> fun (red, green, blue) ->
                 printf "\x1b]10;rgb:%s/%s/%s\x1b\\" red green blue
         | DefaultBackgroundColor color ->
-           colorHEX color
+            colorHEX color
             |> fun (red, green, blue) ->
                 printf "\x1b]11;rgb:%s/%s/%s\x1b\\" red green blue
         | DefaultCursorColor color ->
-           colorHEX color
+            colorHEX color
             |> fun (red, green, blue) ->
                 printf "\x1b]12;rgb:%s/%s/%s\x1b\\" red green blue
 

@@ -36,12 +36,12 @@ module Color =
     }
 
     type Color =
-        | XTerm of int
+        | XTerm      of int
         | XTermColor of XTermColor
-        | RGB of int * int * int
-        | RGBColor of RGBColor
-        | HEX of string * string * string
-        | HEXColor of HEXColor
+        | RGB        of int * int * int
+        | RGBColor   of RGBColor
+        | HEX        of string * string * string
+        | HEXColor   of HEXColor
 
     val rgbToHEX :
         red   : int ->

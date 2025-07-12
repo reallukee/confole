@@ -24,14 +24,14 @@ open Position
 module Format =
     type Format =
         | Restore
-        | Bold      of bool
-        | Faint     of bool
-        | Italic    of bool
-        | Underline of bool
-        | Blinking  of bool
-        | Reverse   of bool
-        | Hidden    of bool
-        | Strikeout of bool
+        | Bold            of bool
+        | Faint           of bool
+        | Italic          of bool
+        | Underline       of bool
+        | Blinking        of bool
+        | Reverse         of bool
+        | Hidden          of bool
+        | Strikeout       of bool
         | ForegroundColor of Color
         | BackgroundColor of Color
 
@@ -42,20 +42,17 @@ module Format =
 
     let restore formats = Restore :: formats
 
-    let bold flag formats = Bold flag :: formats
-    let faint flag formats = Faint flag :: formats
-    let italic flag formats = Italic flag :: formats
+    let bold      flag formats = Bold      flag :: formats
+    let faint     flag formats = Faint     flag :: formats
+    let italic    flag formats = Italic    flag :: formats
     let underline flag formats = Underline flag :: formats
-    let blinking flag formats = Blinking flag :: formats
-    let reverse flag formats = Reverse flag :: formats
-    let hidden flag formats = Hidden flag :: formats
+    let blinking  flag formats = Blinking  flag :: formats
+    let reverse   flag formats = Reverse   flag :: formats
+    let hidden    flag formats = Hidden    flag :: formats
     let strikeout flag formats = Strikeout flag :: formats
 
-    let foregroundColor color formats =
-        ForegroundColor color :: formats
-
-    let backgroundColor color formats =
-        BackgroundColor color :: formats
+    let foregroundColor color formats = ForegroundColor color :: formats
+    let backgroundColor color formats = BackgroundColor color :: formats
 
     let apply newLine text format =
         match format with
@@ -71,13 +68,25 @@ module Format =
         | Strikeout flag -> printf "\x1b[%dm%s" (if flag then 9 else 29) text
 
         | ForegroundColor color ->
-            colorRGB color
-            |> fun (red, green, blue) ->
-                printf "\x1b[38;2;%d;%d;%dm%s" red green blue text
+            match color with
+            | XTerm id ->
+                printf "\x1b[38;5;%dm%s" id text
+            | XTermColor color ->
+                printf "\x1b[38;5;%dm%s" color.id text
+            | _ ->
+                colorRGB color
+                |> fun (red, green, blue) ->
+                    printf "\x1b[38;2;%d;%d;%dm%s" red green blue text
         | BackgroundColor color ->
-            colorRGB color
-            |> fun (red, green, blue) ->
-                printf "\x1b[48;2;%d;%d;%dm%s" red green blue text
+            match color with
+            | XTerm id ->
+                printf "\x1b[48;5;%dm%s" id text
+            | XTermColor color ->
+                printf "\x1b[48;5;%dm%s" color.id text
+            | _ ->
+                colorRGB color
+                |> fun (red, green, blue) ->
+                    printf "\x1b[48;2;%d;%d;%dm%s" red green blue text
 
         | _ -> failwith "Not yet implemented!"
 

@@ -23,18 +23,25 @@ open Position
 
 module Cursor =
     type Cursor =
-        | Up       of int
-        | Down     of int
-        | Next     of int
-        | Previous of int
+        | Reverse
+        | Save
+        | Restore
+        | Up           of int
+        | Down         of int
+        | Next         of int
+        | Previous     of int
         | NextLine     of int
         | PreviousLine of int
-        | Move of Position
+        | Move         of Position
 
     type Cursors = Cursor List
 
     let init () : Cursors =
         []
+
+    let reverse cursors = Reverse :: cursors
+    let save cursors = Save :: cursors
+    let restore cursors = Restore :: cursors
 
     let up n cursors = Up n :: cursors
     let down n cursors = Down n :: cursors
@@ -48,6 +55,10 @@ module Cursor =
 
     let apply newLine cursor =
         match cursor with
+        | Reverse -> printf "\x1bM"
+        | Save    -> printf "\x1b7"
+        | Restore -> printf "\x1b8"
+
         | Up       n -> printf "\x1b[A%d" n
         | Down     n -> printf "\x1b[B%d" n
         | Next     n -> printf "\x1b[C%d" n
