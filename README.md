@@ -53,7 +53,7 @@ git clone https://github.com/reallukee/confole.git
 ```
 cd confole/confole
 
-dotnet build
+dotnet build --configuration Release
 ```
 
 

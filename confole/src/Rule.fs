@@ -98,3 +98,23 @@ module Rule =
             DefaultCursorColor     (RGB (255, 255, 255))
         ]
         |> applyAll false
+
+    let configure newLine config =
+        init ()
+        |> config
+        |> applyAll newLine
+
+    type RulesBuilder () =
+        member _.Yield ruleF : Rules -> Rules =
+            ruleF
+
+        member _.Combine (acc : Rules -> Rules, ruleF) : Rules -> Rules =
+            acc >> ruleF
+
+        member _.Delay f : Rules -> Rules =
+            f ()
+
+        member _.Run rulesF : Rules =
+            rulesF (init ())
+
+    let builder = RulesBuilder ()

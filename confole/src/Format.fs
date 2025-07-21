@@ -122,3 +122,23 @@ module Format =
             BackgroundColor (RGB (0, 0, 0))
         ]
         |> applyAll false text
+
+    let configure newLine text config =
+        init ()
+        |> config
+        |> applyAll newLine text
+
+    type FormatsBuilder () =
+        member _.Yield formatF : Formats -> Formats =
+            formatF
+
+        member _.Combine (acc : Formats -> Formats, formatF) : Formats -> Formats =
+            acc >> formatF
+
+        member _.Delay f : Formats -> Formats =
+            f ()
+
+        member _.Run formatsF : Formats =
+            formatsF (init ())
+
+    let builder = FormatsBuilder ()

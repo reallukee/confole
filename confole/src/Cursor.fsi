@@ -67,3 +67,31 @@ module Cursor =
     val reset :
         unit ->
         unit
+
+    val configure :
+        newLine : bool ->
+        config  : (Cursors -> Cursors) ->
+        unit
+
+    type CursorsBuilder =
+        new :
+            unit ->
+            CursorsBuilder
+
+        member Yield :
+            cursorF : (Cursors -> Cursors) ->
+            (Cursors -> Cursors)
+
+        member Combine :
+            acc : (Cursors -> Cursors) * cursorF : (Cursors -> Cursors) ->
+            (Cursors -> Cursors)
+
+        member Delay :
+            f : (unit -> (Cursors -> Cursors)) ->
+            (Cursors -> Cursors)
+
+        member Run :
+            cursorsF : (Cursors -> Cursors) ->
+            Cursors
+
+    val builder : CursorsBuilder

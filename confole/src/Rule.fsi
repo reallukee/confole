@@ -63,3 +63,31 @@ module Rule =
     val reset :
         unit ->
         unit
+
+    val configure :
+        newLine : bool ->
+        config  : (Rules -> Rules) ->
+        unit
+
+    type RulesBuilder =
+        new :
+            unit ->
+            RulesBuilder
+
+        member Yield :
+            ruleF : (Rules -> Rules) ->
+            (Rules -> Rules)
+
+        member Combine :
+            acc : (Rules -> Rules) * ruleF : (Rules -> Rules) ->
+            (Rules -> Rules)
+
+        member Delay :
+            f : (unit -> (Rules -> Rules)) ->
+            (Rules -> Rules)
+
+        member Run :
+            rulesF : (Rules -> Rules) ->
+            Rules
+
+    val builder : RulesBuilder

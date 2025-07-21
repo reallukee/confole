@@ -94,3 +94,23 @@ module Cursor =
     let reset () =
         []
         |> applyAll false
+
+    let configure newLine config =
+        init ()
+        |> config
+        |> applyAll newLine
+
+    type CursorsBuilder () =
+        member _.Yield cursorF : Cursors -> Cursors =
+            cursorF
+
+        member _.Combine (acc : Cursors -> Cursors, cursorF) : Cursors -> Cursors =
+            acc >> cursorF
+
+        member _.Delay f : Cursors -> Cursors =
+            f ()
+
+        member _.Run cursorsF : Cursors =
+            cursorsF (init ())
+
+    let builder = CursorsBuilder ()

@@ -1,14 +1,21 @@
 (*
     F# Script
 
-    dotnet fsi cursor2.fsx
+    dotnet fsi cursor.fsx
 *)
 
 // Necessary for F# Interactive
+// dotnet build confole --configuration Release
+
 // #r @"../confole/bin/Release/netstandard2.0/confole.dll"
+
+// Necessary for F# Interactive
 // dotnet build confole --configuration Release
 // dotnet pack confole --configuration Release
+
 #r @"nuget: Reallukee.Confole, 1.0.0"
+
+open System
 
 open Reallukee.Confole
 
@@ -19,5 +26,8 @@ let cursors =
 Cursor.applyAll false cursors
 
 printfn "Hello, World!"
+
+do Console.ReadKey(false)
+|> ignore
 
 Cursor.reset ()

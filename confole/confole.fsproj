@@ -9,7 +9,7 @@
         <ApplicationIcon>..\assets\confole.ico</ApplicationIcon>
 
         <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
-        <FSharpPrefer64BitTools>False</FSharpPrefer64BitTools>
+        <FSharpPrefer64BitTools>True</FSharpPrefer64BitTools>
 
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
         <PackageId>Reallukee.Confole</PackageId>
@@ -47,25 +47,40 @@
         <None Include="..\examples\rules.fsx">
             <Link>examples\rules.fsx</Link>
         </None>
-
         <None Include="..\examples\rules2.fsx">
             <Link>examples\rules2.fsx</Link>
+        </None>
+        <None Include="..\examples\rules3.fsx">
+            <Link>examples\rules3.fsx</Link>
+        </None>
+        <None Include="..\examples\rules4.fsx">
+            <Link>examples\rules4.fsx</Link>
         </None>
 
         <None Include="..\examples\cursor.fsx">
             <Link>examples\cursor.fsx</Link>
         </None>
-
         <None Include="..\examples\cursor2.fsx">
             <Link>examples\cursor2.fsx</Link>
+        </None>
+        <None Include="..\examples\cursor3.fsx">
+            <Link>examples\cursor3.fsx</Link>
+        </None>
+        <None Include="..\examples\cursor4.fsx">
+            <Link>examples\cursor4.fsx</Link>
         </None>
 
         <None Include="..\examples\format.fsx">
             <Link>examples\format.fsx</Link>
         </None>
-
         <None Include="..\examples\format2.fsx">
             <Link>examples\format2.fsx</Link>
+        </None>
+        <None Include="..\examples\format3.fsx">
+            <Link>examples\format3.fsx</Link>
+        </None>
+        <None Include="..\examples\format4.fsx">
+            <Link>examples\format4.fsx</Link>
         </None>
     </ItemGroup>
 

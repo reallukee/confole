@@ -70,3 +70,32 @@ module Format =
     val reset :
         text : string ->
         unit
+
+    val configure :
+        newLine : bool ->
+        text    : string ->
+        config  : (Formats -> Formats) ->
+        unit
+
+    type FormatsBuilder =
+        new :
+            unit ->
+            FormatsBuilder
+
+        member Yield :
+            formatF : (Formats -> Formats) ->
+            (Formats -> Formats)
+
+        member Combine :
+            acc : (Formats -> Formats) * formatF : (Formats -> Formats) ->
+            (Formats -> Formats)
+
+        member Delay :
+            f : (unit -> (Formats -> Formats)) ->
+            (Formats -> Formats)
+
+        member Run :
+            formatsF : (Formats -> Formats) ->
+            Formats
+
+    val builder : FormatsBuilder

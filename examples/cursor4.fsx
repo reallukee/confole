@@ -1,7 +1,7 @@
 (*
     F# Script
 
-    dotnet fsi format.fsx
+    dotnet fsi cursor4.fsx
 *)
 
 // Necessary for F# Interactive
@@ -19,15 +19,14 @@ open System
 
 open Reallukee.Confole
 
-let formats =
-    Format.init ()
-    |> Format.italic true
-    |> Format.foregroundColor (Color.RGB (255, 0, 0))
-    |> Format.backgroundColor (Color.RGB (0, 0, 255))
+Cursor.builder {
+    Cursor.move (Position.ColRow (4, 2))
+}
+|> Cursor.applyAll false
 
-Format.applyAll true "Hello, World!" formats
+printfn "Hello, World!"
 
 do Console.ReadKey(false)
 |> ignore
 
-Format.reset ""
+Cursor.reset ()
