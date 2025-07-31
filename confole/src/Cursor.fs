@@ -22,6 +22,12 @@ open Color
 open Position
 
 module Cursor =
+    let private ESC = "\u001B"
+    let private CSI = "\u001B["
+    let private OSC = "\u001B]"
+
+    let private BELL = "\u0007"
+
     type Cursor =
         | Reverse
         | Save
@@ -34,38 +40,41 @@ module Cursor =
         | PreviousLine of int
         | Move         of Position
 
-    type Cursors = Cursor List
+    type Cursors = Cursor list
 
     let init () : Cursors =
         []
 
     let reverse cursors = Reverse :: cursors
-    let save cursors = Save :: cursors
+    let save    cursors = Save    :: cursors
     let restore cursors = Restore :: cursors
 
-    let up n cursors = Up n :: cursors
-    let down n cursors = Down n :: cursors
-    let next n cursors = Next n :: cursors
+    let up       n cursors = Up       n :: cursors
+    let down     n cursors = Down     n :: cursors
+    let next     n cursors = Next     n :: cursors
     let previous n cursors = Previous n :: cursors
 
-    let nextLine n cursors = NextLine n :: cursors
+    let nextLine     n cursors = NextLine     n :: cursors
     let previousLine n cursors = PreviousLine n :: cursors
 
     let move position cursors = Move position :: cursors
 
+    let clear (cursors : Cursors) : Cursors =
+        []
+
     let apply newLine cursor =
         match cursor with
-        | Reverse -> printf "\x1bM"
-        | Save    -> printf "\x1b7"
-        | Restore -> printf "\x1b8"
+        | Reverse -> printf "%sM" ESC
+        | Save    -> printf "%s7" ESC
+        | Restore -> printf "%s8" ESC
 
-        | Up       n -> printf "\x1b[A%d" n
-        | Down     n -> printf "\x1b[B%d" n
-        | Next     n -> printf "\x1b[C%d" n
-        | Previous n -> printf "\x1b[D%d" n
+        | Up       n -> printf "%sA%d" CSI n
+        | Down     n -> printf "%sB%d" CSI n
+        | Next     n -> printf "%sC%d" CSI n
+        | Previous n -> printf "%sD%d" CSI n
 
-        | NextLine     n -> printf "\x1b[E%d" n
-        | PreviousLine n -> printf "\x1b[F%d" n
+        | NextLine     n -> printf "%sE%d" CSI n
+        | PreviousLine n -> printf "%sF%d" CSI n
 
         | Move position ->
             let col, row =
@@ -74,7 +83,7 @@ module Cursor =
                 | Cell cell -> cell.col + 1, cell.row + 1
                 | _ -> failwith "Unsupported position format"
 
-            printf "\x1b[%d;%dH" row col
+            printf "%s%d;%dH" CSI row col
 
         | _ -> failwith "Not yet implemented!"
 
@@ -92,7 +101,9 @@ module Cursor =
             printfn ""
 
     let reset () =
-        []
+        [
+            Move (ColRow (0, 0))
+        ]
         |> applyAll false
 
     let configure newLine config =
@@ -100,7 +111,7 @@ module Cursor =
         |> config
         |> applyAll newLine
 
-    type CursorsBuilder () =
+    type Builder () =
         member _.Yield cursorF : Cursors -> Cursors =
             cursorF
 
@@ -113,4 +124,4 @@ module Cursor =
         member _.Run cursorsF : Cursors =
             cursorsF (init ())
 
-    let builder = CursorsBuilder ()
+    let builder = Builder ()

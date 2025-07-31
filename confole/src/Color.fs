@@ -43,15 +43,15 @@ module Color =
         | HEX        of string * string * string
         | HEXColor   of HEXColor
 
-    let rgbToHEX (red : int) (green : int) (blue : int) : string * string * string =
+    let rgbToHEX red green blue =
         let red   = sprintf "%x" red
         let green = sprintf "%x" green
         let blue  = sprintf "%x" blue
 
         red, green, blue
 
-    let hexToRGB (red : string) (green : string) (blue : string) : int * int * int =
-        let hex hex =
+    let hexToRGB red green blue =
+        let hex (hex : string) =
             hex
             |> Seq.rev
             |> Seq.mapi (fun index item ->
@@ -60,7 +60,7 @@ module Color =
                     | c when c >= '0' && c <= '9' -> int c - int '0'
                     | c when c >= 'A' && c <= 'Z' -> int c - int 'A' + 10
                     | c when c >= 'a' && c <= 'z' -> int c - int 'a' + 10
-                    | _ -> failwith ""
+                    | _ -> failwith "Invalid char"
 
                 value * pown 16 index
             )
@@ -84,7 +84,7 @@ module Color =
         }
 
     let hexColorToRGBColor (color : HEXColor) : RGBColor =
-        let hex hex =
+        let hex (hex : string) =
             hex
             |> Seq.rev
             |> Seq.mapi (fun index item ->
@@ -93,7 +93,7 @@ module Color =
                     | c when c >= '0' && c <= '9' -> int c - int '0'
                     | c when c >= 'A' && c <= 'Z' -> int c - int 'A' + 10
                     | c when c >= 'a' && c <= 'z' -> int c - int 'a' + 10
-                    | _ -> failwith ""
+                    | _ -> failwith "Invalid char"
 
                 value * pown 16 index
             )
@@ -113,10 +113,12 @@ module Color =
         match color with
         | RGB (red, green, blue) -> red, green, blue
         | RGBColor color -> color.red, color.green, color.blue
+
         | HEX (red, green, blue) -> hexToRGB red green blue
         | HEXColor color ->
             hexColorToRGBColor color
             |> fun color -> color.red, color.green, color.blue
+
         | _ -> failwith "Unsupported color format"
 
     let colorHEX color =
@@ -125,6 +127,8 @@ module Color =
         | RGBColor color ->
             rgbColorToHEXColor color
             |> fun color -> color.red, color.green, color.blue
+
         | HEX (red, green, blue) -> red, green, blue
         | HEXColor color -> color.red, color.green, color.blue
+
         | _ -> failwith "Unsupported color format"

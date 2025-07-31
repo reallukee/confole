@@ -22,6 +22,12 @@ open Color
 open Position
 
 module Format =
+    let private ESC = "\u001B"
+    let private CSI = "\u001B["
+    let private OSC = "\u001B]"
+
+    let private BELL = "\u0007"
+
     type Format =
         | Restore
         | Bold            of bool
@@ -35,7 +41,7 @@ module Format =
         | ForegroundColor of Color
         | BackgroundColor of Color
 
-    type Formats = Format List
+    type Formats = Format list
 
     let init () : Formats =
         []
@@ -54,39 +60,42 @@ module Format =
     let foregroundColor color formats = ForegroundColor color :: formats
     let backgroundColor color formats = BackgroundColor color :: formats
 
+    let clear (formats : Formats) : Formats =
+        []
+
     let apply newLine text format =
         match format with
-        | Restore -> printf "\x1b[0m%s" text
+        | Restore -> printf "%s0m%s" CSI text
 
-        | Bold      flag -> printf "\x1b[%dm%s" (if flag then 1 else 22) text
-        | Faint     flag -> printf "\x1b[%dm%s" (if flag then 2 else 22) text
-        | Italic    flag -> printf "\x1b[%dm%s" (if flag then 3 else 23) text
-        | Underline flag -> printf "\x1b[%dm%s" (if flag then 4 else 24) text
-        | Blinking  flag -> printf "\x1b[%dm%s" (if flag then 5 else 25) text
-        | Reverse   flag -> printf "\x1b[%dm%s" (if flag then 7 else 27) text
-        | Hidden    flag -> printf "\x1b[%dm%s" (if flag then 8 else 28) text
-        | Strikeout flag -> printf "\x1b[%dm%s" (if flag then 9 else 29) text
+        | Bold      flag -> printf "%s%dm%s" CSI (if flag then 1 else 22) text
+        | Faint     flag -> printf "%s%dm%s" CSI (if flag then 2 else 22) text
+        | Italic    flag -> printf "%s%dm%s" CSI (if flag then 3 else 23) text
+        | Underline flag -> printf "%s%dm%s" CSI (if flag then 4 else 24) text
+        | Blinking  flag -> printf "%s%dm%s" CSI (if flag then 5 else 25) text
+        | Reverse   flag -> printf "%s%dm%s" CSI (if flag then 7 else 27) text
+        | Hidden    flag -> printf "%s%dm%s" CSI (if flag then 8 else 28) text
+        | Strikeout flag -> printf "%s%dm%s" CSI (if flag then 9 else 29) text
 
         | ForegroundColor color ->
             match color with
             | XTerm id ->
-                printf "\x1b[38;5;%dm%s" id text
+                printf "%s38;5;%dm%s" CSI id text
             | XTermColor color ->
-                printf "\x1b[38;5;%dm%s" color.id text
+                printf "%s38;5;%dm%s" CSI color.id text
             | _ ->
                 colorRGB color
                 |> fun (red, green, blue) ->
-                    printf "\x1b[38;2;%d;%d;%dm%s" red green blue text
+                    printf "%s38;2;%d;%d;%dm%s" CSI red green blue text
         | BackgroundColor color ->
             match color with
             | XTerm id ->
-                printf "\x1b[48;5;%dm%s" id text
+                printf "%s48;5;%dm%s" CSI id text
             | XTermColor color ->
-                printf "\x1b[48;5;%dm%s" color.id text
+                printf "%s48;5;%dm%s" CSI color.id text
             | _ ->
                 colorRGB color
                 |> fun (red, green, blue) ->
-                    printf "\x1b[48;2;%d;%d;%dm%s" red green blue text
+                    printf "%s48;2;%d;%d;%dm%s" CSI red green blue text
 
         | _ -> failwith "Not yet implemented!"
 
@@ -100,7 +109,7 @@ module Format =
             apply false "" item
         )
 
-        printf "%s\x1b[0m" text
+        printf "%s%s0m" text CSI
 
         if newLine then
             printfn ""
@@ -128,7 +137,7 @@ module Format =
         |> config
         |> applyAll newLine text
 
-    type FormatsBuilder () =
+    type Builder () =
         member _.Yield formatF : Formats -> Formats =
             formatF
 
@@ -141,4 +150,4 @@ module Format =
         member _.Run formatsF : Formats =
             formatsF (init ())
 
-    let builder = FormatsBuilder ()
+    let builder = Builder ()

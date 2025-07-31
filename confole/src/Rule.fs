@@ -22,17 +22,27 @@ open Color
 open Position
 
 module Rule =
+    let private ESC = "\u001B"
+    let private CSI = "\u001B["
+    let private OSC = "\u001B]"
+
+    let private BELL = "\u0007"
+
     type Rule =
-        | Title                  of string
+        | Title                    of string
         | ShowCursorBlinking
         | HideCursorBlinking
         | ShowCursor
         | HideCursor
-        | DefaultForegroundColor of Color
-        | DefaultBackgroundColor of Color
-        | DefaultCursorColor     of Color
+        | EnableDesignateMode
+        | DisableDesignateMode
+        | EnableAlternativeBuffer
+        | DisableAlternativeBuffer
+        | DefaultForegroundColor   of Color
+        | DefaultBackgroundColor   of Color
+        | DefaultCursorColor       of Color
 
-    type Rules = Rule List
+    type Rules = Rule list
 
     let init () : Rules =
         []
@@ -45,32 +55,47 @@ module Rule =
     let showCursor rules = ShowCursor :: rules
     let hideCursor rules = HideCursor :: rules
 
+    let enableDesignateMode  rules = EnableDesignateMode  :: rules
+    let disableDesignateMode rules = DisableDesignateMode :: rules
+
+    let enableAlternativeBuffer  rules = EnableAlternativeBuffer  :: rules
+    let disableAlternativeBuffer rules = DisableAlternativeBuffer :: rules
+
     let defaultForegroundColor color rules = DefaultForegroundColor color :: rules
     let defaultBackgroundColor color rules = DefaultBackgroundColor color :: rules
-    let defaultCursorColor color rules = DefaultCursorColor color :: rules
+    let defaultCursorColor     color rules = DefaultCursorColor     color :: rules
+
+    let clear (rules : Rules) : Rules =
+        []
 
     let apply newLine rule =
         match rule with
-        | Title value -> printf "\x1b]0;%s\x07" value
+        | Title value -> printf "%s0;%s%s" OSC value BELL
 
-        | ShowCursorBlinking -> printf "\x1b[?12h"
-        | HideCursorBlinking -> printf "\x1b[?12l"
+        | ShowCursorBlinking -> printf "%s?12h" CSI
+        | HideCursorBlinking -> printf "%s?12l" CSI
 
-        | ShowCursor -> printf "\x1b[?25h"
-        | HideCursor -> printf "\x1b[?25l"
+        | ShowCursor -> printf "%s?25h" CSI
+        | HideCursor -> printf "%s?25l" CSI
+
+        | EnableDesignateMode  -> printf "%s0" CSI
+        | DisableDesignateMode -> printf "%sB" CSI
+
+        | EnableAlternativeBuffer  -> printf "%s?1049h" CSI
+        | DisableAlternativeBuffer -> printf "%s?1049l" CSI
 
         | DefaultForegroundColor color ->
             colorHEX color
             |> fun (red, green, blue) ->
-                printf "\x1b]10;rgb:%s/%s/%s\x1b\\" red green blue
+                printf "%s10;rgb:%s/%s/%s%s\\" OSC red green blue ESC
         | DefaultBackgroundColor color ->
             colorHEX color
             |> fun (red, green, blue) ->
-                printf "\x1b]11;rgb:%s/%s/%s\x1b\\" red green blue
+                printf "%s11;rgb:%s/%s/%s%s\\" OSC red green blue ESC
         | DefaultCursorColor color ->
             colorHEX color
             |> fun (red, green, blue) ->
-                printf "\x1b]12;rgb:%s/%s/%s\x1b\\" red green blue
+                printf "%s12;rgb:%s/%s/%s%s\\" OSC red green blue ESC
 
         | _ -> failwith "Not yet implemented!"
 
@@ -93,6 +118,10 @@ module Rule =
 
             ShowCursor
 
+            DisableDesignateMode
+
+            DisableAlternativeBuffer
+
             DefaultForegroundColor (RGB (255, 255, 255))
             DefaultBackgroundColor (RGB (0, 0, 0))
             DefaultCursorColor     (RGB (255, 255, 255))
@@ -104,7 +133,7 @@ module Rule =
         |> config
         |> applyAll newLine
 
-    type RulesBuilder () =
+    type Builder () =
         member _.Yield ruleF : Rules -> Rules =
             ruleF
 
@@ -117,4 +146,4 @@ module Rule =
         member _.Run rulesF : Rules =
             rulesF (init ())
 
-    let builder = RulesBuilder ()
+    let builder = Builder ()

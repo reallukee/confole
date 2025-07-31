@@ -43,30 +43,11 @@ module Color =
         | HEX        of string * string * string
         | HEXColor   of HEXColor
 
-    val rgbToHEX :
-        red   : int ->
-        green : int ->
-        blue  : int ->
-        string * string * string
+    val rgbToHEX : int -> int -> int -> string * string * string
+    val hexToRGB : string -> string -> string -> int * int * int
 
-    val hexToRGB :
-        red   : string ->
-        green : string ->
-        blue  : string ->
-        int * int * int
+    val rgbColorToHEXColor : RGBColor -> HEXColor
+    val hexColorToRGBColor : HEXColor -> RGBColor
 
-    val rgbColorToHEXColor :
-        color : RGBColor ->
-        HEXColor
-
-    val hexColorToRGBColor :
-        color : HEXColor ->
-        RGBColor
-
-    val colorRGB :
-        color : Color ->
-        int * int * int
-
-    val colorHEX :
-        color : Color ->
-        string * string * string
+    val colorRGB : Color -> int * int * int
+    val colorHEX : Color -> string * string * string

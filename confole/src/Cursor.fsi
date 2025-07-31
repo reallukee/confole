@@ -34,64 +34,53 @@ module Cursor =
         | PreviousLine of int
         | Move         of Position
 
-    type Cursors = Cursor List
+    type Cursors = Cursor list
 
     val init :
         unit ->
         Cursors
 
-    val reverse : cursors : Cursors -> Cursors
-    val save    : cursors : Cursors -> Cursors
-    val restore : cursors : Cursors -> Cursors
+    val reverse : Cursors -> Cursors
+    val save    : Cursors -> Cursors
+    val restore : Cursors -> Cursors
 
-    val up       : n : int -> cursors : Cursors -> Cursors
-    val down     : n : int -> cursors : Cursors -> Cursors
-    val next     : n : int -> cursors : Cursors -> Cursors
-    val previous : n : int -> cursors : Cursors -> Cursors
+    val up       : int -> Cursors -> Cursors
+    val down     : int -> Cursors -> Cursors
+    val next     : int -> Cursors -> Cursors
+    val previous : int -> Cursors -> Cursors
 
-    val nextLine     : n : int -> cursors : Cursors -> Cursors
-    val previousLine : n : int -> cursors : Cursors -> Cursors
+    val nextLine     : int -> Cursors -> Cursors
+    val previousLine : int -> Cursors -> Cursors
 
-    val move : position : Position -> cursors : Cursors -> Cursors
+    val move : Position -> Cursors -> Cursors
 
-    val apply :
-        newLine : bool ->
-        cursor  : Cursor ->
-        unit
+    val clear : Cursors -> Cursors
 
-    val applyAll :
-        newLine : bool ->
-        cursors : Cursors ->
-        unit
+    val apply    : bool -> Cursor -> unit
+    val applyAll : bool -> Cursors -> unit
+    val reset    : unit -> unit
 
-    val reset :
-        unit ->
-        unit
+    val configure : bool -> (Cursors -> Cursors) -> unit
 
-    val configure :
-        newLine : bool ->
-        config  : (Cursors -> Cursors) ->
-        unit
-
-    type CursorsBuilder =
+    type Builder =
         new :
             unit ->
-            CursorsBuilder
+            Builder
 
         member Yield :
-            cursorF : (Cursors -> Cursors) ->
+            (Cursors -> Cursors) ->
             (Cursors -> Cursors)
 
         member Combine :
-            acc : (Cursors -> Cursors) * cursorF : (Cursors -> Cursors) ->
+            (Cursors -> Cursors) * (Cursors -> Cursors) ->
             (Cursors -> Cursors)
 
         member Delay :
-            f : (unit -> (Cursors -> Cursors)) ->
+            (unit -> (Cursors -> Cursors)) ->
             (Cursors -> Cursors)
 
         member Run :
-            cursorsF : (Cursors -> Cursors) ->
+            (Cursors -> Cursors) ->
             Cursors
 
-    val builder : CursorsBuilder
+    val builder : Builder

@@ -11,6 +11,8 @@
         <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
         <FSharpPrefer64BitTools>True</FSharpPrefer64BitTools>
 
+        <NoWarn>0026</NoWarn>
+
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
         <PackageId>Reallukee.Confole</PackageId>
         <Title>Confole</Title>

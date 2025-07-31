@@ -23,71 +23,68 @@ open Position
 
 module Rule =
     type Rule =
-        | Title                  of string
+        | Title                    of string
         | ShowCursorBlinking
         | HideCursorBlinking
         | ShowCursor
         | HideCursor
-        | DefaultForegroundColor of Color
-        | DefaultBackgroundColor of Color
-        | DefaultCursorColor     of Color
+        | EnableDesignateMode
+        | DisableDesignateMode
+        | EnableAlternativeBuffer
+        | DisableAlternativeBuffer
+        | DefaultForegroundColor   of Color
+        | DefaultBackgroundColor   of Color
+        | DefaultCursorColor       of Color
 
-    type Rules = Rule List
+    type Rules = Rule list
 
-    val init :
-        unit ->
-        Rules
+    val init : unit -> Rules
 
-    val title : value : string -> rules : Rules -> Rules
+    val title : string ->  Rules -> Rules
 
-    val showCursorBlinking : rules : Rules -> Rules
-    val hideCursorBlinking : rules : Rules -> Rules
+    val showCursorBlinking : Rules -> Rules
+    val hideCursorBlinking : Rules -> Rules
 
-    val showCursor : rules : Rules -> Rules
-    val hideCursor : rules : Rules -> Rules
+    val showCursor : Rules -> Rules
+    val hideCursor : Rules -> Rules
 
-    val defaultForegroundColor : color : Color -> rules : Rules -> Rules
-    val defaultBackgroundColor : color : Color -> rules : Rules -> Rules
-    val defaultCursorColor     : color : Color -> rules : Rules -> Rules
+    val enableDesignateMode  : Rules -> Rules
+    val disableDesignateMode : Rules -> Rules
 
-    val apply :
-        newLine : bool ->
-        rule    : Rule ->
-        unit
+    val enableAlternativeBuffer  : Rules -> Rules
+    val disableAlternativeBuffer : Rules -> Rules
 
-    val applyAll :
-        newLine : bool ->
-        rules   : Rules ->
-        unit
+    val defaultForegroundColor : Color -> Rules -> Rules
+    val defaultBackgroundColor : Color -> Rules -> Rules
+    val defaultCursorColor     : Color -> Rules -> Rules
 
-    val reset :
-        unit ->
-        unit
+    val clear : Rules -> Rules
 
-    val configure :
-        newLine : bool ->
-        config  : (Rules -> Rules) ->
-        unit
+    val apply    : bool -> Rule -> unit
+    val applyAll : bool -> Rules -> unit
+    val reset    : unit -> unit
 
-    type RulesBuilder =
+    val configure : bool -> (Rules -> Rules) -> unit
+
+    type Builder =
         new :
             unit ->
-            RulesBuilder
+            Builder
 
         member Yield :
-            ruleF : (Rules -> Rules) ->
+            (Rules -> Rules) ->
             (Rules -> Rules)
 
         member Combine :
-            acc : (Rules -> Rules) * ruleF : (Rules -> Rules) ->
+            (Rules -> Rules) * (Rules -> Rules) ->
             (Rules -> Rules)
 
         member Delay :
-            f : (unit -> (Rules -> Rules)) ->
+            (unit -> (Rules -> Rules)) ->
             (Rules -> Rules)
 
         member Run :
-            rulesF : (Rules -> Rules) ->
+            (Rules -> Rules) ->
             Rules
 
-    val builder : RulesBuilder
+    val builder : Builder

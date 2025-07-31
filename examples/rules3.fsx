@@ -21,12 +21,14 @@ open Reallukee.Confole
 
 Rule.configure false (fun rules ->
     rules
-    |> Rule.title                  "Confole"
-    |> Rule.hideCursorBlinking
-    |> Rule.hideCursor
-    |> Rule.defaultForegroundColor (Color.RGB (255, 255, 255))
-    |> Rule.defaultBackgroundColor (Color.RGB (0, 0, 0))
-    |> Rule.defaultCursorColor     (Color.RGB (255, 255, 255))
+    |> Rule.title                    "Confole"
+    |> Rule.showCursorBlinking
+    |> Rule.showCursor
+    |> Rule.disableDesignateMode
+    |> Rule.disableAlternativeBuffer
+    |> Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
+    |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
+    |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
 )
 
 printfn "Hello, World!"

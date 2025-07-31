@@ -35,67 +35,52 @@ module Format =
         | ForegroundColor of Color
         | BackgroundColor of Color
 
-    type Formats = Format List
+    type Formats = Format list
 
     val init :
         unit ->
         Formats
 
-    val restore : formats : Formats -> Formats
+    val restore : Formats -> Formats
 
-    val bold      : bool -> formats : Formats -> Formats
-    val faint     : bool -> formats : Formats -> Formats
-    val italic    : bool -> formats : Formats -> Formats
-    val underline : bool -> formats : Formats -> Formats
-    val blinking  : bool -> formats : Formats -> Formats
-    val reverse   : bool -> formats : Formats -> Formats
-    val hidden    : bool -> formats : Formats -> Formats
-    val strikeout : bool -> formats : Formats -> Formats
+    val bold      : bool -> Formats -> Formats
+    val faint     : bool -> Formats -> Formats
+    val italic    : bool -> Formats -> Formats
+    val underline : bool -> Formats -> Formats
+    val blinking  : bool -> Formats -> Formats
+    val reverse   : bool -> Formats -> Formats
+    val hidden    : bool -> Formats -> Formats
+    val strikeout : bool -> Formats -> Formats
 
-    val foregroundColor : color : Color -> formats : Formats -> Formats
-    val backgroundColor : color : Color -> formats : Formats -> Formats
+    val foregroundColor : color : Color -> Formats -> Formats
+    val backgroundColor : color : Color -> Formats -> Formats
 
-    val apply :
-        newLine : bool ->
-        text    : string ->
-        format  : Format ->
-        unit
+    val clear : Formats -> Formats
 
-    val applyAll :
-        newLine : bool ->
-        text    : string ->
-        formats : Formats ->
-        unit
+    val apply    : bool -> string -> Format -> unit
+    val applyAll : bool -> string -> Formats -> unit
+    val reset    : string -> unit
 
-    val reset :
-        text : string ->
-        unit
+    val configure : bool -> string -> (Formats -> Formats) -> unit
 
-    val configure :
-        newLine : bool ->
-        text    : string ->
-        config  : (Formats -> Formats) ->
-        unit
-
-    type FormatsBuilder =
+    type Builder =
         new :
             unit ->
-            FormatsBuilder
+            Builder
 
         member Yield :
-            formatF : (Formats -> Formats) ->
-            (Formats -> Formats)
+            (Formats -> Formats) -> (Formats -> Formats)
 
         member Combine :
-            acc : (Formats -> Formats) * formatF : (Formats -> Formats) ->
+            (Formats -> Formats) * (Formats -> Formats) ->
             (Formats -> Formats)
 
         member Delay :
-            f : (unit -> (Formats -> Formats)) ->
+            (unit -> (Formats -> Formats)) ->
             (Formats -> Formats)
 
         member Run :
-            formatsF : (Formats -> Formats) ->
+            (Formats -> Formats) ->
             Formats
 
-    val builder : FormatsBuilder
+    val builder : Builder
