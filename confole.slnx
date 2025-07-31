@@ -1,4 +1,8 @@
 <Solution>
-    <Project Path="confole.example/confole.example.fsproj" />
-    <Project Path="confole/confole.fsproj" />
+  <Folder Name="/sharp/">
+    <Project Path="confole.sharp.dev/confole.sharp.dev.csproj" />
+    <Project Path="confole.sharp/confole.sharp.fsproj" />
+  </Folder>
+  <Project Path="confole.dev/confole.dev.fsproj" />
+  <Project Path="confole/confole.fsproj" />
 </Solution>

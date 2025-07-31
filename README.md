@@ -83,7 +83,9 @@ git clone https://github.com/reallukee/confole.git
 ```
 cd confole
 
-dotnet build confole --configuration Release
+dotnet restore confole
+
+dotnet build confole --no-restore --configuration Release
 ```
 
 
