@@ -1,7 +1,7 @@
 (*
     F# Script
 
-    dotnet fsi format4.fsx
+    dotnet fsi format5.fsx
 *)
 
 // Necessary for F# Interactive
@@ -19,11 +19,11 @@ open System
 
 open Reallukee.Confole
 
-Format.builder {
-    Format.italic true
-    Format.foregroundColor (Color.RGB (255, 0, 0))
-    Format.backgroundColor (Color.RGB (0, 0, 255))
-}
+[
+    Format.Italic true
+    Format.ForegroundColor (Color.RGB (255, 0, 0))
+    Format.BackgroundColor (Color.RGB (0, 0, 255))
+]
 |> Format.applyAll true "Hello, World!"
 
 do Console.ReadKey(false)

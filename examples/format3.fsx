@@ -1,7 +1,7 @@
 (*
     F# Script
 
-    dotnet fsi formats3.fsx
+    dotnet fsi format3.fsx
 *)
 
 // Necessary for F# Interactive

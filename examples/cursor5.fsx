@@ -1,7 +1,7 @@
 (*
     F# Script
 
-    dotnet fsi rules4.fsx
+    dotnet fsi cursor5.fsx
 *)
 
 // Necessary for F# Interactive
@@ -19,21 +19,14 @@ open System
 
 open Reallukee.Confole
 
-Rule.builder {
-    Rule.title                    "Confole"
-    Rule.showCursorBlinking
-    Rule.showCursor
-    Rule.disableDesignateMode
-    Rule.disableAlternativeBuffer
-    Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
-    Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
-    Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
-}
-|> Rule.applyAll false
+[
+    Cursor.Move (Position.ColRow (4, 2))
+]
+|> Cursor.applyAll false
 
 printfn "Hello, World!"
 
 do Console.ReadKey(false)
 |> ignore
 
-Rule.reset ()
+Cursor.reset ()

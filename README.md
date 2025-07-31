@@ -10,6 +10,8 @@
 
 🎨 Una libreria funzionale per applicazioni console F#
 
+[Uso](#uso)
+•
 [Compilazione](#compilazione)
 •
 [Autore](#autore)
@@ -24,6 +26,27 @@
 
 > [!IMPORTANT]
 > **JUST 4 FUN**
+
+
+
+# Uso
+
+```fsharp
+open Reallukee.Confole
+
+let formats =
+    Format.init ()
+    |> Format.italic true
+    |> Format.foregroundColor (Color.RGB (255, 0, 0))
+    |> Format.backgroundColor (Color.RGB (0, 0, 255))
+
+Format.applyAll true "Hello, World!" formats
+
+do Console.ReadKey(false)
+|> ignore
+
+Format.reset ""
+```
 
 
 
@@ -42,6 +65,13 @@
 
 * .NET 5.0+ SDK
 
+### Esecuzione
+
+* .NET Framework 4.6.1+
+* .NET Core 2.0+
+* .NET 5.0+
+* Mono 5.12
+
 ## 1. Sorgente
 
 ```
@@ -51,9 +81,9 @@ git clone https://github.com/reallukee/confole.git
 ## 2. Compila
 
 ```
-cd confole/confole
+cd confole
 
-dotnet build --configuration Release
+dotnet build confole --configuration Release
 ```
 
 

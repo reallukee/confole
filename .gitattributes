@@ -1,2 +1,8 @@
 * text=auto
 * eol=lf
+
+*.cs linguist-vendored=true
+
+*.sh linguist-vendored=true
+*.cmd linguist-vendored=true
+*.ps1 linguist-vendored=true

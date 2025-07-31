@@ -1,7 +1,7 @@
 (*
     F# Script
 
-    dotnet fsi rules.fsx
+    dotnet fsi rule.fsx
 *)
 
 // Necessary for F# Interactive

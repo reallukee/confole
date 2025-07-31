@@ -46,17 +46,20 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\examples\rules.fsx">
-            <Link>examples\rules.fsx</Link>
+        <None Include="..\examples\rule.fsx">
+            <Link>examples\rule.fsx</Link>
         </None>
-        <None Include="..\examples\rules2.fsx">
-            <Link>examples\rules2.fsx</Link>
+        <None Include="..\examples\rule2.fsx">
+            <Link>examples\rule2.fsx</Link>
         </None>
-        <None Include="..\examples\rules3.fsx">
-            <Link>examples\rules3.fsx</Link>
+        <None Include="..\examples\rule3.fsx">
+            <Link>examples\rule3.fsx</Link>
         </None>
-        <None Include="..\examples\rules4.fsx">
-            <Link>examples\rules4.fsx</Link>
+        <None Include="..\examples\rule4.fsx">
+            <Link>examples\rule4.fsx</Link>
+        </None>
+        <None Include="..\examples\rule5.fsx">
+            <Link>examples\rule5.fsx</Link>
         </None>
 
         <None Include="..\examples\cursor.fsx">
@@ -71,6 +74,9 @@
         <None Include="..\examples\cursor4.fsx">
             <Link>examples\cursor4.fsx</Link>
         </None>
+        <None Include="..\examples\cursor5.fsx">
+            <Link>examples\cursor5.fsx</Link>
+        </None>
 
         <None Include="..\examples\format.fsx">
             <Link>examples\format.fsx</Link>
@@ -83,6 +89,9 @@
         </None>
         <None Include="..\examples\format4.fsx">
             <Link>examples\format4.fsx</Link>
+        </None>
+        <None Include="..\examples\format5.fsx">
+            <Link>examples\format5.fsx</Link>
         </None>
     </ItemGroup>
 
