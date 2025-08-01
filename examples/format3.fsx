@@ -26,7 +26,7 @@ Format.configure true "Hello, World!" (fun formats ->
     |> Format.backgroundColor (Color.RGB (0, 0, 255))
 )
 
-do Console.ReadKey(false)
+do Console.ReadKey(true)
 |> ignore
 
 Format.reset ""

@@ -26,7 +26,7 @@ Format.builder {
 }
 |> Format.applyAll true "Hello, World!"
 
-do Console.ReadKey(false)
+do Console.ReadKey(true)
 |> ignore
 
 Format.reset ""

@@ -25,7 +25,7 @@ Format.init ()
 |> Format.backgroundColor (Color.RGB (0, 0, 255))
 |> Format.applyAll true "Hello, World!"
 
-do Console.ReadKey(false)
+do Console.ReadKey(true)
 |> ignore
 
 Format.reset ""

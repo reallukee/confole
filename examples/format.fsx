@@ -27,7 +27,7 @@ let formats =
 
 Format.applyAll true "Hello, World!" formats
 
-do Console.ReadKey(false)
+do Console.ReadKey(true)
 |> ignore
 
 Format.reset ""

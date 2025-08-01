@@ -5,7 +5,7 @@
 
     Una libreria funzionale per applicazioni console F#
 
-    File name   : Rule.fsi32
+    File name   : Rule.fsi
 
     Title       : RULE
     Description : Rule

@@ -25,7 +25,11 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Restore project
-        run: dotnet restore confole
+        run: |
+          dotnet restore confole
+          dotnet restore confole.sharp
 
       - name: Build project
-        run: dotnet build confole --no-restore --configuration Release
+        run: |
+          dotnet build confole --no-restore --configuration Release
+          dotnet build confole.sharp --no-restore --configuration Release

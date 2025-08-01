@@ -22,7 +22,7 @@ module Program =
 
         printfn "Hello, World!"
 
-        do Console.ReadKey(false)
+        do Console.ReadKey(true)
         |> ignore
 
         Rule.reset ()
