@@ -27,6 +27,16 @@ module Rule =
     let private OSC = "\u001B]"
 
     let private BELL = "\u0007"
+    let private SP   = "\u0020"
+
+    type Shape =
+        | User
+        | BlinkingBlock
+        | SteadyBlock
+        | BlinkingUnderline
+        | SteadyUnderline
+        | BlinkingBar
+        | SteadyBar
 
     type Rule =
         | Title                    of string
@@ -38,14 +48,14 @@ module Rule =
         | DisableDesignateMode
         | EnableAlternativeBuffer
         | DisableAlternativeBuffer
+        | CursorShape              of Shape
         | DefaultForegroundColor   of Color
         | DefaultBackgroundColor   of Color
         | DefaultCursorColor       of Color
 
     type Rules = Rule list
 
-    let init () : Rules =
-        []
+    let init () : Rules = []
 
     let title value rules = Title value :: rules
 
@@ -61,12 +71,20 @@ module Rule =
     let enableAlternativeBuffer  rules = EnableAlternativeBuffer  :: rules
     let disableAlternativeBuffer rules = DisableAlternativeBuffer :: rules
 
+    let cursorShape shape rules = CursorShape shape :: rules
+
     let defaultForegroundColor color rules = DefaultForegroundColor color :: rules
     let defaultBackgroundColor color rules = DefaultBackgroundColor color :: rules
     let defaultCursorColor     color rules = DefaultCursorColor     color :: rules
 
-    let clear (rules : Rules) : Rules =
-        []
+    let clear (rules : Rules) : Rules = []
+
+    let view (rules : Rules) =
+        rules
+        |> List.rev
+        |> List.iter (fun rule ->
+            printfn "%A" rule
+        )
 
     let apply newLine rule =
         match rule with
@@ -83,6 +101,19 @@ module Rule =
 
         | EnableAlternativeBuffer  -> printf "%s?1049h" CSI
         | DisableAlternativeBuffer -> printf "%s?1049l" CSI
+
+        | CursorShape shape ->
+            let shape =
+                match shape with
+                | User              -> 0
+                | BlinkingBlock     -> 1
+                | SteadyBlock       -> 2
+                | BlinkingUnderline -> 3
+                | SteadyUnderline   -> 4
+                | BlinkingBar       -> 5
+                | SteadyBar         -> 6
+
+            printf "%s%d%sq" CSI shape SP
 
         | DefaultForegroundColor color ->
             colorHEX color
@@ -122,9 +153,11 @@ module Rule =
 
             DisableAlternativeBuffer
 
-            DefaultForegroundColor (RGB (255, 255, 255))
-            DefaultBackgroundColor (RGB (0, 0, 0))
-            DefaultCursorColor     (RGB (255, 255, 255))
+            CursorShape               User
+
+            DefaultForegroundColor    (RGB (255, 255, 255))
+            DefaultBackgroundColor    (RGB (0, 0, 0))
+            DefaultCursorColor        (RGB (255, 255, 255))
         ]
         |> applyAll false
 

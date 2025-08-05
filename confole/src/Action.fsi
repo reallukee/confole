@@ -1,0 +1,70 @@
+(*
+    -------
+    Confole
+    -------
+
+    Una libreria funzionale per applicazioni console F#
+
+    File name   : Action.fsi
+
+    Title       : ACTION
+    Description : Action
+
+    Author      : Luca Pollicino
+                  (https://github.com/reallukee)
+    Version     : 1.0.0
+    License     : MIT
+*)
+
+namespace Reallukee.Confole
+
+open Color
+open Position
+
+module Action =
+    type Erase =
+        | FromCurrentToEnd
+        | FromBeginToCurrent
+        | FromBeginToEnd
+
+    type Action =
+        | EraseDisplay of Erase
+        | EraseLine    of Erase
+
+    type Actions = Action list
+
+    val init : unit -> Actions
+
+    val eraseDisplay : Erase -> Actions -> Actions
+    val eraseLine    : Erase -> Actions -> Actions
+
+    val clear : Actions -> Actions
+
+    val view : Actions -> unit
+
+    val apply    : bool -> Action  -> unit
+    val applyAll : bool -> Actions -> unit
+    val reset    : unit -> unit
+
+    val configure : bool -> (Actions -> Actions) -> unit
+
+    type Builder =
+        new : unit -> Builder
+
+        member Yield :
+            (Actions -> Actions) ->
+            (Actions -> Actions)
+
+        member Combine :
+            (Actions -> Actions) * (Actions -> Actions) ->
+            (Actions -> Actions)
+
+        member Delay :
+            (unit -> (Actions -> Actions)) ->
+            (Actions -> Actions)
+
+        member Run :
+            (Actions -> Actions) ->
+            Actions
+
+    val builder : Builder

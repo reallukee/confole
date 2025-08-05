@@ -24,22 +24,22 @@ open Position
 module Format =
     type Format =
         | Restore
-        | Bold            of bool
-        | Faint           of bool
-        | Italic          of bool
-        | Underline       of bool
-        | Blinking        of bool
-        | Reverse         of bool
-        | Hidden          of bool
-        | Strikeout       of bool
-        | ForegroundColor of Color
-        | BackgroundColor of Color
+        | Bold                   of bool
+        | Faint                  of bool
+        | Italic                 of bool
+        | Underline              of bool
+        | Blinking               of bool
+        | Reverse                of bool
+        | Hidden                 of bool
+        | Strikeout              of bool
+        | RestoreForegroundColor
+        | RestoreBackgroundColor
+        | ForegroundColor        of Color
+        | BackgroundColor        of Color
 
     type Formats = Format list
 
-    val init :
-        unit ->
-        Formats
+    val init : unit -> Formats
 
     val restore : Formats -> Formats
 
@@ -52,24 +52,28 @@ module Format =
     val hidden    : bool -> Formats -> Formats
     val strikeout : bool -> Formats -> Formats
 
-    val foregroundColor : color : Color -> Formats -> Formats
-    val backgroundColor : color : Color -> Formats -> Formats
+    val restoreForegroundColor : Formats -> Formats
+    val restoreBackgroundColor : Formats -> Formats
+
+    val foregroundColor : Color -> Formats -> Formats
+    val backgroundColor : Color -> Formats -> Formats
 
     val clear : Formats -> Formats
 
-    val apply    : bool -> string -> Format -> unit
-    val applyAll : bool -> string -> Formats -> unit
+    val view : Formats -> unit
+
+    val apply    : bool   -> string -> Format  -> unit
+    val applyAll : bool   -> string -> Formats -> unit
     val reset    : string -> unit
 
     val configure : bool -> string -> (Formats -> Formats) -> unit
 
     type Builder =
-        new :
-            unit ->
-            Builder
+        new : unit -> Builder
 
         member Yield :
-            (Formats -> Formats) -> (Formats -> Formats)
+            (Formats -> Formats) ->
+            (Formats -> Formats)
 
         member Combine :
             (Formats -> Formats) * (Formats -> Formats) ->

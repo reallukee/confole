@@ -36,9 +36,7 @@ module Cursor =
 
     type Cursors = Cursor list
 
-    val init :
-        unit ->
-        Cursors
+    val init : unit -> Cursors
 
     val reverse : Cursors -> Cursors
     val save    : Cursors -> Cursors
@@ -56,16 +54,16 @@ module Cursor =
 
     val clear : Cursors -> Cursors
 
-    val apply    : bool -> Cursor -> unit
+    val view : Cursors -> unit
+
+    val apply    : bool -> Cursor  -> unit
     val applyAll : bool -> Cursors -> unit
     val reset    : unit -> unit
 
     val configure : bool -> (Cursors -> Cursors) -> unit
 
     type Builder =
-        new :
-            unit ->
-            Builder
+        new : unit -> Builder
 
         member Yield :
             (Cursors -> Cursors) ->

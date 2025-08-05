@@ -42,7 +42,7 @@ let formats =
 
 Format.applyAll true "Hello, World!" formats
 
-do Console.ReadKey(false)
+do Console.ReadKey(true)
 |> ignore
 
 Format.reset ""
@@ -70,7 +70,7 @@ Format.reset ""
 * .NET Framework 4.6.1+
 * .NET Core 2.0+
 * .NET 5.0+
-* Mono 5.12
+* Mono 5.12+
 
 ## 1. Sorgente
 

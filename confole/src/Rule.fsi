@@ -22,6 +22,15 @@ open Color
 open Position
 
 module Rule =
+    type Shape =
+        | User
+        | BlinkingBlock
+        | SteadyBlock
+        | BlinkingUnderline
+        | SteadyUnderline
+        | BlinkingBar
+        | SteadyBar
+
     type Rule =
         | Title                    of string
         | ShowCursorBlinking
@@ -32,6 +41,7 @@ module Rule =
         | DisableDesignateMode
         | EnableAlternativeBuffer
         | DisableAlternativeBuffer
+        | CursorShape              of Shape
         | DefaultForegroundColor   of Color
         | DefaultBackgroundColor   of Color
         | DefaultCursorColor       of Color
@@ -54,22 +64,24 @@ module Rule =
     val enableAlternativeBuffer  : Rules -> Rules
     val disableAlternativeBuffer : Rules -> Rules
 
+    val cursorShape : Shape -> Rules -> Rules
+
     val defaultForegroundColor : Color -> Rules -> Rules
     val defaultBackgroundColor : Color -> Rules -> Rules
     val defaultCursorColor     : Color -> Rules -> Rules
 
     val clear : Rules -> Rules
 
-    val apply    : bool -> Rule -> unit
+    val view : Rules -> unit
+
+    val apply    : bool -> Rule  -> unit
     val applyAll : bool -> Rules -> unit
     val reset    : unit -> unit
 
     val configure : bool -> (Rules -> Rules) -> unit
 
     type Builder =
-        new :
-            unit ->
-            Builder
+        new : unit -> Builder
 
         member Yield :
             (Rules -> Rules) ->

@@ -27,6 +27,7 @@ module Cursor =
     let private OSC = "\u001B]"
 
     let private BELL = "\u0007"
+    let private SP   = "\u0020"
 
     type Cursor =
         | Reverse
@@ -42,8 +43,7 @@ module Cursor =
 
     type Cursors = Cursor list
 
-    let init () : Cursors =
-        []
+    let init () : Cursors = []
 
     let reverse cursors = Reverse :: cursors
     let save    cursors = Save    :: cursors
@@ -59,8 +59,14 @@ module Cursor =
 
     let move position cursors = Move position :: cursors
 
-    let clear (cursors : Cursors) : Cursors =
-        []
+    let clear (cursors : Cursors) : Cursors = []
+
+    let view (cursors : Cursors) =
+        cursors
+        |> List.rev
+        |> List.iter (fun cursor ->
+            printfn "%A" cursor
+        )
 
     let apply newLine cursor =
         match cursor with

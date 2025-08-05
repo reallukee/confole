@@ -27,24 +27,26 @@ module Format =
     let private OSC = "\u001B]"
 
     let private BELL = "\u0007"
+    let private SP   = "\u0020"
 
     type Format =
         | Restore
-        | Bold            of bool
-        | Faint           of bool
-        | Italic          of bool
-        | Underline       of bool
-        | Blinking        of bool
-        | Reverse         of bool
-        | Hidden          of bool
-        | Strikeout       of bool
-        | ForegroundColor of Color
-        | BackgroundColor of Color
+        | Bold                   of bool
+        | Faint                  of bool
+        | Italic                 of bool
+        | Underline              of bool
+        | Blinking               of bool
+        | Reverse                of bool
+        | Hidden                 of bool
+        | Strikeout              of bool
+        | RestoreForegroundColor
+        | RestoreBackgroundColor
+        | ForegroundColor        of Color
+        | BackgroundColor        of Color
 
     type Formats = Format list
 
-    let init () : Formats =
-        []
+    let init () : Formats = []
 
     let restore formats = Restore :: formats
 
@@ -57,11 +59,20 @@ module Format =
     let hidden    flag formats = Hidden    flag :: formats
     let strikeout flag formats = Strikeout flag :: formats
 
+    let restoreForegroundColor formats = RestoreForegroundColor :: formats
+    let restoreBackgroundColor formats = RestoreBackgroundColor :: formats
+
     let foregroundColor color formats = ForegroundColor color :: formats
     let backgroundColor color formats = BackgroundColor color :: formats
 
-    let clear (formats : Formats) : Formats =
-        []
+    let clear (formats : Formats) : Formats = []
+
+    let view (formats : Formats) =
+        formats
+        |> List.rev
+        |> List.iter (fun format ->
+            printfn "%A" format
+        )
 
     let apply newLine text format =
         match format with
@@ -75,6 +86,9 @@ module Format =
         | Reverse   flag -> printf "%s%dm%s" CSI (if flag then 7 else 27) text
         | Hidden    flag -> printf "%s%dm%s" CSI (if flag then 8 else 28) text
         | Strikeout flag -> printf "%s%dm%s" CSI (if flag then 9 else 29) text
+
+        | RestoreForegroundColor -> printf "%s39m%s" CSI text
+        | RestoreBackgroundColor -> printf "%s49m%s" CSI text
 
         | ForegroundColor color ->
             match color with
