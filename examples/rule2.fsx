@@ -26,6 +26,7 @@ let rules =
     |> Rule.showCursor
     |> Rule.disableDesignateMode
     |> Rule.disableAlternativeBuffer
+    |> Rule.cursorShape              (Rule.Shape.User)
     |> Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
     |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
     |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))

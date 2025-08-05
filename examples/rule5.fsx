@@ -25,6 +25,7 @@ open Reallukee.Confole
     Rule.ShowCursor
     Rule.DisableDesignateMode
     Rule.DisableAlternativeBuffer
+    Rule.CursorShape              (Rule.Shape.User)
     Rule.DefaultForegroundColor   (Color.RGB (255, 255, 255))
     Rule.DefaultBackgroundColor   (Color.RGB (0, 0, 0))
     Rule.DefaultCursorColor       (Color.RGB (255, 255, 255))

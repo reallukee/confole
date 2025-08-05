@@ -63,7 +63,7 @@ module Action =
                 | FromBeginToCurrent -> 1
                 | FromBeginToEnd     -> 2
 
-            printf "%s[%dJ" CSI erase
+            printf "%s%dJ" CSI erase
         | EraseLine erase ->
             let erase =
                 match erase with
@@ -71,7 +71,7 @@ module Action =
                 | FromBeginToCurrent -> 1
                 | FromBeginToEnd     -> 2
 
-            printf "%s[%dK" CSI erase
+            printf "%s%dK" CSI erase
 
         | _ -> failwith "Not yet implemented!"
 

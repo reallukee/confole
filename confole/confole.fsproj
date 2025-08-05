@@ -80,6 +80,22 @@
             <Link>examples\cursor5.fsx</Link>
         </None>
 
+        <None Include="..\examples\action.fsx">
+            <Link>examples\action.fsx</Link>
+        </None>
+        <None Include="..\examples\action2.fsx">
+            <Link>examples\action2.fsx</Link>
+        </None>
+        <None Include="..\examples\action3.fsx">
+            <Link>examples\action3.fsx</Link>
+        </None>
+        <None Include="..\examples\action4.fsx">
+            <Link>examples\action4.fsx</Link>
+        </None>
+        <None Include="..\examples\action5.fsx">
+            <Link>examples\action5.fsx</Link>
+        </None>
+
         <None Include="..\examples\format.fsx">
             <Link>examples\format.fsx</Link>
         </None>
