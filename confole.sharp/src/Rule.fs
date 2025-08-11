@@ -20,9 +20,216 @@ namespace Reallukee.Confole.Sharp
 
 open Reallukee.Confole
 
-type Rules() =
-    let mutable rules : IRule list = []
+type Shape =
+    | User              = 0
+    | BlinkingBlock     = 1
+    | SteadyBlock       = 2
+    | BlinkingUnderline = 3
+    | SteadyUnderline   = 4
+    | BlinkingBar       = 5
+    | SteadyBar         = 6
 
+
+
+type IRule =
+    abstract member ToFunctional : Rule.Rule with get
+
+type IRules = IRule list
+
+
+
+type RuleTitle(title) =
+    let mutable title_ = title
+
+    member this.Title
+        with get() =
+            title_
+
+        and set(value) =
+            title_ <- value
+
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.Title this.Title
+
+
+
+type RuleShowCursorBlinking() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.ShowCursorBlinking
+
+type RuleHideCursorBlinking() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.HideCursorBlinking
+
+
+
+type RuleShowCursor() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.ShowCursor
+
+type RuleHideCursor() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.HideCursor
+
+
+
+type RuleEnableDesignateMode() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.EnableDesignateMode
+
+type RuleDisableDesignateMode() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.DisableDesignateMode
+
+
+
+type RuleEnableAlternativeBuffer() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.EnableAlternativeBuffer
+
+type RuleDisableAlternativeBuffer() =
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                Rule.DisableAlternativeBuffer
+
+
+
+type RuleCursorShape(shape) =
+    let mutable shape_ = shape
+
+    member this.Shape
+        with get() =
+            shape_
+
+        and set(value) =
+            shape_ <- value
+
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                let shape =
+                    match this.Shape with
+                    | Shape.User              -> Rule.Shape.User
+                    | Shape.BlinkingBlock     -> Rule.Shape.BlinkingBlock
+                    | Shape.SteadyBlock       -> Rule.Shape.SteadyBlock
+                    | Shape.BlinkingUnderline -> Rule.Shape.BlinkingUnderline
+                    | Shape.SteadyUnderline   -> Rule.Shape.SteadyUnderline
+                    | Shape.BlinkingBar       -> Rule.Shape.BlinkingBar
+                    | Shape.SteadyBar         -> Rule.Shape.SteadyBar
+                    | _                       -> failwith "Unknown value!"
+
+                Rule.CursorShape shape
+
+
+
+type RuleDefaultForegroundColor(color : Color) =
+    let mutable color_ = color
+
+    member this.Color
+        with get() =
+            color_
+
+        and set(value) =
+            color_ <- value
+
+    static member fromRGB(red, green, blue) =
+        RuleDefaultForegroundColor(RGBColor(red, green, blue))
+
+    static member fromHEX(red, green, blue) =
+        RuleDefaultForegroundColor(HEXColor(red, green, blue))
+
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                let color =
+                    match this.Color with
+                    | :? RGBColor as rgbColor ->
+                        Color.RGB (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+                    | :? HEXColor as hexColor ->
+                        Color.HEX (hexColor.Red, hexColor.Green, hexColor.Blue)
+                    | _ -> failwith "Unsupported color format!"
+
+                Rule.DefaultForegroundColor color
+
+type RuleDefaultBackgroundColor(color : Color) =
+    let mutable color_ = color
+
+    member this.Color
+        with get() =
+            color_
+
+        and set(value) =
+            color_ <- value
+
+    static member fromRGB(red, green, blue) =
+        RuleDefaultBackgroundColor(RGBColor(red, green, blue))
+
+    static member fromHEX(red, green, blue) =
+        RuleDefaultBackgroundColor(HEXColor(red, green, blue))
+
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                let color =
+                    match this.Color with
+                    | :? RGBColor as rgbColor ->
+                        Color.RGB (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+                    | :? HEXColor as hexColor ->
+                        Color.HEX (hexColor.Red, hexColor.Green, hexColor.Blue)
+                    | _ -> failwith "Unsupported color format!"
+
+                Rule.DefaultBackgroundColor color
+
+type RuleDefaultCursorColor(color : Color) =
+    let mutable color_ = color
+
+    member this.Color
+        with get() =
+            color_
+
+        and set(value) =
+            color_ <- value
+
+    static member fromRGB(red, green, blue) =
+        RuleDefaultCursorColor(RGBColor(red, green, blue))
+
+    static member fromHEX(red, green, blue) =
+        RuleDefaultCursorColor(HEXColor(red, green, blue))
+
+    interface IRule with
+        member this.ToFunctional
+            with get() =
+                let color =
+                    match this.Color with
+                    | :? RGBColor as rgbColor ->
+                        Color.RGB (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+                    | :? HEXColor as hexColor ->
+                        Color.HEX (hexColor.Red, hexColor.Green, hexColor.Blue)
+                    | _ -> failwith "Unsupported color format!"
+
+                Rule.DefaultCursorColor color
+
+
+
+type Rules() =
+    let mutable rules = []
     let mutable newLine = false
 
     member this.Rules
@@ -57,14 +264,14 @@ type Rules() =
 
     member this.Item
         with get(index) =
-            rules
+            this.Rules
             |> List.rev
             |> List.item index
 
 
 
     member this.AddRule(rule : IRule) =
-        rules <- rule :: rules
+        this.Rules <- rule :: this.Rules
 
         this
 
@@ -75,72 +282,41 @@ type Rules() =
 
 
 
-    member this.AddTitleRule(value) =
-        rules <- new RuleTitle(value) :: rules
+    member this.AddTitleRule(title) = this.AddRule(new RuleTitle(title))
 
-        this
+    member this.AddShowCursorBlinkingRule() = this.AddRule(new RuleShowCursorBlinking())
+    member this.AddHideCursorBlinkingRule() = this.AddRule(new RuleHideCursorBlinking())
 
-    member this.AddShowCursorBlinkingRule() =
-        rules <- new ShowCursorBlinking() :: rules
+    member this.AddShowCursorRule() = this.AddRule(new RuleShowCursor())
+    member this.AddHideCursorRule() = this.AddRule(new RuleHideCursor())
 
-        this
+    member this.AddEnableDesignateMode()  = this.AddRule(new RuleEnableDesignateMode())
+    member this.AddDisableDesignateMode() = this.AddRule(new RuleDisableDesignateMode())
 
-    member this.AddHideCursorBlinkingRule() =
-        rules <- new HideCursorBlinking() :: rules
+    member this.AddEnableAlternativeBuffer()  = this.AddRule(new RuleEnableAlternativeBuffer())
+    member this.AddDisableAlternativeBuffer() = this.AddRule(new RuleDisableAlternativeBuffer())
 
-        this
+    member this.AddCursorShape(shape) = this.AddRule(new RuleCursorShape(shape))
 
-    member this.AddShowCursorRule() =
-        rules <- new ShowCursor() :: rules
-
-        this
-
-    member this.AddHideCursorRule() =
-        rules <- new HideCursor() :: rules
-
-        this
-
-    member this.AddEnableDesignateMode() =
-        rules <- new EnableDesignateMode() :: rules
-
-        this
-
-    member this.AddDisableDesignateMode() =
-        rules <- new DisableDesignateMode() :: rules
-
-        this
-
-    member this.AddEnableAlternativeBuffer() =
-        rules <- new EnableAlternativeBuffer() :: rules
-
-        this
-
-    member this.AddDisableAlternativeBuffer() =
-        rules <- new DisableAlternativeBuffer() :: rules
-
-        this
-
-    member this.AddDefaultForegroundColorRule(color) =
-        rules <- new DefaultForegroundColor(color) :: rules
-
-        this
-
-    member this.AddDefaultBackgroundColorRule(color) =
-        rules <- new DefaultBackgroundColor(color) :: rules
-
-        this
-
-    member this.AddDefaultCursorColorRule(color) =
-        rules <- new DefaultCursorColor(color) :: rules
-
-        this
+    member this.AddDefaultForegroundColorRule(color) = this.AddRule(new RuleDefaultForegroundColor(color))
+    member this.AddDefaultBackgroundColorRule(color) = this.AddRule(new RuleDefaultBackgroundColor(color))
+    member this.AddDefaultCursorColorRule(color) = this.AddRule(new RuleDefaultCursorColor(color))
 
 
 
     member this.Clear() =
-        rules <- []
+        this.Rules <- []
 
         this
+
+
+
+    member this.View() =
+        this.Rules
+        |> List.rev
+        |> List.iter (fun rule ->
+            printfn "%A" rule
+        )
 
 
 
@@ -148,31 +324,31 @@ type Rules() =
         rule.ToFunctional
         |> Rule.apply newLine
 
-    member this.ApplyRule(rule : IRule, newLine) =
+    member this.Apply(rule : IRule, newLine) =
         this.CallApply(rule, newLine)
 
-    member this.ApplyRule(rule : IRule) =
-        this.CallApply(rule, newLine)
+    member this.Apply(rule : IRule) =
+        this.CallApply(rule, this.NewLine)
 
 
 
     member private this.CallApplyAll(newLine) =
-        rules
+        this.Rules
         |> List.rev
         |> List.map (fun rule ->
             rule.ToFunctional
         )
         |> Rule.applyAll newLine
 
-    member this.Apply(newLine) =
+    member this.ApplyAll(newLine) =
         this.CallApplyAll newLine
 
-    member this.Apply() =
-        this.CallApplyAll newLine
+    member this.ApplyAll() =
+        this.CallApplyAll this.NewLine
 
 
 
     member this.Reset() =
-        rules <- []
+        this.Rules <- []
 
         Rule.reset ()

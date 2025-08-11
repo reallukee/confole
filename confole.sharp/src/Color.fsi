@@ -29,9 +29,9 @@ type XTermColor =
 
     member Id : int with get, set
 
-    override Equals : obj -> bool
+    override Equals      : obj  -> bool
     override GetHashCode : unit -> int
-    override ToString : unit -> string
+    override ToString    : unit -> string
 
 type RGBColor =
     inherit Color
@@ -43,9 +43,9 @@ type RGBColor =
     member Green : int with get, set
     member Blue  : int with get, set
 
-    override Equals : obj -> bool
+    override Equals      : obj  -> bool
     override GetHashCode : unit -> int
-    override ToString : unit -> string
+    override ToString    : unit -> string
 
 type HEXColor =
     inherit Color
@@ -57,6 +57,6 @@ type HEXColor =
     member Green : string with get, set
     member Blue  : string with get, set
 
-    override Equals : obj -> bool
+    override Equals      : obj  -> bool
     override GetHashCode : unit -> int
-    override ToString : unit -> string
+    override ToString    : unit -> string

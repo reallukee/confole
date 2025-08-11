@@ -38,13 +38,13 @@ type XTermColor() =
         and set(value) =
             id <- value
 
-    override this.Equals obj =
+    override this.Equals(obj) =
         match obj with
         | :? XTermColor as other ->
             this.Id = other.Id
         | _ -> false
 
-    override this.GetHashCode () =
+    override this.GetHashCode() =
         hash(id)
 
     override this.ToString() =
@@ -85,7 +85,7 @@ type RGBColor() =
         and set(value) =
             blue <- value
 
-    override this.Equals obj =
+    override this.Equals(obj) =
         match obj with
         | :? RGBColor as other ->
             this.Red   = other.Red   &&
@@ -93,7 +93,7 @@ type RGBColor() =
             this.Blue  = other.Blue
         | _ -> false
 
-    override this.GetHashCode () =
+    override this.GetHashCode() =
         hash(red, green, blue)
 
     override this.ToString() =
@@ -134,7 +134,7 @@ type HEXColor() =
         and set(value) =
             blue <- value
 
-    override this.Equals obj =
+    override this.Equals(obj) =
         match obj with
         | :? HEXColor as other ->
             this.Red   = other.Red   &&
@@ -142,7 +142,7 @@ type HEXColor() =
             this.Blue  = other.Blue
         | _ -> false
 
-    override this.GetHashCode () =
+    override this.GetHashCode() =
         hash(red, green, blue)
 
     override this.ToString() =

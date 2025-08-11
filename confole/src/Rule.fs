@@ -96,8 +96,8 @@ module Rule =
         | ShowCursor -> printf "%s?25h" CSI
         | HideCursor -> printf "%s?25l" CSI
 
-        | EnableDesignateMode  -> printf "%s0" CSI
-        | DisableDesignateMode -> printf "%sB" CSI
+        | EnableDesignateMode  -> printf "%s(0" ESC
+        | DisableDesignateMode -> printf "%s(B" ESC
 
         | EnableAlternativeBuffer  -> printf "%s?1049h" CSI
         | DisableAlternativeBuffer -> printf "%s?1049l" CSI

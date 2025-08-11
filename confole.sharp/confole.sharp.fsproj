@@ -57,6 +57,12 @@
         <Compile Include="..\confole\src\Cursor.fs">
             <Link>src\core\Cursor.fs</Link>
         </Compile>
+        <Compile Include="..\confole\src\Action.fsi">
+            <Link>src\core\Action.fsi</Link>
+        </Compile>
+        <Compile Include="..\confole\src\Action.fs">
+            <Link>src\core\Action.fs</Link>
+        </Compile>
         <Compile Include="..\confole\src\Format.fsi">
             <Link>src\core\Format.fsi</Link>
         </Compile>
@@ -68,10 +74,10 @@
     <ItemGroup>
         <Compile Include="src\Color.fsi" />
         <Compile Include="src\Color.fs" />
-        <Compile Include="src\IRule.fsi" />
-        <Compile Include="src\IRule.fs" />
         <Compile Include="src\Rule.fsi" />
         <Compile Include="src\Rule.fs" />
+        <Compile Include="src\Format.fsi" />
+        <Compile Include="src\Format.fs" />
     </ItemGroup>
 
     <ItemGroup>

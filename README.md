@@ -22,10 +22,11 @@
 
 
 
-<br />
+<div align="center">
 
-> [!IMPORTANT]
-> **JUST 4 FUN**
+# > [Documentazione](./DOCS.md) <
+
+</div>
 
 
 
@@ -36,7 +37,7 @@ open Reallukee.Confole
 
 let formats =
     Format.init ()
-    |> Format.italic true
+    |> Format.italic          true
     |> Format.foregroundColor (Color.RGB (255, 0, 0))
     |> Format.backgroundColor (Color.RGB (0, 0, 255))
 
@@ -46,6 +47,26 @@ do Console.ReadKey(true)
 |> ignore
 
 Format.reset ""
+```
+
+## C# e Visual Basic?
+
+```csharp
+using System;
+
+using Reallukee.Confole.Sharp;
+
+Formats formats = new Formats();
+
+formats.AddItalicFormat(true)
+       .AddForegroundColorFormat(new RGBColor(255, 0, 0))
+       .AddBackgroundColorFormat(new RGBColor(0, 0, 255));
+
+formats.ApplyAll("Hello, World!");
+
+Console.ReadKey();
+
+formats.Reset("");
 ```
 
 
