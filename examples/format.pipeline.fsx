@@ -1,17 +1,15 @@
 (*
     F# Script
 
-    dotnet fsi format.fsx
+    Type "dotnet fsi format.pipeline.fsx" to run!
+
+    Necessary for F# Interactive
+
+    dotnet build confole --configuration Release
+    dotnet pack confole --configuration Release
 *)
 
-// Necessary for F# Interactive
-// dotnet build confole --configuration Release
-
 // #r @"../confole/bin/Release/netstandard2.0/confole.dll"
-
-// Necessary for F# Interactive
-// dotnet build confole --configuration Release
-// dotnet pack confole --configuration Release
 
 #r @"nuget: Reallukee.Confole, 1.0.0"
 
@@ -21,7 +19,7 @@ open Reallukee.Confole
 
 let formats =
     Format.init ()
-    |> Format.italic true
+    |> Format.italic          true
     |> Format.foregroundColor (Color.RGB (255, 0, 0))
     |> Format.backgroundColor (Color.RGB (0, 0, 255))
 

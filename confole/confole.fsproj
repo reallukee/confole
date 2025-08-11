@@ -48,68 +48,68 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\examples\rule.fsx">
-            <Link>examples\rule.fsx</Link>
+        <None Include="..\examples\rule.pipeline.fsx">
+            <Link>examples\rule.pipeline.fsx</Link>
         </None>
-        <None Include="..\examples\rule2.fsx">
-            <Link>examples\rule2.fsx</Link>
+        <None Include="..\examples\rule.delayedpipeline.fsx">
+            <Link>examples\rule.delayedpipeline.fsx</Link>
         </None>
-        <None Include="..\examples\rule3.fsx">
-            <Link>examples\rule3.fsx</Link>
+        <None Include="..\examples\rule.configure.fsx">
+            <Link>examples\rule.configure.fsx</Link>
         </None>
-        <None Include="..\examples\rule4.fsx">
-            <Link>examples\rule4.fsx</Link>
+        <None Include="..\examples\rule.builder.fsx">
+            <Link>examples\rule.builder.fsx</Link>
         </None>
-        <None Include="..\examples\rule5.fsx">
-            <Link>examples\rule5.fsx</Link>
-        </None>
-
-        <None Include="..\examples\cursor.fsx">
-            <Link>examples\cursor.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor2.fsx">
-            <Link>examples\cursor2.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor3.fsx">
-            <Link>examples\cursor3.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor4.fsx">
-            <Link>examples\cursor4.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor5.fsx">
-            <Link>examples\cursor5.fsx</Link>
+        <None Include="..\examples\rule.array.fsx">
+            <Link>examples\rule.array.fsx</Link>
         </None>
 
-        <None Include="..\examples\action.fsx">
-            <Link>examples\action.fsx</Link>
+        <None Include="..\examples\cursor.pipeline.fsx">
+            <Link>examples\cursor.pipeline.fsx</Link>
         </None>
-        <None Include="..\examples\action2.fsx">
-            <Link>examples\action2.fsx</Link>
+        <None Include="..\examples\cursor.delayedpipeline.fsx">
+            <Link>examples\cursor.delayedpipeline.fsx</Link>
         </None>
-        <None Include="..\examples\action3.fsx">
-            <Link>examples\action3.fsx</Link>
+        <None Include="..\examples\cursor.configure.fsx">
+            <Link>examples\cursor.configure.fsx</Link>
         </None>
-        <None Include="..\examples\action4.fsx">
-            <Link>examples\action4.fsx</Link>
+        <None Include="..\examples\cursor.builder.fsx">
+            <Link>examples\cursor.builder.fsx</Link>
         </None>
-        <None Include="..\examples\action5.fsx">
-            <Link>examples\action5.fsx</Link>
+        <None Include="..\examples\cursor.array.fsx">
+            <Link>examples\cursor.array.fsx</Link>
         </None>
 
-        <None Include="..\examples\format.fsx">
-            <Link>examples\format.fsx</Link>
+        <None Include="..\examples\action.pipeline.fsx">
+            <Link>examples\action.pipeline.fsx</Link>
         </None>
-        <None Include="..\examples\format2.fsx">
-            <Link>examples\format2.fsx</Link>
+        <None Include="..\examples\action.delayedpipeline.fsx">
+            <Link>examples\action.delayedpipeline.fsx</Link>
         </None>
-        <None Include="..\examples\format3.fsx">
-            <Link>examples\format3.fsx</Link>
+        <None Include="..\examples\action.configure.fsx">
+            <Link>examples\action.configure.fsx</Link>
         </None>
-        <None Include="..\examples\format4.fsx">
-            <Link>examples\format4.fsx</Link>
+        <None Include="..\examples\action.builder.fsx">
+            <Link>examples\action.builder.fsx</Link>
         </None>
-        <None Include="..\examples\format5.fsx">
-            <Link>examples\format5.fsx</Link>
+        <None Include="..\examples\action.array.fsx">
+            <Link>examples\action.array.fsx</Link>
+        </None>
+
+        <None Include="..\examples\format.pipeline.fsx">
+            <Link>examples\format.pipeline.fsx</Link>
+        </None>
+        <None Include="..\examples\format.delayedpipeline.fsx">
+            <Link>examples\format.delayedpipeline.fsx</Link>
+        </None>
+        <None Include="..\examples\format.configure.fsx">
+            <Link>examples\format.configure.fsx</Link>
+        </None>
+        <None Include="..\examples\format.builder.fsx">
+            <Link>examples\format.builder.fsx</Link>
+        </None>
+        <None Include="..\examples\format.array.fsx">
+            <Link>examples\format.array.fsx</Link>
         </None>
     </ItemGroup>
 
