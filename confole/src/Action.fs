@@ -39,8 +39,8 @@ module Action =
         | DeleteCharacter of int
         | InsertLine      of int
         | DeleteLine      of int
-        | EraseDisplay    of Erase
-        | EraseLine       of Erase
+        | EraseDisplay    of Erase option
+        | EraseLine       of Erase option
 
     type Actions = Action list
 
@@ -52,8 +52,8 @@ module Action =
     let insertLine n actions = InsertLine n :: actions
     let deleteLine n actions = DeleteLine n :: actions
 
-    let eraseDisplay erase actions = EraseDisplay (defaultArg erase FromBeginToEnd) :: actions
-    let eraseLine    erase actions = EraseLine    (defaultArg erase FromBeginToEnd) :: actions
+    let eraseDisplay erase actions = EraseDisplay erase :: actions
+    let eraseLine    erase actions = EraseLine    erase :: actions
 
     let clear (actions : Actions) : Actions = []
 
@@ -75,17 +75,19 @@ module Action =
         | EraseDisplay erase ->
             let erase =
                 match erase with
-                | FromCurrentToEnd   -> 0
-                | FromBeginToCurrent -> 1
-                | FromBeginToEnd     -> 2
+                | Some FromCurrentToEnd   -> 0
+                | Some FromBeginToCurrent -> 1
+                | Some FromBeginToEnd     -> 2
+                | None                    -> 2
 
             printf "%s%dJ" CSI erase
         | EraseLine erase ->
             let erase =
                 match erase with
-                | FromCurrentToEnd   -> 0
-                | FromBeginToCurrent -> 1
-                | FromBeginToEnd     -> 2
+                | Some FromCurrentToEnd   -> 0
+                | Some FromBeginToCurrent -> 1
+                | Some FromBeginToEnd     -> 2
+                | None                    -> 2
 
             printf "%s%dK" CSI erase
 

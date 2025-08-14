@@ -25,8 +25,8 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
 
 let actions =
     Action.init ()
-    |> Action.eraseDisplay Action.Erase.FromBeginToEnd
-    |> Action.eraseLine    Action.Erase.FromBeginToEnd
+    |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
+    |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 
 Action.applyAll false actions
 

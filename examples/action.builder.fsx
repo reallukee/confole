@@ -24,8 +24,8 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     |> ignore
 
 Action.builder {
-    Action.eraseDisplay Action.Erase.FromBeginToEnd
-    Action.eraseLine    Action.Erase.FromBeginToEnd
+    Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
+    Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 }
 |> Action.applyAll false
 

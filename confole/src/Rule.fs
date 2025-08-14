@@ -48,7 +48,7 @@ module Rule =
         | DisableDesignateMode
         | EnableAlternativeBuffer
         | DisableAlternativeBuffer
-        | CursorShape              of Shape
+        | CursorShape              of Shape option
         | DefaultForegroundColor   of Color
         | DefaultBackgroundColor   of Color
         | DefaultCursorColor       of Color
@@ -105,13 +105,14 @@ module Rule =
         | CursorShape shape ->
             let shape =
                 match shape with
-                | User              -> 0
-                | BlinkingBlock     -> 1
-                | SteadyBlock       -> 2
-                | BlinkingUnderline -> 3
-                | SteadyUnderline   -> 4
-                | BlinkingBar       -> 5
-                | SteadyBar         -> 6
+                | Some User              -> 0
+                | Some BlinkingBlock     -> 1
+                | Some SteadyBlock       -> 2
+                | Some BlinkingUnderline -> 3
+                | Some SteadyUnderline   -> 4
+                | Some BlinkingBar       -> 5
+                | Some SteadyBar         -> 6
+                | None                   -> 0
 
             printf "%s%d%sq" CSI shape SP
 
@@ -153,7 +154,7 @@ module Rule =
 
             DisableAlternativeBuffer
 
-            CursorShape               User
+            CursorShape               (Some User)
 
             DefaultForegroundColor    (RGB (255, 255, 255))
             DefaultBackgroundColor    (RGB (0, 0, 0))

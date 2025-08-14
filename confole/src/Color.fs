@@ -119,7 +119,7 @@ module Color =
             hexColorToRGBColor color
             |> fun color -> color.red, color.green, color.blue
 
-        | _ -> failwith "Unsupported color format"
+        | _ -> failwith "Unsupported color format!"
 
     let colorHEX color =
         match color with
@@ -131,4 +131,4 @@ module Color =
         | HEX (red, green, blue) -> red, green, blue
         | HEXColor color -> color.red, color.green, color.blue
 
-        | _ -> failwith "Unsupported color format"
+        | _ -> failwith "Unsupported color format!"

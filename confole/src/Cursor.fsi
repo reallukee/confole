@@ -26,12 +26,12 @@ module Cursor =
         | Reverse
         | Save
         | Restore
-        | Up           of int
-        | Down         of int
-        | Next         of int
-        | Previous     of int
-        | NextLine     of int
-        | PreviousLine of int
+        | Up           of int option
+        | Down         of int option
+        | Next         of int option
+        | Previous     of int option
+        | NextLine     of int option
+        | PreviousLine of int option
         | Move         of Position
 
     type Cursors = Cursor list
@@ -50,7 +50,7 @@ module Cursor =
     val nextLine     : int option -> Cursors -> Cursors
     val previousLine : int option -> Cursors -> Cursors
 
-    val move : Position option -> Cursors -> Cursors
+    val move : Position -> Cursors -> Cursors
 
     val clear : Cursors -> Cursors
 

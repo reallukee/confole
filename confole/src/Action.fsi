@@ -32,8 +32,8 @@ module Action =
         | DeleteCharacter of int
         | InsertLine      of int
         | DeleteLine      of int
-        | EraseDisplay    of Erase
-        | EraseLine       of Erase
+        | EraseDisplay    of Erase option
+        | EraseLine       of Erase option
 
     type Actions = Action list
 

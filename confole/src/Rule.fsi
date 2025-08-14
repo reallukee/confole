@@ -41,7 +41,7 @@ module Rule =
         | DisableDesignateMode
         | EnableAlternativeBuffer
         | DisableAlternativeBuffer
-        | CursorShape              of Shape
+        | CursorShape              of Shape option
         | DefaultForegroundColor   of Color
         | DefaultBackgroundColor   of Color
         | DefaultCursorColor       of Color
@@ -64,7 +64,7 @@ module Rule =
     val enableAlternativeBuffer  : Rules -> Rules
     val disableAlternativeBuffer : Rules -> Rules
 
-    val cursorShape : Shape -> Rules -> Rules
+    val cursorShape : Shape option -> Rules -> Rules
 
     val defaultForegroundColor : Color -> Rules -> Rules
     val defaultBackgroundColor : Color -> Rules -> Rules
