@@ -28,15 +28,25 @@ module Action =
         | FromBeginToEnd
 
     type Action =
-        | EraseDisplay of Erase
-        | EraseLine    of Erase
+        | InsertCharacter of int
+        | DeleteCharacter of int
+        | InsertLine      of int
+        | DeleteLine      of int
+        | EraseDisplay    of Erase
+        | EraseLine       of Erase
 
     type Actions = Action list
 
     val init : unit -> Actions
 
-    val eraseDisplay : Erase -> Actions -> Actions
-    val eraseLine    : Erase -> Actions -> Actions
+    val insertCharacter : int -> Actions -> Actions
+    val deleteCharacter : int -> Actions -> Actions
+
+    val insertLine : int -> Actions -> Actions
+    val deleteLine : int -> Actions -> Actions
+
+    val eraseDisplay : Erase option -> Actions -> Actions
+    val eraseLine    : Erase option -> Actions -> Actions
 
     val clear : Actions -> Actions
 

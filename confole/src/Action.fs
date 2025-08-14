@@ -35,15 +35,25 @@ module Action =
         | FromBeginToEnd
 
     type Action =
-        | EraseDisplay of Erase
-        | EraseLine    of Erase
+        | InsertCharacter of int
+        | DeleteCharacter of int
+        | InsertLine      of int
+        | DeleteLine      of int
+        | EraseDisplay    of Erase
+        | EraseLine       of Erase
 
     type Actions = Action list
 
     let init () : Actions = []
 
-    let eraseDisplay erase actions = EraseDisplay erase :: actions
-    let eraseLine    erase actions = EraseLine    erase :: actions
+    let insertCharacter n actions = InsertCharacter n :: actions
+    let deleteCharacter n actions = DeleteCharacter n :: actions
+
+    let insertLine n actions = InsertLine n :: actions
+    let deleteLine n actions = DeleteLine n :: actions
+
+    let eraseDisplay erase actions = EraseDisplay (defaultArg erase FromBeginToEnd) :: actions
+    let eraseLine    erase actions = EraseLine    (defaultArg erase FromBeginToEnd) :: actions
 
     let clear (actions : Actions) : Actions = []
 
@@ -56,6 +66,12 @@ module Action =
 
     let apply newLine action =
         match action with
+        | InsertCharacter n -> printf "%s%d@" CSI n
+        | DeleteCharacter n -> printf "%s%dP" CSI n
+
+        | InsertLine n -> printf "%s%dL" CSI n
+        | DeleteLine n -> printf "%s%dM" CSI n
+
         | EraseDisplay erase ->
             let erase =
                 match erase with

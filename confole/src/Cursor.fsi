@@ -42,15 +42,15 @@ module Cursor =
     val save    : Cursors -> Cursors
     val restore : Cursors -> Cursors
 
-    val up       : int -> Cursors -> Cursors
-    val down     : int -> Cursors -> Cursors
-    val next     : int -> Cursors -> Cursors
-    val previous : int -> Cursors -> Cursors
+    val up       : int option -> Cursors -> Cursors
+    val down     : int option -> Cursors -> Cursors
+    val next     : int option -> Cursors -> Cursors
+    val previous : int option -> Cursors -> Cursors
 
-    val nextLine     : int -> Cursors -> Cursors
-    val previousLine : int -> Cursors -> Cursors
+    val nextLine     : int option -> Cursors -> Cursors
+    val previousLine : int option -> Cursors -> Cursors
 
-    val move : Position -> Cursors -> Cursors
+    val move : Position option -> Cursors -> Cursors
 
     val clear : Cursors -> Cursors
 

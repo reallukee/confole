@@ -49,15 +49,15 @@ module Cursor =
     let save    cursors = Save    :: cursors
     let restore cursors = Restore :: cursors
 
-    let up       n cursors = Up       n :: cursors
-    let down     n cursors = Down     n :: cursors
-    let next     n cursors = Next     n :: cursors
-    let previous n cursors = Previous n :: cursors
+    let up       n cursors = Up       (defaultArg n 1) :: cursors
+    let down     n cursors = Down     (defaultArg n 1) :: cursors
+    let next     n cursors = Next     (defaultArg n 1) :: cursors
+    let previous n cursors = Previous (defaultArg n 1) :: cursors
 
-    let nextLine     n cursors = NextLine     n :: cursors
-    let previousLine n cursors = PreviousLine n :: cursors
+    let nextLine     n cursors = NextLine     (defaultArg n 1) :: cursors
+    let previousLine n cursors = PreviousLine (defaultArg n 1) :: cursors
 
-    let move position cursors = Move position :: cursors
+    let move position cursors = Move (defaultArg position (ColRow(1, 1))) :: cursors
 
     let clear (cursors : Cursors) : Cursors = []
 
