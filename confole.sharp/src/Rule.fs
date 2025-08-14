@@ -38,88 +38,193 @@ type IRules = IRule list
 
 
 
-type RuleTitle(title) =
+type TitleRule(title) =
     let mutable title_ = title
 
     member this.Title
         with get() =
             title_
 
-        and set(value) =
-            title_ <- value
+        and set(title) =
+            title_ <- title
 
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.Title this.Title
 
+    override this.Equals(obj) =
+        match obj with
+        | :? TitleRule as other ->
+            this.Title = other.Title
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Title)
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
 
 
-type RuleShowCursorBlinking() =
+
+type ShowCursorBlinkingRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.ShowCursorBlinking
 
-type RuleHideCursorBlinking() =
+    override this.Equals(obj) =
+        match obj with
+        | :? ShowCursorBlinkingRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
+
+type HideCursorBlinkingRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.HideCursorBlinking
 
+    override this.Equals(obj) =
+        match obj with
+        | :? HideCursorBlinkingRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
 
 
-type RuleShowCursor() =
+
+type ShowCursorRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.ShowCursor
 
-type RuleHideCursor() =
+    override this.Equals(obj) =
+        match obj with
+        | :? ShowCursorRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
+
+type HideCursorRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.HideCursor
 
+    override this.Equals(obj) =
+        match obj with
+        | :? HideCursorRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
 
 
-type RuleEnableDesignateMode() =
+
+type EnableDesignateModeRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.EnableDesignateMode
 
-type RuleDisableDesignateMode() =
+    override this.Equals(obj) =
+        match obj with
+        | :? EnableDesignateModeRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
+
+type DisableDesignateModeRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.DisableDesignateMode
 
+    override this.Equals(obj) =
+        match obj with
+        | :? DisableDesignateModeRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
 
 
-type RuleEnableAlternativeBuffer() =
+
+type EnableAlternativeBufferRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.EnableAlternativeBuffer
 
-type RuleDisableAlternativeBuffer() =
+    override this.Equals(obj) =
+        match obj with
+        | :? EnableAlternativeBufferRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
+
+type DisableAlternativeBufferRule() =
     interface IRule with
         member this.ToFunctional
             with get() =
                 Rule.DisableAlternativeBuffer
 
+    override this.Equals(obj) =
+        match obj with
+        | :? DisableAlternativeBufferRule -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
 
 
-type RuleCursorShape(shape) =
-    let mutable shape_ = shape
+
+type CursorShapeRule() =
+    let mutable shape_ = Shape.User
 
     member this.Shape
         with get() =
             shape_
 
-        and set(value) =
-            shape_ <- value
+        and set(shape) =
+            shape_ <- shape
+
+    new(shape) as this =
+        CursorShapeRule() then
+
+        this.Shape <- shape
 
     interface IRule with
         member this.ToFunctional
@@ -135,25 +240,31 @@ type RuleCursorShape(shape) =
                     | Shape.SteadyBar         -> Rule.Shape.SteadyBar
                     | _                       -> failwith "Unknown value!"
 
-                Rule.CursorShape shape
+                Rule.CursorShape (Some shape)
+
+    override this.Equals(obj) =
+        match obj with
+        | :? CursorShapeRule as other ->
+            this.Shape = other.Shape
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Shape)
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
 
 
 
-type RuleDefaultForegroundColor(color : Color) =
+type DefaultForegroundColorRule(color : Color) =
     let mutable color_ = color
 
     member this.Color
         with get() =
             color_
 
-        and set(value) =
-            color_ <- value
-
-    static member fromRGB(red, green, blue) =
-        RuleDefaultForegroundColor(RGBColor(red, green, blue))
-
-    static member fromHEX(red, green, blue) =
-        RuleDefaultForegroundColor(HEXColor(red, green, blue))
+        and set(color) =
+            color_ <- color
 
     interface IRule with
         member this.ToFunctional
@@ -168,21 +279,27 @@ type RuleDefaultForegroundColor(color : Color) =
 
                 Rule.DefaultForegroundColor color
 
-type RuleDefaultBackgroundColor(color : Color) =
+    override this.Equals(obj) =
+        match obj with
+        | :? DefaultForegroundColorRule as other ->
+            this.Color = other.Color
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Color.GetHashCode())
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
+
+type DefaultBackgroundColorRule(color : Color) =
     let mutable color_ = color
 
     member this.Color
         with get() =
             color_
 
-        and set(value) =
-            color_ <- value
-
-    static member fromRGB(red, green, blue) =
-        RuleDefaultBackgroundColor(RGBColor(red, green, blue))
-
-    static member fromHEX(red, green, blue) =
-        RuleDefaultBackgroundColor(HEXColor(red, green, blue))
+        and set(color) =
+            color_ <- color
 
     interface IRule with
         member this.ToFunctional
@@ -197,21 +314,27 @@ type RuleDefaultBackgroundColor(color : Color) =
 
                 Rule.DefaultBackgroundColor color
 
-type RuleDefaultCursorColor(color : Color) =
+    override this.Equals(obj) =
+        match obj with
+        | :? DefaultBackgroundColorRule as other ->
+            this.Color = other.Color
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Color.GetHashCode())
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
+
+type DefaultCursorColorRule(color : Color) =
     let mutable color_ = color
 
     member this.Color
         with get() =
             color_
 
-        and set(value) =
-            color_ <- value
-
-    static member fromRGB(red, green, blue) =
-        RuleDefaultCursorColor(RGBColor(red, green, blue))
-
-    static member fromHEX(red, green, blue) =
-        RuleDefaultCursorColor(HEXColor(red, green, blue))
+        and set(color) =
+            color_ <- color
 
     interface IRule with
         member this.ToFunctional
@@ -226,25 +349,37 @@ type RuleDefaultCursorColor(color : Color) =
 
                 Rule.DefaultCursorColor color
 
+    override this.Equals(obj) =
+        match obj with
+        | :? DefaultCursorColorRule as other ->
+            this.Color = other.Color
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Color.GetHashCode())
+
+    override this.ToString() =
+        $"{(this :> IRule).ToFunctional}"
+
 
 
 type Rules() =
-    let mutable rules = []
-    let mutable newLine = false
+    let mutable rules_ = []
+    let mutable newLine_ = false
 
     member this.Rules
         with get() =
-            rules
+            rules_
 
-        and private set(value) =
-            rules <- value
+        and private set(rules) =
+            rules_ <- rules
 
     member this.NewLine
         with get() =
-            newLine
+            newLine_
 
-        and set(value) =
-            newLine <- value
+        and set(newLine) =
+            newLine_ <- newLine
 
 
 
@@ -282,25 +417,25 @@ type Rules() =
 
 
 
-    member this.AddTitleRule(title) = this.AddRule(new RuleTitle(title))
+    member this.AddTitleRule(title) = this.AddRule(new TitleRule(title))
 
-    member this.AddShowCursorBlinkingRule() = this.AddRule(new RuleShowCursorBlinking())
-    member this.AddHideCursorBlinkingRule() = this.AddRule(new RuleHideCursorBlinking())
+    member this.AddShowCursorBlinkingRule() = this.AddRule(new ShowCursorBlinkingRule())
+    member this.AddHideCursorBlinkingRule() = this.AddRule(new HideCursorBlinkingRule())
 
-    member this.AddShowCursorRule() = this.AddRule(new RuleShowCursor())
-    member this.AddHideCursorRule() = this.AddRule(new RuleHideCursor())
+    member this.AddShowCursorRule() = this.AddRule(new ShowCursorRule())
+    member this.AddHideCursorRule() = this.AddRule(new HideCursorRule())
 
-    member this.AddEnableDesignateMode()  = this.AddRule(new RuleEnableDesignateMode())
-    member this.AddDisableDesignateMode() = this.AddRule(new RuleDisableDesignateMode())
+    member this.AddEnableDesignateModeRule()  = this.AddRule(new EnableDesignateModeRule())
+    member this.AddDisableDesignateModeRule() = this.AddRule(new DisableDesignateModeRule())
 
-    member this.AddEnableAlternativeBuffer()  = this.AddRule(new RuleEnableAlternativeBuffer())
-    member this.AddDisableAlternativeBuffer() = this.AddRule(new RuleDisableAlternativeBuffer())
+    member this.AddEnableAlternativeBufferRule()  = this.AddRule(new EnableAlternativeBufferRule())
+    member this.AddDisableAlternativeBufferRule() = this.AddRule(new DisableAlternativeBufferRule())
 
-    member this.AddCursorShape(shape) = this.AddRule(new RuleCursorShape(shape))
+    member this.AddCursorShapeRule(shape) = this.AddRule(new CursorShapeRule(shape))
 
-    member this.AddDefaultForegroundColorRule(color) = this.AddRule(new RuleDefaultForegroundColor(color))
-    member this.AddDefaultBackgroundColorRule(color) = this.AddRule(new RuleDefaultBackgroundColor(color))
-    member this.AddDefaultCursorColorRule(color) = this.AddRule(new RuleDefaultCursorColor(color))
+    member this.AddDefaultForegroundColorRule(color) = this.AddRule(new DefaultForegroundColorRule(color))
+    member this.AddDefaultBackgroundColorRule(color) = this.AddRule(new DefaultBackgroundColorRule(color))
+    member this.AddDefaultCursorColorRule(color) = this.AddRule(new DefaultCursorColorRule(color))
 
 
 
@@ -352,3 +487,25 @@ type Rules() =
         this.Rules <- []
 
         Rule.reset ()
+
+
+
+    override this.Equals(obj) =
+        match obj with
+        | :? Rules as other ->
+            this.NewLine = other.NewLine &&
+            this.Rules.Equals(other.Rules)
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.NewLine, this.Rules)
+
+    override this.ToString() =
+        let rules =
+            this.Rules
+            |> Seq.map (fun rule ->
+                rule.ToString()
+            )
+            |> String.concat "; "
+
+        $"Rules(NewLine={this.NewLine}, Rules=[{rules}])"

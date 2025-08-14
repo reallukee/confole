@@ -24,7 +24,7 @@ type Color() = class end
 type XTermColor() =
     inherit Color()
 
-    let mutable id = 0
+    let mutable id_ = 0
 
     new(id) as this =
         XTermColor() then
@@ -33,10 +33,10 @@ type XTermColor() =
 
     member this.Id
         with get() =
-            id
+            id_
 
-        and set(value) =
-            id <- value
+        and set(id) =
+            id_ <- id
 
     override this.Equals(obj) =
         match obj with
@@ -45,17 +45,17 @@ type XTermColor() =
         | _ -> false
 
     override this.GetHashCode() =
-        hash(id)
+        hash(this.Id)
 
     override this.ToString() =
-        $"{this.Id}"
+        $"XTermColor({this.Id})"
 
 type RGBColor() =
     inherit Color()
 
-    let mutable red   = 0
-    let mutable green = 0
-    let mutable blue  = 0
+    let mutable red_   = 0
+    let mutable green_ = 0
+    let mutable blue_  = 0
 
     new(red, green, blue) as this =
         RGBColor() then
@@ -66,24 +66,24 @@ type RGBColor() =
 
     member this.Red
         with get() =
-            red
+            red_
 
-        and set(value) =
-            red <- value
+        and set(red) =
+            red_ <- red
 
     member this.Green
         with get() =
-            green
+            green_
 
-        and set(value) =
-            green <- value
+        and set(green) =
+            green_ <- green
 
     member this.Blue
         with get() =
-            blue
+            blue_
 
-        and set(value) =
-            blue <- value
+        and set(blue) =
+            blue_ <- blue
 
     override this.Equals(obj) =
         match obj with
@@ -94,17 +94,17 @@ type RGBColor() =
         | _ -> false
 
     override this.GetHashCode() =
-        hash(red, green, blue)
+        hash(this.Red, this.Green, this.Blue)
 
     override this.ToString() =
-        $"RGB({this.Red}, {this.Green}, {this.Blue})"
+        $"RGBColor({this.Red}, {this.Green}, {this.Blue})"
 
 type HEXColor() =
     inherit Color()
 
-    let mutable red   = "0"
-    let mutable green = "0"
-    let mutable blue  = "0"
+    let mutable red_   = "0"
+    let mutable green_ = "0"
+    let mutable blue_  = "0"
 
     new(red, green, blue) as this =
         HEXColor() then
@@ -115,24 +115,24 @@ type HEXColor() =
 
     member this.Red
         with get() =
-            red
+            red_
 
-        and set(value) =
-            red <- value
+        and set(red) =
+            red_ <- red
 
     member this.Green
         with get() =
-            green
+            green_
 
-        and set(value) =
-            green <- value
+        and set(green) =
+            green_ <- green
 
     member this.Blue
         with get() =
-            blue
+            blue_
 
-        and set(value) =
-            blue <- value
+        and set(blue) =
+            blue_ <- blue
 
     override this.Equals(obj) =
         match obj with
@@ -143,7 +143,7 @@ type HEXColor() =
         | _ -> false
 
     override this.GetHashCode() =
-        hash(red, green, blue)
+        hash(this.Red, this.Green, this.Blue)
 
     override this.ToString() =
-        $"#{this.Red:X2}{this.Green:X2}{this.Blue:X2}"
+        $"HEXColor({this.Red:X2}, {this.Green:X2}, {this.Blue:X2})"

@@ -33,6 +33,17 @@ type FormatRestore() =
             with get () =
                 Format.Restore
 
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatRestore -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
+
 
 
 type FormatBold(flag) =
@@ -42,13 +53,25 @@ type FormatBold(flag) =
         with get () =
             flag_
 
-        and set value =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get () =
                 Format.Bold this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatBold as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 type FormatFaint(flag) =
     let mutable flag_ = flag
@@ -57,13 +80,25 @@ type FormatFaint(flag) =
         with get() =
             flag_
 
-        and set(value) =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.Faint this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatFaint as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 type FormatItalic(flag) =
     let mutable flag_ = flag
@@ -72,13 +107,25 @@ type FormatItalic(flag) =
         with get() =
             flag_
 
-        and set(value) =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.Italic this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatItalic as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 type FormatUnderline(flag) =
     let mutable flag_ = flag
@@ -87,13 +134,25 @@ type FormatUnderline(flag) =
         with get() =
             flag_
 
-        and set(value) =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.Underline this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatUnderline as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 type FormatBlinking(flag) =
     let mutable flag_ = flag
@@ -102,13 +161,25 @@ type FormatBlinking(flag) =
         with get() =
             flag_
 
-        and set(value) =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.Blinking this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatBlinking as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 type FormatReverse(flag) =
     let mutable flag_ = flag
@@ -117,13 +188,25 @@ type FormatReverse(flag) =
         with get() =
             flag_
 
-        and set(value) =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.Reverse this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatReverse as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 type FormatHidden(flag) =
     let mutable flag_ = flag
@@ -132,13 +215,25 @@ type FormatHidden(flag) =
         with get() =
             flag_
 
-        and set(value) =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.Hidden this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatHidden as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 type FormatStrikeout(flag) =
     let mutable flag_ = flag
@@ -147,13 +242,25 @@ type FormatStrikeout(flag) =
         with get() =
             flag_
 
-        and set(value) =
-            flag_ <- value
+        and set(flag) =
+            flag_ <- flag
 
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.Strikeout this.Flag
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatStrikeout as other ->
+            this.Flag && other.Flag
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Flag)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 
 
@@ -163,11 +270,33 @@ type FormatRestoreForegroundColor() =
             with get() =
                 Format.RestoreForegroundColor
 
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatRestoreForegroundColor -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
+
 type FormatRestoreBackgroundColor() =
     interface IFormat with
         member this.ToFunctional
             with get() =
                 Format.RestoreBackgroundColor
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatRestoreBackgroundColor -> true
+        | _ -> false
+
+    override this.GetHashCode() =
+        0
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
 
 
 
@@ -178,8 +307,8 @@ type FormatForegroundColor(color : Color) =
         with get() =
             color_
 
-        and set(value) =
-            color_ <- value
+        and set(color) =
+            color_ <- color
 
     interface IFormat with
         member this.ToFunctional
@@ -194,6 +323,18 @@ type FormatForegroundColor(color : Color) =
 
                 Format.ForegroundColor color
 
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatForegroundColor as other ->
+            this.Color = other.Color
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Color)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
+
 type FormatBackgroundColor(color : Color) =
     let mutable color_ = color
 
@@ -201,8 +342,8 @@ type FormatBackgroundColor(color : Color) =
         with get() =
             color_
 
-        and set(value) =
-            color_ <- value
+        and set(color) =
+            color_ <- color
 
     interface IFormat with
         member this.ToFunctional
@@ -217,25 +358,37 @@ type FormatBackgroundColor(color : Color) =
 
                 Format.BackgroundColor color
 
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatBackgroundColor as other ->
+            this.Color = other.Color
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.Color)
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
+
 
 
 type Formats() =
-    let mutable formats = []
-    let mutable newLine = false
+    let mutable formats_ = []
+    let mutable newLine_ = false
 
     member this.Formats
         with get() =
-            formats
+            formats_
 
-        and set(value) =
-            formats <- value
+        and set(formats) =
+            formats_ <- formats
 
     member this.NewLine
         with get() =
-            newLine
+            newLine_
 
-        and set(value) =
-            newLine <- value
+        and set(newLine) =
+            newLine_ <- newLine
 
 
 
@@ -340,3 +493,25 @@ type Formats() =
         this.Formats <- []
 
         Format.reset text
+
+
+
+    override this.Equals(obj) =
+        match obj with
+        | :? Formats as other ->
+            this.NewLine = other.NewLine &&
+            this.Formats.Equals(other.Formats)
+        | _ -> false
+
+    override this.GetHashCode() =
+        hash(this.NewLine, this.Formats)
+
+    override this.ToString() =
+        let formats =
+            this.Formats
+            |> Seq.map (fun format ->
+                format.ToString()
+            )
+            |> String.concat "; "
+
+        $"Formats(NewLine={this.NewLine}, Formats=[{formats}])"

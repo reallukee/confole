@@ -32,6 +32,10 @@ type FormatRestore =
 
     new : unit -> FormatRestore
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
 
 
 type FormatBold =
@@ -41,12 +45,20 @@ type FormatBold =
 
     member Flag : bool with get, set
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
 type FormatFaint =
     interface IFormat
 
     new : bool -> FormatFaint
 
     member Flag : bool with get, set
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 type FormatItalic =
     interface IFormat
@@ -55,12 +67,20 @@ type FormatItalic =
 
     member Flag : bool with get, set
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
 type FormatUnderline =
     interface IFormat
 
     new : bool -> FormatUnderline
 
     member Flag : bool with get, set
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 type FormatBlinking =
     interface IFormat
@@ -69,12 +89,20 @@ type FormatBlinking =
 
     member Flag : bool with get, set
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
 type FormatReverse =
     interface IFormat
 
     new : bool -> FormatReverse
 
     member Flag : bool with get, set
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 type FormatHidden =
     interface IFormat
@@ -83,12 +111,20 @@ type FormatHidden =
 
     member Flag : bool with get, set
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
 type FormatStrikeout =
     interface IFormat
 
     new : bool -> FormatStrikeout
 
     member Flag : bool with get, set
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
@@ -97,10 +133,18 @@ type FormatRestoreForegroundColor =
 
     new : unit -> FormatRestoreForegroundColor
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
 type FormatRestoreBackgroundColor =
     interface IFormat
 
     new : unit -> FormatRestoreBackgroundColor
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
@@ -111,12 +155,20 @@ type FormatForegroundColor =
 
     member Color : Color
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
 type FormatBackgroundColor =
     interface IFormat
 
     new : Color -> FormatBackgroundColor
 
     member Color : Color
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
@@ -163,6 +215,6 @@ type Formats =
 
     member Reset : string -> unit
 
-    //override Equals      : obj  -> bool
-    //override GetHashCode : unit -> int
-    //override ToString    : unit -> string
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string

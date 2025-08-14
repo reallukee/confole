@@ -38,116 +38,145 @@ type IRules = IRule list
 
 
 
-type RuleTitle =
+type TitleRule =
     interface IRule
 
-    new : string -> RuleTitle
+    new : string -> TitleRule
 
     member Title : string with get, set
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
-type RuleShowCursorBlinking =
+
+type ShowCursorBlinkingRule =
     interface IRule
 
-    new : unit -> RuleShowCursorBlinking
+    new : unit -> ShowCursorBlinkingRule
 
-type RuleHideCursorBlinking =
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
+type HideCursorBlinkingRule =
     interface IRule
 
-    new : unit -> RuleHideCursorBlinking
+    new : unit -> HideCursorBlinkingRule
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
-type RuleShowCursor =
+type ShowCursorRule =
     interface IRule
 
-    new : unit -> RuleShowCursor
+    new : unit -> ShowCursorRule
 
-type RuleHideCursor =
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
+type HideCursorRule =
     interface IRule
 
-    new : unit -> RuleHideCursor
+    new : unit -> HideCursorRule
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
-type RuleEnableDesignateMode =
+type EnableDesignateModeRule =
     interface IRule
 
-    new : unit -> RuleEnableDesignateMode
+    new : unit -> EnableDesignateModeRule
 
-type RuleDisableDesignateMode =
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
+type DisableDesignateModeRule =
     interface IRule
 
-    new : unit -> RuleDisableDesignateMode
+    new : unit -> DisableDesignateModeRule
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
-type RuleEnableAlternativeBuffer =
+type EnableAlternativeBufferRule =
     interface IRule
 
-    new : unit -> RuleEnableAlternativeBuffer
+    new : unit -> EnableAlternativeBufferRule
 
-type RuleDisableAlternativeBuffer =
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
+type DisableAlternativeBufferRule =
     interface IRule
 
-    new : unit -> RuleDisableAlternativeBuffer
+    new : unit -> DisableAlternativeBufferRule
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
-type RuleCursorShape =
+type CursorShapeRule =
     interface IRule
 
-    new : Shape -> RuleCursorShape
+    new : unit -> CursorShapeRule
+    new : Shape -> CursorShapeRule
 
     member Shape : Shape with get, set
 
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
-type RuleDefaultForegroundColor =
+
+type DefaultForegroundColorRule =
     interface IRule
 
-    new : Color -> RuleDefaultForegroundColor
-
-    static member fromRGB :
-        int * int * int ->
-        RuleDefaultForegroundColor
-
-    static member fromHEX :
-        string * string * string ->
-        RuleDefaultForegroundColor
+    new : Color -> DefaultForegroundColorRule
 
     member Color : Color with get, set
 
-type RuleDefaultBackgroundColor =
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
+type DefaultBackgroundColorRule =
     interface IRule
 
-    new : Color -> RuleDefaultBackgroundColor
-
-    static member fromRGB :
-        int * int * int ->
-        RuleDefaultBackgroundColor
-
-    static member fromHEX :
-        string * string * string ->
-        RuleDefaultBackgroundColor
+    new : Color -> DefaultBackgroundColorRule
 
     member Color : Color with get, set
 
-type RuleDefaultCursorColor =
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
+
+type DefaultCursorColorRule =
     interface IRule
 
-    new : Color -> RuleDefaultCursorColor
-
-    static member fromRGB :
-        int * int * int ->
-        RuleDefaultCursorColor
-
-    static member fromHEX :
-        string * string * string ->
-        RuleDefaultCursorColor
+    new : Color -> DefaultCursorColorRule
 
     member Color : Color with get, set
+
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
 
 
 
@@ -173,13 +202,13 @@ type Rules =
     member AddShowCursorRule : unit -> Rules
     member AddHideCursorRule : unit -> Rules
 
-    member AddEnableDesignateMode  : unit -> Rules
-    member AddDisableDesignateMode : unit -> Rules
+    member AddEnableDesignateModeRule  : unit -> Rules
+    member AddDisableDesignateModeRule : unit -> Rules
 
-    member AddEnableAlternativeBuffer  : unit -> Rules
-    member AddDisableAlternativeBuffer : unit -> Rules
+    member AddEnableAlternativeBufferRule  : unit -> Rules
+    member AddDisableAlternativeBufferRule : unit -> Rules
 
-    member AddCursorShape : Shape -> Rules
+    member AddCursorShapeRule : Shape -> Rules
 
     member AddDefaultForegroundColorRule : Color -> Rules
     member AddDefaultBackgroundColorRule : Color -> Rules
@@ -197,6 +226,6 @@ type Rules =
 
     member Reset : unit -> unit
 
-    //override Equals      : obj  -> bool
-    //override GetHashCode : unit -> int
-    //override ToString    : unit -> string
+    override Equals      : obj  -> bool
+    override GetHashCode : unit -> int
+    override ToString    : unit -> string
