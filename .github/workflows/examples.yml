@@ -1,4 +1,4 @@
-name: Build
+name: Examples
 
 on:
   push:
@@ -7,9 +7,7 @@ on:
     paths:
       - "**/*.fsi"
       - "**/*.fs"
-      - "**/*.fsproj"
-      - "**/*.sln"
-      - "**/*.slnx"
+      - "**/*.fsx"
 
 jobs:
   build:
@@ -37,3 +35,13 @@ jobs:
         run: |
           dotnet pack confole --no-build --configuration Release
           dotnet pack confole.sharp --no-build --configuration Release
+
+      - name: Run examples
+        run: |
+          for example in examples/*.fsx; do
+            if [[ -f "$example" ]]; then
+              dotnet fsi "$example"
+            fi
+          done
+        env:
+          CI: true

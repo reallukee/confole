@@ -25,7 +25,8 @@ let formats =
 
 Format.applyAll true "Hello, World!" formats
 
-do Console.ReadKey(true)
-|> ignore
+if Environment.GetEnvironmentVariable("CI") <> "true" then
+    do Console.ReadKey(true)
+    |> ignore
 
 Format.reset ""

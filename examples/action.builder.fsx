@@ -19,8 +19,9 @@ open Reallukee.Confole
 
 printfn "Hello, World!"
 
-do Console.ReadKey(true)
-|> ignore
+if Environment.GetEnvironmentVariable("CI") <> "true" then
+    do Console.ReadKey(true)
+    |> ignore
 
 Action.builder {
     Action.eraseDisplay Action.Erase.FromBeginToEnd

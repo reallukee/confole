@@ -25,7 +25,8 @@ Cursor.applyAll false cursors
 
 printfn "Hello, World!"
 
-do Console.ReadKey(true)
-|> ignore
+if Environment.GetEnvironmentVariable("CI") <> "true" then
+    do Console.ReadKey(true)
+    |> ignore
 
 Cursor.reset ()

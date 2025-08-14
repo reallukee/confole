@@ -24,7 +24,8 @@ Format.configure true "Hello, World!" (fun formats ->
     |> Format.backgroundColor (Color.RGB (0, 0, 255))
 )
 
-do Console.ReadKey(true)
-|> ignore
+if Environment.GetEnvironmentVariable("CI") <> "true" then
+    do Console.ReadKey(true)
+    |> ignore
 
 Format.reset ""

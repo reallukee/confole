@@ -23,7 +23,8 @@ Format.init ()
 |> Format.backgroundColor (Color.RGB (0, 0, 255))
 |> Format.applyAll true "Hello, World!"
 
-do Console.ReadKey(true)
-|> ignore
+if Environment.GetEnvironmentVariable("CI") <> "true" then
+    do Console.ReadKey(true)
+    |> ignore
 
 Format.reset ""
