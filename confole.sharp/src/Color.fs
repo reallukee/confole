@@ -21,7 +21,7 @@ namespace Reallukee.Confole.Sharp
 [<AbstractClass>]
 type Color() = class end
 
-type XTermColor() =
+and XTermColor() =
     inherit Color()
 
     let mutable id_ = 0
@@ -38,6 +38,9 @@ type XTermColor() =
         and set(id) =
             id_ <- id
 
+    static member fromId(id) =
+        new XTermColor(id)
+
     override this.Equals(obj) =
         match obj with
         | :? XTermColor as other ->
@@ -50,7 +53,7 @@ type XTermColor() =
     override this.ToString() =
         $"XTermColor({this.Id})"
 
-type RGBColor() =
+and RGBColor() =
     inherit Color()
 
     let mutable red_   = 0
@@ -85,6 +88,19 @@ type RGBColor() =
         and set(blue) =
             blue_ <- blue
 
+    static member fromRGB(red, green, blue) =
+        new RGBColor(red, green, blue)
+
+    static member fromHEX(red, green, blue) =
+        let red, green, blue = Reallukee.Confole.Color.hexToRGB red green blue
+
+        new RGBColor(red, green, blue)
+
+    static member fromHEXColor(hexColor : HEXColor) =
+        let red, green, blue = Reallukee.Confole.Color.hexToRGB hexColor.Red hexColor.Green hexColor.Blue
+
+        new RGBColor(red, green, blue)
+
     override this.Equals(obj) =
         match obj with
         | :? RGBColor as other ->
@@ -99,7 +115,7 @@ type RGBColor() =
     override this.ToString() =
         $"RGBColor({this.Red}, {this.Green}, {this.Blue})"
 
-type HEXColor() =
+and HEXColor() =
     inherit Color()
 
     let mutable red_   = "0"
@@ -133,6 +149,19 @@ type HEXColor() =
 
         and set(blue) =
             blue_ <- blue
+
+    static member fromHEX(red, green, blue) =
+        new HEXColor(red, green, blue)
+
+    static member fromRGB(red, green, blue) =
+        let red, green, blue = Reallukee.Confole.Color.rgbToHEX red green blue
+
+        new HEXColor(red, green, blue)
+
+    static member fromHEXColor(rgbColor : RGBColor) =
+        let red, green, blue = Reallukee.Confole.Color.rgbToHEX rgbColor.Red rgbColor.Green rgbColor.Blue
+
+        new HEXColor(red, green, blue)
 
     override this.Equals(obj) =
         match obj with

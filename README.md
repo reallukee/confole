@@ -12,6 +12,8 @@
 
 [Uso](#uso)
 •
+[Download](#download)
+•
 [Compilazione](#compilazione)
 •
 [Autore](#autore)
@@ -49,7 +51,12 @@ do Console.ReadKey(true)
 Format.reset ""
 ```
 
+> Più esempi [qui](./examples)!
+
 ## C# e Visual Basic?
+
+> [!TIP]
+> `Confole.Sharp` è wrapper OOP di `Confole`!
 
 ```csharp
 using System;
@@ -71,6 +78,12 @@ formats.Reset("");
 
 
 
+# Download
+
+> [Download](https://github.com/reallukee/confole/releases/latest)
+
+
+
 # Compilazione
 
 ## 0. Requisiti
@@ -87,6 +100,9 @@ formats.Reset("");
 * .NET 5.0+ SDK
 
 ### Esecuzione
+
+> [!IMPORTANT]
+> Confole ha come target .NET Standard 2.0!
 
 * .NET Framework 4.6.1+
 * .NET Core 2.0+

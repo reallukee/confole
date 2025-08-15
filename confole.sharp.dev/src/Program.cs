@@ -13,9 +13,9 @@ internal class Program
         rules.AddTitleRule("Confole")
              .AddShowCursorBlinkingRule()
              .AddShowCursorRule()
-             .AddDisableDesignateMode()
-             .AddDisableAlternativeBuffer()
-             .AddCursorShape(Shape.User)
+             .AddDisableDesignateModeRule()
+             .AddDisableAlternativeBufferRule()
+             .AddCursorShapeRule(Shape.User)
              .AddDefaultForegroundColorRule(new RGBColor(255, 0, 0))
              .AddDefaultBackgroundColorRule(new RGBColor(0, 0, 0))
              .AddDefaultCursorColorRule(new RGBColor(255, 255, 0));
