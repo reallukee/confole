@@ -15,3 +15,18 @@ indent_size = 2
 
 [*.yml]
 indent_size = 2
+
+[*.config]
+indent_size = 2
+
+[*.csproj]
+indent_size = 2
+
+[*.vbproj]
+indent_size = 2
+
+[*.fsproj]
+indent_size = 2
+
+[*.slnx]
+indent_size = 2

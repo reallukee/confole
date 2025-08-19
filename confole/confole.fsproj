@@ -1,142 +1,142 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>confole</AssemblyName>
-        <RootNamespace>Reallukee.Confole</RootNamespace>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>confole</AssemblyName>
+    <RootNamespace>Reallukee.Confole</RootNamespace>
 
-        <ApplicationIcon>..\assets\confole.ico</ApplicationIcon>
+    <ApplicationIcon>..\assets\confole.ico</ApplicationIcon>
 
-        <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
-        <FSharpPrefer64BitTools>True</FSharpPrefer64BitTools>
+    <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
+    <FSharpPrefer64BitTools>True</FSharpPrefer64BitTools>
 
-        <NoWarn>0026</NoWarn>
+    <NoWarn>0026</NoWarn>
 
-        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <PackageId>Reallukee.Confole</PackageId>
-        <Title>Confole</Title>
-        <Version>1.0.0-rc1</Version>
-        <Authors>Luca Pollicino</Authors>
-        <Company>Luca Pollicino</Company>
-        <Product>Confole</Product>
-        <Description>Una libreria funzionale per applicazioni console F#</Description>
-        <Copyright>Luca Pollicino</Copyright>
-        <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
-        <PackageIcon>confole.png</PackageIcon>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <RepositoryUrl>https://github.com/reallukee/confole</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>fsharp;console;library</PackageTags>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    </PropertyGroup>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageId>Reallukee.Confole</PackageId>
+    <Title>Confole</Title>
+    <Version>1.0.0-rc1</Version>
+    <Authors>Luca Pollicino</Authors>
+    <Company>Luca Pollicino</Company>
+    <Product>Confole</Product>
+    <Description>Una libreria funzionale per applicazioni console F#</Description>
+    <Copyright>Luca Pollicino</Copyright>
+    <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
+    <PackageIcon>confole.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/reallukee/confole</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;console;library</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <Compile Include="src\Color.fsi" />
-        <Compile Include="src\Color.fs" />
-        <Compile Include="src\Position.fsi" />
-        <Compile Include="src\Position.fs" />
-        <Compile Include="src\Rule.fsi" />
-        <Compile Include="src\Rule.fs" />
-        <Compile Include="src\Cursor.fsi" />
-        <Compile Include="src\Cursor.fs" />
-        <Compile Include="src\Action.fsi" />
-        <Compile Include="src\Action.fs" />
-        <Compile Include="src\Format.fsi" />
-        <Compile Include="src\Format.fs" />
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Color.fsi" />
+    <Compile Include="src\Color.fs" />
+    <Compile Include="src\Position.fsi" />
+    <Compile Include="src\Position.fs" />
+    <Compile Include="src\Rule.fsi" />
+    <Compile Include="src\Rule.fs" />
+    <Compile Include="src\Cursor.fsi" />
+    <Compile Include="src\Cursor.fs" />
+    <Compile Include="src\Action.fsi" />
+    <Compile Include="src\Action.fs" />
+    <Compile Include="src\Format.fsi" />
+    <Compile Include="src\Format.fs" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Include="..\examples\rule.pipeline.fsx">
-            <Link>examples\rule.pipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\rule.delayedpipeline.fsx">
-            <Link>examples\rule.delayedpipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\rule.configure.fsx">
-            <Link>examples\rule.configure.fsx</Link>
-        </None>
-        <None Include="..\examples\rule.builder.fsx">
-            <Link>examples\rule.builder.fsx</Link>
-        </None>
-        <None Include="..\examples\rule.array.fsx">
-            <Link>examples\rule.array.fsx</Link>
-        </None>
+  <ItemGroup>
+    <None Include="..\examples\rule.pipeline.fsx">
+      <Link>examples\rule.pipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\rule.delayedpipeline.fsx">
+      <Link>examples\rule.delayedpipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\rule.configure.fsx">
+      <Link>examples\rule.configure.fsx</Link>
+    </None>
+    <None Include="..\examples\rule.builder.fsx">
+      <Link>examples\rule.builder.fsx</Link>
+    </None>
+    <None Include="..\examples\rule.array.fsx">
+      <Link>examples\rule.array.fsx</Link>
+    </None>
 
-        <None Include="..\examples\cursor.pipeline.fsx">
-            <Link>examples\cursor.pipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor.delayedpipeline.fsx">
-            <Link>examples\cursor.delayedpipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor.configure.fsx">
-            <Link>examples\cursor.configure.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor.builder.fsx">
-            <Link>examples\cursor.builder.fsx</Link>
-        </None>
-        <None Include="..\examples\cursor.array.fsx">
-            <Link>examples\cursor.array.fsx</Link>
-        </None>
+    <None Include="..\examples\cursor.pipeline.fsx">
+      <Link>examples\cursor.pipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\cursor.delayedpipeline.fsx">
+      <Link>examples\cursor.delayedpipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\cursor.configure.fsx">
+      <Link>examples\cursor.configure.fsx</Link>
+    </None>
+    <None Include="..\examples\cursor.builder.fsx">
+      <Link>examples\cursor.builder.fsx</Link>
+    </None>
+    <None Include="..\examples\cursor.array.fsx">
+      <Link>examples\cursor.array.fsx</Link>
+    </None>
 
-        <None Include="..\examples\action.pipeline.fsx">
-            <Link>examples\action.pipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\action.delayedpipeline.fsx">
-            <Link>examples\action.delayedpipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\action.configure.fsx">
-            <Link>examples\action.configure.fsx</Link>
-        </None>
-        <None Include="..\examples\action.builder.fsx">
-            <Link>examples\action.builder.fsx</Link>
-        </None>
-        <None Include="..\examples\action.array.fsx">
-            <Link>examples\action.array.fsx</Link>
-        </None>
+    <None Include="..\examples\action.pipeline.fsx">
+      <Link>examples\action.pipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\action.delayedpipeline.fsx">
+      <Link>examples\action.delayedpipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\action.configure.fsx">
+      <Link>examples\action.configure.fsx</Link>
+    </None>
+    <None Include="..\examples\action.builder.fsx">
+      <Link>examples\action.builder.fsx</Link>
+    </None>
+    <None Include="..\examples\action.array.fsx">
+      <Link>examples\action.array.fsx</Link>
+    </None>
 
-        <None Include="..\examples\format.pipeline.fsx">
-            <Link>examples\format.pipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\format.delayedpipeline.fsx">
-            <Link>examples\format.delayedpipeline.fsx</Link>
-        </None>
-        <None Include="..\examples\format.configure.fsx">
-            <Link>examples\format.configure.fsx</Link>
-        </None>
-        <None Include="..\examples\format.builder.fsx">
-            <Link>examples\format.builder.fsx</Link>
-        </None>
-        <None Include="..\examples\format.array.fsx">
-            <Link>examples\format.array.fsx</Link>
-        </None>
-    </ItemGroup>
+    <None Include="..\examples\format.pipeline.fsx">
+      <Link>examples\format.pipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\format.delayedpipeline.fsx">
+      <Link>examples\format.delayedpipeline.fsx</Link>
+    </None>
+    <None Include="..\examples\format.configure.fsx">
+      <Link>examples\format.configure.fsx</Link>
+    </None>
+    <None Include="..\examples\format.builder.fsx">
+      <Link>examples\format.builder.fsx</Link>
+    </None>
+    <None Include="..\examples\format.array.fsx">
+      <Link>examples\format.array.fsx</Link>
+    </None>
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Include="..\assets\confole.ico">
-            <Link>resources\icon.ico</Link>
-        </None>
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\confole.ico">
+      <Link>resources\icon.ico</Link>
+    </None>
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Include="..\assets\confole.png">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-            <Link>resources\package\icon.ico</Link>
-        </None>
+  <ItemGroup>
+    <None Include="..\assets\confole.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>resources\package\icon.ico</Link>
+    </None>
 
-        <None Include="..\README.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-            <Link>resources\package\README.md</Link>
-        </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>resources\package\README.md</Link>
+    </None>
 
-        <None Include="..\LICENSE">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-            <Link>resources\package\LICENSE</Link>
-        </None>
-    </ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>resources\package\LICENSE</Link>
+    </None>
+  </ItemGroup>
 
 </Project>

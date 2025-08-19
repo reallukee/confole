@@ -26,8 +26,8 @@ jobs:
 
       - name: Restore projects
         run: |
-          dotnet restore confole
-          dotnet restore confole.sharp
+          dotnet restore confole --ignore-failed-sources
+          dotnet restore confole.sharp --ignore-failed-sources
 
       - name: Build projects
         run: |

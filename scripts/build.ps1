@@ -21,9 +21,9 @@ $projects = @(
 )
 
 $projects | ForEach-Object {
-    & dotnet restore $PSItem
+    & dotnet restore $PSItem --ignore-failed-sources
 
-    & dotnet build $PSItem --no-restore --configuration Release
+    & dotnet build $PSItem --no-restore --configuration Release --output bin
 }
 
 Pop-Location

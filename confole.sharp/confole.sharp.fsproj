@@ -1,115 +1,115 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>confole.sharp</AssemblyName>
-        <RootNamespace>Reallukee.Confole.Sharp</RootNamespace>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>confole.sharp</AssemblyName>
+    <RootNamespace>Reallukee.Confole.Sharp</RootNamespace>
 
-        <ApplicationIcon>..\assets\confole.ico</ApplicationIcon>
+    <ApplicationIcon>..\assets\confole.ico</ApplicationIcon>
 
-        <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
-        <FSharpPrefer64BitTools>True</FSharpPrefer64BitTools>
+    <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
+    <FSharpPrefer64BitTools>True</FSharpPrefer64BitTools>
 
-        <NoWarn>0026</NoWarn>
+    <NoWarn>0026</NoWarn>
 
-        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <PackageId>Reallukee.Confole.Sharp</PackageId>
-        <Title>Confole.Sharp</Title>
-        <Version>1.0.0-rc1</Version>
-        <Authors>Luca Pollicino</Authors>
-        <Company>Luca Pollicino</Company>
-        <Product>Confole#</Product>
-        <Description>Una libreria funzionale per applicazioni console F#</Description>
-        <Copyright>Luca Pollicino</Copyright>
-        <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
-        <PackageIcon>confole.png</PackageIcon>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <RepositoryUrl>https://github.com/reallukee/confole</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>fsharp;console;library</PackageTags>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    </PropertyGroup>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageId>Reallukee.Confole.Sharp</PackageId>
+    <Title>Confole.Sharp</Title>
+    <Version>1.0.0-rc1</Version>
+    <Authors>Luca Pollicino</Authors>
+    <Company>Luca Pollicino</Company>
+    <Product>Confole#</Product>
+    <Description>Una libreria funzionale per applicazioni console F#</Description>
+    <Copyright>Luca Pollicino</Copyright>
+    <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
+    <PackageIcon>confole.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/reallukee/confole</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;console;library</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <Compile Include="..\confole\src\Color.fsi">
-            <Link>src\core\Color.fsi</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Color.fs">
-            <Link>src\core\Color.fs</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Position.fsi">
-            <Link>src\core\Position.fsi</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Position.fs">
-            <Link>src\core\Position.fs</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Rule.fsi">
-            <Link>src\core\Rule.fsi</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Rule.fs">
-            <Link>src\core\Rule.fs</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Cursor.fsi">
-            <Link>src\core\Cursor.fsi</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Cursor.fs">
-            <Link>src\core\Cursor.fs</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Action.fsi">
-            <Link>src\core\Action.fsi</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Action.fs">
-            <Link>src\core\Action.fs</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Format.fsi">
-            <Link>src\core\Format.fsi</Link>
-        </Compile>
-        <Compile Include="..\confole\src\Format.fs">
-            <Link>src\core\Format.fs</Link>
-        </Compile>
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\confole\src\Color.fsi">
+      <Link>src\core\Color.fsi</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Color.fs">
+      <Link>src\core\Color.fs</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Position.fsi">
+      <Link>src\core\Position.fsi</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Position.fs">
+      <Link>src\core\Position.fs</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Rule.fsi">
+      <Link>src\core\Rule.fsi</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Rule.fs">
+      <Link>src\core\Rule.fs</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Cursor.fsi">
+      <Link>src\core\Cursor.fsi</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Cursor.fs">
+      <Link>src\core\Cursor.fs</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Action.fsi">
+      <Link>src\core\Action.fsi</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Action.fs">
+      <Link>src\core\Action.fs</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Format.fsi">
+      <Link>src\core\Format.fsi</Link>
+    </Compile>
+    <Compile Include="..\confole\src\Format.fs">
+      <Link>src\core\Format.fs</Link>
+    </Compile>
+  </ItemGroup>
 
-    <ItemGroup>
-        <Compile Include="src\Color.fsi" />
-        <Compile Include="src\Color.fs" />
-        <Compile Include="src\Position.fsi" />
-        <Compile Include="src\Position.fs" />
-        <Compile Include="src\Rule.fsi" />
-        <Compile Include="src\Rule.fs" />
-        <Compile Include="src\Cursor.fsi" />
-        <Compile Include="src\Cursor.fs" />
-        <Compile Include="src\Action.fsi" />
-        <Compile Include="src\Action.fs" />
-        <Compile Include="src\Format.fsi" />
-        <Compile Include="src\Format.fs" />
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Color.fsi" />
+    <Compile Include="src\Color.fs" />
+    <Compile Include="src\Position.fsi" />
+    <Compile Include="src\Position.fs" />
+    <Compile Include="src\Rule.fsi" />
+    <Compile Include="src\Rule.fs" />
+    <Compile Include="src\Cursor.fsi" />
+    <Compile Include="src\Cursor.fs" />
+    <Compile Include="src\Action.fsi" />
+    <Compile Include="src\Action.fs" />
+    <Compile Include="src\Format.fsi" />
+    <Compile Include="src\Format.fs" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Include="..\assets\confole.ico">
-            <Link>resources\icon.ico</Link>
-        </None>
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\confole.ico">
+      <Link>resources\icon.ico</Link>
+    </None>
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Include="..\assets\confole.png">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-            <Link>resources\package\icon.ico</Link>
-        </None>
+  <ItemGroup>
+    <None Include="..\assets\confole.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>resources\package\icon.ico</Link>
+    </None>
 
-        <None Include="..\README.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-            <Link>resources\package\README.md</Link>
-        </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>resources\package\README.md</Link>
+    </None>
 
-        <None Include="..\LICENSE">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-            <Link>resources\package\LICENSE</Link>
-        </None>
-    </ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>resources\package\LICENSE</Link>
+    </None>
+  </ItemGroup>
 
 </Project>

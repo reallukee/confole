@@ -5,4 +5,4 @@ catch {
     exit 1
 }
 
-dotnet nuget locals all --clear
+& dotnet nuget locals all --clear
