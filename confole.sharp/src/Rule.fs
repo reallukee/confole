@@ -1,4 +1,4 @@
-﻿(*
+(*
     --------
     Confole#
     --------
@@ -487,6 +487,98 @@ type Rules() =
         this.Rules <- []
 
         Rule.reset ()
+
+
+
+    static member SetTitleRule(title) =
+        let titleRule = new TitleRule(title) :> IRule
+
+        titleRule.ToFunctional
+        |> Rule.apply false
+
+
+
+    static member SetShowCursorBlinkingRule() =
+        let showCursorBlinkingRule = new ShowCursorBlinkingRule() :> IRule
+
+        showCursorBlinkingRule.ToFunctional
+        |> Rule.apply false
+
+    static member SetHideCursorBlinkingRule() =
+        let hideCursorBlinkingRule = new HideCursorBlinkingRule() :> IRule
+
+        hideCursorBlinkingRule.ToFunctional
+        |> Rule.apply false
+
+
+
+    static member SetShowCursorRule() =
+        let showCursorRule = new ShowCursorRule() :> IRule
+
+        showCursorRule.ToFunctional
+        |> Rule.apply false
+
+    static member SetHideCursorRule() =
+        let hideCursorRule = new HideCursorRule() :> IRule
+
+        hideCursorRule.ToFunctional
+        |> Rule.apply false
+
+
+
+    static member SetEnableDesignateModeRule() =
+        let enableDesignateModeRule = new EnableDesignateModeRule() :> IRule
+
+        enableDesignateModeRule.ToFunctional
+        |> Rule.apply false
+
+    static member SetDisableDesignateModeRule() =
+        let disableDesignateModeRule = new DisableAlternativeBufferRule() :> IRule
+
+        disableDesignateModeRule.ToFunctional
+        |> Rule.apply false
+
+
+
+    static member SetEnableAlternativeBufferRule() =
+        let enableAlternativeBufferRule = new EnableAlternativeBufferRule() :> IRule
+
+        enableAlternativeBufferRule.ToFunctional
+        |> Rule.apply false
+
+    static member SetDisableAlternativeBufferRule() =
+        let disableAlternativeBufferRule = new DisableAlternativeBufferRule() :> IRule
+
+        disableAlternativeBufferRule.ToFunctional
+        |> Rule.apply false
+
+
+
+    static member SetCursorShapeRule(shape) =
+        let cursorShapeRule = new CursorShapeRule(shape) :> IRule
+
+        cursorShapeRule.ToFunctional
+        |> Rule.apply false
+
+
+
+    static member SetDefaultForegroundColorRule(color) =
+        let defaultForegroundColorRule = new DefaultForegroundColorRule(color) :> IRule
+
+        defaultForegroundColorRule.ToFunctional
+        |> Rule.apply false
+
+    static member SetDefaultBackgroundColorRule(color) =
+        let defaultBackgroundColorRule = new DefaultBackgroundColorRule(color) :> IRule
+
+        defaultBackgroundColorRule.ToFunctional
+        |> Rule.apply false
+
+    static member SetDefaultCursorColorRule(color) =
+        let defaultCursorColorRule = new DefaultCursorColorRule(color) :> IRule
+
+        defaultCursorColorRule.ToFunctional
+        |> Rule.apply false
 
 
 

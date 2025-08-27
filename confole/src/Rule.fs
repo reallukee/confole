@@ -117,15 +117,15 @@ module Rule =
             printf "%s%d%sq" CSI shape SP
 
         | DefaultForegroundColor color ->
-            colorHEX color
+            colorToHEX color
             |> fun (red, green, blue) ->
                 printf "%s10;rgb:%s/%s/%s%s\\" OSC red green blue ESC
         | DefaultBackgroundColor color ->
-            colorHEX color
+            colorToHEX color
             |> fun (red, green, blue) ->
                 printf "%s11;rgb:%s/%s/%s%s\\" OSC red green blue ESC
         | DefaultCursorColor color ->
-            colorHEX color
+            colorToHEX color
             |> fun (red, green, blue) ->
                 printf "%s12;rgb:%s/%s/%s%s\\" OSC red green blue ESC
 

@@ -43,14 +43,18 @@ module Color =
         | HEX        of string * string * string
         | HEXColor   of HEXColor
 
-    let rgbToHEX red green blue =
+    let rgbToHEX rgb =
+        let red, green, blue = rgb
+
         let red   = sprintf "%x" red
         let green = sprintf "%x" green
         let blue  = sprintf "%x" blue
 
         red, green, blue
 
-    let hexToRGB red green blue =
+    let hexToRGB hex =
+        let red, green, blue = hex
+
         let hex (hex : string) =
             hex
             |> Seq.rev
@@ -72,10 +76,10 @@ module Color =
 
         red, green, blue
 
-    let rgbColorToHEXColor (color : RGBColor) : HEXColor =
-        let red   = sprintf "%x" color.red
-        let green = sprintf "%x" color.green
-        let blue  = sprintf "%x" color.blue
+    let rgbColorToHEXColor (rgbColor : RGBColor) : HEXColor =
+        let red   = sprintf "%x" rgbColor.red
+        let green = sprintf "%x" rgbColor.green
+        let blue  = sprintf "%x" rgbColor.blue
 
         {
             red   = red
@@ -83,7 +87,7 @@ module Color =
             blue  = blue
         }
 
-    let hexColorToRGBColor (color : HEXColor) : RGBColor =
+    let hexColorToRGBColor (hexColor : HEXColor) : RGBColor =
         let hex (hex : string) =
             hex
             |> Seq.rev
@@ -99,9 +103,9 @@ module Color =
             )
             |> Seq.sum
 
-        let red   = hex color.red
-        let green = hex color.green
-        let blue  = hex color.blue
+        let red   = hex hexColor.red
+        let green = hex hexColor.green
+        let blue  = hex hexColor.blue
 
         {
             red   = red
@@ -109,21 +113,21 @@ module Color =
             blue  = blue
         }
 
-    let colorRGB color =
+    let colorToRGB color =
         match color with
         | RGB (red, green, blue) -> red, green, blue
         | RGBColor color -> color.red, color.green, color.blue
 
-        | HEX (red, green, blue) -> hexToRGB red green blue
+        | HEX (red, green, blue) -> hexToRGB (red, green, blue)
         | HEXColor color ->
             hexColorToRGBColor color
             |> fun color -> color.red, color.green, color.blue
 
         | _ -> failwith "Unsupported color format!"
 
-    let colorHEX color =
+    let colorToHEX color =
         match color with
-        | RGB (red, green, blue) -> rgbToHEX red green blue
+        | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
         | RGBColor color ->
             rgbColorToHEXColor color
             |> fun color -> color.red, color.green, color.blue

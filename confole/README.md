@@ -1,6 +1,4 @@
-<div align="center">
-
-<img src="./assets/confole.png" width="256px" height="256px" />
+![confole.png](https://raw.githubusercontent.com/reallukee/confole/main/assets/confole.png)
 
 # Confole
 
@@ -10,21 +8,15 @@
 
 🎨 Una libreria funzionale per applicazioni console F#
 
-[Uso](#uso)
-•
-[Download](#download)
-•
-[Compilazione](#compilazione)
-•
-[Autore](#autore)
-•
-[Licenza](#licenza)
+* [Uso](#uso)
+* [Download](#download)
+* [Compilazione](#compilazione)
+* [Autore](#autore)
+* [Licenza](#licenza)
 
 
 
 ### [Documentazione](./DOCS.md)?
-
-</div>
 
 
 
@@ -93,14 +85,7 @@ formats.Reset("");
 
 # Download
 
-## GitHub
-
 > [Download](https://github.com/reallukee/confole/releases/latest)
-
-## NuGet
-
-* [Confole](https://www.nuget.org/packages/Reallukee.Confole)
-* [Confole.Sharp](https://www.nuget.org/packages/Reallukee.Confole.Sharp)
 
 
 

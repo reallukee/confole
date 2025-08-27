@@ -97,7 +97,7 @@ module Format =
             | XTermColor color ->
                 printf "%s38;5;%dm%s" CSI color.id text
             | _ ->
-                colorRGB color
+                colorToRGB color
                 |> fun (red, green, blue) ->
                     printf "%s38;2;%d;%d;%dm%s" CSI red green blue text
         | BackgroundColor color ->
@@ -107,7 +107,7 @@ module Format =
             | XTermColor color ->
                 printf "%s48;5;%dm%s" CSI color.id text
             | _ ->
-                colorRGB color
+                colorToRGB color
                 |> fun (red, green, blue) ->
                     printf "%s48;2;%d;%d;%dm%s" CSI red green blue text
 

@@ -92,12 +92,12 @@ and RGBColor() =
         new RGBColor(red, green, blue)
 
     static member fromHEX(red, green, blue) =
-        let red, green, blue = Reallukee.Confole.Color.hexToRGB red green blue
+        let red, green, blue = Reallukee.Confole.Color.hexToRGB (red, green, blue)
 
         new RGBColor(red, green, blue)
 
     static member fromHEXColor(hexColor : HEXColor) =
-        let red, green, blue = Reallukee.Confole.Color.hexToRGB hexColor.Red hexColor.Green hexColor.Blue
+        let red, green, blue = Reallukee.Confole.Color.hexToRGB (hexColor.Red, hexColor.Green, hexColor.Blue)
 
         new RGBColor(red, green, blue)
 
@@ -154,12 +154,12 @@ and HEXColor() =
         new HEXColor(red, green, blue)
 
     static member fromRGB(red, green, blue) =
-        let red, green, blue = Reallukee.Confole.Color.rgbToHEX red green blue
+        let red, green, blue = Reallukee.Confole.Color.rgbToHEX (red, green, blue)
 
         new HEXColor(red, green, blue)
 
     static member fromHEXColor(rgbColor : RGBColor) =
-        let red, green, blue = Reallukee.Confole.Color.rgbToHEX rgbColor.Red rgbColor.Green rgbColor.Blue
+        let red, green, blue = Reallukee.Confole.Color.rgbToHEX (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
 
         new HEXColor(red, green, blue)
 
