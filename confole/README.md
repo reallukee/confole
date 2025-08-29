@@ -2,9 +2,9 @@
 
 # Confole
 
-![License](https://img.shields.io/github/license/reallukee/confole)
-![Release](https://img.shields.io/github/v/release/reallukee/confole?include_prereleases)
-![Build](https://img.shields.io/github/actions/workflow/status/reallukee/confole/build.yml)
+![GitHub License](https://img.shields.io/github/license/reallukee/confole)
+![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole)
+![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole)
 
 🎨 Una libreria funzionale per applicazioni console F#
 
@@ -16,7 +16,7 @@
 
 
 
-### [Documentazione](./DOCS.md)?
+### Si tutto ok, ma la [Documentazione](./DOCS.md)?
 
 
 
@@ -87,6 +87,11 @@ formats.Reset("");
 
 > [Download](https://github.com/reallukee/confole/releases/latest)
 
+## NuGet
+
+* [Confole](https://www.nuget.org/packages/Reallukee.Confole)
+* [Confole.Sharp](https://www.nuget.org/packages/Reallukee.Confole.Sharp)
+
 
 
 # Compilazione
@@ -113,16 +118,16 @@ formats.Reset("");
 
 ## 1. Sorgente
 
-* [Usando git](#usando-git)
-* [Usando GitHub](#usando-github)
+* [Usando *git*](#usando-git)
+* [Usando *GitHub*](#usando-github)
 
-### Usando git
+### Usando *git*
 
 ```
 git clone https://github.com/reallukee/confole.git
 ```
 
-### Usando GitHub
+### Usando *GitHub*
 
 >[Download da GitHub](https://github.com/reallukee/confole/archive/main.zip)
 
@@ -139,7 +144,7 @@ git clone https://github.com/reallukee/confole.git
     dotnet pack confole.sharp --configuration Release
     ```
 
-2. Usando PowerShell:
+2. Usando *PowerShell*:
 
     ```pwsh
     cd .\scripts\
@@ -151,7 +156,7 @@ git clone https://github.com/reallukee/confole.git
 
 # Autore
 
-- [Luca Pollicino](https://github.com/reallukee)
+* [Luca Pollicino](https://github.com/reallukee)
 
 
 

@@ -1,29 +1,46 @@
+param(
+    [ValidateSet(
+        "Confole",
+        "Confole.Sharp",
+        "All"
+    )]
+    $Target = "All"
+)
+
 try {
     (& dotnet --version) | Out-Null
 }
 catch {
+    Write-Error -Message ".NET SDK not found!"
+
     exit 1
 }
 
 Push-Location
 
-$root = (Split-Path -Parent (Get-Location))
+$root = Split-Path -Parent (Get-Location)
 
 if (-not (Test-Path -Path $root -PathType Container)) {
+    Write-Error -Message "Can't enter repository root directory!"
+
+    Pop-Location
+
     exit 1
 }
 
 Set-Location -Path $root
 
-$projects = @(
-    "confole",
-    "confole.sharp"
-)
+switch ($Target) {
+    "Confole"       { $projects = @("confole") }
+    "Confole.Sharp" { $projects = @("confole.sharp") }
+    "All"           { $projects = @("confole", "confole.sharp") }
+    default         { exit 1 }
+}
 
 $projects | ForEach-Object {
-    & dotnet restore $PSItem --ignore-failed-sources
+    & dotnet restore $_ --ignore-failed-sources
 
-    & dotnet build $PSItem --no-restore --configuration Release --output bin
+    & dotnet build $_ --no-restore --configuration Release --output bin
 }
 
 Pop-Location

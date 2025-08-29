@@ -1,8 +1,12 @@
 Push-Location
 
-$root = (Split-Path -Parent (Get-Location))
+$root = Split-Path -Parent (Get-Location)
 
 if (-not (Test-Path -Path $root -PathType Container)) {
+    Write-Error -Message "Can't enter repository root directory!"
+
+    Pop-Location
+
     exit 1
 }
 
@@ -32,6 +36,8 @@ Get-ChildItem -Path $root -Directory -Recurse -Force | Where-Object {
         Remove-Item -Path $_.FullName -Recurse -Force | Out-Null
     }
     catch {
+        Write-Error -Message "Can't remove $(_.FullName)!"
+
         exit 1
     }
 }
