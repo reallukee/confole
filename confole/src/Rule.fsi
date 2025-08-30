@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Rule.fsi
 
     Title       : RULE
-    Description : Rule
+    Description : Contiene le firme dei tipi e delle funzioni
+                  pubbliche del modulo Rule.
+                  Il modulo Rule si occupa di sequenze VTS
+                  relative all'apparenza del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -50,53 +55,54 @@ module Rule =
 
     val init : unit -> Rules
 
-    val title : string ->  Rules -> Rules
+    val title : title : string -> rules : Rules -> Rules
 
-    val showCursorBlinking : Rules -> Rules
-    val hideCursorBlinking : Rules -> Rules
+    val showCursorBlinking : rules : Rules -> Rules
+    val hideCursorBlinking : rules : Rules -> Rules
 
-    val showCursor : Rules -> Rules
-    val hideCursor : Rules -> Rules
+    val showCursor : rules : Rules -> Rules
+    val hideCursor : rules : Rules -> Rules
 
-    val enableDesignateMode  : Rules -> Rules
-    val disableDesignateMode : Rules -> Rules
+    val enableDesignateMode  : rules : Rules -> Rules
+    val disableDesignateMode : rules : Rules -> Rules
 
-    val enableAlternativeBuffer  : Rules -> Rules
-    val disableAlternativeBuffer : Rules -> Rules
+    val enableAlternativeBuffer  : rules : Rules -> Rules
+    val disableAlternativeBuffer : rules : Rules -> Rules
 
-    val cursorShape : Shape option -> Rules -> Rules
+    val cursorShape : shape : Shape option -> rules : Rules -> Rules
 
-    val defaultForegroundColor : Color -> Rules -> Rules
-    val defaultBackgroundColor : Color -> Rules -> Rules
-    val defaultCursorColor     : Color -> Rules -> Rules
+    val defaultForegroundColor : color : Color -> rules : Rules -> Rules
+    val defaultBackgroundColor : color : Color -> rules : Rules -> Rules
+    val defaultCursorColor     : color : Color -> rules : Rules -> Rules
 
-    val clear : Rules -> Rules
+    val clear : rules : Rules -> Rules
 
-    val view : Rules -> unit
+    val view : rules : Rules -> unit
 
-    val apply    : bool -> Rule  -> unit
-    val applyAll : bool -> Rules -> unit
-    val reset    : unit -> unit
+    val apply    : newLine : bool -> rule  : Rule  -> unit
+    val applyAll : newLine : bool -> rules : Rules -> unit
 
-    val configure : bool -> (Rules -> Rules) -> unit
+    val reset : unit -> unit
+
+    val configure : newLine : bool -> config : (Rules -> Rules) -> unit
 
     type Builder =
         new : unit -> Builder
 
         member Yield :
-            (Rules -> Rules) ->
+            ruleFunction : (Rules -> Rules) ->
             (Rules -> Rules)
 
         member Combine :
-            (Rules -> Rules) * (Rules -> Rules) ->
+            rule : (Rules -> Rules) * ruleFunction : (Rules -> Rules) ->
             (Rules -> Rules)
 
         member Delay :
-            (unit -> (Rules -> Rules)) ->
+            ``function`` : (unit -> (Rules -> Rules)) ->
             (Rules -> Rules)
 
         member Run :
-            (Rules -> Rules) ->
+            rulesFunction : (Rules -> Rules) ->
             Rules
 
     val builder : Builder

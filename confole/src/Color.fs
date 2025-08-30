@@ -3,12 +3,15 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Color.fs
 
     Title       : COLOR
-    Description : Color
+    Description : Contiene l'implementazione dei tipi e delle
+                  funzioni pubbliche (e non) del modulo Color.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)

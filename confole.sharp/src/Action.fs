@@ -3,7 +3,9 @@
     Confole#
     --------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Action.fs
 
@@ -300,14 +302,39 @@ type Actions() =
 
 
 
-    member this.AddInsertCharacterAction(n) = this.AddAction(new InsertCharacterAction(n))
-    member this.AddDeleteCharacterAction(n) = this.AddAction(new DeleteCharacterAction(n))
+    member this.AddInsertCharacterAction(n) =
+        let insertCharacterAction = new InsertCharacterAction(n)
 
-    member this.AddInsertLineAction(n) = this.AddAction(new InsertLineAction(n))
-    member this.AddDeleteLineAction(n) = this.AddAction(new DeleteLineAction(n))
+        this.AddAction(insertCharacterAction)
 
-    member this.AddEraseDisplayAction(erase) = this.AddAction(new EraseDisplayAction(erase))
-    member this.AddEraseLineAction(erase)    = this.AddAction(new EraseLineAction(erase))
+    member this.AddDeleteCharacterAction(n) =
+        let deleteCharacterAction = new DeleteCharacterAction(n)
+
+        this.AddAction(deleteCharacterAction)
+
+
+
+    member this.AddInsertLineAction(n) =
+        let insertLineAction = new InsertLineAction(n)
+
+        this.AddAction(insertLineAction)
+
+    member this.AddDeleteLineAction(n) =
+        let deleteLineAction = new DeleteLineAction(n)
+
+        this.AddAction(deleteLineAction)
+
+
+
+    member this.AddEraseDisplayAction(erase) =
+        let eraseDisplayAction = new EraseDisplayAction(erase)
+
+        this.AddAction(eraseDisplayAction)
+
+    member this.AddEraseLineAction(erase) =
+        let eraseLineAction = new EraseLineAction(erase)
+
+        this.AddAction(eraseLineAction)
 
 
 

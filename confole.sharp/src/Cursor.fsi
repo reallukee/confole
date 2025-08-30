@@ -3,7 +3,9 @@
     Confole#
     --------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Cursor.fsi
 
@@ -32,116 +34,116 @@ type ReverseCursor =
 
     new : unit -> ReverseCursor
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type SaveCursor =
     interface ICursor
 
     new : unit -> SaveCursor
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type RestoreCursor =
     interface ICursor
 
     new : unit -> RestoreCursor
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
 type UpCursor =
     interface ICursor
 
-    new : unit -> UpCursor
-    new : int -> UpCursor
+    new : unit    -> UpCursor
+    new : n : int -> UpCursor
 
     member N : int with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type DownCursor =
     interface ICursor
 
-    new : unit -> DownCursor
-    new : int -> DownCursor
+    new : unit    -> DownCursor
+    new : n : int -> DownCursor
 
     member N : int with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type NextCursor =
     interface ICursor
 
-    new : unit -> NextCursor
-    new : int -> NextCursor
+    new : unit    -> NextCursor
+    new : n : int -> NextCursor
 
     member N : int with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type PreviousCursor =
     interface ICursor
 
-    new : unit -> PreviousCursor
-    new : int -> PreviousCursor
+    new : unit    -> PreviousCursor
+    new : n : int -> PreviousCursor
 
     member N : int with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
 type NextLineCursor =
     interface ICursor
 
-    new : unit -> NextLineCursor
-    new : int -> NextLineCursor
+    new : unit    -> NextLineCursor
+    new : n : int -> NextLineCursor
 
     member N : int with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type PreviousLineCursor =
     interface ICursor
 
-    new : unit -> PreviousLineCursor
-    new : int -> PreviousLineCursor
+    new : unit    -> PreviousLineCursor
+    new : n : int -> PreviousLineCursor
 
     member N : int with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
-type CursorMove =
+type MoveCursor =
     interface ICursor
 
-    new : Position -> CursorMove
+    new : position : Position -> MoveCursor
 
     member Position : Position with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -151,40 +153,40 @@ type Cursors =
     member NewLine : bool     with get, set
     member Cursors : ICursors with get
 
-    new : ICursors * bool -> Cursors
-    new : bool -> Cursors
+    new : cursors : ICursors * newLine : bool -> Cursors
+    new : newLine : bool                      -> Cursors
 
     member Item : int -> ICursor with get
 
-    member AddCursor  : ICursor  -> Cursors
-    member AddCursors : ICursors -> Cursors
+    member AddCursor  : cursor  : ICursor  -> Cursors
+    member AddCursors : cursors : ICursors -> Cursors
 
     member AddReverseCursor : unit -> Cursors
     member AddSaveCursor    : unit -> Cursors
     member AddRestoreCursor : unit -> Cursors
 
-    member AddUpCursor       : int -> Cursors
-    member AddDownCursor     : int -> Cursors
-    member AddNextCursor     : int -> Cursors
-    member AddPreviousCursor : int -> Cursors
+    member AddUpCursor       : n : int -> Cursors
+    member AddDownCursor     : n : int -> Cursors
+    member AddNextCursor     : n : int -> Cursors
+    member AddPreviousCursor : n : int -> Cursors
 
-    member AddNextLineCursor     : int -> Cursors
-    member AddPreviousLineCursor : int -> Cursors
+    member AddNextLineCursor     : n : int -> Cursors
+    member AddPreviousLineCursor : n : int -> Cursors
 
-    member AddMoveCursor : Position -> Cursors
+    member AddMoveCursor : position : Position -> Cursors
 
     member Clear : unit -> Cursors
 
     member View : unit -> unit
 
-    member Apply : ICursor * bool -> unit
-    member Apply : ICursor        -> unit
+    member Apply : cursor : ICursor * newLine : bool -> unit
+    member Apply : cursor : ICursor                 -> unit
 
-    member ApplyAll : bool -> unit
-    member ApplyAll : unit -> unit
+    member ApplyAll : newLine : bool -> unit
+    member ApplyAll : unit           -> unit
 
     member Reset : unit -> unit
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string

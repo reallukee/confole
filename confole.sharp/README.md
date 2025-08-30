@@ -6,7 +6,7 @@
 ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Sharp)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Sharp)
 
-🎨 Una libreria funzionale per applicazioni console F#
+🎨 Abbellisci la tua app console F# in modo funzionale
 
 * [Uso](#uso)
 * [Download](#download)
@@ -16,7 +16,7 @@
 
 
 
-### Si tutto ok, ma la [Documentazione](./DOCS.md)?
+### Si tutto ok, ma la [documentazione](https://github.com/reallukee/confole)?
 
 
 
@@ -24,7 +24,7 @@
 
 ## F#
 
-Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole/)!
+Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole)!
 
 ```
 dotnet add package Reallukee.Confole --prerelease
@@ -57,7 +57,7 @@ Format.reset ""
 > [!IMPORTANT]
 > `Confole.Sharp` è wrapper OOP di `Confole`!
 
-Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole.Sharp/)!
+Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole.Sharp)!
 
 ```
 dotnet add package Reallukee.Confole.Sharp --prerelease

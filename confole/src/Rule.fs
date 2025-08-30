@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Rule.fs
 
     Title       : RULE
-    Description : Rule
+    Description : Contiene l'implementazione dei tipi e delle
+                  funzioni pubbliche (e non) del modulo Rule.
+                  Il modulo Rule si occupa di sequenze VTS
+                  relative all'apparenza del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -57,7 +62,7 @@ module Rule =
 
     let init () : Rules = []
 
-    let title value rules = Title value :: rules
+    let title title rules = Title title :: rules
 
     let showCursorBlinking rules = ShowCursorBlinking :: rules
     let hideCursorBlinking rules = HideCursorBlinking :: rules
@@ -147,11 +152,9 @@ module Rule =
     let reset () =
         [
             ShowCursorBlinking
-
             ShowCursor
 
             DisableDesignateMode
-
             DisableAlternativeBuffer
 
             CursorShape               (Some User)
@@ -168,16 +171,16 @@ module Rule =
         |> applyAll newLine
 
     type Builder () =
-        member _.Yield ruleF : Rules -> Rules =
-            ruleF
+        member _.Yield ruleFunction : Rules -> Rules =
+            ruleFunction
 
-        member _.Combine (acc : Rules -> Rules, ruleF) : Rules -> Rules =
-            acc >> ruleF
+        member _.Combine (rule : Rules -> Rules, ruleFunction) : Rules -> Rules =
+            rule >> ruleFunction
 
-        member _.Delay f : Rules -> Rules =
-            f ()
+        member _.Delay ``function`` : Rules -> Rules =
+            ``function`` ()
 
-        member _.Run rulesF : Rules =
-            rulesF (init ())
+        member _.Run rulesFunction : Rules =
+            rulesFunction (init ())
 
     let builder = Builder ()

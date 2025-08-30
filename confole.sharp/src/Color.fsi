@@ -3,7 +3,9 @@
     Confole#
     --------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Color.fsi
 
@@ -25,50 +27,50 @@ and XTermColor =
     inherit Color
 
     new : unit -> XTermColor
-    new : int -> XTermColor
+    new : id : int -> XTermColor
 
     member Id : int with get, set
 
-    static member fromId : int -> XTermColor
+    static member fromId : id : int -> XTermColor
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 and RGBColor =
     inherit Color
 
     new : unit -> RGBColor
-    new : int * int * int -> RGBColor
+    new : red : int * green : int * blue : int -> RGBColor
 
     member Red   : int with get, set
     member Green : int with get, set
     member Blue  : int with get, set
 
-    static member fromRGB : int * int * int -> RGBColor
-    static member fromHEX : string * string * string -> RGBColor
+    static member fromRGB : red : int * green : int * blue : int -> RGBColor
+    static member fromHEX : red : string * green : string * blue :string -> RGBColor
 
-    static member fromHEXColor : HEXColor -> RGBColor
+    static member fromHEXColor : hexColor : HEXColor -> RGBColor
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 and HEXColor =
     inherit Color
 
     new : unit -> HEXColor
-    new : string * string * string -> HEXColor
+    new : red : string * green : string * blue : string -> HEXColor
 
     member Red   : string with get, set
     member Green : string with get, set
     member Blue  : string with get, set
 
-    static member fromHEX : string * string * string -> HEXColor
-    static member fromRGB : int * int * int -> HEXColor
+    static member fromHEX : red : string * green : string * blue : string -> HEXColor
+    static member fromRGB : red : int * green : int * blue : int -> HEXColor
 
-    static member fromHEXColor : RGBColor -> HEXColor
+    static member fromHEXColor : rgbColor : RGBColor -> HEXColor
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string

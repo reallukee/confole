@@ -3,7 +3,9 @@
     Confole#
     --------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Cursor.fs
 
@@ -276,7 +278,7 @@ type PreviousLineCursor() =
 
 
 
-type CursorMove(position : Position) =
+type MoveCursor(position : Position) =
     let mutable position_ = position
 
     member this.Position
@@ -299,7 +301,7 @@ type CursorMove(position : Position) =
 
     override this.Equals(obj) =
         match obj with
-        | :? CursorMove as other ->
+        | :? MoveCursor as other ->
             this.Position = other.Position
         | _ -> false
 
@@ -353,8 +355,8 @@ type Cursors() =
 
 
 
-    member this.AddCursor(cursors : ICursor) =
-        this.Cursors <- cursors :: this.Cursors
+    member this.AddCursor(cursor : ICursor) =
+        this.Cursors <- cursor :: this.Cursors
 
         this
 
@@ -365,19 +367,61 @@ type Cursors() =
 
 
 
-    member this.AddReverseCursor() = this.AddCursor(new ReverseCursor())
-    member this.AddSaveCursor()    = this.AddCursor(new SaveCursor())
-    member this.AddRestoreCursor() = this.AddCursor(new RestoreCursor())
+    member this.AddReverseCursor() =
+        let reverseCursor = new ReverseCursor()
 
-    member this.AddUpCursor(n)       = this.AddCursor(new UpCursor(n))
-    member this.AddDownCursor(n)     = this.AddCursor(new DownCursor(n))
-    member this.AddNextCursor(n)     = this.AddCursor(new NextCursor(n))
-    member this.AddPreviousCursor(n) = this.AddCursor(new PreviousCursor(n))
+        this.AddCursor(reverseCursor)
 
-    member this.AddNextLineCursor(n)     = this.AddCursor(new NextLineCursor(n))
-    member this.AddPreviousLineCursor(n) = this.AddCursor(new PreviousLineCursor(n))
+    member this.AddSaveCursor() =
+        let saveCursor = new SaveCursor()
 
-    member this.AddMoveCursor(position) = this.AddCursor(new CursorMove(position))
+        this.AddCursor(saveCursor)
+
+    member this.AddRestoreCursor() =
+        let restoreCursor = new RestoreCursor()
+
+        this.AddCursor(restoreCursor)
+
+
+
+    member this.AddUpCursor(n) =
+        let upCursor = new UpCursor(n)
+
+        this.AddCursor(upCursor)
+
+    member this.AddDownCursor(n) =
+        let downCursor = new DownCursor(n)
+
+        this.AddCursor(downCursor)
+
+    member this.AddNextCursor(n) =
+        let nextCursor = new NextCursor(n)
+
+        this.AddCursor(nextCursor)
+
+    member this.AddPreviousCursor(n) =
+        let previousLine = new PreviousCursor(n)
+
+        this.AddCursor(previousLine)
+
+
+
+    member this.AddNextLineCursor(n) =
+        let nextLineCursor = new NextLineCursor(n)
+
+        this.AddCursor(nextLineCursor)
+
+    member this.AddPreviousLineCursor(n) =
+        let previousLineCursor = new PreviousLineCursor(n)
+
+        this.AddCursor(previousLineCursor)
+
+
+
+    member this.AddMoveCursor(position) =
+        let moveCursor = new MoveCursor(position)
+
+        this.AddCursor(moveCursor)
 
 
 

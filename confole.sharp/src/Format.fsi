@@ -3,7 +3,9 @@
     Confole#
     --------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Format.fsi
 
@@ -27,148 +29,148 @@ type IFormats = IFormat list
 
 
 
-type FormatRestore =
+type RestoreFormat =
     interface IFormat
 
-    new : unit -> FormatRestore
+    new : unit -> RestoreFormat
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
-type FormatBold =
+type BoldFormat =
     interface IFormat
 
-    new : bool -> FormatBold
+    new : flag : bool -> BoldFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatFaint =
+type FaintFormat =
     interface IFormat
 
-    new : bool -> FormatFaint
+    new : flag : bool -> FaintFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatItalic =
+type ItalicFormat =
     interface IFormat
 
-    new : bool -> FormatItalic
+    new : flag : bool -> ItalicFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatUnderline =
+type UnderlineFormat =
     interface IFormat
 
-    new : bool -> FormatUnderline
+    new : flag : bool -> UnderlineFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatBlinking =
+type BlinkingFormat =
     interface IFormat
 
-    new : bool -> FormatBlinking
+    new : flag : bool -> BlinkingFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatReverse =
+type ReverseFormat =
     interface IFormat
 
-    new : bool -> FormatReverse
+    new : flag : bool -> ReverseFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatHidden =
+type HiddenFormat =
     interface IFormat
 
-    new : bool -> FormatHidden
+    new : flag : bool -> HiddenFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatStrikeout =
+type StrikeoutFormat =
     interface IFormat
 
-    new : bool -> FormatStrikeout
+    new : flag : bool -> StrikeoutFormat
 
     member Flag : bool with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
-type FormatRestoreForegroundColor =
+type RestoreForegroundColorFormat =
     interface IFormat
 
-    new : unit -> FormatRestoreForegroundColor
+    new : unit -> RestoreForegroundColorFormat
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatRestoreBackgroundColor =
+type RestoreBackgroundColorFormat =
     interface IFormat
 
-    new : unit -> FormatRestoreBackgroundColor
+    new : unit -> RestoreBackgroundColorFormat
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
-type FormatForegroundColor =
+type ForegroundColorFormat =
     interface IFormat
 
-    new : Color -> FormatForegroundColor
+    new : color : Color -> ForegroundColorFormat
 
     member Color : Color
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
-type FormatBackgroundColor =
+type BackgroundColorFormat =
     interface IFormat
 
-    new : Color -> FormatBackgroundColor
+    new : color : Color -> BackgroundColorFormat
 
     member Color : Color
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -178,43 +180,43 @@ type Formats =
     member NewLine : bool     with get, set
     member Formats : IFormats with get
 
-    new : IFormats * bool -> Formats
-    new : bool -> Formats
+    new : formats : IFormats * newLine : bool -> Formats
+    new : newLine : bool                      -> Formats
 
     member Item : int -> IFormat with get
 
-    member AddFormat  : IFormat  -> Formats
-    member AddFormats : IFormats -> Formats
+    member AddFormat  : format  : IFormat  -> Formats
+    member AddFormats : formats : IFormats -> Formats
 
     member AddRestoreFormat : unit -> Formats
 
-    member AddBoldFormat      : bool -> Formats
-    member AddFaintFormat     : bool -> Formats
-    member AddItalicFormat    : bool -> Formats
-    member AddUnderlineFormat : bool -> Formats
-    member AddBlinkingFormat  : bool -> Formats
-    member AddReverseFormat   : bool -> Formats
-    member AddHiddenFormat    : bool -> Formats
-    member AddStrikeoutFormat : bool -> Formats
+    member AddBoldFormat      : flag : bool -> Formats
+    member AddFaintFormat     : flag : bool -> Formats
+    member AddItalicFormat    : flag : bool -> Formats
+    member AddUnderlineFormat : flag : bool -> Formats
+    member AddBlinkingFormat  : flag : bool -> Formats
+    member AddReverseFormat   : flag : bool -> Formats
+    member AddHiddenFormat    : flag : bool -> Formats
+    member AddStrikeoutFormat : flag : bool -> Formats
 
     member AddRestoreForegroundColorFormat : unit -> Formats
     member AddRestoreBackgroundColorFormat : unit -> Formats
 
-    member AddForegroundColorFormat : Color -> Formats
-    member AddBackgroundColorFormat : Color -> Formats
+    member AddForegroundColorFormat : color : Color -> Formats
+    member AddBackgroundColorFormat : color : Color -> Formats
 
     member Clear : unit -> Formats
 
     member View : unit -> unit
 
-    member Apply : IFormat * bool * string -> unit
-    member Apply : IFormat * string        -> unit
+    member Apply : format : IFormat * newLine : bool * text : string -> unit
+    member Apply : format : IFormat * text : string                  -> unit
 
-    member ApplyAll : bool * string -> unit
-    member ApplyAll : string        -> unit
+    member ApplyAll : newLine : bool * text : string -> unit
+    member ApplyAll : text : string                  -> unit
 
-    member Reset : string -> unit
+    member Reset : text : string -> unit
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string

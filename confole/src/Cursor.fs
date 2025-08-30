@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Cursor.fs
 
     Title       : CURSOR
-    Description : Cursor
+    Description : Contiene l'implementazione dei tipi e delle
+                  funzioni pubbliche (e non) del modulo Cursor.
+                  Il modulo Cursor si occupa di sequenze VTS
+                  relative al cursore del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -118,16 +123,16 @@ module Cursor =
         |> applyAll newLine
 
     type Builder () =
-        member _.Yield cursorF : Cursors -> Cursors =
-            cursorF
+        member _.Yield cursorFunction : Cursors -> Cursors =
+            cursorFunction
 
-        member _.Combine (acc : Cursors -> Cursors, cursorF) : Cursors -> Cursors =
-            acc >> cursorF
+        member _.Combine (cursor : Cursors -> Cursors, cursorFunction) : Cursors -> Cursors =
+            cursor >> cursorFunction
 
-        member _.Delay f : Cursors -> Cursors =
-            f ()
+        member _.Delay ``function`` : Cursors -> Cursors =
+            ``function`` ()
 
-        member _.Run cursorsF : Cursors =
-            cursorsF (init ())
+        member _.Run cursorsFunction : Cursors =
+            cursorsFunction (init ())
 
     let builder = Builder ()

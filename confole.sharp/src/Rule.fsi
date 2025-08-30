@@ -3,7 +3,9 @@
     Confole#
     --------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Rule.fsi
 
@@ -41,13 +43,13 @@ type IRules = IRule list
 type TitleRule =
     interface IRule
 
-    new : string -> TitleRule
+    new : title : string -> TitleRule
 
     member Title : string with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -56,18 +58,18 @@ type ShowCursorBlinkingRule =
 
     new : unit -> ShowCursorBlinkingRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type HideCursorBlinkingRule =
     interface IRule
 
     new : unit -> HideCursorBlinkingRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -76,18 +78,18 @@ type ShowCursorRule =
 
     new : unit -> ShowCursorRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type HideCursorRule =
     interface IRule
 
     new : unit -> HideCursorRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -96,18 +98,18 @@ type EnableDesignateModeRule =
 
     new : unit -> EnableDesignateModeRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type DisableDesignateModeRule =
     interface IRule
 
     new : unit -> DisableDesignateModeRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -116,32 +118,32 @@ type EnableAlternativeBufferRule =
 
     new : unit -> EnableAlternativeBufferRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type DisableAlternativeBufferRule =
     interface IRule
 
     new : unit -> DisableAlternativeBufferRule
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
 type CursorShapeRule =
     interface IRule
 
-    new : unit -> CursorShapeRule
-    new : Shape -> CursorShapeRule
+    new : unit          -> CursorShapeRule
+    new : shape : Shape -> CursorShapeRule
 
     member Shape : Shape with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -152,9 +154,9 @@ type DefaultForegroundColorRule =
 
     member Color : Color with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type DefaultBackgroundColorRule =
     interface IRule
@@ -163,9 +165,9 @@ type DefaultBackgroundColorRule =
 
     member Color : Color with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 type DefaultCursorColorRule =
     interface IRule
@@ -174,9 +176,9 @@ type DefaultCursorColorRule =
 
     member Color : Color with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string
 
 
 
@@ -186,15 +188,15 @@ type Rules =
     member NewLine : bool   with get, set
     member Rules   : IRules with get
 
-    new : IRules * bool -> Rules
-    new : bool -> Rules
+    new : rules : IRules * newLine : bool -> Rules
+    new : newLine : bool                  -> Rules
 
     member Item : int -> IRule with get
 
-    member AddRule  : IRule  -> Rules
-    member AddRules : IRules -> Rules
+    member AddRule  : rule  : IRule  -> Rules
+    member AddRules : rules : IRules -> Rules
 
-    member AddTitleRule : string -> Rules
+    member AddTitleRule : title : string -> Rules
 
     member AddShowCursorBlinkingRule : unit -> Rules
     member AddHideCursorBlinkingRule : unit -> Rules
@@ -208,44 +210,24 @@ type Rules =
     member AddEnableAlternativeBufferRule  : unit -> Rules
     member AddDisableAlternativeBufferRule : unit -> Rules
 
-    member AddCursorShapeRule : Shape -> Rules
+    member AddCursorShapeRule : shape : Shape -> Rules
 
-    member AddDefaultForegroundColorRule : Color -> Rules
-    member AddDefaultBackgroundColorRule : Color -> Rules
-    member AddDefaultCursorColorRule     : Color -> Rules
+    member AddDefaultForegroundColorRule : color : Color -> Rules
+    member AddDefaultBackgroundColorRule : color : Color -> Rules
+    member AddDefaultCursorColorRule     : color : Color -> Rules
 
     member Clear : unit -> Rules
 
     member View : unit -> unit
 
-    member Apply : IRule * bool -> unit
-    member Apply : IRule        -> unit
+    member Apply : rule : IRule * newLine : bool -> unit
+    member Apply : rule : IRule                  -> unit
 
-    member ApplyAll : bool -> unit
-    member ApplyAll : unit -> unit
+    member ApplyAll : newLine : bool -> unit
+    member ApplyAll : unit           -> unit
 
     member Reset : unit -> unit
 
-    static member SetTitleRule : string -> unit
-
-    static member SetShowCursorBlinkingRule : unit -> unit
-    static member SetHideCursorBlinkingRule : unit -> unit
-
-    static member SetShowCursorRule : unit -> unit
-    static member SetHideCursorRule : unit -> unit
-
-    static member SetEnableDesignateModeRule  : unit -> unit
-    static member SetDisableDesignateModeRule : unit -> unit
-
-    static member SetEnableAlternativeBufferRule  : unit -> unit
-    static member SetDisableAlternativeBufferRule : unit -> unit
-
-    static member SetCursorShapeRule : Shape -> unit
-
-    static member SetDefaultForegroundColorRule : Color -> unit
-    static member SetDefaultBackgroundColorRule : Color -> unit
-    static member SetDefaultCursorColorRule     : Color -> unit
-
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string

@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Cursor.fsi
 
     Title       : CURSOR
-    Description : Cursor
+    Description : Contiene le firme dei tipi e delle funzioni
+                  pubbliche del modulo Cursor.
+                  Il modulo Cursor si occupa di sequenze VTS
+                  relative al cursore del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -38,47 +43,48 @@ module Cursor =
 
     val init : unit -> Cursors
 
-    val reverse : Cursors -> Cursors
-    val save    : Cursors -> Cursors
-    val restore : Cursors -> Cursors
+    val reverse : cursors : Cursors -> Cursors
+    val save    : cursors : Cursors -> Cursors
+    val restore : cursors : Cursors -> Cursors
 
-    val up       : int option -> Cursors -> Cursors
-    val down     : int option -> Cursors -> Cursors
-    val next     : int option -> Cursors -> Cursors
-    val previous : int option -> Cursors -> Cursors
+    val up       : n : int option -> cursors : Cursors -> Cursors
+    val down     : n : int option -> cursors : Cursors -> Cursors
+    val next     : n : int option -> cursors : Cursors -> Cursors
+    val previous : n : int option -> cursors : Cursors -> Cursors
 
-    val nextLine     : int option -> Cursors -> Cursors
-    val previousLine : int option -> Cursors -> Cursors
+    val nextLine     : n : int option -> cursors : Cursors -> Cursors
+    val previousLine : n : int option -> cursors : Cursors -> Cursors
 
-    val move : Position -> Cursors -> Cursors
+    val move : position : Position -> cursors : Cursors -> Cursors
 
-    val clear : Cursors -> Cursors
+    val clear : cursors : Cursors -> Cursors
 
-    val view : Cursors -> unit
+    val view : cursors : Cursors -> unit
 
-    val apply    : bool -> Cursor  -> unit
-    val applyAll : bool -> Cursors -> unit
-    val reset    : unit -> unit
+    val apply    : newLine : bool -> cursor  : Cursor  -> unit
+    val applyAll : newLine : bool -> cursors : Cursors -> unit
 
-    val configure : bool -> (Cursors -> Cursors) -> unit
+    val reset : unit -> unit
+
+    val configure : newLine : bool -> config : (Cursors -> Cursors) -> unit
 
     type Builder =
         new : unit -> Builder
 
         member Yield :
-            (Cursors -> Cursors) ->
+            cursorFunction : (Cursors -> Cursors) ->
             (Cursors -> Cursors)
 
         member Combine :
-            (Cursors -> Cursors) * (Cursors -> Cursors) ->
+            cursor : (Cursors -> Cursors) * cursorFunction : (Cursors -> Cursors) ->
             (Cursors -> Cursors)
 
         member Delay :
-            (unit -> (Cursors -> Cursors)) ->
+            ``function`` : (unit -> (Cursors -> Cursors)) ->
             (Cursors -> Cursors)
 
         member Run :
-            (Cursors -> Cursors) ->
+            cursorsFunction : (Cursors -> Cursors) ->
             Cursors
 
     val builder : Builder

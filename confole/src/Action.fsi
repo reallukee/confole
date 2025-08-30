@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Action.fsi
 
     Title       : ACTION
-    Description : Action
+    Description : Contiene le firme dei tipi e delle funzioni
+                  pubbliche del modulo Action.
+                  Il modulo Action si occupa di sequenze VTS
+                  relative al viewport del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -39,42 +44,43 @@ module Action =
 
     val init : unit -> Actions
 
-    val insertCharacter : int -> Actions -> Actions
-    val deleteCharacter : int -> Actions -> Actions
+    val insertCharacter : n : int -> actions : Actions -> Actions
+    val deleteCharacter : n : int -> actions : Actions -> Actions
 
-    val insertLine : int -> Actions -> Actions
-    val deleteLine : int -> Actions -> Actions
+    val insertLine : n : int -> actions : Actions -> Actions
+    val deleteLine : n : int -> actions : Actions -> Actions
 
-    val eraseDisplay : Erase option -> Actions -> Actions
-    val eraseLine    : Erase option -> Actions -> Actions
+    val eraseDisplay : erase : Erase option -> actions : Actions -> Actions
+    val eraseLine    : erase : Erase option -> actions : Actions -> Actions
 
-    val clear : Actions -> Actions
+    val clear : actions : Actions -> Actions
 
-    val view : Actions -> unit
+    val view : actions : Actions -> unit
 
-    val apply    : bool -> Action  -> unit
-    val applyAll : bool -> Actions -> unit
-    val reset    : unit -> unit
+    val apply    : newLine : bool -> action  : Action  -> unit
+    val applyAll : newLine : bool -> actions : Actions -> unit
 
-    val configure : bool -> (Actions -> Actions) -> unit
+    val reset : unit -> unit
+
+    val configure : newLine : bool -> config : (Actions -> Actions) -> unit
 
     type Builder =
         new : unit -> Builder
 
         member Yield :
-            (Actions -> Actions) ->
+            actionFunction : (Actions -> Actions) ->
             (Actions -> Actions)
 
         member Combine :
-            (Actions -> Actions) * (Actions -> Actions) ->
+            action : (Actions -> Actions) * actionFunction : (Actions -> Actions) ->
             (Actions -> Actions)
 
         member Delay :
-            (unit -> (Actions -> Actions)) ->
+            ``function`` : (unit -> (Actions -> Actions)) ->
             (Actions -> Actions)
 
         member Run :
-            (Actions -> Actions) ->
+            actionsFunction : (Actions -> Actions) ->
             Actions
 
     val builder : Builder

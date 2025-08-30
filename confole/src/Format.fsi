@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Format.fsi
 
     Title       : FORMAT
-    Description : Format
+    Description : Contiene le firme dei tipi e delle funzioni
+                  pubbliche del modulo Format.
+                  Il modulo Format si occupa di sequenze VTS
+                  relative alla formattazione del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -41,50 +46,51 @@ module Format =
 
     val init : unit -> Formats
 
-    val restore : Formats -> Formats
+    val restore : formats : Formats -> Formats
 
-    val bold      : bool -> Formats -> Formats
-    val faint     : bool -> Formats -> Formats
-    val italic    : bool -> Formats -> Formats
-    val underline : bool -> Formats -> Formats
-    val blinking  : bool -> Formats -> Formats
-    val reverse   : bool -> Formats -> Formats
-    val hidden    : bool -> Formats -> Formats
-    val strikeout : bool -> Formats -> Formats
+    val bold      : flag : bool -> formats : Formats -> Formats
+    val faint     : flag : bool -> formats : Formats -> Formats
+    val italic    : flag : bool -> formats : Formats -> Formats
+    val underline : flag : bool -> formats : Formats -> Formats
+    val blinking  : flag : bool -> formats : Formats -> Formats
+    val reverse   : flag : bool -> formats : Formats -> Formats
+    val hidden    : flag : bool -> formats : Formats -> Formats
+    val strikeout : flag : bool -> formats : Formats -> Formats
 
-    val restoreForegroundColor : Formats -> Formats
-    val restoreBackgroundColor : Formats -> Formats
+    val restoreForegroundColor : formats : Formats -> Formats
+    val restoreBackgroundColor : formats : Formats -> Formats
 
-    val foregroundColor : Color -> Formats -> Formats
-    val backgroundColor : Color -> Formats -> Formats
+    val foregroundColor : color : Color -> formats : Formats -> Formats
+    val backgroundColor : color : Color -> formats : Formats -> Formats
 
-    val clear : Formats -> Formats
+    val clear : formats : Formats -> Formats
 
-    val view : Formats -> unit
+    val view : formats : Formats -> unit
 
-    val apply    : bool   -> string -> Format  -> unit
-    val applyAll : bool   -> string -> Formats -> unit
-    val reset    : string -> unit
+    val apply    : newLine : bool -> text : string -> format  : Format  -> unit
+    val applyAll : newLine : bool -> text : string -> formats : Formats -> unit
 
-    val configure : bool -> string -> (Formats -> Formats) -> unit
+    val reset : text : string -> unit
+
+    val configure : newLine : bool -> text : string -> config : (Formats -> Formats) -> unit
 
     type Builder =
         new : unit -> Builder
 
         member Yield :
-            (Formats -> Formats) ->
+            formatFunction : (Formats -> Formats) ->
             (Formats -> Formats)
 
         member Combine :
-            (Formats -> Formats) * (Formats -> Formats) ->
+            format : (Formats -> Formats) * formatFunction : (Formats -> Formats) ->
             (Formats -> Formats)
 
         member Delay :
-            (unit -> (Formats -> Formats)) ->
+            ``function`` : (unit -> (Formats -> Formats)) ->
             (Formats -> Formats)
 
         member Run :
-            (Formats -> Formats) ->
+            formatsFunction : (Formats -> Formats) ->
             Formats
 
     val builder : Builder

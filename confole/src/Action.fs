@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Action.fs
 
     Title       : ACTION
-    Description : Action
+    Description : Contiene l'implementazione dei tipi e delle
+                  funzioni pubbliche (e non) del modulo Action.
+                  Il modulo Action si occupa di sequenze VTS
+                  relative al viewport del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -116,16 +121,16 @@ module Action =
         |> applyAll newLine
 
     type Builder () =
-        member _.Yield actionF : Actions -> Actions =
-            actionF
+        member _.Yield actionFunction : Actions -> Actions =
+            actionFunction
 
-        member _.Combine (acc : Actions -> Actions, actionF) : Actions -> Actions =
-            acc >> actionF
+        member _.Combine (action : Actions -> Actions, actionFunction) : Actions -> Actions =
+            action >> actionFunction
 
-        member _.Delay f : Actions -> Actions =
-            f ()
+        member _.Delay ``function`` : Actions -> Actions =
+            ``function`` ()
 
-        member _.Run actionsF : Actions =
-            actionsF (init ())
+        member _.Run actionsFunction : Actions =
+            actionsFunction (init ())
 
     let builder = Builder ()

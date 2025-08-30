@@ -3,7 +3,9 @@
     Confole#
     --------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Position.fsi
 
@@ -30,6 +32,6 @@ type Cell =
     member Col : int with get, set
     member Row : int with get, set
 
-    override Equals      : obj  -> bool
-    override GetHashCode : unit -> int
-    override ToString    : unit -> string
+    override Equals      : obj : obj -> bool
+    override GetHashCode : unit      -> int
+    override ToString    : unit      -> string

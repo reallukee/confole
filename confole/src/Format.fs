@@ -3,12 +3,17 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Format.fs
 
     Title       : FORMAT
-    Description : Format
+    Description : Contiene l'implementazione dei tipi e delle
+                  funzioni pubbliche (e non) del modulo Format.
+                  Il modulo Format si occupa di sequenze VTS
+                  relative alla formattazione del terminale.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
@@ -152,16 +157,16 @@ module Format =
         |> applyAll newLine text
 
     type Builder () =
-        member _.Yield formatF : Formats -> Formats =
-            formatF
+        member _.Yield formatFunction : Formats -> Formats =
+            formatFunction
 
-        member _.Combine (acc : Formats -> Formats, formatF) : Formats -> Formats =
-            acc >> formatF
+        member _.Combine (format : Formats -> Formats, formatFunction) : Formats -> Formats =
+            format >> formatFunction
 
-        member _.Delay f : Formats -> Formats =
-            f ()
+        member _.Delay ``function`` : Formats -> Formats =
+            ``function``  ()
 
-        member _.Run formatsF : Formats =
-            formatsF (init ())
+        member _.Run formatsFunction : Formats =
+            formatsFunction (init ())
 
     let builder = Builder ()

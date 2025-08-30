@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <!--<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>-->
     <AssemblyName>confole</AssemblyName>
     <RootNamespace>Reallukee.Confole</RootNamespace>
 
@@ -22,7 +23,7 @@
     <Authors>Luca Pollicino</Authors>
     <Company>Luca Pollicino</Company>
     <Product>Confole</Product>
-    <Description>Una libreria funzionale per applicazioni console F#</Description>
+    <Description>Abbellisci la tua app console F# in modo funzionale</Description>
     <Copyright>Luca Pollicino</Copyright>
     <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
     <PackageIcon>confole.png</PackageIcon>

@@ -3,12 +3,15 @@
     Confole
     -------
 
-    Una libreria funzionale per applicazioni console F#
+    Abbellisci la tua app console F# in modo funzionale
+
+    https://github.com/reallukee/confole
 
     File name   : Position.fsi
 
     Title       : POSITION
-    Description : Position
+    Description : Contiene le firme dei tipi e delle funzioni
+                  pubbliche del modulo Position.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
