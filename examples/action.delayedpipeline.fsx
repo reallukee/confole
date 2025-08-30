@@ -23,9 +23,11 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
     |> ignore
 
-Action.init ()
-|> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
-|> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
-|> Action.applyAll false
+let actions =
+    Action.init ()
+    |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
+    |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
+
+Action.applyAll false actions
 
 Action.reset ()

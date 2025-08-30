@@ -17,11 +17,9 @@ open System
 
 open Reallukee.Confole
 
-let cursors =
-    Cursor.init ()
-    |> Cursor.move (Position.ColRow (4, 2))
-
-Cursor.applyAll false cursors
+Cursor.init ()
+|> Cursor.move (Position.ColRow (4, 2))
+|> Cursor.applyAll false
 
 printfn "Hello, World!"
 

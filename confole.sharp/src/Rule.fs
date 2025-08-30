@@ -463,7 +463,7 @@ type Rules() =
 
 
     member this.AddEnableAlternativeBufferRule() =
-        let enableAlternativeBufferRule = new EnableAlternativeBufferRule
+        let enableAlternativeBufferRule = new EnableAlternativeBufferRule()
 
         this.AddRule(enableAlternativeBufferRule)
 
