@@ -36,6 +36,21 @@ jobs:
         with:
           dotnet-version: "9.0.x"
 
+      - name: Restore projects
+        run: |
+          dotnet restore confole --ignore-failed-sources
+          dotnet restore confole.sharp --ignore-failed-sources
+
+      - name: Build projects
+        run: |
+          dotnet build confole --no-restore --configuration Release
+          dotnet build confole.sharp --no-restore --configuration Release
+
+      - name: Pack projects
+        run: |
+          dotnet pack confole --no-build --configuration Release
+          dotnet pack confole.sharp --no-build --configuration Release
+
       - name: Install DocFX
         run: dotnet tool update -g docfx
 
