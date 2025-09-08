@@ -45,7 +45,7 @@ jobs:
       - name: Upload DocFX
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docfx/site
+          path: docfx/_site
 
       - name: Deploy DocFX
         id: deployment
