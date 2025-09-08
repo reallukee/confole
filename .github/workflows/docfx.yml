@@ -1,0 +1,52 @@
+name: DocFX
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "**/*.fsi"
+      - "**/*.fs"
+      - "**/*.fsx"
+      - "assets/**"
+      - "docfx/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  docfx:
+    environment:
+      name: "github-pages"
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Install DocFX
+        run: dotnet tool update -g docfx
+
+      - name: Build DocFX
+        run: docfx docfx/docfx.json
+
+      - name: Upload DocFX
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docfx/site
+
+      - name: Deploy DocFX
+        id: deployment
+        uses: actions/deploy-pages@v4

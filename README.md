@@ -60,6 +60,8 @@ Format.reset ""
 > [!NOTE]
 > Più esempi [qui](./examples)!
 
+
+
 ## C# e Visual Basic?
 
 > [!IMPORTANT]
@@ -125,6 +127,8 @@ formats.Reset("");
 * .NET Core 2.0+
 * .NET 5.0+
 * Mono 5.12+
+
+
 
 ## 1. Sorgente
 

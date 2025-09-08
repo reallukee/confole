@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../bin",
+          "files": [
+            "*.dll"
+          ],
+          "exclude": [
+            "confole.dll"
+          ]
+        }
+      ],
+      "output": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "src": "../assets",
+        "files": [
+          "**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "Confole",
+      "_appTitle": "Confole",
+      "_appFooter": "Confole",
+      "_appLogoPath": "docfx/logo.png",
+      "_appFaviconPath": "docfx/favicon.ico",
+      "pdf": false
+    }
+  }
+}

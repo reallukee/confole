@@ -7,6 +7,10 @@ global.json
 # Visual Studio
 .vs/
 
+# DocFX
+/docfx/_site
+/docfx/api
+
 # Compilation
 [Bb]in/
 [Oo]bj/
