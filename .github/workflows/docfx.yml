@@ -43,13 +43,8 @@ jobs:
 
       - name: Build projects
         run: |
-          dotnet build confole --no-restore --configuration Release
-          dotnet build confole.sharp --no-restore --configuration Release
-
-      - name: Pack projects
-        run: |
-          dotnet pack confole --no-build --configuration Release
-          dotnet pack confole.sharp --no-build --configuration Release
+          dotnet build confole --no-restore --configuration Release --output bin
+          dotnet build confole.sharp --no-restore --configuration Release --output bin
 
       - name: Install DocFX
         run: dotnet tool update -g docfx
