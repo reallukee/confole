@@ -35,7 +35,7 @@ git clone https://github.com/reallukee/confole.git
 
 ### Usando *GitHub*
 
->[Download da GitHub](https://github.com/reallukee/confole/archive/main.zip)
+> [Download da GitHub](https://github.com/reallukee/confole/archive/main.zip)
 
 
 
@@ -43,17 +43,62 @@ git clone https://github.com/reallukee/confole.git
 
 1. Usando le TUE mani:
 
-    ```
+    ```bash
     cd confole
+    ```
 
-    dotnet pack confole --configuration Release
-    dotnet pack confole.sharp --configuration Release
+    ### Solo compilazione:
+
+    ```bash
+    # Compila Confole
+    dotnet build confole --configuration Release
+
+    # Compila Confole.Sharp
+    dotnet build confole.sharp --configuration Release
+    ```
+
+    ### Compilazione + NuGet:
+
+    ```bash
+    # Compila e pacchettizza Confole
+    dotnet build confole --configuration Release
+
+    # Compila e pacchettizza Confole.Sharp
+    dotnet build confole.sharp --configuration Release
     ```
 
 2. Usando *PowerShell*:
 
     ```pwsh
-    cd .\scripts\
+    cd .\confole\scripts\
+    ```
 
-    .\pack.ps1
+    > [!TIP]
+    > Sia `build.ps1` che `pack.ps1` accettano il parametro `-Target` che permette
+    > di specificare quali progetti compilare e/o pacchetizzare.
+    >
+    > Il valore di default di `-Target` è `All`.
+    >
+    > Gli altri valori accettati sono:
+    > * `Confole`
+    > * `Confole.Sharp`
+
+    ### Solo compilazione:
+
+    ```pwsh
+    # Compila Confole
+    .\build.ps1 -Target Confole
+
+    # Compila Confole.Sharp
+    .\build.ps1 -Target Confole.Sharp
+    ```
+
+    ### Compilazione + NuGet:
+
+    ```pwsh
+    # Compila e pacchettizza Confole
+    .\pack.ps1 -Target Confole
+
+    # Compila e pacchettizza Confole.Sharp
+    .\pack.ps1 -Target Confole.Sharp
     ```

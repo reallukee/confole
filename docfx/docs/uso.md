@@ -1,5 +1,10 @@
 # Uso
 
+* [F#](#f)
+* [C# e Visual Basic](#c-e-visual-basic)
+
+
+
 ## F#
 
 Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole)!
@@ -7,6 +12,8 @@ Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Conf
 ```
 dotnet add package Reallukee.Confole --prerelease
 ```
+
+Esempio minimale dell'uso delle API di Confole!
 
 ```fsharp
 open System
@@ -43,6 +50,12 @@ Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Realluke
 dotnet add package Reallukee.Confole.Sharp --prerelease
 ```
 
+Esempio minimale dell'uso delle API di Confole.Sharp!
+
+
+
+### C#
+
 ```csharp
 using System;
 
@@ -56,7 +69,33 @@ formats.AddItalicFormat(true)
 
 formats.ApplyAll("Hello, World!");
 
-Console.ReadKey();
+Console.ReadKey(true);
 
 formats.Reset("");
+```
+
+
+
+### Visual Basic
+
+```vb
+Imports System
+
+Imports Reallukee.Confole.Sharp
+
+Module Program
+    Sub Main()
+        Dim formats As New Formats()
+
+        formats.AddItalicFormat(True)
+        formats.AddForegroundColorFormat(New RGBColor(255, 0, 0))
+        formats.AddBackgroundColorFormat(New RGBColor(0, 0, 255))
+
+        formats.ApplyAll("Hello, World!")
+
+        Console.ReadKey(true)
+
+        formats.Reset("")
+    End Sub
+End Module
 ```

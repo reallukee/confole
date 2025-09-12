@@ -10,8 +10,16 @@ _layout: landing
 
 ![GitHub License](https://img.shields.io/github/license/reallukee/confole)
 ![GitHub Release](https://img.shields.io/github/v/release/reallukee/confole?include_prereleases)
-![GitHub Workflow Build](https://img.shields.io/github/actions/workflow/status/reallukee/confole/build.yml)
+![Github Build Workflow](https://img.shields.io/github/actions/workflow/status/reallukee/confole/build.yml)
 
 🎨 Abbellisci la tua app console F# in modo funzionale
+
+
+
+[Uso](/docs/uso)
+•
+[Download](/docs/download)
+•
+[Compilazione](/docs/compilazione)
 
 </div>

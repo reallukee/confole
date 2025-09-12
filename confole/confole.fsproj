@@ -14,7 +14,7 @@
 
     <NoWarn>0026</NoWarn>
 
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
 
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageId>Reallukee.Confole</PackageId>
@@ -118,7 +118,7 @@
 
   <ItemGroup>
     <None Include="..\assets\confole.ico">
-      <Link>resources\confole.ico</Link>
+      <Link>resources\icon.ico</Link>
     </None>
   </ItemGroup>
 
@@ -126,7 +126,7 @@
     <None Include="..\assets\confole.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
-      <Link>resources\package\confole.png</Link>
+      <Link>resources\package\icon.png</Link>
     </None>
 
     <None Include="README.md">

@@ -22,6 +22,11 @@
 
 # Uso
 
+* [F#](#f)
+* [C# e Visual Basic](#c-e-visual-basic)
+
+
+
 ## F#
 
 Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole)!
@@ -29,6 +34,8 @@ Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Conf
 ```
 dotnet add package Reallukee.Confole --prerelease
 ```
+
+Esempio minimale dell'uso delle API di Confole!
 
 ```fsharp
 open System
@@ -50,7 +57,7 @@ Format.reset ""
 ```
 
 > [!NOTE]
-> Più esempi [qui](./examples)!
+> Più esempi [qui](https://github.com/reallukee/confole)!
 
 
 
@@ -65,6 +72,12 @@ Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Realluke
 dotnet add package Reallukee.Confole.Sharp --prerelease
 ```
 
+Esempio minimale dell'uso delle API di Confole.Sharp!
+
+
+
+### C#
+
 ```csharp
 using System;
 
@@ -78,14 +91,42 @@ formats.AddItalicFormat(true)
 
 formats.ApplyAll("Hello, World!");
 
-Console.ReadKey();
+Console.ReadKey(true);
 
 formats.Reset("");
 ```
 
 
 
+### Visual Basic
+
+```vb
+Imports System
+
+Imports Reallukee.Confole.Sharp
+
+Module Program
+    Sub Main()
+        Dim formats As New Formats()
+
+        formats.AddItalicFormat(True)
+        formats.AddForegroundColorFormat(New RGBColor(255, 0, 0))
+        formats.AddBackgroundColorFormat(New RGBColor(0, 0, 255))
+
+        formats.ApplyAll("Hello, World!")
+
+        Console.ReadKey(true)
+
+        formats.Reset("")
+    End Sub
+End Module
+```
+
+
+
 # Download
+
+## GitHub
 
 > [Download](https://github.com/reallukee/confole/releases/latest)
 
@@ -133,7 +174,7 @@ git clone https://github.com/reallukee/confole.git
 
 ### Usando *GitHub*
 
->[Download da GitHub](https://github.com/reallukee/confole/archive/main.zip)
+> [Download da GitHub](https://github.com/reallukee/confole/archive/main.zip)
 
 
 
@@ -141,19 +182,64 @@ git clone https://github.com/reallukee/confole.git
 
 1. Usando le TUE mani:
 
-    ```
+    ```bash
     cd confole
+    ```
 
-    dotnet pack confole --configuration Release
-    dotnet pack confole.sharp --configuration Release
+    ### Solo compilazione:
+
+    ```bash
+    # Compila Confole
+    dotnet build confole --configuration Release
+
+    # Compila Confole.Sharp
+    dotnet build confole.sharp --configuration Release
+    ```
+
+    ### Compilazione + NuGet:
+
+    ```bash
+    # Compila e pacchettizza Confole
+    dotnet build confole --configuration Release
+
+    # Compila e pacchettizza Confole.Sharp
+    dotnet build confole.sharp --configuration Release
     ```
 
 2. Usando *PowerShell*:
 
     ```pwsh
-    cd .\scripts\
+    cd .\confole\scripts\
+    ```
 
-    .\pack.ps1
+    > [!TIP]
+    > Sia `build.ps1` che `pack.ps1` accettano il parametro `-Target` che permette
+    > di specificare quali progetti compilare e/o pacchetizzare.
+    >
+    > Il valore di default di `-Target` è `All`.
+    >
+    > Gli altri valori accettati sono:
+    > * `Confole`
+    > * `Confole.Sharp`
+
+    ### Solo compilazione:
+
+    ```pwsh
+    # Compila Confole
+    .\build.ps1 -Target Confole
+
+    # Compila Confole.Sharp
+    .\build.ps1 -Target Confole.Sharp
+    ```
+
+    ### Compilazione + NuGet:
+
+    ```pwsh
+    # Compila e pacchettizza Confole
+    .\pack.ps1 -Target Confole
+
+    # Compila e pacchettizza Confole.Sharp
+    .\pack.ps1 -Target Confole.Sharp
     ```
 
 
