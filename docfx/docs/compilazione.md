@@ -61,10 +61,10 @@ git clone https://github.com/reallukee/confole.git
 
     ```bash
     # Compila e pacchettizza Confole
-    dotnet build confole --configuration Release
+    dotnet pack confole --configuration Release
 
     # Compila e pacchettizza Confole.Sharp
-    dotnet build confole.sharp --configuration Release
+    dotnet pack confole.sharp --configuration Release
     ```
 
 2. Usando *PowerShell*:
