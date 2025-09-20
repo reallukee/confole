@@ -28,6 +28,6 @@ let actions =
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
     |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 
-Action.applyAll false actions
+Action.applyAll actions
 
 Action.reset ()

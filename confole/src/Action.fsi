@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -42,8 +42,6 @@ module Action =
 
     type Actions = Action list
 
-    val init : unit -> Actions
-
     val insertCharacter : n : int -> actions : Actions -> Actions
     val deleteCharacter : n : int -> actions : Actions -> Actions
 
@@ -53,16 +51,20 @@ module Action =
     val eraseDisplay : erase : Erase option -> actions : Actions -> Actions
     val eraseLine    : erase : Erase option -> actions : Actions -> Actions
 
+    val init  : unit              -> Actions
     val clear : actions : Actions -> Actions
+    val view  : actions : Actions -> unit
 
-    val view : actions : Actions -> unit
+    val apply        : action  : Action  -> unit
+    val applyNewLine : action  : Action  -> unit
 
-    val apply    : newLine : bool -> action  : Action  -> unit
-    val applyAll : newLine : bool -> actions : Actions -> unit
+    val applyAll        : actions : Actions -> unit
+    val applyAllNewLine : actions : Actions -> unit
 
     val reset : unit -> unit
 
-    val configure : newLine : bool -> config : (Actions -> Actions) -> unit
+    val configure        : config : (Actions -> Actions) -> unit
+    val configureNewLine : config : (Actions -> Actions) -> unit
 
     type Builder =
         new : unit -> Builder
@@ -84,3 +86,12 @@ module Action =
             Actions
 
     val builder : Builder
+
+    val doInsertCharacter : n : int -> unit
+    val doDeleteCharacter : n : int -> unit
+
+    val doInsertLine : n : int -> unit
+    val doDeleteLine : n : int -> unit
+
+    val doEraseDisplay : erase : Erase option -> unit
+    val doEraseLine    : erase : Erase option -> unit

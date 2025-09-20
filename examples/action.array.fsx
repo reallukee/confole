@@ -27,6 +27,6 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     Action.EraseDisplay (Some Action.Erase.FromBeginToEnd)
     Action.EraseLine    (Some Action.Erase.FromBeginToEnd)
 ]
-|> Action.applyAll false
+|> Action.applyAll
 
 Action.reset ()

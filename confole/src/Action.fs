@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -49,7 +49,7 @@ module Action =
 
     type Actions = Action list
 
-    let init () : Actions = []
+
 
     let insertCharacter n actions = InsertCharacter n :: actions
     let deleteCharacter n actions = DeleteCharacter n :: actions
@@ -60,6 +60,10 @@ module Action =
     let eraseDisplay erase actions = EraseDisplay erase :: actions
     let eraseLine    erase actions = EraseLine    erase :: actions
 
+
+
+    let init () : Actions = []
+
     let clear (actions : Actions) : Actions = []
 
     let view (actions : Actions) =
@@ -69,7 +73,9 @@ module Action =
             printfn "%A" action
         )
 
-    let apply newLine action =
+
+
+    let apply action =
         match action with
         | InsertCharacter n -> printf "%s%d@" CSI n
         | DeleteCharacter n -> printf "%s%dP" CSI n
@@ -98,27 +104,42 @@ module Action =
 
         | _ -> failwith "Not yet implemented!"
 
-        if newLine then
-            printfn ""
+    let applyNewLine action =
+        apply action
 
-    let applyAll newLine actions =
+        printfn ""
+
+    let applyAll actions =
         actions
         |> List.rev
         |> List.iter (fun action ->
-            apply false action
+            apply action
         )
 
-        if newLine then
-            printfn ""
+    let applyAllNewLine actions =
+        applyAll actions
+
+        printfn ""
+
+
 
     let reset () =
         []
-        |> applyAll false
+        |> applyAll
 
-    let configure newLine config =
+
+
+    let configure config =
         init ()
         |> config
-        |> applyAll newLine
+        |> applyAll
+
+    let configureNewLine config =
+        configure config
+
+        printfn ""
+
+
 
     type Builder () =
         member _.Yield actionFunction : Actions -> Actions =
@@ -134,3 +155,23 @@ module Action =
             actionsFunction (init ())
 
     let builder = Builder ()
+
+
+
+    let doInsertCharacter n =
+        apply (InsertCharacter n)
+
+    let doDeleteCharacter n =
+        apply (DeleteCharacter n)
+
+    let doInsertLine n =
+        apply (InsertLine n)
+
+    let doDeleteLine n =
+        apply (DeleteLine n)
+
+    let doEraseDisplay erase =
+        apply (EraseDisplay erase)
+
+    let doEraseLine erase =
+        apply (EraseLine erase)

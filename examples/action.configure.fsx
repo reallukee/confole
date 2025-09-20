@@ -23,7 +23,7 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
     |> ignore
 
-Action.configure false (fun actions ->
+Action.configure (fun actions ->
     actions
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
     |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
