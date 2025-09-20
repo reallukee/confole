@@ -27,7 +27,7 @@ type Cell =
     inherit Position
 
     new : unit -> Cell
-    new : int * int -> Cell
+    new : col : int * row : int -> Cell
 
     member Col : int with get, set
     member Row : int with get, set

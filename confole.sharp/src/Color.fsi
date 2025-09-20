@@ -20,15 +20,9 @@
 
 namespace Reallukee.Confole.Sharp
 
-/// <summary>
-/// Rappresenta un colore.
-/// </summary>
 [<AbstractClass>]
 type Color = class end
 
-/// <summary>
-/// Rappresenta un colore XTerm.
-/// </summary>
 and XTermColor =
     inherit Color
 
@@ -43,9 +37,6 @@ and XTermColor =
     override GetHashCode : unit      -> int
     override ToString    : unit      -> string
 
-/// <summary>
-/// Rappresenta un colore RGB.
-/// </summary>
 and RGBColor =
     inherit Color
 
@@ -65,9 +56,6 @@ and RGBColor =
     override GetHashCode : unit      -> int
     override ToString    : unit      -> string
 
-/// <summary>
-/// Rappresenta un colore HEX.
-/// </summary>
 and HEXColor =
     inherit Color
 
