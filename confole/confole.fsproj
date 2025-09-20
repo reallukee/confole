@@ -14,7 +14,7 @@
 
     <NoWarn>0026</NoWarn>
 
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageId>Reallukee.Confole</PackageId>

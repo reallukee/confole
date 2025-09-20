@@ -23,8 +23,8 @@ if (-not (Test-Path -Path $root -PathType Container)) {
 
 Set-Location -Path $root
 
-(& docfx build docfx.json)
+& docfx build docfx.json
 
-(& docfx docfx.json --serve)
+docfx docfx.json --serve
 
 Pop-Location

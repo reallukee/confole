@@ -22,7 +22,7 @@
 
 
 
-### Si tutto ok, ma la [documentazione](./DOCS.md)?
+### Sì tutto ok, ma la [documentazione](./DOCS.md)?
 
 </div>
 
@@ -43,7 +43,7 @@ Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Conf
 dotnet add package Reallukee.Confole --prerelease
 ```
 
-Esempio minimale dell'uso delle API di Confole!
+Esempio minimale dell'uso delle API di Confole.
 
 ```fsharp
 open System
@@ -80,7 +80,7 @@ Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Realluke
 dotnet add package Reallukee.Confole.Sharp --prerelease
 ```
 
-Esempio minimale dell'uso delle API di Confole.Sharp!
+Esempio minimale dell'uso delle API di Confole.Sharp.
 
 
 
@@ -171,10 +171,10 @@ End Module
 
 ## 1. Sorgente
 
-* [Usando *git*](#usando-git)
+* [Usando *Git*](#usando-git)
 * [Usando *GitHub*](#usando-github)
 
-### Usando *git*
+### Usando *Git*
 
 ```
 git clone https://github.com/reallukee/confole.git
@@ -216,19 +216,12 @@ git clone https://github.com/reallukee/confole.git
 
 2. Usando *PowerShell*:
 
+    > [!TIP]
+    > *PowerShell* è la scelta ideale in ambienti .NET oriented!
+
     ```pwsh
     cd .\confole\scripts\
     ```
-
-    > [!TIP]
-    > Sia `build.ps1` che `pack.ps1` accettano il parametro `-Target` che permette
-    > di specificare quali progetti compilare e/o pacchetizzare.
-    >
-    > Il valore di default di `-Target` è `All`.
-    >
-    > Gli altri valori accettati sono:
-    > * `Confole`
-    > * `Confole.Sharp`
 
     ### Solo compilazione:
 

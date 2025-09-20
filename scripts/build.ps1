@@ -4,7 +4,15 @@ param(
         "Confole.Sharp",
         "All"
     )]
-    $Target = "All"
+    $Target = "All",
+
+    [ValidateSet(
+        "Debug",
+        "Release"
+    )]
+    $Configuration = "Release",
+
+    $Output = "bin"
 )
 
 try {
@@ -40,7 +48,7 @@ switch ($Target) {
 $projects | ForEach-Object {
     & dotnet restore $_ --ignore-failed-sources
 
-    & dotnet build $_ --no-restore --configuration Release --output bin
+    & dotnet build $_ --no-restore --configuration ${Configuration} --output ${Output}
 }
 
 Pop-Location

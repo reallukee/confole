@@ -13,7 +13,7 @@ Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Conf
 dotnet add package Reallukee.Confole --prerelease
 ```
 
-Esempio minimale dell'uso delle API di Confole!
+Esempio minimale dell'uso delle API di Confole.
 
 ```fsharp
 open System
@@ -50,7 +50,7 @@ Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Realluke
 dotnet add package Reallukee.Confole.Sharp --prerelease
 ```
 
-Esempio minimale dell'uso delle API di Confole.Sharp!
+Esempio minimale dell'uso delle API di Confole.Sharp.
 
 
 
