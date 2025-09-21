@@ -12,7 +12,7 @@ open Reallukee.Confole
     Format.ForegroundColor (Color.RGB (255, 0, 0))
     Format.BackgroundColor (Color.RGB (0, 0, 255))
 ]
-|> Format.applyAll true "Hello, World!"
+|> Format.applyAllNewLine "Hello, World!"
 
 if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
@@ -35,7 +35,7 @@ Format.builder {
     Format.foregroundColor (Color.RGB (255, 0, 0))
     Format.backgroundColor (Color.RGB (0, 0, 255))
 }
-|> Format.applyAll true "Hello, World!"
+|> Format.applyAllNewLine "Hello, World!"
 
 if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
@@ -53,7 +53,7 @@ open System
 
 open Reallukee.Confole
 
-Format.configure true "Hello, World!" (fun formats ->
+Format.configureNewLine "Hello, World!" (fun formats ->
     formats
     |> Format.italic          true
     |> Format.foregroundColor (Color.RGB (255, 0, 0))
@@ -82,7 +82,7 @@ let formats =
     |> Format.foregroundColor (Color.RGB (255, 0, 0))
     |> Format.backgroundColor (Color.RGB (0, 0, 255))
 
-Format.applyAll true "Hello, World!" formats
+Format.applyAllNewLine "Hello, World!" formats
 
 if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
@@ -104,7 +104,7 @@ Format.init ()
 |> Format.italic          true
 |> Format.foregroundColor (Color.RGB (255, 0, 0))
 |> Format.backgroundColor (Color.RGB (0, 0, 255))
-|> Format.applyAll true "Hello, World!"
+|> Format.applyAllNewLine "Hello, World!"
 
 if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)

@@ -17,7 +17,7 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     Action.EraseDisplay (Some Action.Erase.FromBeginToEnd)
     Action.EraseLine    (Some Action.Erase.FromBeginToEnd)
 ]
-|> Action.applyAll false
+|> Action.applyAll
 
 Action.reset ()
 ```
@@ -41,7 +41,7 @@ Action.builder {
     Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
     Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 }
-|> Action.applyAll false
+|> Action.applyAll
 
 Action.reset ()
 ```
@@ -61,7 +61,7 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
     |> ignore
 
-Action.configure false (fun actions ->
+Action.configure (fun actions ->
     actions
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
     |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
@@ -90,7 +90,7 @@ let actions =
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
     |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 
-Action.applyAll false actions
+Action.applyAll actions
 
 Action.reset ()
 ```
@@ -113,7 +113,7 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
 Action.init ()
 |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
 |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
-|> Action.applyAll false
+|> Action.applyAll
 
 Action.reset ()
 ```

@@ -48,7 +48,7 @@ let formats =
     |> Format.foregroundColor (Color.RGB (255, 0, 0))
     |> Format.backgroundColor (Color.RGB (0, 0, 255))
 
-Format.applyAll true "Hello, World!" formats
+Format.applyAllNewLine "Hello, World!" formats
 
 do Console.ReadKey(true)
 |> ignore

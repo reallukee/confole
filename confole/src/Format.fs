@@ -131,6 +131,8 @@ module Format =
             apply "" item
         )
 
+        printf "%s" text
+
     let applyAllNewLine text formats =
         applyAll text formats
 
