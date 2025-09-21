@@ -11,13 +11,13 @@
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
 
-// #r @"nuget: Reallukee.Confole, 1.0.0"
+// #r @"nuget: Reallukee.Confole, 1.1.0"
 
 open System
 
 open Reallukee.Confole
 
-Format.configure true "Hello, World!" (fun formats ->
+Format.configureNewLine "Hello, World!" (fun formats ->
     formats
     |> Format.italic          true
     |> Format.foregroundColor (Color.RGB (255, 0, 0))

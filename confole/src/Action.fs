@@ -27,12 +27,7 @@ open Color
 open Position
 
 module Action =
-    let private ESC = "\u001B"
-    let private CSI = "\u001B["
-    let private OSC = "\u001B]"
-
-    let private BELL = "\u0007"
-    let private SP   = "\u0020"
+    open Common
 
     type Erase =
         | FromCurrentToEnd
@@ -158,20 +153,11 @@ module Action =
 
 
 
-    let doInsertCharacter n =
-        apply (InsertCharacter n)
+    let doInsertCharacter n = apply (InsertCharacter n)
+    let doDeleteCharacter n = apply (DeleteCharacter n)
 
-    let doDeleteCharacter n =
-        apply (DeleteCharacter n)
+    let doInsertLine n = apply (InsertLine n)
+    let doDeleteLine n = apply (DeleteLine n)
 
-    let doInsertLine n =
-        apply (InsertLine n)
-
-    let doDeleteLine n =
-        apply (DeleteLine n)
-
-    let doEraseDisplay erase =
-        apply (EraseDisplay erase)
-
-    let doEraseLine erase =
-        apply (EraseLine erase)
+    let doEraseDisplay erase = apply (EraseDisplay erase)
+    let doEraseLine    erase = apply (EraseLine erase)

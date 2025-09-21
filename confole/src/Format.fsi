@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -27,6 +27,8 @@ open Color
 open Position
 
 module Format =
+    open Common
+
     type Format =
         | Restore
         | Bold                   of bool
@@ -43,8 +45,6 @@ module Format =
         | BackgroundColor        of Color
 
     type Formats = Format list
-
-    val init : unit -> Formats
 
     val restore : formats : Formats -> Formats
 
@@ -63,16 +63,20 @@ module Format =
     val foregroundColor : color : Color -> formats : Formats -> Formats
     val backgroundColor : color : Color -> formats : Formats -> Formats
 
+    val init  : unit              -> Formats
     val clear : formats : Formats -> Formats
+    val view  : formats : Formats -> unit
 
-    val view : formats : Formats -> unit
+    val apply        : text : string -> format : Format -> unit
+    val applyNewLine : text : string -> format : Format -> unit
 
-    val apply    : newLine : bool -> text : string -> format  : Format  -> unit
-    val applyAll : newLine : bool -> text : string -> formats : Formats -> unit
+    val applyAll        : text : string -> formats : Formats -> unit
+    val applyAllNewLine : text : string -> formats : Formats -> unit
 
     val reset : text : string -> unit
 
-    val configure : newLine : bool -> text : string -> config : (Formats -> Formats) -> unit
+    val configure        : text : string -> config : (Formats -> Formats) -> unit
+    val configureNewLine : text : string -> config : (Formats -> Formats) -> unit
 
     type Builder =
         new : unit -> Builder
@@ -94,3 +98,20 @@ module Format =
             Formats
 
     val builder : Builder
+
+    val doRestore : text : string -> unit
+
+    val doBold      : text : string -> flag : bool -> unit
+    val doFaint     : text : string -> flag : bool -> unit
+    val doItalic    : text : string -> flag : bool -> unit
+    val doUnderline : text : string -> flag : bool -> unit
+    val doBlinking  : text : string -> flag : bool -> unit
+    val doReverse   : text : string -> flag : bool -> unit
+    val doHidden    : text : string -> flag : bool -> unit
+    val doStrikeout : text : string -> flag : bool -> unit
+
+    val doRestoreForegroundColor : text : string -> unit
+    val doRestoreBackgroundColor : text : string -> unit
+
+    val doForegroundColor : text : string -> color : Color -> unit
+    val doBackgroundColor : text : string -> color : Color -> unit

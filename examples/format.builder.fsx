@@ -11,7 +11,7 @@
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
 
-// #r @"nuget: Reallukee.Confole, 1.0.0"
+// #r @"nuget: Reallukee.Confole, 1.1.0"
 
 open System
 
@@ -22,7 +22,7 @@ Format.builder {
     Format.foregroundColor (Color.RGB (255, 0, 0))
     Format.backgroundColor (Color.RGB (0, 0, 255))
 }
-|> Format.applyAll true "Hello, World!"
+|> Format.applyAllNewLine "Hello, World!"
 
 if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)

@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -518,8 +518,10 @@ type Formats() =
 
 
     member private this.CallApply(format : IFormat, newLine, text) =
-        format.ToFunctional
-        |> Format.apply newLine text
+        if newLine then
+            Format.applyNewLine text format.ToFunctional
+        else
+            Format.apply text format.ToFunctional
 
     member this.Apply(format : IFormat, newLine, text) =
         this.CallApply(format, newLine, text)
@@ -530,12 +532,17 @@ type Formats() =
 
 
     member private this.CallApplyAll(newLine, text) =
-        this.Formats
-        |> List.rev
-        |> List.map (fun format ->
-            format.ToFunctional
-        )
-        |> Format.applyAll newLine text
+        let formats =
+            this.Formats
+            |> List.rev
+            |> List.map (fun format ->
+                format.ToFunctional
+            )
+
+        if newLine then
+            Format.applyAllNewLine text formats
+        else
+            Format.applyAll text formats
 
     member this.ApplyAll(newLine, text) =
         this.CallApplyAll(newLine, text)

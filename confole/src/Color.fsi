@@ -15,13 +15,15 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
 module Color =
+    open Common
+
     type XTermColor = {
         id : int
     }

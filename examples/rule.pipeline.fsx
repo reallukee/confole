@@ -11,7 +11,7 @@
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
 
-// #r @"nuget: Reallukee.Confole, 1.0.0"
+// #r @"nuget: Reallukee.Confole, 1.1.0"
 
 open System
 
@@ -27,7 +27,7 @@ Rule.init ()
 |> Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
 |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
 |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
-|> Rule.applyAll false
+|> Rule.applyAll
 
 printfn "Hello, World!"
 

@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -27,12 +27,7 @@ open Color
 open Position
 
 module Format =
-    let private ESC = "\u001B"
-    let private CSI = "\u001B["
-    let private OSC = "\u001B]"
-
-    let private BELL = "\u0007"
-    let private SP   = "\u0020"
+    open Common
 
     type Format =
         | Restore
@@ -51,7 +46,7 @@ module Format =
 
     type Formats = Format list
 
-    let init () : Formats = []
+
 
     let restore formats = Restore :: formats
 
@@ -70,6 +65,10 @@ module Format =
     let foregroundColor color formats = ForegroundColor color :: formats
     let backgroundColor color formats = BackgroundColor color :: formats
 
+
+
+    let init () : Formats = []
+
     let clear (formats : Formats) : Formats = []
 
     let view (formats : Formats) =
@@ -79,7 +78,9 @@ module Format =
             printfn "%A" format
         )
 
-    let apply newLine text format =
+
+
+    let apply text format =
         match format with
         | Restore -> printf "%s0m%s" CSI text
 
@@ -118,20 +119,24 @@ module Format =
 
         | _ -> failwith "Not yet implemented!"
 
-        if newLine then
-            printfn ""
+    let applyNewLine text format =
+        apply text format
 
-    let applyAll newLine text formats =
+        printfn ""
+
+    let applyAll text formats =
         formats
         |> List.rev
         |> List.iter (fun item ->
-            apply false "" item
+            apply "" item
         )
 
-        printf "%s%s0m" text CSI
+    let applyAllNewLine text formats =
+        applyAll text formats
 
-        if newLine then
-            printfn ""
+        printfn ""
+
+
 
     let reset text =
         [
@@ -149,12 +154,21 @@ module Format =
             ForegroundColor (RGB (255, 255, 255))
             BackgroundColor (RGB (0, 0, 0))
         ]
-        |> applyAll false text
+        |> applyAll text
 
-    let configure newLine text config =
+
+
+    let configure text config =
         init ()
         |> config
-        |> applyAll newLine text
+        |> applyAll text
+
+    let configureNewLine text config =
+        configure text config
+
+        printfn ""
+
+
 
     type Builder () =
         member _.Yield formatFunction : Formats -> Formats =
@@ -170,3 +184,22 @@ module Format =
             formatsFunction (init ())
 
     let builder = Builder ()
+
+
+
+    let doRestore text = apply text Restore
+
+    let doBold      text flag = apply text (Bold flag)
+    let doFaint     text flag = apply text (Faint flag)
+    let doItalic    text flag = apply text (Italic flag)
+    let doUnderline text flag = apply text (Underline flag)
+    let doBlinking  text flag = apply text (Blinking flag)
+    let doReverse   text flag = apply text (Reverse flag)
+    let doHidden    text flag = apply text (Hidden flag)
+    let doStrikeout text flag = apply text (Strikeout flag)
+
+    let doRestoreForegroundColor text = apply text RestoreForegroundColor
+    let doRestoreBackgroundColor text = apply text RestoreForegroundColor
+
+    let doForegroundColor text color = apply text (ForegroundColor color)
+    let doBackgroundColor text color = apply text (BackgroundColor color)

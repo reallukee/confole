@@ -27,6 +27,8 @@ open Color
 open Position
 
 module Action =
+    open Common
+
     type Erase =
         | FromCurrentToEnd
         | FromBeginToCurrent
@@ -55,8 +57,8 @@ module Action =
     val clear : actions : Actions -> Actions
     val view  : actions : Actions -> unit
 
-    val apply        : action  : Action  -> unit
-    val applyNewLine : action  : Action  -> unit
+    val apply        : action : Action -> unit
+    val applyNewLine : action : Action -> unit
 
     val applyAll        : actions : Actions -> unit
     val applyAllNewLine : actions : Actions -> unit
