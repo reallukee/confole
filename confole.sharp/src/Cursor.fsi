@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -176,8 +176,7 @@ type Cursors =
     member AddMoveCursor : position : Position -> Cursors
 
     member Clear : unit -> Cursors
-
-    member View : unit -> unit
+    member View  : unit -> unit
 
     member Apply : cursor : ICursor * newLine : bool -> unit
     member Apply : cursor : ICursor                 -> unit

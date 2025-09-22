@@ -503,8 +503,6 @@ type Rules() =
 
         this
 
-
-
     member this.View() =
         this.Rules
         |> List.rev

@@ -343,8 +343,6 @@ type Actions() =
 
         this
 
-
-
     member this.View() =
         this.Actions
         |> List.rev

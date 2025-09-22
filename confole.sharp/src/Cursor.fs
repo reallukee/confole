@@ -430,8 +430,6 @@ type Cursors() =
 
         this
 
-
-
     member this.View() =
         this.Cursors
         |> List.rev

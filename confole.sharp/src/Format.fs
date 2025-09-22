@@ -506,8 +506,6 @@ type Formats() =
 
         this
 
-
-
     member this.View() =
         this.Formats
         |> List.rev
