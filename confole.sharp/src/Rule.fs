@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -503,8 +503,6 @@ type Rules() =
 
         this
 
-
-
     member this.View() =
         this.Rules
         |> List.rev
@@ -515,8 +513,10 @@ type Rules() =
 
 
     member private this.CallApply(rule : IRule, newLine) =
-        rule.ToFunctional
-        |> Rule.apply newLine
+        if newLine then
+            Rule.applyNewLine rule.ToFunctional
+        else
+            Rule.apply rule.ToFunctional
 
     member this.Apply(rule : IRule, newLine) =
         this.CallApply(rule, newLine)
@@ -527,12 +527,17 @@ type Rules() =
 
 
     member private this.CallApplyAll(newLine) =
-        this.Rules
-        |> List.rev
-        |> List.map (fun rule ->
-            rule.ToFunctional
-        )
-        |> Rule.applyAll newLine
+        let rules =
+            this.Rules
+            |> List.rev
+            |> List.map (fun rule ->
+                rule.ToFunctional
+            )
+
+        if newLine then
+            Rule.applyAllNewLine rules
+        else
+            Rule.applyAll rules
 
     member this.ApplyAll(newLine) =
         this.CallApplyAll newLine

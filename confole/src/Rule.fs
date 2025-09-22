@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -27,12 +27,7 @@ open Color
 open Position
 
 module Rule =
-    let private ESC = "\u001B"
-    let private CSI = "\u001B["
-    let private OSC = "\u001B]"
-
-    let private BELL = "\u0007"
-    let private SP   = "\u0020"
+    open Common
 
     type Shape =
         | User
@@ -60,7 +55,7 @@ module Rule =
 
     type Rules = Rule list
 
-    let init () : Rules = []
+
 
     let title title rules = Title title :: rules
 
@@ -82,6 +77,10 @@ module Rule =
     let defaultBackgroundColor color rules = DefaultBackgroundColor color :: rules
     let defaultCursorColor     color rules = DefaultCursorColor     color :: rules
 
+
+
+    let init () : Rules = []
+
     let clear (rules : Rules) : Rules = []
 
     let view (rules : Rules) =
@@ -91,7 +90,9 @@ module Rule =
             printfn "%A" rule
         )
 
-    let apply newLine rule =
+
+
+    let apply rule =
         match rule with
         | Title value -> printf "%s0;%s%s" OSC value BELL
 
@@ -136,18 +137,24 @@ module Rule =
 
         | _ -> failwith "Not yet implemented!"
 
-        if newLine then
-            printfn ""
+    let applyNewLine rule =
+        apply rule
 
-    let applyAll newLine rules =
+        printfn ""
+
+    let applyAll rules =
         rules
         |> List.rev
         |> List.iter (fun item ->
-            apply false item
+            apply item
         )
 
-        if newLine then
-            printfn ""
+    let applyAllNewLine rules =
+        applyAll rules
+
+        printfn ""
+
+
 
     let reset () =
         [
@@ -163,12 +170,21 @@ module Rule =
             DefaultBackgroundColor    (RGB (0, 0, 0))
             DefaultCursorColor        (RGB (255, 255, 255))
         ]
-        |> applyAll false
+        |> applyAll
 
-    let configure newLine config =
+
+
+    let configure config =
         init ()
         |> config
-        |> applyAll newLine
+        |> applyAll
+
+    let configureNewLine config =
+        configure config
+
+        printfn ""
+
+
 
     type Builder () =
         member _.Yield ruleFunction : Rules -> Rules =
@@ -184,3 +200,25 @@ module Rule =
             rulesFunction (init ())
 
     let builder = Builder ()
+
+
+
+    let doTitle title = apply (Title title)
+
+    let doShowCursorBlinking () = apply ShowCursorBlinking
+    let doHideCursorBlinking () = apply HideCursorBlinking
+
+    let doShowCursor () = apply ShowCursor
+    let doHideCursor () = apply HideCursor
+
+    let doEnableDesignateMode  () = apply EnableDesignateMode
+    let doDisableDesignateMode () = apply DisableDesignateMode
+
+    let doEnableAlternativeBuffer  () = apply EnableAlternativeBuffer
+    let doDisableAlternativeBuffer () = apply DisableAlternativeBuffer
+
+    let doCursorShape shape = apply (CursorShape shape)
+
+    let doDefaultForegroundColor color = apply (DefaultForegroundColor color)
+    let doDefaultBackgroundColor color = apply (DefaultBackgroundColor color)
+    let doDefaultCursorColor     color = apply (DefaultCursorColor color)

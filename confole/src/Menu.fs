@@ -143,7 +143,7 @@ module Menu =
 
         menu.items
         |> List.iteri (fun index item ->
-            Cursor.apply false (Move (ColRow (menu.col, menu.row + index)))
+            doMove (ColRow (menu.col, menu.row + index))
 
             let item =
                 match item.itemType with
@@ -152,7 +152,7 @@ module Menu =
 
             let format = format menu index
 
-            applyAll false item format
+            applyAll item format
         )
 
 
@@ -268,12 +268,12 @@ module Menu =
 
 
     let call menu =
-        Rule.apply false HideCursor
+        doHideCursor ()
 
         let rec loop menu =
             draw menu
 
-            Cursor.apply false (Move (ColRow (0, 0)))
+            doMove (ColRow (0, 0))
 
             let key = Console.ReadKey(true)
 
@@ -293,6 +293,6 @@ module Menu =
 
         let menu = loop menu
 
-        Rule.apply false ShowCursor
+        doShowCursor ()
 
         menu

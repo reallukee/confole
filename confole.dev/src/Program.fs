@@ -19,7 +19,7 @@ module Program =
             |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
             |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
 
-        Rule.applyAll false rules
+        Rule.applyAll rules
 
         printfn "Hello, World!"
 

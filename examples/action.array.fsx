@@ -11,7 +11,7 @@
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
 
-// #r @"nuget: Reallukee.Confole, 1.0.0"
+// #r @"nuget: Reallukee.Confole, 1.1.0"
 
 open System
 
@@ -27,6 +27,6 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     Action.EraseDisplay (Some Action.Erase.FromBeginToEnd)
     Action.EraseLine    (Some Action.Erase.FromBeginToEnd)
 ]
-|> Action.applyAll false
+|> Action.applyAll
 
 Action.reset ()

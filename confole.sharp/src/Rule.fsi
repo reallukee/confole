@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -217,8 +217,7 @@ type Rules =
     member AddDefaultCursorColorRule     : color : Color -> Rules
 
     member Clear : unit -> Rules
-
-    member View : unit -> unit
+    member View  : unit -> unit
 
     member Apply : rule : IRule * newLine : bool -> unit
     member Apply : rule : IRule                  -> unit

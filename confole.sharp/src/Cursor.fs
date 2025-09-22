@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -430,8 +430,6 @@ type Cursors() =
 
         this
 
-
-
     member this.View() =
         this.Cursors
         |> List.rev
@@ -442,8 +440,10 @@ type Cursors() =
 
 
     member private this.CallApply(cursor : ICursor, newLine) =
-        cursor.ToFunctional
-        |> Cursor.apply newLine
+        if newLine then
+            Cursor.applyNewLine cursor.ToFunctional
+        else
+            Cursor.apply cursor.ToFunctional
 
     member this.Apply(cursor : ICursor, newLine) =
         this.CallApply(cursor, newLine)
@@ -454,12 +454,17 @@ type Cursors() =
 
 
     member private this.CallApplyAll(newLine) =
-        this.Cursors
-        |> List.rev
-        |> List.map (fun cursor ->
-            cursor.ToFunctional
-        )
-        |> Cursor.applyAll newLine
+        let cursors =
+            this.Cursors
+            |> List.rev
+            |> List.map (fun cursor ->
+                cursor.ToFunctional
+            )
+
+        if newLine then
+            Cursor.applyAllNewLine cursors
+        else
+            Cursor.applyAll cursors
 
     member this.ApplyAll(newLine) =
         this.CallApplyAll newLine

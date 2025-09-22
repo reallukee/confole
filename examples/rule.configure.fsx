@@ -11,13 +11,13 @@
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
 
-// #r @"nuget: Reallukee.Confole, 1.0.0"
+// #r @"nuget: Reallukee.Confole, 1.1.0"
 
 open System
 
 open Reallukee.Confole
 
-Rule.configure false (fun rules ->
+Rule.configure (fun rules ->
     rules
     |> Rule.title                    "Confole"
     |> Rule.showCursorBlinking

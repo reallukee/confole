@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -27,6 +27,8 @@ open Color
 open Position
 
 module Cursor =
+    open Common
+
     type Cursor =
         | Reverse
         | Save
@@ -40,8 +42,6 @@ module Cursor =
         | Move         of Position
 
     type Cursors = Cursor list
-
-    val init : unit -> Cursors
 
     val reverse : cursors : Cursors -> Cursors
     val save    : cursors : Cursors -> Cursors
@@ -57,16 +57,20 @@ module Cursor =
 
     val move : position : Position -> cursors : Cursors -> Cursors
 
+    val init  : unit              -> Cursors
     val clear : cursors : Cursors -> Cursors
+    val view  : cursors : Cursors -> unit
 
-    val view : cursors : Cursors -> unit
+    val apply        : cursor : Cursor -> unit
+    val applyNewLine : cursor : Cursor -> unit
 
-    val apply    : newLine : bool -> cursor  : Cursor  -> unit
-    val applyAll : newLine : bool -> cursors : Cursors -> unit
+    val applyAll        : cursors : Cursors -> unit
+    val applyAllNewLine : cursors : Cursors -> unit
 
     val reset : unit -> unit
 
-    val configure : newLine : bool -> config : (Cursors -> Cursors) -> unit
+    val configure        : config : (Cursors -> Cursors) -> unit
+    val configureNewLine : config : (Cursors -> Cursors) -> unit
 
     type Builder =
         new : unit -> Builder
@@ -88,3 +92,17 @@ module Cursor =
             Cursors
 
     val builder : Builder
+
+    val doReverse : unit -> unit
+    val doSave    : unit -> unit
+    val doRestore : unit -> unit
+
+    val doUp       : n : int option -> unit
+    val doDown     : n : int option -> unit
+    val doNext     : n : int option -> unit
+    val doPrevious : n : int option -> unit
+
+    val doNextLine     : n : int option -> unit
+    val doPreviousLine : n : int option -> unit
+
+    val doMove : position : Position -> unit

@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -206,8 +206,7 @@ type Formats =
     member AddBackgroundColorFormat : color : Color -> Formats
 
     member Clear : unit -> Formats
-
-    member View : unit -> unit
+    member View  : unit -> unit
 
     member Apply : format : IFormat * newLine : bool * text : string -> unit
     member Apply : format : IFormat * text : string                  -> unit

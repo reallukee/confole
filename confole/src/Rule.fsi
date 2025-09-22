@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -27,6 +27,8 @@ open Color
 open Position
 
 module Rule =
+    open Common
+
     type Shape =
         | User
         | BlinkingBlock
@@ -53,8 +55,6 @@ module Rule =
 
     type Rules = Rule list
 
-    val init : unit -> Rules
-
     val title : title : string -> rules : Rules -> Rules
 
     val showCursorBlinking : rules : Rules -> Rules
@@ -75,16 +75,20 @@ module Rule =
     val defaultBackgroundColor : color : Color -> rules : Rules -> Rules
     val defaultCursorColor     : color : Color -> rules : Rules -> Rules
 
+    val init  : unit          -> Rules
     val clear : rules : Rules -> Rules
+    val view  : rules : Rules -> unit
 
-    val view : rules : Rules -> unit
+    val apply        : rule : Rule -> unit
+    val applyNewLine : rule : Rule -> unit
 
-    val apply    : newLine : bool -> rule  : Rule  -> unit
-    val applyAll : newLine : bool -> rules : Rules -> unit
+    val applyAll        : rules : Rules -> unit
+    val applyAllNewLine : rules : Rules -> unit
 
     val reset : unit -> unit
 
-    val configure : newLine : bool -> config : (Rules -> Rules) -> unit
+    val configure        : config : (Rules -> Rules) -> unit
+    val configureNewLine : config : (Rules -> Rules) -> unit
 
     type Builder =
         new : unit -> Builder
@@ -106,3 +110,23 @@ module Rule =
             Rules
 
     val builder : Builder
+
+    val doTitle : title : string -> unit
+
+    val doShowCursorBlinking : unit -> unit
+    val doHideCursorBlinking : unit -> unit
+
+    val doShowCursor : unit -> unit
+    val doHideCursor : unit -> unit
+
+    val doEnableDesignateMode  : unit -> unit
+    val doDisableDesignateMode : unit -> unit
+
+    val doEnableAlternativeBuffer  : unit -> unit
+    val doDisableAlternativeBuffer : unit -> unit
+
+    val doCursorShape : shape : Shape option -> unit
+
+    val doDefaultForegroundColor : color : Color -> unit
+    val doDefaultBackgroundColor : color : Color -> unit
+    val doDefaultCursorColor     : color : Color -> unit

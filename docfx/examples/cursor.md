@@ -10,7 +10,7 @@ open Reallukee.Confole
 [
     Cursor.Move (Position.ColRow (4, 2))
 ]
-|> Cursor.applyAll false
+|> Cursor.applyAll
 
 printfn "Hello, World!"
 
@@ -33,7 +33,7 @@ open Reallukee.Confole
 Cursor.builder {
     Cursor.move (Position.ColRow (4, 2))
 }
-|> Cursor.applyAll false
+|> Cursor.applyAll
 
 printfn "Hello, World!"
 
@@ -53,7 +53,7 @@ open System
 
 open Reallukee.Confole
 
-Cursor.configure false (fun cursors ->
+Cursor.configure (fun cursors ->
     cursors
     |> Cursor.move (Position.ColRow (4, 2))
 )
@@ -80,7 +80,7 @@ let cursors =
     Cursor.init ()
     |> Cursor.move (Position.ColRow (4, 2))
 
-Cursor.applyAll false cursors
+Cursor.applyAll cursors
 
 printfn "Hello, World!"
 
@@ -102,7 +102,7 @@ open Reallukee.Confole
 
 Cursor.init ()
 |> Cursor.move (Position.ColRow (4, 2))
-|> Cursor.applyAll false
+|> Cursor.applyAll
 
 printfn "Hello, World!"
 

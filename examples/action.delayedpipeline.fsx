@@ -11,7 +11,7 @@
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
 
-// #r @"nuget: Reallukee.Confole, 1.0.0"
+// #r @"nuget: Reallukee.Confole, 1.1.0"
 
 open System
 
@@ -28,6 +28,6 @@ let actions =
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
     |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 
-Action.applyAll false actions
+Action.applyAll actions
 
 Action.reset ()

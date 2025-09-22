@@ -18,7 +18,7 @@ open Reallukee.Confole
     Rule.DefaultBackgroundColor   (Color.RGB (0, 0, 0))
     Rule.DefaultCursorColor       (Color.RGB (255, 255, 255))
 ]
-|> Rule.applyAll false
+|> Rule.applyAll
 
 printfn "Hello, World!"
 
@@ -49,7 +49,7 @@ Rule.builder {
     Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
     Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
 }
-|> Rule.applyAll false
+|> Rule.applyAll
 
 printfn "Hello, World!"
 
@@ -69,7 +69,7 @@ open System
 
 open Reallukee.Confole
 
-Rule.configure false (fun rules ->
+Rule.configure (fun rules ->
     rules
     |> Rule.title                    "Confole"
     |> Rule.showCursorBlinking
@@ -112,7 +112,7 @@ let rules =
     |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
     |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
 
-Rule.applyAll false rules
+Rule.applyAll rules
 
 printfn "Hello, World!"
 
@@ -142,7 +142,7 @@ Rule.init ()
 |> Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
 |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
 |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
-|> Rule.applyAll false
+|> Rule.applyAll
 
 printfn "Hello, World!"
 

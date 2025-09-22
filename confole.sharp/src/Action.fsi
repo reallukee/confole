@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -138,8 +138,7 @@ type Actions =
     member AddEraseLineAction    : erase : Erase -> Actions
 
     member Clear : unit -> Actions
-
-    member View : unit -> unit
+    member View  : unit -> unit
 
     member Apply : action : IAction * newLine : bool -> unit
     member Apply : action : IAction                  -> unit

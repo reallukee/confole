@@ -14,7 +14,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -343,8 +343,6 @@ type Actions() =
 
         this
 
-
-
     member this.View() =
         this.Actions
         |> List.rev
@@ -355,8 +353,10 @@ type Actions() =
 
 
     member private this.CallApply(action : IAction, newLine) =
-        action.ToFunctional
-        |> Action.apply newLine
+        if newLine then
+            Action.applyNewLine action.ToFunctional
+        else
+            Action.apply action.ToFunctional
 
     member this.Apply(action : IAction, newLine) =
         this.CallApply(action, newLine)
@@ -367,12 +367,17 @@ type Actions() =
 
 
     member private this.CallApplyAll(newLine) =
-        this.Actions
-        |> List.rev
-        |> List.map (fun action ->
-            action.ToFunctional
-        )
-        |> Action.applyAll newLine
+        let actions =
+            this.Actions
+            |> List.rev
+            |> List.map (fun action ->
+                action.ToFunctional
+            )
+
+        if newLine then
+            Action.applyAllNewLine actions
+        else
+            Action.applyAll actions
 
     member this.ApplyAll(newLine) =
         this.CallApplyAll newLine

@@ -17,7 +17,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee)
-    Version     : 1.0.0
+    Version     : 1.1.0
     License     : MIT
 *)
 
@@ -27,12 +27,7 @@ open Color
 open Position
 
 module Cursor =
-    let private ESC = "\u001B"
-    let private CSI = "\u001B["
-    let private OSC = "\u001B]"
-
-    let private BELL = "\u0007"
-    let private SP   = "\u0020"
+    open Common
 
     type Cursor =
         | Reverse
@@ -48,7 +43,7 @@ module Cursor =
 
     type Cursors = Cursor list
 
-    let init () : Cursors = []
+
 
     let reverse cursors = Reverse :: cursors
     let save    cursors = Save    :: cursors
@@ -64,6 +59,10 @@ module Cursor =
 
     let move position cursors = Move position :: cursors
 
+
+
+    let init () : Cursors = []
+
     let clear (cursors : Cursors) : Cursors = []
 
     let view (cursors : Cursors) =
@@ -73,7 +72,9 @@ module Cursor =
             printfn "%A" cursor
         )
 
-    let apply newLine cursor =
+
+
+    let apply cursor =
         match cursor with
         | Reverse -> printf "%sM" ESC
         | Save    -> printf "%s7" ESC
@@ -98,29 +99,44 @@ module Cursor =
 
         | _ -> failwith "Not yet implemented!"
 
-        if newLine then
-            printfn ""
+    let applyNewLine cursor =
+        apply cursor
 
-    let applyAll newLine cursors =
+        printfn ""
+
+    let applyAll cursors =
         cursors
         |> List.rev
         |> List.iter (fun cursor ->
-            apply false cursor
+            apply cursor
         )
 
-        if newLine then
-            printfn ""
+    let applyAllNewLine cursors =
+        applyAll cursors
+
+        printfn ""
+
+
 
     let reset () =
         [
             Move (ColRow (0, 0))
         ]
-        |> applyAll false
+        |> applyAll
 
-    let configure newLine config =
+
+
+    let configure config =
         init ()
         |> config
-        |> applyAll newLine
+        |> applyAll
+
+    let configureNewLine config =
+        configure config
+
+        printfn ""
+
+
 
     type Builder () =
         member _.Yield cursorFunction : Cursors -> Cursors =
@@ -136,3 +152,19 @@ module Cursor =
             cursorsFunction (init ())
 
     let builder = Builder ()
+
+
+
+    let doReverse () = apply Reverse
+    let doSave    () = apply Save
+    let doRestore () = apply Restore
+
+    let doUp       n = apply (Up n)
+    let doDown     n = apply (Down n)
+    let doNext     n = apply (Next n)
+    let doPrevious n = apply (Previous n)
+
+    let doNextLine     n = apply (NextLine n)
+    let doPreviousLine n = apply (PreviousLine n)
+
+    let doMove position = apply (Move position)
