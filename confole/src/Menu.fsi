@@ -46,14 +46,14 @@ module Menu =
         | Value     of string
         | Separator
 
-    type MenuItem = {
+    and MenuItem = {
         itemType : MenuItemType
         enable   : bool
         visible  : bool
         style    : MenuItemStyle option
     }
 
-    type Menu = {
+    and Menu = {
         col          : int
         row          : int
         items        : MenuItem list
@@ -64,11 +64,12 @@ module Menu =
 
     val draw : menu : Menu -> unit
 
-    val selectable : menu : Menu -> bool
+    val hasSelectable : menu : Menu -> bool
 
+    val selectItem   : menu : Menu -> index : int -> Menu
     val nextItem     : menu : Menu -> Menu
     val previousItem : menu : Menu -> Menu
     val topItem      : menu : Menu -> Menu
     val bottomItem   : menu : Menu -> Menu
 
-    val call : menu : Menu -> Menu
+    val run : menu : Menu -> Menu
