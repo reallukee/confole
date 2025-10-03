@@ -25,5 +25,5 @@ module Common =
     let CSI = "\u001B["
     let OSC = "\u001B]"
 
-    let BELL = "\u0007"
+    let Bell = "\u0007"
     let SP   = "\u0020"

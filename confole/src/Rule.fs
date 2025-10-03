@@ -94,7 +94,7 @@ module Rule =
 
     let apply rule =
         match rule with
-        | Title value -> printf "%s0;%s%s" OSC value BELL
+        | Title value -> printf "%s0;%s%s" OSC value Bell
 
         | ShowCursorBlinking -> printf "%s?12h" CSI
         | HideCursorBlinking -> printf "%s?12l" CSI
@@ -164,11 +164,11 @@ module Rule =
             DisableDesignateMode
             DisableAlternativeBuffer
 
-            CursorShape               (Some User)
+            CursorShape              (Some User)
 
-            DefaultForegroundColor    (RGB (255, 255, 255))
-            DefaultBackgroundColor    (RGB (0, 0, 0))
-            DefaultCursorColor        (RGB (255, 255, 255))
+            DefaultForegroundColor   (RGB (255, 255, 255))
+            DefaultBackgroundColor   (RGB (0, 0, 0))
+            DefaultCursorColor       (RGB (255, 255, 255))
         ]
         |> applyAll
 
