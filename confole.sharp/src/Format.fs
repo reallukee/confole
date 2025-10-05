@@ -557,6 +557,84 @@ type Formats() =
 
 
 
+    static member DoRestore(text) =
+        let restoreFormat = new RestoreFormat() :> IFormat
+
+        Format.apply text restoreFormat.ToFunctional
+
+
+
+    static member DoBold(text, flag) =
+        let boldFormat = new BoldFormat(flag) :> IFormat
+
+        Format.apply text boldFormat.ToFunctional
+
+    static member DoFaint(text, flag) =
+        let faintFormat = new FaintFormat(flag) :> IFormat
+
+        Format.apply text faintFormat.ToFunctional
+
+    static member DoItalic(text, flag) =
+        let italicFormat = new ItalicFormat(flag) :> IFormat
+
+        Format.apply text italicFormat.ToFunctional
+
+    static member DoUnderline(text, flag) =
+        let underlineFormat = new UnderlineFormat(flag) :> IFormat
+
+        Format.apply text underlineFormat.ToFunctional
+
+    static member DoBlinking(text, flag) =
+        let blinkingFormat = new BlinkingFormat(flag) :> IFormat
+
+        Format.apply text blinkingFormat.ToFunctional
+
+    static member DoReverse(text, flag) =
+        let reverseFormat = new ReverseFormat(flag) :> IFormat
+
+        Format.apply text reverseFormat.ToFunctional
+
+    static member DoHidden(text, flag) =
+        let hiddenFormat = new HiddenFormat(flag) :> IFormat
+
+        Format.apply text hiddenFormat.ToFunctional
+
+    static member DoStrikeout(text, flag) =
+        let strikeoutFormat = new StrikeoutFormat(flag) :> IFormat
+
+        Format.apply text strikeoutFormat.ToFunctional
+
+
+
+    static member DoRestoreForegroundColor(text) =
+        let restoreForegroundColorFormat = new RestoreForegroundColorFormat() :> IFormat
+
+        Format.apply text restoreForegroundColorFormat.ToFunctional
+
+    static member DoRestoreBackgroundColor(text) =
+        let restoreBackgroundColorFormat = new RestoreBackgroundColorFormat() :> IFormat
+
+        Format.apply text restoreBackgroundColorFormat.ToFunctional
+
+
+
+    static member DoForegroundColor(text, color) =
+        let foregroundColorFormat = new ForegroundColorFormat(color) :> IFormat
+
+        Format.apply text foregroundColorFormat.ToFunctional
+
+    static member DoBackgroundColor(text, color) =
+        let backgroundColorFormat = new BackgroundColorFormat(color) :> IFormat
+
+        Format.apply text backgroundColorFormat.ToFunctional
+
+
+
+    static member DoReset(text) =
+        Format.reset text
+
+
+
     override this.Equals(obj) =
         match obj with
         | :? Formats as other ->

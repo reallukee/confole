@@ -186,6 +186,22 @@ type Cursors =
 
     member Reset : unit -> unit
 
+    static member DoReverse : unit -> unit
+    static member DoSave    : unit -> unit
+    static member DoRestore : unit -> unit
+
+    static member DoUp       : n : int -> unit
+    static member DoDown     : n : int -> unit
+    static member DoNext     : n : int -> unit
+    static member DoPrevious : n : int -> unit
+
+    static member DoNextLine     : n : int -> unit
+    static member DoPreviousLine : n : int -> unit
+
+    static member DoMove : position : Position -> unit
+
+    static member DoReset : unit -> unit
+
     override Equals      : obj : obj -> bool
     override GetHashCode : unit      -> int
     override ToString    : unit      -> string

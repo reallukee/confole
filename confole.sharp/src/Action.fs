@@ -191,7 +191,7 @@ type EraseDisplayAction() =
                     | Erase.FromCurrentToEnd   -> Action.Erase.FromCurrentToEnd
                     | Erase.FromBeginToCurrent -> Action.Erase.FromBeginToCurrent
                     | Erase.FromBeginToEnd     -> Action.Erase.FromBeginToEnd
-                    | _                        -> failwith "Unknown value!"
+                    | _ -> failwith "Unknown value!"
 
                 Action.EraseDisplay (Some erase)
 
@@ -230,7 +230,7 @@ type EraseLineAction() =
                     | Erase.FromCurrentToEnd   -> Action.Erase.FromCurrentToEnd
                     | Erase.FromBeginToCurrent -> Action.Erase.FromBeginToCurrent
                     | Erase.FromBeginToEnd     -> Action.Erase.FromBeginToEnd
-                    | _                        -> failwith "Unknown value!"
+                    | _ -> failwith "Unknown value!"
 
                 Action.EraseLine (Some erase)
 
@@ -390,6 +390,47 @@ type Actions() =
     member this.Reset() =
         this.Actions <- []
 
+        Action.reset ()
+
+
+
+    static member DoInsertCharacter(n) =
+        let insertCharacterAction = new InsertCharacterAction(n) :> IAction
+
+        Action.apply insertCharacterAction.ToFunctional
+
+    static member DoDeleteCharacter(n) =
+        let deleteCharacterAction = new DeleteCharacterAction(n) :> IAction
+
+        Action.apply deleteCharacterAction.ToFunctional
+
+
+
+    static member DoInsertLine(n) =
+        let insertLineAction = new InsertCharacterAction(n) :> IAction
+
+        Action.apply insertLineAction.ToFunctional
+
+    static member DoDeleteLine(n) =
+        let deleteLineAction = new DeleteLineAction(n) :> IAction
+
+        Action.apply deleteLineAction.ToFunctional
+
+
+
+    static member DoEraseDisplay(erase) =
+        let eraseDisplayAction = new EraseDisplayAction(erase) :> IAction
+
+        Action.apply eraseDisplayAction.ToFunctional
+
+    static member DoEraseLine(erase) =
+        let eraseLineAction = new EraseLineAction(erase) :> IAction
+
+        Action.apply eraseLineAction.ToFunctional
+
+
+
+    static member DoReset() =
         Action.reset ()
 
 

@@ -481,6 +481,69 @@ type Cursors() =
 
 
 
+    static member DoReverse() =
+        let reverseCursor = new ReverseCursor() :> ICursor
+
+        Cursor.apply reverseCursor.ToFunctional
+
+    static member DoSave() =
+        let saveCursor = new SaveCursor() :> ICursor
+
+        Cursor.apply saveCursor.ToFunctional
+
+    static member DoRestore() =
+        let restoreCursor = new RestoreCursor() :> ICursor
+
+        Cursor.apply restoreCursor.ToFunctional
+
+
+
+    static member DoUp(n) =
+        let upCursor = new UpCursor(n) :> ICursor
+
+        Cursor.apply upCursor.ToFunctional
+
+    static member DoDown(n) =
+        let downCursor = new DownCursor(n) :> ICursor
+
+        Cursor.apply downCursor.ToFunctional
+
+    static member DoNext(n) =
+        let nextCursor = new NextCursor(n) :> ICursor
+
+        Cursor.apply nextCursor.ToFunctional
+
+    static member DoPrevious(n) =
+        let previousCursor = new PreviousCursor(n) :> ICursor
+
+        Cursor.apply previousCursor.ToFunctional
+
+
+
+    static member DoNextLine(n) =
+        let nextLineCursor = new NextLineCursor(n) :> ICursor
+
+        Cursor.apply nextLineCursor.ToFunctional
+
+    static member DoPreviousLine(n) =
+        let previousLineCursor = new PreviousLineCursor(n) :> ICursor
+
+        Cursor.apply previousLineCursor.ToFunctional
+
+
+
+    static member DoMove(position) =
+        let moveCursor = new MoveCursor(position) :> ICursor
+
+        Cursor.apply moveCursor.ToFunctional
+
+
+
+    static member DoReset() =
+        Cursor.reset ()
+
+
+
     override this.Equals(obj) =
         match obj with
         | :? Cursors as other ->

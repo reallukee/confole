@@ -148,6 +148,17 @@ type Actions =
 
     member Reset : unit -> unit
 
+    static member DoInsertCharacter : n : int -> unit
+    static member DoDeleteCharacter : n : int -> unit
+
+    static member DoInsertLine : n : int -> unit
+    static member DoDeleteLine : n : int -> unit
+
+    static member DoEraseDisplay : erase : Erase -> unit
+    static member DoEraseLine    : erase : Erase -> unit
+
+    static member DoReset : unit -> unit
+
     override Equals      : obj : obj -> bool
     override GetHashCode : unit      -> int
     override ToString    : unit      -> string

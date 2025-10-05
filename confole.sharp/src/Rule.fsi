@@ -227,6 +227,28 @@ type Rules =
 
     member Reset : unit -> unit
 
+    static member DoTitleRule : title : string -> unit
+
+    static member DoShowCursorBlinkingRule : unit -> unit
+    static member DoHideCursorBlinkingRule : unit -> unit
+
+    static member DoShowCursorRule : unit -> unit
+    static member DoHideCursorRule : unit -> unit
+
+    static member DoEnableDesignateModeRule  : unit -> unit
+    static member DoDisableDesignateModeRule : unit -> unit
+
+    static member DoEnableAlternativeBufferRule  : unit -> unit
+    static member DoDisableAlternativeBufferRule : unit -> unit
+
+    static member DoCursorShapeRule : shape : Shape -> unit
+
+    static member DoDefaultForegroundColorRule : color : Color -> unit
+    static member DoDefaultBackgroundColorRule : color : Color -> unit
+    static member DoDefaultCursorColorRule     : color : Color -> unit
+
+    static member DoReset : unit -> unit
+
     override Equals      : obj : obj -> bool
     override GetHashCode : unit      -> int
     override ToString    : unit      -> string
