@@ -23,7 +23,7 @@
 # Uso
 
 * [F#](#f)
-* [C# e Visual Basic](#c-e-visual-basic)
+* [C#](#c)
 
 
 
@@ -35,7 +35,7 @@ Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Conf
 dotnet add package Reallukee.Confole --prerelease
 ```
 
-Esempio minimale dell'uso delle API di Confole.
+Esempio minimale dell'uso delle API di `Confole`:
 
 ```fsharp
 open System
@@ -56,15 +56,35 @@ do Console.ReadKey(true)
 Format.reset ""
 ```
 
+È possibile anche usare le API in stile "imperativo":
+
+```fsharp
+open System
+
+open Reallukee.Confole
+
+Format.doForegroundColor "" (Color.RGB (255, 0, 0))
+Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
+Format.doBold "Hello, World!" true
+
+do Console.ReadKey(true)
+|> ignore
+
+Format.reset ""
+```
+
 > [!NOTE]
-> Più esempi [qui](https://github.com/reallukee/confole)!
+> Più esempi [qui](./examples)!
 
 
 
-## C# e Visual Basic?
+## C#?
 
 > [!IMPORTANT]
 > `Confole.Sharp` è wrapper OOP di `Confole`!
+
+> [!NOTE]
+> `Confole.Sharp` INCLUDE tutte le funzionalità di `Confole`!
 
 Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole.Sharp)!
 
@@ -72,11 +92,7 @@ Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Realluke
 dotnet add package Reallukee.Confole.Sharp --prerelease
 ```
 
-Esempio minimale dell'uso delle API di Confole.Sharp.
-
-
-
-### C#
+Esempio minimale dell'uso delle API di `Confole.Sharp`:
 
 ```csharp
 using System;
@@ -96,30 +112,20 @@ Console.ReadKey(true);
 formats.Reset("");
 ```
 
+È possibile anche usare le API in modo statico:
 
+```csharp
+using System;
 
-### Visual Basic
+using Reallukee.Confole.Sharp;
 
-```vb
-Imports System
+Formats.DoForegroundColor("", new RGBColor(255, 0, 0));
+Formats.DoBackgroundColor("", new RGBColor(0, 0, 255));
+Formats.DoItalic("Hello, World!", true);
 
-Imports Reallukee.Confole.Sharp
+Console.ReadKey(true);
 
-Module Program
-    Sub Main()
-        Dim formats As New Formats()
-
-        formats.AddItalicFormat(True)
-        formats.AddForegroundColorFormat(New RGBColor(255, 0, 0))
-        formats.AddBackgroundColorFormat(New RGBColor(0, 0, 255))
-
-        formats.ApplyAll("Hello, World!")
-
-        Console.ReadKey(true)
-
-        formats.Reset("")
-    End Sub
-End Module
+Formats.DoReset("");
 ```
 
 

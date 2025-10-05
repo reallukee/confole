@@ -143,18 +143,6 @@ module Format =
     let reset text =
         [
             Restore
-
-            Bold      false
-            Faint     false
-            Italic    false
-            Underline false
-            Blinking  false
-            Reverse   false
-            Hidden    false
-            Strikeout false
-
-            ForegroundColor (RGB (255, 255, 255))
-            BackgroundColor (RGB (0, 0, 0))
         ]
         |> applyAll text
 
@@ -191,13 +179,13 @@ module Format =
 
     let doRestore text = apply text Restore
 
-    let doBold      text flag = apply text (Bold flag)
-    let doFaint     text flag = apply text (Faint flag)
-    let doItalic    text flag = apply text (Italic flag)
+    let doBold      text flag = apply text (Bold      flag)
+    let doFaint     text flag = apply text (Faint     flag)
+    let doItalic    text flag = apply text (Italic    flag)
     let doUnderline text flag = apply text (Underline flag)
-    let doBlinking  text flag = apply text (Blinking flag)
-    let doReverse   text flag = apply text (Reverse flag)
-    let doHidden    text flag = apply text (Hidden flag)
+    let doBlinking  text flag = apply text (Blinking  flag)
+    let doReverse   text flag = apply text (Reverse   flag)
+    let doHidden    text flag = apply text (Hidden    flag)
     let doStrikeout text flag = apply text (Strikeout flag)
 
     let doRestoreForegroundColor text = apply text RestoreForegroundColor

@@ -25,5 +25,5 @@ module Common =
     val CSI : string
     val OSC : string
 
-    val BELL : string
+    val Bell : string
     val SP   : string

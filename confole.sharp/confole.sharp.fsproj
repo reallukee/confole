@@ -108,7 +108,7 @@
       <Link>resources\package\confole.png</Link>
     </None>
 
-    <None Include="README.md">
+    <None Include="..\nuget\confole.sharp\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
       <Link>resources\package\README.md</Link>

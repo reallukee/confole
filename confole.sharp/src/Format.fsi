@@ -216,6 +216,25 @@ type Formats =
 
     member Reset : text : string -> unit
 
+    static member DoRestore : text : string -> unit
+
+    static member DoBold      : text : string * flag : bool -> unit
+    static member DoFaint     : text : string * flag : bool -> unit
+    static member DoItalic    : text : string * flag : bool -> unit
+    static member DoUnderline : text : string * flag : bool -> unit
+    static member DoBlinking  : text : string * flag : bool -> unit
+    static member DoReverse   : text : string * flag : bool -> unit
+    static member DoHidden    : text : string * flag : bool -> unit
+    static member DoStrikeout : text : string * flag : bool -> unit
+
+    static member DoRestoreForegroundColor : text : string -> unit
+    static member DoRestoreBackgroundColor : text : string -> unit
+
+    static member DoForegroundColor : text : string * color : Color -> unit
+    static member DoBackgroundColor : text : string * color : Color -> unit
+
+    static member DoReset : text : string -> unit
+
     override Equals      : obj : obj -> bool
     override GetHashCode : unit      -> int
     override ToString    : unit      -> string

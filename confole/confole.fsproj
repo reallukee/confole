@@ -133,7 +133,7 @@
       <Link>resources\package\icon.png</Link>
     </None>
 
-    <None Include="README.md">
+    <None Include="..\nuget\confole\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
       <Link>resources\package\README.md</Link>
