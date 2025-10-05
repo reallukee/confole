@@ -15,9 +15,3 @@ _layout: landing
 🎨 Abbellisci la tua app console F# in modo funzionale
 
 </div>
-
-
-
-* [Uso](/docs/uso)
-* [Download](/docs/download)
-* [Compilazione](/docs/compilazione)
