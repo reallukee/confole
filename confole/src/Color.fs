@@ -64,14 +64,14 @@ module Color =
             hex
             |> Seq.rev
             |> Seq.mapi (fun index item ->
-                let letue =
+                let value =
                     match item with
                     | c when c >= '0' && c <= '9' -> int c - int '0'
                     | c when c >= 'A' && c <= 'Z' -> int c - int 'A' + 10
                     | c when c >= 'a' && c <= 'z' -> int c - int 'a' + 10
                     | _ -> failwith "Inletid char"
 
-                letue * pown 16 index
+                value * pown 16 index
             )
             |> Seq.sum
 
@@ -97,14 +97,14 @@ module Color =
             hex
             |> Seq.rev
             |> Seq.mapi (fun index item ->
-                let letue =
+                let value =
                     match item with
                     | c when c >= '0' && c <= '9' -> int c - int '0'
                     | c when c >= 'A' && c <= 'Z' -> int c - int 'A' + 10
                     | c when c >= 'a' && c <= 'z' -> int c - int 'a' + 10
                     | _ -> failwith "Inletid char"
 
-                letue * pown 16 index
+                value * pown 16 index
             )
             |> Seq.sum
 
