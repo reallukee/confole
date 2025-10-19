@@ -78,7 +78,7 @@ Format.reset ""
 
 
 
-## C#?
+## C#
 
 > [!IMPORTANT]
 > `Confole.Sharp` è wrapper OOP di `Confole`!
