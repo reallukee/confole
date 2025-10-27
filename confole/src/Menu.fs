@@ -110,13 +110,13 @@ module Menu =
             }
         | true, true, false ->
             builder {
-                foregroundColor (Option.defaultValue defaultSelectedForegroundColor style.selectedForegroundColor)
-                backgroundColor (Option.defaultValue defaultSelectedBackgroundColor style.selectedBackgroundColor)
+                foregroundColor (Option.defaultValue defaultCurrentForegroundColor style.currentForegroundColor)
+                backgroundColor (Option.defaultValue defaultCurrentBackgroundColor style.currentBackgroundColor)
             }
         | true, _, true ->
             builder {
-                foregroundColor (Option.defaultValue defaultCurrentForegroundColor style.currentForegroundColor)
-                backgroundColor (Option.defaultValue defaultCurrentBackgroundColor style.currentBackgroundColor)
+                foregroundColor (Option.defaultValue defaultSelectedForegroundColor style.selectedForegroundColor)
+                backgroundColor (Option.defaultValue defaultSelectedBackgroundColor style.selectedBackgroundColor)
             }
         | true, false, false ->
             builder {
@@ -144,7 +144,7 @@ module Menu =
 
         menu.items
         |> List.iteri (fun index item ->
-            Cursor.apply false (Move (ColRow (menu.col, menu.row + index)))
+            doMove (ColRow (menu.col, menu.row + index))
 
             let item =
                 match item.itemType with
@@ -153,7 +153,7 @@ module Menu =
 
             let format = style menu index
 
-            applyAll false item format
+            applyAll item format
         )
 
 
@@ -171,7 +171,7 @@ module Menu =
 
 
 
-    let private incrementCurrentItem menu =
+    let private currentItemToNext menu =
         let hasSelectable = hasSelectable menu
 
         if not hasSelectable then
@@ -190,7 +190,7 @@ module Menu =
 
         loop menu.currentItem
 
-    let private decrementCurrentItem menu =
+    let private currentItemToPrevious menu =
         let hasSelectable = hasSelectable menu
 
         if not hasSelectable then
@@ -261,7 +261,7 @@ module Menu =
         if List.isEmpty menu.items then
             failwith "Error!"
 
-        let next = incrementCurrentItem menu
+        let next = currentItemToNext menu
 
         { menu with
             currentItem  = next
@@ -272,7 +272,7 @@ module Menu =
         if List.isEmpty menu.items then
             failwith "Error!"
 
-        let previous = decrementCurrentItem menu
+        let previous = currentItemToPrevious menu
 
         { menu with
             currentItem  = previous
@@ -313,9 +313,7 @@ module Menu =
         doHideCursor ()
 
         let menu =
-            let hasSelectable = hasSelectable menu
-
-            if not hasSelectable then
+            if not (hasSelectable menu) then
                 menu
             else
                 topItem menu
@@ -323,7 +321,7 @@ module Menu =
         let rec loop menu =
             draw menu
 
-            Cursor.apply false (Move (ColRow (0, 0)))
+            doMove (ColRow (0, 0))
 
             let key = Console.ReadKey(true)
 
@@ -343,6 +341,6 @@ module Menu =
 
         let menu = loop menu
 
-        Rule.apply false ShowCursor
+        doShowCursor ()
 
         menu

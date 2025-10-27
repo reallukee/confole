@@ -7,25 +7,46 @@ open Reallukee.Confole
 module Program =
     [<EntryPoint>]
     let main _ =
-        let rules =
-            Rule.init ()
-            |> Rule.title                    "Confole"
-            |> Rule.showCursorBlinking
-            |> Rule.showCursor
-            |> Rule.disableDesignateMode
-            |> Rule.disableAlternativeBuffer
-            |> Rule.cursorShape              (Some Rule.Shape.User)
-            |> Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
-            |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
-            |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
+        let menu : Menu.Menu = {
+            col   = 4
+            row   = 2
+            items = [
+                {
+                    itemType = Menu.Separator
+                    enable   = true
+                    visible  = true
+                    style    = None
+                }
+                {
+                    itemType = Menu.Value "Item 1"
+                    enable   = true
+                    visible  = true
+                    style    = None
+                }
+                {
+                    itemType = Menu.Value "Item 2"
+                    enable   = true
+                    visible  = true
+                    style    = None
+                }
+                {
+                    itemType = Menu.Value "Item 3"
+                    enable   = true
+                    visible  = true
+                    style    = None
+                }
+                {
+                    itemType = Menu.Separator
+                    enable   = true
+                    visible  = true
+                    style    = None
+                }
+            ]
+            currentItem  = 0
+            selectedItem = 0
+            style        = None
+        }
 
-        Rule.applyAll rules
-
-        printfn "Hello, World!"
-
-        do Console.ReadKey(true)
-        |> ignore
-
-        Rule.reset ()
+        let menu = Menu.run menu
 
         0
