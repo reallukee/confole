@@ -2,6 +2,7 @@
 .idea/
 .run/
 
+# DotNet
 global.json
 
 # Visual Studio

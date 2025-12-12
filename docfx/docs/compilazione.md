@@ -8,9 +8,9 @@
 > .NET 8.0+ SDK consigliata!
 
 * .NET Core 2.0+ SDK o .NET 5.0+ SDK
-* PowerShell 7+ (Script)
+* PowerShell 7+ (Per gli script)
 
-### Esecuzione
+### Compatibilità
 
 > [!IMPORTANT]
 > Confole ha come target .NET Standard 2.0!
@@ -24,16 +24,16 @@
 
 ## 1. Sorgente
 
-* [Usando *Git*](#usando-git)
-* [Usando *GitHub*](#usando-github)
+* [Usando `git`](#usando-git)
+* [Usando `GitHub`](#usando-github)
 
-### Usando *Git*
+### Usando `git`
 
 ```
 git clone https://github.com/reallukee/confole.git
 ```
 
-### Usando *GitHub*
+### Usando `GitHub`
 
 > [Download da GitHub](https://github.com/reallukee/confole/archive/main.zip)
 
@@ -70,7 +70,7 @@ git clone https://github.com/reallukee/confole.git
 2. Usando *PowerShell*:
 
     > [!TIP]
-    > *PowerShell* è la scelta ideale in ambienti .NET oriented!
+    > *PowerShell* è la scelta ideale in ambienti .NET oriented!
 
     ```pwsh
     cd .\confole\scripts\
