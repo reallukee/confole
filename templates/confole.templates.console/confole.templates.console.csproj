@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageId>Reallukee.Confole.Templates.Console</PackageId>
+    <Title>Confole Console Templates</Title>
+    <Version>1.1.0</Version>
+    <Authors>Luca Pollicino</Authors>
+    <Company>Luca Pollicino</Company>
+    <Product>Confole Console Templates</Product>
+    <Description>Confole Console Templates</Description>
+    <Copyright>Luca Pollicino</Copyright>
+    <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
+    <PackageIcon>confole.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/reallukee/confole</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;console;templates</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="templates\**\*.*" Pack="true" PackagePath="content\templates\" />
+
+    <Compile Remove="templates\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\confole.png" Link="resources\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\confole.png" Pack="true" PackagePath="\" Link="resources\package\icon.png" />
+    <None Include="..\..\nuget\confole.templates.console\README.md" Pack="true" PackagePath="\" Link="resources\package\README.md" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" Link="resources\package\LICENSE" />
+  </ItemGroup>
+
+</Project>

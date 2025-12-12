@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "name": "Confole Console App",
+  "description": "Fornisce un template per la creazione di App Console VB con Confole",
+  "icon": "icon.png",
+  "sourceName": "ConfoleConsoleApp",
+  "author": "Luca Pollicino (Reallukee)",
+  "language": [
+    "VB"
+  ],
+  "identity": "Reallukee.Confole.Templates.Console.VB",
+  "groupIdentity": "Reallukee.Confole.Templates.Console",
+  "shortName": [
+    "confole-console-app",
+    "confole-app"
+  ],
+  "preferNameDirectory": true,
+  "shortcuts": [],
+  "tags": {
+    "language": "VB",
+    "type": "project",
+    "projectType": "console"
+  },
+  "classifications": [
+    "Console",
+    "Reallukee",
+    "Confole"
+  ],
+  "symbols": {
+    "mode": {
+      "displayName": "Modalità",
+      "description": "Scegli stile",
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "classic",
+          "description": "Stile classico",
+          "value": "Classico"
+        },
+        {
+          "choice": "static",
+          "description": "Stile statico",
+          "value": "Statico"
+        }
+      ],
+      "defaultValue": "classic"
+    },
+    "restore": {
+      "displayName": "Restore",
+      "description": "Restore",
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "ConfoleConsoleApp.vbproj"
+    }
+  ],
+  "postActions": [
+    {
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "description": "Apri",
+      "condition": "(HostIdentifier != 'dotnetcli')",
+      "manualInstructions": [],
+      "args": {
+        "files": "Program.vb"
+      },
+      "continueOnError": true
+    },
+    {
+      "actionId": "B17581D1-C5C9-4489-8F0A-004BE667B814",
+      "description": "DotNet Add",
+      "manualInstructions": [{
+        "text": "Run 'dotnet add package Reallukee.Confole.Sharp --version 1.1.0'"
+      }],
+      "args": {
+        "referenceType": "package",
+        "reference": "Reallukee.Confole.Sharp",
+        "version": "1.1.0",
+        "projectFileExtensions": ".vbproj"
+      },
+      "continueOnError": false
+    },
+    {
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "description": "DotNet Restore",
+      "condition": "(restore)",
+      "manualInstructions": [{
+        "text": "Run 'dotnet restore'"
+      }],
+      "continueOnError": true
+    }
+  ]
+}
