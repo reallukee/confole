@@ -22,7 +22,7 @@
 
 
 
-### Sì tutto ok, ma la [documentazione](./DOCS.md)?
+### Sì tutto ok, ma la [documentazione](./DOCS.md)?
 
 </div>
 
@@ -37,104 +37,105 @@
 
 ## F#
 
-Installa `Confole` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole)!
+1. Installa `Confole` tramite `NuGet`:
 
-```
-dotnet add package Reallukee.Confole --prerelease
-```
+    ```
+    dotnet add package Reallukee.Confole
+    ```
 
-Esempio minimale dell'uso delle API di `Confole`:
+2. Incolla l'esempio minimale dell'uso delle API di `Confole`:
 
-```fsharp
-open System
+    ```fsharp
+    open System
 
-open Reallukee.Confole
+    open Reallukee.Confole
 
-let formats =
-    Format.init ()
-    |> Format.italic          true
-    |> Format.foregroundColor (Color.RGB (255, 0, 0))
-    |> Format.backgroundColor (Color.RGB (0, 0, 255))
+    let formats =
+        Format.init ()
+        |> Format.italic          true
+        |> Format.foregroundColor (Color.RGB (255, 0, 0))
+        |> Format.backgroundColor (Color.RGB (0, 0, 255))
 
-Format.applyAllNewLine "Hello, World!" formats
+    Format.applyAllNewLine "Hello, World!" formats
 
-do Console.ReadKey(true)
-|> ignore
+    do Console.ReadKey(true)
+    |> ignore
 
-Format.reset ""
-```
+    Format.reset ""
+    ```
 
-È possibile anche usare le API in stile "imperativo":
+    È possibile anche usare le API in stile *imperativo*:
 
-```fsharp
-open System
+    ```fsharp
+    open System
 
-open Reallukee.Confole
+    open Reallukee.Confole
 
-Format.doForegroundColor "" (Color.RGB (255, 0, 0))
-Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
-Format.doBold "Hello, World!" true
+    Format.doForegroundColor "" (Color.RGB (255, 0, 0))
+    Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
+    Format.doBold "Hello, World!" true
 
-do Console.ReadKey(true)
-|> ignore
+    printfn ""
 
-Format.reset ""
-```
+    do Console.ReadKey(true)
+    |> ignore
 
-> [!NOTE]
-> Più esempi [qui](./examples)!
+    Format.reset ""
+    ```
 
 
 
 ## C#
 
 > [!IMPORTANT]
-> `Confole.Sharp` è wrapper OOP di `Confole`!
+> `Confole.Sharp` è wrapper OOP di `Confole`!
 
 > [!NOTE]
-> `Confole.Sharp` INCLUDE tutte le funzionalità di `Confole`!
+> `Confole.Sharp` **INCLUDE** tutte le funzionalità di `Confole`!
 
-Installa `Confole.Sharp` tramite [NuGet](https://www.nuget.org/packages/Reallukee.Confole.Sharp)!
+1. Installa `Confole.Sharp` tramite `NuGet`:
 
-```
-dotnet add package Reallukee.Confole.Sharp --prerelease
-```
+    ```
+    dotnet add package Reallukee.Confole.Sharp
+    ```
 
-Esempio minimale dell'uso delle API di `Confole.Sharp`:
+2. Incolla l'esempio minimale dell'uso delle API di `Confole.Sharp`:
 
-```csharp
-using System;
+    ```csharp
+    using System;
 
-using Reallukee.Confole.Sharp;
+    using Reallukee.Confole.Sharp;
 
-Formats formats = new Formats();
+    Formats formats = new Formats();
 
-formats.AddItalicFormat(true)
-       .AddForegroundColorFormat(new RGBColor(255, 0, 0))
-       .AddBackgroundColorFormat(new RGBColor(0, 0, 255));
+    formats.AddItalicFormat(true)
+           .AddForegroundColorFormat(new RGBColor(255, 0, 0))
+           .AddBackgroundColorFormat(new RGBColor(0, 0, 255));
 
-formats.ApplyAll("Hello, World!");
+    formats.ApplyAll(true, "Hello, World!");
 
-Console.ReadKey(true);
+    Console.ReadKey(true);
 
-formats.Reset("");
-```
+    formats.Reset("");
+    ```
 
-È possibile anche usare le API in modo statico:
+    È possibile anche usare le API in modo *statico*:
 
-```csharp
-using System;
+    ```csharp
+    using System;
 
-using Reallukee.Confole.Sharp;
+    using Reallukee.Confole.Sharp;
 
-Formats.DoForegroundColor("", new RGBColor(255, 0, 0));
-Formats.DoBackgroundColor("", new RGBColor(0, 0, 255));
-Formats.DoItalic("Hello, World!", true);
+    Formats.DoForegroundColor("", new RGBColor(255, 0, 0));
+    Formats.DoBackgroundColor("", new RGBColor(0, 0, 255));
+    Formats.DoItalic("Hello, World!", true);
 
-Console.ReadKey(true);
+    Console.WriteLine();
 
-Formats.DoReset("");
-```
+    Console.ReadKey(true);
+
+    Formats.DoReset("");
+    ```
 
 
 
@@ -142,12 +143,14 @@ Formats.DoReset("");
 
 ## GitHub
 
-> [Download](https://github.com/reallukee/confole/releases/latest)
+> [Download da GitHub](https://github.com/reallukee/confole/releases/latest)
 
 ## NuGet
 
-* [Confole](https://www.nuget.org/packages/Reallukee.Confole)
-* [Confole.Sharp](https://www.nuget.org/packages/Reallukee.Confole.Sharp)
+| Pacchetto                                                                 | Versione                                                                 | Downloads                                                                   |
+| :------------------------------------------------------------------------ | :----------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| [`Confole`](https://www.nuget.org/packages/Reallukee.Confole)             | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole)       | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole)       |
+| [`Confole.Sharp`](https://www.nuget.org/packages/Reallukee.Confole.Sharp) | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Sharp) | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Sharp) |
 
 
 
@@ -161,9 +164,9 @@ Formats.DoReset("");
 > .NET 8.0+ SDK consigliata!
 
 * .NET Core 2.0+ SDK o .NET 5.0+ SDK
-* PowerShell 7+ (Script)
+* PowerShell 7+ (Per gli script)
 
-### Esecuzione
+### Compatibilità
 
 > [!IMPORTANT]
 > Confole ha come target .NET Standard 2.0!
@@ -177,16 +180,16 @@ Formats.DoReset("");
 
 ## 1. Sorgente
 
-* [Usando *Git*](#usando-git)
-* [Usando *GitHub*](#usando-github)
+* [Usando `git`](#usando-git)
+* [Usando `GitHub`](#usando-github)
 
-### Usando *Git*
+### Usando `git`
 
 ```
 git clone https://github.com/reallukee/confole.git
 ```
 
-### Usando *GitHub*
+### Usando `GitHub`
 
 > [Download da GitHub](https://github.com/reallukee/confole/archive/main.zip)
 
@@ -223,7 +226,7 @@ git clone https://github.com/reallukee/confole.git
 2. Usando *PowerShell*:
 
     > [!TIP]
-    > *PowerShell* è la scelta ideale in ambienti .NET oriented!
+    > *PowerShell* è la scelta ideale in ambienti .NET oriented!
 
     ```pwsh
     cd .\confole\scripts\

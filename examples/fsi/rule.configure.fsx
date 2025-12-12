@@ -1,12 +1,12 @@
 (*
     F# Script
 
-    Type "dotnet fsi rule.delayedpipeline.fsx" to run!
+    Type "dotnet fsi rule.configure.fsx" to run!
 
-    Necessary for F# Interactive
+    Necessary for F# Interactive:
 
-    dotnet build confole --configuration Release
-    dotnet pack confole --configuration Release
+        dotnet build confole --configuration Release
+        dotnet pack confole --configuration Release
 *)
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
@@ -17,8 +17,8 @@ open System
 
 open Reallukee.Confole
 
-let rules =
-    Rule.init ()
+Rule.configure (fun rules ->
+    rules
     |> Rule.title                    "Confole"
     |> Rule.showCursorBlinking
     |> Rule.showCursor
@@ -28,11 +28,11 @@ let rules =
     |> Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
     |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
     |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
-
-Rule.applyAll rules
+)
 
 printfn "Hello, World!"
 
+// For GitHub actions!
 if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
     |> ignore

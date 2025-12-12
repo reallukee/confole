@@ -2,9 +2,11 @@
 
 ## GitHub
 
-> [Download](https://github.com/reallukee/confole/releases/latest)
+> [Download da GitHub](https://github.com/reallukee/confole/releases/latest)
 
 ## NuGet
 
-* [Confole](https://www.nuget.org/packages/Reallukee.Confole)
-* [Confole.Sharp](https://www.nuget.org/packages/Reallukee.Confole.Sharp)
+| Pacchetto                                                                 | Versione                                                                 | Downloads                                                                   |
+| :------------------------------------------------------------------------ | :----------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| [`Confole`](https://www.nuget.org/packages/Reallukee.Confole)             | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole)       | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole)       |
+| [`Confole.Sharp`](https://www.nuget.org/packages/Reallukee.Confole.Sharp) | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Sharp) | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Sharp) |
