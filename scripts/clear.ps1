@@ -16,7 +16,9 @@ $targets = @(
     ".vs",
     ".idea",
     "bin",
-    "obj"
+    "obj",
+    "_site",
+    "api"
 )
 
 $exclusions = @(
