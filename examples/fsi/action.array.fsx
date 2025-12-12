@@ -3,10 +3,10 @@
 
     Type "dotnet fsi action.array.fsx" to run!
 
-    Necessary for F# Interactive
+    Necessary for F# Interactive:
 
-    dotnet build confole --configuration Release
-    dotnet pack confole --configuration Release
+        dotnet build confole --configuration Release
+        dotnet pack confole --configuration Release
 *)
 
 #r @"../confole/bin/Release/netstandard2.0/confole.dll"
@@ -19,6 +19,7 @@ open Reallukee.Confole
 
 printfn "Hello, World!"
 
+// For GitHub actions!
 if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
     |> ignore
