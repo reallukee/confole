@@ -1,23 +1,20 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "name": "Confole Console App",
-  "description": "Fornisce un template per la creazione di App Console VB con Confole",
+  "description": "Fornisce un template per la creazione di App Console F# con Confole",
   "icon": "icon.png",
   "sourceName": "ConfoleConsoleApp",
   "author": "Luca Pollicino (Reallukee)",
   "language": [
-    "VB"
+    "F#"
   ],
-  "identity": "Reallukee.Confole.Templates.Console.VB",
-  "groupIdentity": "Reallukee.Confole.Templates.Console",
-  "shortName": [
-    "confole-console-app",
-    "confole-app"
-  ],
+  "identity": "Reallukee.Confole.Templates.FSharp",
+  "groupIdentity": "Reallukee.Confole.Templates",
+  "shortName": "confole-app",
   "preferNameDirectory": true,
   "shortcuts": [],
   "tags": {
-    "language": "VB",
+    "language": "F#",
     "type": "project",
     "projectType": "console"
   },
@@ -34,17 +31,17 @@
       "datatype": "choice",
       "choices": [
         {
-          "choice": "classic",
-          "description": "Stile classico",
-          "value": "Classico"
+          "choice": "functional",
+          "description": "Stile funzionale",
+          "value": "Funzionale"
         },
         {
-          "choice": "static",
-          "description": "Stile statico",
-          "value": "Statico"
+          "choice": "imperative",
+          "description": "Stile imperativo",
+          "value": "Imperativo"
         }
       ],
-      "defaultValue": "classic"
+      "defaultValue": "functional"
     },
     "restore": {
       "displayName": "Restore",
@@ -56,7 +53,7 @@
   },
   "primaryOutputs": [
     {
-      "path": "ConfoleConsoleApp.vbproj"
+      "path": "ConfoleConsoleApp.fsproj"
     }
   ],
   "postActions": [
@@ -66,7 +63,7 @@
       "condition": "(HostIdentifier != 'dotnetcli')",
       "manualInstructions": [],
       "args": {
-        "files": "Program.vb"
+        "files": "Program.fs"
       },
       "continueOnError": true
     },
@@ -74,13 +71,13 @@
       "actionId": "B17581D1-C5C9-4489-8F0A-004BE667B814",
       "description": "DotNet Add",
       "manualInstructions": [{
-        "text": "Run 'dotnet add package Reallukee.Confole.Sharp --version 1.1.0'"
+        "text": "Run 'dotnet add package Reallukee.Confole --version 1.1.0'"
       }],
       "args": {
         "referenceType": "package",
-        "reference": "Reallukee.Confole.Sharp",
+        "reference": "Reallukee.Confole",
         "version": "1.1.0",
-        "projectFileExtensions": ".vbproj"
+        "projectFileExtensions": ".fsproj"
       },
       "continueOnError": false
     },

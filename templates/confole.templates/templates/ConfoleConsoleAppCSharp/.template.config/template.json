@@ -8,12 +8,9 @@
   "language": [
     "C#"
   ],
-  "identity": "Reallukee.Confole.Templates.Console.CSharp",
-  "groupIdentity": "Reallukee.Confole.Templates.Console",
-  "shortName": [
-    "confole-console-app",
-    "confole-app"
-  ],
+  "identity": "Reallukee.Confole.Templates.CSharp",
+  "groupIdentity": "Reallukee.Confole.Templates",
+  "shortName": "confole-app",
   "preferNameDirectory": true,
   "shortcuts": [],
   "tags": {
