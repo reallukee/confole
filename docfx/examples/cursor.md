@@ -14,10 +14,6 @@ open Reallukee.Confole
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Cursor.reset ()
 ```
 
@@ -37,10 +33,6 @@ Cursor.builder {
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Cursor.reset ()
 ```
 
@@ -59,10 +51,6 @@ Cursor.configure (fun cursors ->
 )
 
 printfn "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Cursor.reset ()
 ```
@@ -84,10 +72,6 @@ Cursor.applyAll cursors
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Cursor.reset ()
 ```
 
@@ -105,10 +89,6 @@ Cursor.init ()
 |> Cursor.applyAll
 
 printfn "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Cursor.reset ()
 ```

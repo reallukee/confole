@@ -14,10 +14,6 @@ open Reallukee.Confole
 ]
 |> Format.applyAllNewLine "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Format.reset ""
 ```
 
@@ -37,10 +33,6 @@ Format.builder {
 }
 |> Format.applyAllNewLine "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Format.reset ""
 ```
 
@@ -59,10 +51,6 @@ Format.configureNewLine "Hello, World!" (fun formats ->
     |> Format.foregroundColor (Color.RGB (255, 0, 0))
     |> Format.backgroundColor (Color.RGB (0, 0, 255))
 )
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Format.reset ""
 ```
@@ -84,10 +72,6 @@ let formats =
 
 Format.applyAllNewLine "Hello, World!" formats
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Format.reset ""
 ```
 
@@ -105,10 +89,6 @@ Format.init ()
 |> Format.foregroundColor (Color.RGB (255, 0, 0))
 |> Format.backgroundColor (Color.RGB (0, 0, 255))
 |> Format.applyAllNewLine "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Format.reset ""
 ```

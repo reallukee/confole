@@ -22,10 +22,6 @@ open Reallukee.Confole
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Rule.reset ()
 ```
 
@@ -53,10 +49,6 @@ Rule.builder {
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Rule.reset ()
 ```
 
@@ -83,10 +75,6 @@ Rule.configure (fun rules ->
 )
 
 printfn "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Rule.reset ()
 ```
@@ -116,10 +104,6 @@ Rule.applyAll rules
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Rule.reset ()
 ```
 
@@ -145,10 +129,6 @@ Rule.init ()
 |> Rule.applyAll
 
 printfn "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Rule.reset ()
 ```
