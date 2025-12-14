@@ -39,7 +39,7 @@ jobs:
 
       - name: Run examples
         run: |
-          for example in examples/*.fsx; do
+          for example in examples/fsi/*.fsx; do
             if [[ -f "$example" ]]; then
               dotnet fsi "$example"
             fi
