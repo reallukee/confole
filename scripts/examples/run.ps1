@@ -9,7 +9,7 @@ catch {
 
 Push-Location
 
-$root = Join-Path -Path (Split-Path -Parent (Get-Location)) -ChildPath "examples"
+$root = Join-Path -Path (Split-Path -Parent (Split-Path -Parent (Get-Location))) -ChildPath "examples/fsi"
 
 if (-not (Test-Path -Path $root -PathType Container)) {
     Write-Error -Message "Can't enter repository examples directory!"
