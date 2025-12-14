@@ -1,11 +1,11 @@
-// Program.cs ** ConfoleConsoleApp
+// Program.cs ** ConfoleApp
 //   Confole: https://github.com/reallukee/confole
 
 using System;
 
 using Reallukee.Confole.Sharp;
 
-namespace ConfoleConsoleApp;
+namespace ConfoleApp;
 
 internal class Program
 {
@@ -18,7 +18,7 @@ internal class Program
                .AddForegroundColorFormat(new RGBColor(255, 0, 0))
                .AddBackgroundColorFormat(new RGBColor(0, 0, 255));
 
-        formats.ApplyAll(true, "Hello, World from ConfoleConsoleApp!");
+        formats.ApplyAll(true, "Hello, World from ConfoleApp!");
 
         formats.Reset("");
         #endif

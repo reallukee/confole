@@ -1,11 +1,11 @@
-' Program.vb ** ConfoleConsoleApp
+' Program.vb ** ConfoleApp
 '   Confole: https://github.com/reallukee/confole
 
 Imports System
 
 Imports Reallukee.Confole.Sharp
 
-Namespace ConfoleConsoleApp
+Namespace ConfoleApp
 
     Friend Class Program
 
@@ -17,7 +17,7 @@ Namespace ConfoleConsoleApp
                    .AddForegroundColorFormat(New RGBColor(255, 0, 0)) _
                    .AddBackgroundColorFormat(New RGBColor(0, 0, 255))
 
-            formats.ApplyAll(True, "Hello, World from ConfoleConsoleApp!")
+            formats.ApplyAll(True, "Hello, World from ConfoleApp!")
 
             formats.Reset("")
             #End If

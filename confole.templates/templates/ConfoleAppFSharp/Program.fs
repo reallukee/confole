@@ -1,7 +1,7 @@
-// Program.fs ** ConfoleConsoleApp
+// Program.fs ** ConfoleApp
 //   Confole: https://github.com/reallukee/confole
 
-namespace ConfoleConsoleApp
+namespace ConfoleApp
 
 open System
 
@@ -17,14 +17,14 @@ module Program =
             |> Format.foregroundColor (Color.RGB (255, 0, 0))
             |> Format.backgroundColor (Color.RGB (0, 0, 255))
 
-        Format.applyAllNewLine "Hello, World from ConfoleConsoleApp!" formats
+        Format.applyAllNewLine "Hello, World from ConfoleApp!" formats
 
         Format.reset ""
         #endif
         #if (mode == "imperative")
         Format.doForegroundColor "" (Color.RGB (255, 0, 0))
         Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
-        Format.doBold "Hello, World! from ConfoleConsoleApp!" true
+        Format.doBold "Hello, World! from ConfoleApp!" true
 
         printfn ""
 

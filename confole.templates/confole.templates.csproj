@@ -2,15 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <!--<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>-->
 
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageId>Reallukee.Confole.Templates</PackageId>
-    <Title>Confole Console Templates</Title>
+    <Title>Confole Templates</Title>
     <Version>1.1.0</Version>
     <Authors>Luca Pollicino</Authors>
     <Company>Luca Pollicino</Company>
-    <Product>Confole Console Templates</Product>
-    <Description>Confole Console Templates</Description>
+    <Product>Confole Templates</Product>
+    <Description>Abbellisci la tua app console F# in modo funzionale</Description>
     <Copyright>Luca Pollicino</Copyright>
     <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
     <PackageIcon>confole.png</PackageIcon>

@@ -3,14 +3,16 @@
   "name": "Confole Console App",
   "description": "Fornisce un template per la creazione di App Console F# con Confole",
   "icon": "icon.png",
-  "sourceName": "ConfoleConsoleApp",
+  "sourceName": "ConfoleApp",
   "author": "Luca Pollicino (Reallukee)",
   "language": [
     "F#"
   ],
   "identity": "Reallukee.Confole.Templates.FSharp",
   "groupIdentity": "Reallukee.Confole.Templates",
-  "shortName": "confole-app",
+  "shortName": [
+    "confole-app"
+  ],
   "preferNameDirectory": true,
   "shortcuts": [],
   "tags": {
@@ -53,7 +55,7 @@
   },
   "primaryOutputs": [
     {
-      "path": "ConfoleConsoleApp.fsproj"
+      "path": "ConfoleApp.fsproj"
     }
   ],
   "postActions": [

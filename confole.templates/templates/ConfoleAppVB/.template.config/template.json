@@ -1,20 +1,22 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "name": "Confole Console App",
-  "description": "Fornisce un template per la creazione di App Console C# con Confole",
+  "description": "Fornisce un template per la creazione di App Console VB con Confole",
   "icon": "icon.png",
-  "sourceName": "ConfoleConsoleApp",
+  "sourceName": "ConfoleApp",
   "author": "Luca Pollicino (Reallukee)",
   "language": [
-    "C#"
+    "VB"
   ],
-  "identity": "Reallukee.Confole.Templates.CSharp",
+  "identity": "Reallukee.Confole.Templates.VB",
   "groupIdentity": "Reallukee.Confole.Templates",
-  "shortName": "confole-app",
+  "shortName": [
+    "confole-app"
+  ],
   "preferNameDirectory": true,
   "shortcuts": [],
   "tags": {
-    "language": "C#",
+    "language": "VB",
     "type": "project",
     "projectType": "console"
   },
@@ -53,7 +55,7 @@
   },
   "primaryOutputs": [
     {
-      "path": "ConfoleConsoleApp.csproj"
+      "path": "ConfoleApp.vbproj"
     }
   ],
   "postActions": [
@@ -63,7 +65,7 @@
       "condition": "(HostIdentifier != 'dotnetcli')",
       "manualInstructions": [],
       "args": {
-        "files": "Program.cs"
+        "files": "Program.vb"
       },
       "continueOnError": true
     },
@@ -77,7 +79,7 @@
         "referenceType": "package",
         "reference": "Reallukee.Confole.Sharp",
         "version": "1.1.0",
-        "projectFileExtensions": ".csproj"
+        "projectFileExtensions": ".vbproj"
       },
       "continueOnError": false
     },
