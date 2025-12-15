@@ -24,16 +24,19 @@ jobs:
         run: |
           dotnet restore confole --ignore-failed-sources
           dotnet restore confole.sharp --ignore-failed-sources
+          dotnet restore confole.templates --ignore-failed-sources
 
       - name: Build projects
         run: |
           dotnet build confole --no-restore --configuration Release
           dotnet build confole.sharp --no-restore --configuration Release
+          dotnet build confole.templates --no-restore --configuration Release
 
       - name: Pack projects
         run: |
           dotnet pack confole --no-build --configuration Release --output ./nupkg
           dotnet pack confole.sharp --no-build --configuration Release --output ./nupkg
+          dotnet pack confole.templates --no-build --configuration Release --output ./nupkg
 
       - name: Publish packs
         run: dotnet nuget push "nupkg/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}"

@@ -2,6 +2,7 @@ param(
     [ValidateSet(
         "Confole",
         "Confole.Sharp",
+        "Confole.Templates",
         "All"
     )]
     $Target = "All",
@@ -39,10 +40,11 @@ if (-not (Test-Path -Path $root -PathType Container)) {
 Set-Location -Path $root
 
 switch ($Target) {
-    "Confole"       { $projects = @("confole") }
-    "Confole.Sharp" { $projects = @("confole.sharp") }
-    "All"           { $projects = @("confole", "confole.sharp") }
-    default         { exit 1 }
+    "Confole"           { $projects = @("confole") }
+    "Confole.Sharp"     { $projects = @("confole.sharp") }
+    "Confole.Templates" { $projects = @("confole.templates")}
+    "All"               { $projects = @("confole", "confole.sharp", "confole.templates") }
+    default             { exit 1 }
 }
 
 $projects | ForEach-Object {

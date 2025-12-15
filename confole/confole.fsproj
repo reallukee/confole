@@ -50,6 +50,8 @@
     <Compile Include="src\Action.fs" />
     <Compile Include="src\Format.fsi" />
     <Compile Include="src\Format.fs" />
+    <Compile Include="src\Menu.fsi" />
+    <Compile Include="src\Menu.fs" />
   </ItemGroup>
 
   <ItemGroup>
