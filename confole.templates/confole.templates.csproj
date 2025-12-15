@@ -34,9 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\assets\confole.png" Pack="true" PackagePath="\" Link="resources\package\icon.png" />
-    <None Include="..\..\nuget\confole.templates\README.md" Pack="true" PackagePath="\" Link="resources\package\README.md" />
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" Link="resources\package\LICENSE" />
+    <None Include="..\assets\confole.png" Pack="true" PackagePath="\" Link="resources\package\icon.png" />
+    <None Include="..\nuget\confole.templates\README.md" Pack="true" PackagePath="\" Link="resources\package\README.md" />
+    <None Include="..\LICENSE" Pack="true" PackagePath="\" Link="resources\package\LICENSE" />
   </ItemGroup>
 
 </Project>
