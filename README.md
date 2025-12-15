@@ -6,11 +6,11 @@
 
 ![GitHub License](https://img.shields.io/github/license/reallukee/confole)
 ![GitHub Release](https://img.shields.io/github/v/release/reallukee/confole?include_prereleases)
-![Github Build Workflow](https://img.shields.io/github/actions/workflow/status/reallukee/confole/build.yml)
+![GitHub Build Workflow](https://img.shields.io/github/actions/workflow/status/reallukee/confole/build.yml)
 
 🎨 Abbellisci la tua app console F# in modo funzionale
 
-[Uso](#uso)
+[Iniziamo](#iniziamo)
 •
 [Download](#download)
 •
@@ -28,7 +28,7 @@
 
 
 
-# Uso
+# Iniziamo
 
 * [F#](#f)
 * [C#](#c)
@@ -37,13 +37,41 @@
 
 ## F#
 
+### Usando i template
+
+1. Installa `Confole.Templates` tramite `NuGet`:
+
+    ```
+    dotnet new install Reallukee.Confole.Templates
+    ```
+
+2. Crea un nuovo progetto da template:
+
+    ```
+    dotnet new confole-app --language F# --name MyApp
+    ```
+
+    È possibile anche usare le API in stile *imperativo*:
+
+    ```
+    dotnet new confole-app --language F# --name MyApp --mode imperative
+    ```
+
+3. Esegui il template!
+
+    ```
+    dotnet run MyApp
+    ```
+
+### Usando le mani
+
 1. Installa `Confole` tramite `NuGet`:
 
     ```
     dotnet add package Reallukee.Confole
     ```
 
-2. Incolla l'esempio minimale dell'uso delle API di `Confole`:
+2. Incolla l'esempio minimale dell'uso dell'API di `Confole`:
 
     ```fsharp
     open System
@@ -64,7 +92,7 @@
     Format.reset ""
     ```
 
-    È possibile anche usare le API in stile *imperativo*:
+    È possibile anche usare le API in stile *imperativo*:
 
     ```fsharp
     open System
@@ -83,15 +111,49 @@
     Format.reset ""
     ```
 
+3. Esegui il progetto!
+
+    ```
+    dotnet run
+    ```
+
 
 
 ## C#
 
 > [!IMPORTANT]
-> `Confole.Sharp` è wrapper OOP di `Confole`!
+> `Confole.Sharp` è wrapper OOP di `Confole`!
 
 > [!NOTE]
-> `Confole.Sharp` **INCLUDE** tutte le funzionalità di `Confole`!
+> `Confole.Sharp` **INCLUDE** tutte le funzionalità di `Confole`!
+
+### Usando i template
+
+1. Installa `Confole.Templates` tramite `NuGet`:
+
+    ```
+    dotnet new install Reallukee.Confole.Templates
+    ```
+
+2. Crea un nuovo progetto da template:
+
+    ```
+    dotnet new confole-app --language C# --name MyApp
+    ```
+
+    È possibile anche usare le API in modo *statico*:
+
+    ```
+    dotnet new confole-app --language C# --name MyApp --mode static
+    ```
+
+3. Esegui il template!
+
+    ```
+    dotnet run MyApp
+    ```
+
+### Usando le mani
 
 1. Installa `Confole.Sharp` tramite `NuGet`:
 
@@ -99,7 +161,7 @@
     dotnet add package Reallukee.Confole.Sharp
     ```
 
-2. Incolla l'esempio minimale dell'uso delle API di `Confole.Sharp`:
+2. Incolla l'esempio minimale dell'uso dell'API di `Confole.Sharp`:
 
     ```csharp
     using System;
@@ -119,7 +181,7 @@
     formats.Reset("");
     ```
 
-    È possibile anche usare le API in modo *statico*:
+    È possibile anche usare le API in modo *statico*:
 
     ```csharp
     using System;
@@ -137,20 +199,27 @@
     Formats.DoReset("");
     ```
 
+3. Esegui il progetto!
+
+    ```
+    dotnet run
+    ```
+
 
 
 # Download
 
-## GitHub
+## Da GitHub
 
 > [Download da GitHub](https://github.com/reallukee/confole/releases/latest)
 
-## NuGet
+## Da NuGet
 
-| Pacchetto                                                                 | Versione                                                                 | Downloads                                                                   |
-| :------------------------------------------------------------------------ | :----------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
-| [`Confole`](https://www.nuget.org/packages/Reallukee.Confole)             | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole)       | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole)       |
-| [`Confole.Sharp`](https://www.nuget.org/packages/Reallukee.Confole.Sharp) | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Sharp) | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Sharp) |
+| Pacchetto                                                                         | Versione                                                                     | Downloads                                                                       |
+| :-------------------------------------------------------------------------------- | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
+| [`Confole`](https://www.nuget.org/packages/Reallukee.Confole)                     | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole)           | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole)           |
+| [`Confole#`](https://www.nuget.org/packages/Reallukee.Confole.Sharp)              | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Sharp)     | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Sharp)     |
+| [`Confole Templates`](https://www.nuget.org/packages/Reallukee.Confole.Templates) | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Templates) | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Templates) |
 
 
 
@@ -166,15 +235,18 @@
 * .NET Core 2.0+ SDK o .NET 5.0+ SDK
 * PowerShell 7+ (Per gli script)
 
-### Compatibilità
+### Compatibilità
 
-> [!IMPORTANT]
-> Confole ha come target .NET Standard 2.0!
+Confole ha come target [.NET Standard 2.0](https://learn.microsoft.com/dotnet/standard/net-standard?tabs=net-standard-2-0)!
+
+Sono quindi supportati i seguenti runtime:
 
 * .NET Framework 4.6.1+
-* .NET Core 2.0+
-* .NET 5.0+
-* Mono 5.12+
+* .NET Core 2.0+ o .NET 5.0+
+* Mono 5.4 o Mono 6.4
+
+> [!NOTE]
+> Per maggiori informazioni [qui](https://learn.microsoft.com/dotnet/standard/net-standard?tabs=net-standard-2-0#select-net-standard-version)!
 
 
 
@@ -197,60 +269,44 @@ git clone https://github.com/reallukee/confole.git
 
 ## 2. Compilazione
 
-1. Usando le TUE mani:
+### Usando *PowerShell*
 
-    ```bash
-    cd confole
-    ```
+> [!TIP]
+> *PowerShell* è la scelta ideale in ambienti .NET oriented!
 
-    ### Solo compilazione:
+```pwsh
+cd .\confole\scripts\
+```
 
-    ```bash
-    # Compila Confole
-    dotnet build confole --configuration Release
+Solo compilazione:
 
-    # Compila Confole.Sharp
-    dotnet build confole.sharp --configuration Release
-    ```
+```pwsh
+.\build.ps1
+```
 
-    ### Compilazione + NuGet:
+Compilazione + Pacchettizzazione:
 
-    ```bash
-    # Compila e pacchettizza Confole
-    dotnet pack confole --configuration Release
+```pwsh
+.\pack.ps1
+```
 
-    # Compila e pacchettizza Confole.Sharp
-    dotnet pack confole.sharp --configuration Release
-    ```
+### Usando le mani
 
-2. Usando *PowerShell*:
+```bash
+cd confole
+```
 
-    > [!TIP]
-    > *PowerShell* è la scelta ideale in ambienti .NET oriented!
+Solo compilazione:
 
-    ```pwsh
-    cd .\confole\scripts\
-    ```
+```bash
+dotnet build confole.slnx --configuration Release
+```
 
-    ### Solo compilazione:
+Compilazione + Pacchettizzazione:
 
-    ```pwsh
-    # Compila Confole
-    .\build.ps1 -Target Confole
-
-    # Compila Confole.Sharp
-    .\build.ps1 -Target Confole.Sharp
-    ```
-
-    ### Compilazione + NuGet:
-
-    ```pwsh
-    # Compila e pacchettizza Confole
-    .\pack.ps1 -Target Confole
-
-    # Compila e pacchettizza Confole.Sharp
-    .\pack.ps1 -Target Confole.Sharp
-    ```
+```bash
+dotnet pack confole.slnx --configuration Release
+```
 
 
 

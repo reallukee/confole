@@ -1,10 +1,10 @@
 ![confole.png](https://raw.githubusercontent.com/reallukee/confole/main/assets/confole.png)
 
-# Confole
+# Confole Templates
 
 ![GitHub License](https://img.shields.io/github/license/reallukee/confole)
-![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole)
-![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole)
+![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Templates)
+![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Templates)
 
 🎨 Abbellisci la tua app console F# in modo funzionale
 
@@ -22,7 +22,12 @@
 
 # Iniziamo
 
-### Usando i template
+* [F#](#f)
+* [C#](#c)
+
+
+
+## F#
 
 1. Installa `Confole.Templates` tramite `NuGet`:
 
@@ -48,58 +53,32 @@
     dotnet run MyApp
     ```
 
-### Usando le mani
 
-1. Installa `Confole` tramite `NuGet`:
 
-    ```
-    dotnet add package Reallukee.Confole
-    ```
+## C#
 
-2. Incolla l'esempio minimale dell'uso dell'API di `Confole`:
-
-    ```fsharp
-    open System
-
-    open Reallukee.Confole
-
-    let formats =
-        Format.init ()
-        |> Format.italic          true
-        |> Format.foregroundColor (Color.RGB (255, 0, 0))
-        |> Format.backgroundColor (Color.RGB (0, 0, 255))
-
-    Format.applyAllNewLine "Hello, World!" formats
-
-    do Console.ReadKey(true)
-    |> ignore
-
-    Format.reset ""
-    ```
-
-    È possibile anche usare le API in stile *imperativo*:
-
-    ```fsharp
-    open System
-
-    open Reallukee.Confole
-
-    Format.doForegroundColor "" (Color.RGB (255, 0, 0))
-    Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
-    Format.doBold "Hello, World!" true
-
-    printfn ""
-
-    do Console.ReadKey(true)
-    |> ignore
-
-    Format.reset ""
-    ```
-
-3. Esegui il progetto!
+1. Installa `Confole.Templates` tramite `NuGet`:
 
     ```
-    dotnet run
+    dotnet new install Reallukee.Confole.Templates
+    ```
+
+2. Crea un nuovo progetto da template:
+
+    ```
+    dotnet new confole-app --language C# --name MyApp
+    ```
+
+    È possibile anche usare le API in modo *statico*:
+
+    ```
+    dotnet new confole-app --language C# --name MyApp --mode static
+    ```
+
+3. Esegui il template!
+
+    ```
+    dotnet run MyApp
     ```
 
 
@@ -114,7 +93,7 @@
 
 | Pacchetto                                                                         | Versione                                                                     | Downloads                                                                       |
 | :-------------------------------------------------------------------------------- | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| [`Confole`](https://www.nuget.org/packages/Reallukee.Confole)                     | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole)           | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole)           |
+| [`Confole Templates`](https://www.nuget.org/packages/Reallukee.Confole.Templates) | ![NuGet Version](https://img.shields.io/nuget/v/Reallukee.Confole.Templates) | ![NuGet Downloads](https://img.shields.io/nuget/dt/Reallukee.Confole.Templates) |
 
 
 

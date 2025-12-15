@@ -10,15 +10,18 @@
 * .NET Core 2.0+ SDK o .NET 5.0+ SDK
 * PowerShell 7+ (Per gli script)
 
-### Compatibilità
+### Compatibilità
 
-> [!IMPORTANT]
-> Confole ha come target .NET Standard 2.0!
+Confole ha come target [.NET Standard 2.0](https://learn.microsoft.com/dotnet/standard/net-standard?tabs=net-standard-2-0)!
+
+Sono quindi supportati i seguenti runtime:
 
 * .NET Framework 4.6.1+
-* .NET Core 2.0+
-* .NET 5.0+
-* Mono 5.12+
+* .NET Core 2.0+ o .NET 5.0+
+* Mono 5.4 o Mono 6.4
+
+> [!NOTE]
+> Per maggiori informazioni [qui](https://learn.microsoft.com/dotnet/standard/net-standard?tabs=net-standard-2-0#select-net-standard-version)!
 
 
 
@@ -41,57 +44,41 @@ git clone https://github.com/reallukee/confole.git
 
 ## 2. Compilazione
 
-1. Usando le TUE mani:
+### Usando *PowerShell*
 
-    ```bash
-    cd confole
-    ```
+> [!TIP]
+> *PowerShell* è la scelta ideale in ambienti .NET oriented!
 
-    ### Solo compilazione:
+```pwsh
+cd .\confole\scripts\
+```
 
-    ```bash
-    # Compila Confole
-    dotnet build confole --configuration Release
+Solo compilazione:
 
-    # Compila Confole.Sharp
-    dotnet build confole.sharp --configuration Release
-    ```
+```pwsh
+.\build.ps1
+```
 
-    ### Compilazione + NuGet:
+Compilazione + Pacchettizzazione:
 
-    ```bash
-    # Compila e pacchettizza Confole
-    dotnet pack confole --configuration Release
+```pwsh
+.\pack.ps1
+```
 
-    # Compila e pacchettizza Confole.Sharp
-    dotnet pack confole.sharp --configuration Release
-    ```
+### Usando le mani
 
-2. Usando *PowerShell*:
+```bash
+cd confole
+```
 
-    > [!TIP]
-    > *PowerShell* è la scelta ideale in ambienti .NET oriented!
+Solo compilazione:
 
-    ```pwsh
-    cd .\confole\scripts\
-    ```
+```bash
+dotnet build confole.slnx --configuration Release
+```
 
-    ### Solo compilazione:
+Compilazione + Pacchettizzazione:
 
-    ```pwsh
-    # Compila Confole
-    .\build.ps1 -Target Confole
-
-    # Compila Confole.Sharp
-    .\build.ps1 -Target Confole.Sharp
-    ```
-
-    ### Compilazione + NuGet:
-
-    ```pwsh
-    # Compila e pacchettizza Confole
-    .\pack.ps1 -Target Confole
-
-    # Compila e pacchettizza Confole.Sharp
-    .\pack.ps1 -Target Confole.Sharp
-    ```
+```bash
+dotnet pack confole.slnx --configuration Release
+```
