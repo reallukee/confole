@@ -4,6 +4,9 @@
 # NO! NO! NO!
 confole.templates/**/* linguist-detectable=false
 
+*.cs linguist-detectable=false
+*.vb linguist-detectable=false
+
 # Scripts shouldn't be counted in the code base's statistics
 *.sh linguist-detectable=false
 *.cmd linguist-detectable=false
