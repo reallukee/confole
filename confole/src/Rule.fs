@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Rule.fs
 
@@ -16,8 +16,8 @@
                   relative all'apparenza del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -39,7 +39,7 @@ module Rule =
         | SteadyBar
 
     type Rule =
-        | Title                    of string
+        | Title                    of title : string
         | ShowCursorBlinking
         | HideCursorBlinking
         | ShowCursor
@@ -48,10 +48,10 @@ module Rule =
         | DisableDesignateMode
         | EnableAlternativeBuffer
         | DisableAlternativeBuffer
-        | CursorShape              of Shape option
-        | DefaultForegroundColor   of Color
-        | DefaultBackgroundColor   of Color
-        | DefaultCursorColor       of Color
+        | CursorShape              of shape : Shape option
+        | DefaultForegroundColor   of color : Color
+        | DefaultBackgroundColor   of color : Color
+        | DefaultCursorColor       of color : Color
 
     type Rules = Rule list
 
@@ -94,7 +94,7 @@ module Rule =
 
     let apply rule =
         match rule with
-        | Title value -> printf "%s0;%s%s" OSC value Bell
+        | Title title -> printf "%s0;%s%s" OSC title Bell
 
         | ShowCursorBlinking -> printf "%s?12h" CSI
         | HideCursorBlinking -> printf "%s?12l" CSI

@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Cursor.fs
 
@@ -16,8 +16,8 @@
                   relative al cursore del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -33,13 +33,13 @@ module Cursor =
         | Reverse
         | Save
         | Restore
-        | Up           of int option
-        | Down         of int option
-        | Next         of int option
-        | Previous     of int option
-        | NextLine     of int option
-        | PreviousLine of int option
-        | Move         of Position
+        | Up           of n        : int option
+        | Down         of n        : int option
+        | Next         of n        : int option
+        | Previous     of n        : int option
+        | NextLine     of n        : int option
+        | PreviousLine of n        : int option
+        | Move         of position : Position
 
     type Cursors = Cursor list
 

@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Action.fs
 
@@ -16,8 +16,8 @@
                   relative al viewport del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -35,12 +35,12 @@ module Action =
         | FromBeginToEnd
 
     type Action =
-        | InsertCharacter of int
-        | DeleteCharacter of int
-        | InsertLine      of int
-        | DeleteLine      of int
-        | EraseDisplay    of Erase option
-        | EraseLine       of Erase option
+        | InsertCharacter of n    : int
+        | DeleteCharacter of n    : int
+        | InsertLine      of n    : int
+        | DeleteLine      of n    : int
+        | EraseDisplay    of mode : Erase option
+        | EraseLine       of mode : Erase option
 
     type Actions = Action list
 

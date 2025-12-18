@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Position.fsi
 
@@ -14,8 +14,8 @@
                   pubbliche del modulo Position.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -30,5 +30,5 @@ module Position =
     }
 
     type Position =
-        | ColRow of int * int
-        | Cell   of Cell
+        | ColRow of col  : int  * row : int
+        | Cell   of cell : Cell

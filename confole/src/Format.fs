@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Format.fs
 
@@ -16,8 +16,8 @@
                   relative alla formattazione del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -31,18 +31,18 @@ module Format =
 
     type Format =
         | Restore
-        | Bold                   of bool
-        | Faint                  of bool
-        | Italic                 of bool
-        | Underline              of bool
-        | Blinking               of bool
-        | Reverse                of bool
-        | Hidden                 of bool
-        | Strikeout              of bool
+        | Bold                   of flag  : bool
+        | Faint                  of flag  : bool
+        | Italic                 of flag  : bool
+        | Underline              of flag  : bool
+        | Blinking               of flag  : bool
+        | Reverse                of flag  : bool
+        | Hidden                 of flag  : bool
+        | Strikeout              of flag  : bool
         | RestoreForegroundColor
         | RestoreBackgroundColor
-        | ForegroundColor        of Color
-        | BackgroundColor        of Color
+        | ForegroundColor        of color : Color
+        | BackgroundColor        of color : Color
 
     type Formats = Format list
 
