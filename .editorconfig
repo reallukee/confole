@@ -15,8 +15,8 @@ indent_size = 2
 [*.sln]
 indent_style = tab
 
-[*.{slnx,csproj,vbproj,fsproj,config}]
+[*.{slnx,csproj,vbproj,fsproj,props,config}]
 indent_size = 2
 
-[*.{sln,csproj,fsproj,vbproj,config}]
+[*.{sln,slnx,csproj,vbproj,fsproj,props,config}]
 charset = utf-8-bom
