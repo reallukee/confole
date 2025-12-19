@@ -34,9 +34,9 @@ jobs:
 
       - name: Pack projects
         run: |
-          dotnet pack confole --no-build --configuration Release --output ./nupkg
-          dotnet pack confole.sharp --no-build --configuration Release --output ./nupkg
-          dotnet pack confole.templates --no-build --configuration Release --output ./nupkg
+          dotnet pack confole --no-build --configuration Release --output ./nuget
+          dotnet pack confole.sharp --no-build --configuration Release --output ./nuget
+          dotnet pack confole.templates --no-build --configuration Release --output ./nuget
 
       - name: Publish packs
-        run: dotnet nuget push "nupkg/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}"
+        run: dotnet nuget push "nuget/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}"

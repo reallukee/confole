@@ -11,9 +11,7 @@ param(
         "Debug",
         "Release"
     )]
-    $Configuration = "Release",
-
-    $Output = "bin"
+    $Configuration = "Release"
 )
 
 try {
@@ -40,10 +38,10 @@ if (-not (Test-Path -Path $root -PathType Container)) {
 Set-Location -Path $root
 
 switch ($Target) {
-    "Confole"           { $projects = @("confole") }
-    "Confole.Sharp"     { $projects = @("confole.sharp") }
-    "Confole.Templates" { $projects = @("confole.templates")}
-    "All"               { $projects = @("confole", "confole.sharp", "confole.templates") }
+    "Confole"           { $projects = @("./confole") }
+    "Confole.Sharp"     { $projects = @("./confole.sharp") }
+    "Confole.Templates" { $projects = @("./confole.templates")}
+    "All"               { $projects = @("./confole.slnx") }
     default             { exit 1 }
 }
 
@@ -52,7 +50,7 @@ $projects | ForEach-Object {
 
     & dotnet build $_ --no-restore --configuration ${Configuration}
 
-    & dotnet pack $_ --no-build --configuration ${Configuration} --output ${Output}
+    & dotnet pack $_ --no-build --configuration ${Configuration}
 }
 
 Pop-Location
