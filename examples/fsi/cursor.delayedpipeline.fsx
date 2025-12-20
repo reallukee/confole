@@ -3,15 +3,15 @@
 
     Type "dotnet fsi cursor.delayedpipeline.fsx" to run!
 
-    Necessary for F# Interactive:
+    To run in F# Interactive:
 
-        dotnet build confole --configuration Release
-        dotnet pack confole --configuration Release
+    * dotnet build confole --configuration Release
+    * dotnet pack confole --configuration Release
 *)
 
 #r @"../../confole/bin/Release/netstandard2.0/confole.dll"
 
-// #r @"nuget: Reallukee.Confole, 1.1.0"
+// #r @"nuget: Reallukee.Confole, 1.2.0"
 
 open System
 
@@ -19,7 +19,7 @@ open Reallukee.Confole
 
 let cursors =
     Cursor.init ()
-    |> Cursor.move (Position.ColRow (4, 2))
+    |> Cursor.move (Some (Position.ColRow (4, 2)))
 
 Cursor.applyAll cursors
 
