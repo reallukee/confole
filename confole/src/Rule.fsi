@@ -75,9 +75,10 @@ module Rule =
     val defaultBackgroundColor : color : Color -> rules : Rules -> Rules
     val defaultCursorColor     : color : Color -> rules : Rules -> Rules
 
-    val init  : unit          -> Rules
-    val clear : rules : Rules -> Rules
-    val view  : rules : Rules -> unit
+    val init       : unit          -> Rules
+    val initPreset : rules : Rules -> Rules
+    val clear      : rules : Rules -> Rules
+    val view       : rules : Rules -> unit
 
     val apply        : rule : Rule -> unit
     val applyNewLine : rule : Rule -> unit

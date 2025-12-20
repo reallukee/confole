@@ -10,7 +10,8 @@
     File name   : Common.fsi
 
     Title       : COMMON
-    Description : Common
+    Description : Contiene le firme dei tipi e delle funzioni
+                  pubbliche del modulo Common.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)

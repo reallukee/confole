@@ -10,7 +10,8 @@
     File name   : Common.fs
 
     Title       : COMMON
-    Description : Common
+    Description : Contiene l'implementazione dei tipi e delle
+                  funzioni pubbliche (e non) del modulo Common.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)

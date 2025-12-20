@@ -39,7 +39,7 @@ module Cursor =
         | Previous     of n        : int option
         | NextLine     of n        : int option
         | PreviousLine of n        : int option
-        | Move         of position : Position
+        | Move         of position : Position option
 
     type Cursors = Cursor list
 
@@ -62,6 +62,9 @@ module Cursor =
 
 
     let init () : Cursors = []
+
+    let initPreset (cursors : Cursors) =
+        cursors
 
     let clear (cursors : Cursors) : Cursors = []
 
@@ -90,7 +93,7 @@ module Cursor =
 
         | Move position ->
             let col, row =
-                match position with
+                match defaultArg position (ColRow (0, 0)) with
                 | ColRow (col, row) -> col + 1, row + 1
                 | Cell cell -> cell.col + 1, cell.row + 1
                 | _ -> failwith "Unsupported position format!"
@@ -120,7 +123,7 @@ module Cursor =
 
     let reset () =
         [
-            Move (ColRow (0, 0))
+            Move (Some (ColRow (0, 0)))
         ]
         |> applyAll
 

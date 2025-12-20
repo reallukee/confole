@@ -35,27 +35,28 @@ module Action =
         | FromBeginToEnd
 
     type Action =
-        | InsertCharacter of n    : int
-        | DeleteCharacter of n    : int
-        | InsertLine      of n    : int
-        | DeleteLine      of n    : int
+        | InsertCharacter of n    : int option
+        | DeleteCharacter of n    : int option
+        | InsertLine      of n    : int option
+        | DeleteLine      of n    : int option
         | EraseDisplay    of mode : Erase option
         | EraseLine       of mode : Erase option
 
     type Actions = Action list
 
-    val insertCharacter : n : int -> actions : Actions -> Actions
-    val deleteCharacter : n : int -> actions : Actions -> Actions
+    val insertCharacter : n : int option -> actions : Actions -> Actions
+    val deleteCharacter : n : int option -> actions : Actions -> Actions
 
-    val insertLine : n : int -> actions : Actions -> Actions
-    val deleteLine : n : int -> actions : Actions -> Actions
+    val insertLine : n : int option -> actions : Actions -> Actions
+    val deleteLine : n : int option -> actions : Actions -> Actions
 
     val eraseDisplay : erase : Erase option -> actions : Actions -> Actions
     val eraseLine    : erase : Erase option -> actions : Actions -> Actions
 
-    val init  : unit              -> Actions
-    val clear : actions : Actions -> Actions
-    val view  : actions : Actions -> unit
+    val init       : unit              -> Actions
+    val initPreset : actions : Actions -> Actions
+    val clear      : actions : Actions -> Actions
+    val view       : actions : Actions -> unit
 
     val apply        : action : Action -> unit
     val applyNewLine : action : Action -> unit
@@ -89,11 +90,11 @@ module Action =
 
     val builder : Builder
 
-    val doInsertCharacter : n : int -> unit
-    val doDeleteCharacter : n : int -> unit
+    val doInsertCharacter : n : int option -> unit
+    val doDeleteCharacter : n : int option -> unit
 
-    val doInsertLine : n : int -> unit
-    val doDeleteLine : n : int -> unit
+    val doInsertLine : n : int option -> unit
+    val doDeleteLine : n : int option -> unit
 
     val doEraseDisplay : erase : Erase option -> unit
     val doEraseLine    : erase : Erase option -> unit

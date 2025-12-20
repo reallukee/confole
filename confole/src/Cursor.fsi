@@ -39,7 +39,7 @@ module Cursor =
         | Previous     of n        : int option
         | NextLine     of n        : int option
         | PreviousLine of n        : int option
-        | Move         of position : Position
+        | Move         of position : Position option
 
     type Cursors = Cursor list
 
@@ -55,11 +55,12 @@ module Cursor =
     val nextLine     : n : int option -> cursors : Cursors -> Cursors
     val previousLine : n : int option -> cursors : Cursors -> Cursors
 
-    val move : position : Position -> cursors : Cursors -> Cursors
+    val move : position : Position option -> cursors : Cursors -> Cursors
 
-    val init  : unit              -> Cursors
-    val clear : cursors : Cursors -> Cursors
-    val view  : cursors : Cursors -> unit
+    val init       : unit              -> Cursors
+    val initPreset : cursors : Cursors -> Cursors
+    val clear      : cursors : Cursors -> Cursors
+    val view       : cursors : Cursors -> unit
 
     val apply        : cursor : Cursor -> unit
     val applyNewLine : cursor : Cursor -> unit
@@ -105,4 +106,4 @@ module Cursor =
     val doNextLine     : n : int option -> unit
     val doPreviousLine : n : int option -> unit
 
-    val doMove : position : Position -> unit
+    val doMove : position : Position option -> unit

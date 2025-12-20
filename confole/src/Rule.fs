@@ -81,6 +81,9 @@ module Rule =
 
     let init () : Rules = []
 
+    let initPreset (rules : Rules) =
+        rules
+
     let clear (rules : Rules) : Rules = []
 
     let view (rules : Rules) =

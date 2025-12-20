@@ -35,10 +35,10 @@ module Action =
         | FromBeginToEnd
 
     type Action =
-        | InsertCharacter of n    : int
-        | DeleteCharacter of n    : int
-        | InsertLine      of n    : int
-        | DeleteLine      of n    : int
+        | InsertCharacter of n    : int option
+        | DeleteCharacter of n    : int option
+        | InsertLine      of n    : int option
+        | DeleteLine      of n    : int option
         | EraseDisplay    of mode : Erase option
         | EraseLine       of mode : Erase option
 
@@ -59,6 +59,9 @@ module Action =
 
     let init () : Actions = []
 
+    let initPreset (actions : Actions) =
+        actions
+
     let clear (actions : Actions) : Actions = []
 
     let view (actions : Actions) =
@@ -72,11 +75,11 @@ module Action =
 
     let apply action =
         match action with
-        | InsertCharacter n -> printf "%s%d@" CSI n
-        | DeleteCharacter n -> printf "%s%dP" CSI n
+        | InsertCharacter n -> printf "%s%d@" CSI (Option.defaultValue 1 n)
+        | DeleteCharacter n -> printf "%s%dP" CSI (Option.defaultValue 1 n)
 
-        | InsertLine n -> printf "%s%dL" CSI n
-        | DeleteLine n -> printf "%s%dM" CSI n
+        | InsertLine n -> printf "%s%dL" CSI (Option.defaultValue 1 n)
+        | DeleteLine n -> printf "%s%dM" CSI (Option.defaultValue 1 n)
 
         | EraseDisplay erase ->
             let erase =

@@ -31,6 +31,8 @@ module Format =
 
     type Format =
         | Restore
+        | RestoreForegroundColor
+        | RestoreBackgroundColor
         | Bold                   of flag  : bool
         | Faint                  of flag  : bool
         | Italic                 of flag  : bool
@@ -39,14 +41,15 @@ module Format =
         | Reverse                of flag  : bool
         | Hidden                 of flag  : bool
         | Strikeout              of flag  : bool
-        | RestoreForegroundColor
-        | RestoreBackgroundColor
         | ForegroundColor        of color : Color
         | BackgroundColor        of color : Color
 
     type Formats = Format list
 
     val restore : formats : Formats -> Formats
+
+    val restoreForegroundColor : formats : Formats -> Formats
+    val restoreBackgroundColor : formats : Formats -> Formats
 
     val bold      : flag : bool -> formats : Formats -> Formats
     val faint     : flag : bool -> formats : Formats -> Formats
@@ -57,15 +60,13 @@ module Format =
     val hidden    : flag : bool -> formats : Formats -> Formats
     val strikeout : flag : bool -> formats : Formats -> Formats
 
-    val restoreForegroundColor : formats : Formats -> Formats
-    val restoreBackgroundColor : formats : Formats -> Formats
-
     val foregroundColor : color : Color -> formats : Formats -> Formats
     val backgroundColor : color : Color -> formats : Formats -> Formats
 
-    val init  : unit              -> Formats
-    val clear : formats : Formats -> Formats
-    val view  : formats : Formats -> unit
+    val init       : unit              -> Formats
+    val initPreset : formats : Formats -> Formats
+    val clear      : formats : Formats -> Formats
+    val view       : formats : Formats -> unit
 
     val apply        : text : string -> format : Format -> unit
     val applyNewLine : text : string -> format : Format -> unit
@@ -101,6 +102,9 @@ module Format =
 
     val doRestore : text : string -> unit
 
+    val doRestoreForegroundColor : text : string -> unit
+    val doRestoreBackgroundColor : text : string -> unit
+
     val doBold      : text : string -> flag : bool -> unit
     val doFaint     : text : string -> flag : bool -> unit
     val doItalic    : text : string -> flag : bool -> unit
@@ -109,9 +113,6 @@ module Format =
     val doReverse   : text : string -> flag : bool -> unit
     val doHidden    : text : string -> flag : bool -> unit
     val doStrikeout : text : string -> flag : bool -> unit
-
-    val doRestoreForegroundColor : text : string -> unit
-    val doRestoreBackgroundColor : text : string -> unit
 
     val doForegroundColor : text : string -> color : Color -> unit
     val doBackgroundColor : text : string -> color : Color -> unit

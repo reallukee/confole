@@ -31,6 +31,8 @@ module Format =
 
     type Format =
         | Restore
+        | RestoreForegroundColor
+        | RestoreBackgroundColor
         | Bold                   of flag  : bool
         | Faint                  of flag  : bool
         | Italic                 of flag  : bool
@@ -39,8 +41,6 @@ module Format =
         | Reverse                of flag  : bool
         | Hidden                 of flag  : bool
         | Strikeout              of flag  : bool
-        | RestoreForegroundColor
-        | RestoreBackgroundColor
         | ForegroundColor        of color : Color
         | BackgroundColor        of color : Color
 
@@ -49,6 +49,9 @@ module Format =
 
 
     let restore formats = Restore :: formats
+
+    let restoreForegroundColor formats = RestoreForegroundColor :: formats
+    let restoreBackgroundColor formats = RestoreBackgroundColor :: formats
 
     let bold      flag formats = Bold      flag :: formats
     let faint     flag formats = Faint     flag :: formats
@@ -59,15 +62,15 @@ module Format =
     let hidden    flag formats = Hidden    flag :: formats
     let strikeout flag formats = Strikeout flag :: formats
 
-    let restoreForegroundColor formats = RestoreForegroundColor :: formats
-    let restoreBackgroundColor formats = RestoreBackgroundColor :: formats
-
     let foregroundColor color formats = ForegroundColor color :: formats
     let backgroundColor color formats = BackgroundColor color :: formats
 
 
 
     let init () : Formats = []
+
+    let initPreset (formats : Formats) =
+        formats
 
     let clear (formats : Formats) : Formats = []
 
@@ -84,6 +87,9 @@ module Format =
         match format with
         | Restore -> printf "%s0m%s" CSI text
 
+        | RestoreForegroundColor -> printf "%s39m%s" CSI text
+        | RestoreBackgroundColor -> printf "%s49m%s" CSI text
+
         | Bold      flag -> printf "%s%dm%s" CSI (if flag then 1 else 22) text
         | Faint     flag -> printf "%s%dm%s" CSI (if flag then 2 else 22) text
         | Italic    flag -> printf "%s%dm%s" CSI (if flag then 3 else 23) text
@@ -92,9 +98,6 @@ module Format =
         | Reverse   flag -> printf "%s%dm%s" CSI (if flag then 7 else 27) text
         | Hidden    flag -> printf "%s%dm%s" CSI (if flag then 8 else 28) text
         | Strikeout flag -> printf "%s%dm%s" CSI (if flag then 9 else 29) text
-
-        | RestoreForegroundColor -> printf "%s39m%s" CSI text
-        | RestoreBackgroundColor -> printf "%s49m%s" CSI text
 
         | ForegroundColor color ->
             match color with
@@ -179,6 +182,9 @@ module Format =
 
     let doRestore text = apply text Restore
 
+    let doRestoreForegroundColor text = apply text RestoreForegroundColor
+    let doRestoreBackgroundColor text = apply text RestoreForegroundColor
+
     let doBold      text flag = apply text (Bold      flag)
     let doFaint     text flag = apply text (Faint     flag)
     let doItalic    text flag = apply text (Italic    flag)
@@ -187,9 +193,6 @@ module Format =
     let doReverse   text flag = apply text (Reverse   flag)
     let doHidden    text flag = apply text (Hidden    flag)
     let doStrikeout text flag = apply text (Strikeout flag)
-
-    let doRestoreForegroundColor text = apply text RestoreForegroundColor
-    let doRestoreBackgroundColor text = apply text RestoreForegroundColor
 
     let doForegroundColor text color = apply text (ForegroundColor color)
     let doBackgroundColor text color = apply text (BackgroundColor color)
