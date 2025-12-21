@@ -11,9 +11,9 @@ catch {
 
 Push-Location
 
-$root = Join-Path -Path (Split-Path -Parent (Split-Path -Parent (Get-Location))) -ChildPath "docfx"
+$Root = Join-Path -Path (Split-Path -Parent (Split-Path -Parent (Get-Location))) -ChildPath "docfx"
 
-if (-not (Test-Path -Path $root -PathType Container)) {
+if (-not (Test-Path -Path $Root -PathType Container)) {
     Write-Error -Message "Can't enter repository docfx directory!"
 
     Pop-Location
@@ -21,7 +21,7 @@ if (-not (Test-Path -Path $root -PathType Container)) {
     exit 1
 }
 
-Set-Location -Path $root
+Set-Location -Path $Root
 
 docfx docfx.json --serve
 

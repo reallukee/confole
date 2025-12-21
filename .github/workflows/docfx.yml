@@ -46,11 +46,6 @@ jobs:
           dotnet build confole --no-restore --configuration Release --output bin
           dotnet build confole.sharp --no-restore --configuration Release --output bin
 
-      - name: Pack projects
-        run: |
-          dotnet pack confole --no-build --configuration Release
-          dotnet pack confole.sharp --no-build --configuration Release
-
       - name: Install DocFX
         run: dotnet tool update -g docfx
 

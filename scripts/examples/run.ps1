@@ -9,9 +9,9 @@ catch {
 
 Push-Location
 
-$root = Join-Path -Path (Split-Path -Parent (Split-Path -Parent (Get-Location))) -ChildPath "examples/fsi"
+$Root = Join-Path -Path (Split-Path -Parent (Split-Path -Parent (Get-Location))) -ChildPath "examples/fsi"
 
-if (-not (Test-Path -Path $root -PathType Container)) {
+if (-not (Test-Path -Path $Root -PathType Container)) {
     Write-Error -Message "Can't enter repository examples directory!"
 
     Pop-Location
@@ -19,7 +19,7 @@ if (-not (Test-Path -Path $root -PathType Container)) {
     exit 1
 }
 
-Set-Location -Path $root
+Set-Location -Path $Root
 
 & dotnet nuget locals all --clear
 
