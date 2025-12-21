@@ -7,16 +7,16 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageId>Reallukee.Confole.Templates</PackageId>
     <Title>Confole Templates</Title>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>Luca Pollicino</Authors>
     <Company>Luca Pollicino</Company>
     <Product>Confole Templates</Product>
     <Description>Abbellisci la tua app console F# in modo funzionale</Description>
     <Copyright>Luca Pollicino</Copyright>
-    <PackageProjectUrl>https://github.com/reallukee/confole</PackageProjectUrl>
+    <PackageProjectUrl>https://www.nuget.org/packages/Reallukee.Confole.Templates</PackageProjectUrl>
     <PackageIcon>confole.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/reallukee/confole</RepositoryUrl>
+    <RepositoryUrl>https://github.com/reallukee/confole/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>fsharp;console;templates</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -24,19 +24,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="templates\**\*.*" Pack="true" PackagePath="content\templates\" />
+    <None Include="templates\**\*.*" Pack="true" PackagePath="content\templates" />
 
     <Compile Remove="templates\**\*.*" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\assets\confole.png" Link="resources\icon.ico" />
-  </ItemGroup>
+    <None Include="..\assets\confole.ico"                Pack="true" PackagePath="\" Link="resources\icon.ico" />
 
-  <ItemGroup>
-    <None Include="..\assets\confole.png" Pack="true" PackagePath="\" Link="resources\package\icon.png" />
+    <None Include="..\assets\confole.png"                Pack="true" PackagePath="\" Link="resources\package\icon.png" />
     <None Include="..\nuget\confole.templates\README.md" Pack="true" PackagePath="\" Link="resources\package\README.md" />
-    <None Include="..\LICENSE" Pack="true" PackagePath="\" Link="resources\package\LICENSE" />
+    <None Include="..\LICENSE"                           Pack="true" PackagePath="\" Link="resources\package\LICENSE" />
   </ItemGroup>
 
 </Project>

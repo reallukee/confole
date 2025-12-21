@@ -1,5 +1,5 @@
 ' Program.vb ** ConfoleApp
-'   Confole: https://github.com/reallukee/confole
+'   Confole: https://github.com/reallukee/confole/
 
 Imports System
 
@@ -13,11 +13,11 @@ Namespace ConfoleApp
             #If (mode = "classic") Then
             Dim formats As New Formats()
 
-            formats.AddItalicFormat(True) _
-                   .AddForegroundColorFormat(New RGBColor(255, 0, 0)) _
-                   .AddBackgroundColorFormat(New RGBColor(0, 0, 255))
+            formats.AddItalic(True) _
+                   .AddForegroundColor(New RGBColor(255, 0, 0)) _
+                   .AddBackgroundColor(New RGBColor(0, 0, 255))
 
-            formats.ApplyAll(True, "Hello, World from ConfoleApp!")
+            formats.ApplyAll("Hello, World from ConfoleApp!", True)
 
             formats.Reset("")
             #End If
@@ -34,16 +34,16 @@ Namespace ConfoleApp
             Console.Write("More at: ")
 
             #If (mode = "classic") Then
-            formats.AddUnderlineFormat(True)
+            formats.AddUnderline(True)
 
-            formats.ApplyAll(True, "https://github.com/reallukee/confole")
+            formats.ApplyAll("https://github.com/reallukee/confole/", True)
 
             Console.ReadKey(True)
 
             formats.Reset("")
             #End If
             #If (mode = "static") Then
-            Formats.DoItalic("https://github.com/reallukee/confole", True)
+            Formats.DoItalic("https://github.com/reallukee/confole/", True)
 
             Console.WriteLine()
 

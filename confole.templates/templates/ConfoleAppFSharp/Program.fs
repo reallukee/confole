@@ -1,5 +1,5 @@
 // Program.fs ** ConfoleApp
-//   Confole: https://github.com/reallukee/confole
+//   Confole: https://github.com/reallukee/confole/
 
 namespace ConfoleApp
 
@@ -38,7 +38,7 @@ module Program =
             Format.init ()
             |> Format.underline true
 
-        Format.applyAllNewLine "https://github.com/reallukee/confole" formats
+        Format.applyAllNewLine "https://github.com/reallukee/confole/" formats
 
         do Console.ReadKey(true)
         |> ignore
@@ -47,7 +47,7 @@ module Program =
 
         #endif
         #if (mode == "imperative")
-        Format.doUnderline "https://github.com/reallukee/confole" true
+        Format.doUnderline "https://github.com/reallukee/confole/" true
 
         printfn ""
 

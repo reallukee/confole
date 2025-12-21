@@ -1,5 +1,5 @@
 // Program.cs ** ConfoleApp
-//   Confole: https://github.com/reallukee/confole
+//   Confole: https://github.com/reallukee/confole/
 
 using System;
 
@@ -14,11 +14,11 @@ internal class Program
         #if (mode == "classic")
         Formats formats = new Formats();
 
-        formats.AddItalicFormat(true)
-               .AddForegroundColorFormat(new RGBColor(255, 0, 0))
-               .AddBackgroundColorFormat(new RGBColor(0, 0, 255));
+        formats.AddItalic(true)
+               .AddForegroundColor(new RGBColor(255, 0, 0))
+               .AddBackgroundColor(new RGBColor(0, 0, 255));
 
-        formats.ApplyAll(true, "Hello, World from ConfoleApp!");
+        formats.ApplyAll("Hello, World from ConfoleApp!", true);
 
         formats.Reset("");
         #endif
@@ -35,16 +35,16 @@ internal class Program
         Console.Write("More at: ");
 
         #if (mode == "classic")
-        formats.AddUnderlineFormat(true);
+        formats.AddUnderline(true);
 
-        formats.ApplyAll(true, "https://github.com/reallukee/confole");
+        formats.ApplyAll("https://github.com/reallukee/confole/", true);
 
         Console.ReadKey(true);
 
         formats.Reset("");
         #endif
         #if (mode == "static")
-        Formats.DoItalic("https://github.com/reallukee/confole", true);
+        Formats.DoItalic("https://github.com/reallukee/confole/", true);
 
         Console.WriteLine();
 

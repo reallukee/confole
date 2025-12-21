@@ -73,12 +73,12 @@
       "actionId": "B17581D1-C5C9-4489-8F0A-004BE667B814",
       "description": "DotNet Add",
       "manualInstructions": [{
-        "text": "Run 'dotnet add package Reallukee.Confole.Sharp --version 1.1.0'"
+        "text": "Run 'dotnet add package Reallukee.Confole.Sharp --version 1.2.0'"
       }],
       "args": {
         "referenceType": "package",
         "reference": "Reallukee.Confole.Sharp",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "projectFileExtensions": ".vbproj"
       },
       "continueOnError": false
