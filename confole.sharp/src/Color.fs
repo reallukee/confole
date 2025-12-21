@@ -5,20 +5,27 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Color.fs
 
     Title       : COLOR
-    Description : Color
+    Description : Contiene l'implementazione delle classi,
+                  delle interfacce e delle enumerazioni
+                  pubbliche (e non) del modulo Color.
+                  Il modulo Color si occupa di wrappare
+                  in modo OOP e C#-Friendly l'omonimo
+                  modulo funzionale!
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole.Sharp
+
+open Reallukee.Confole
 
 [<AbstractClass>]
 type Color() = class end
@@ -30,8 +37,7 @@ and XTermColor() =
 
     new(id) as this =
         XTermColor() then
-
-        this.Id <- id
+            this.Id <- id
 
     member this.Id
         with get() =
@@ -64,10 +70,9 @@ and RGBColor() =
 
     new(red, green, blue) as this =
         RGBColor() then
-
-        this.Red   <- red
-        this.Green <- green
-        this.Blue  <- blue
+            this.Red   <- red
+            this.Green <- green
+            this.Blue  <- blue
 
     member this.Red
         with get() =
@@ -120,16 +125,15 @@ and RGBColor() =
 and HEXColor() =
     inherit Color()
 
-    let mutable red_   = "0"
-    let mutable green_ = "0"
-    let mutable blue_  = "0"
+    let mutable red_   = "00"
+    let mutable green_ = "00"
+    let mutable blue_  = "00"
 
     new(red, green, blue) as this =
         HEXColor() then
-
-        this.Red   <- red
-        this.Green <- green
-        this.Blue  <- blue
+            this.Red   <- red
+            this.Green <- green
+            this.Blue  <- blue
 
     member this.Red
         with get() =

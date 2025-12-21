@@ -5,16 +5,21 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Rule.fsi
 
     Title       : RULE
-    Description : Rule
+    Description : Contiene le firme delle classi, delle
+                  interfacce e delle enumerazioni pubbliche
+                  del modulo Rule.
+                  Il modulo Rule si occupa di wrappare
+                  in modo OOP e C#-Friendly l'omonimo
+                  modulo funzionale!
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -40,145 +45,123 @@ type IRules = IRule list
 
 
 
-type TitleRule =
+[<AbstractClass>]
+type RuleString =
     interface IRule
 
-    new : title : string -> TitleRule
+    new : rule : (string -> Rule.Rule) * value : string -> RuleString
 
-    member Title : string with get, set
+    member Value : string with get, set
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string
+
+type TitleRule =
+    inherit RuleString
+
+    new : value : string -> TitleRule
 
 
+
+[<AbstractClass>]
+type RuleEmpty =
+    interface IRule
+
+    new : rule : Rule.Rule -> RuleEmpty
+
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string
 
 type ShowCursorBlinkingRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> ShowCursorBlinkingRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
 type HideCursorBlinkingRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> HideCursorBlinkingRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
-
-
 type ShowCursorRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> ShowCursorRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
 type HideCursorRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> HideCursorRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
-
-
 type EnableDesignateModeRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> EnableDesignateModeRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
 type DisableDesignateModeRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> DisableDesignateModeRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
-
-
 type EnableAlternativeBufferRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> EnableAlternativeBufferRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
 type DisableAlternativeBufferRule =
-    interface IRule
+    inherit RuleEmpty
 
     new : unit -> DisableAlternativeBufferRule
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
 
 
+[<AbstractClass>]
+type RuleShape =
+    interface IRule
+
+    new : rule : (Rule.Shape option -> Rule.Rule) * shape : Shape -> RuleShape
+
+    member Shape : Shape with get, set
+
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string
 
 type CursorShapeRule =
-    interface IRule
+    inherit RuleShape
 
     new : unit          -> CursorShapeRule
     new : shape : Shape -> CursorShapeRule
 
-    member Shape : Shape with get, set
-
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
 
 
-
-type DefaultForegroundColorRule =
+[<AbstractClass>]
+type RuleColor =
     interface IRule
 
-    new : Color -> DefaultForegroundColorRule
+    new : rule : (Color.Color -> Rule.Rule) * color : Sharp.Color -> RuleColor
 
-    member Color : Color with get, set
+    member Color : Sharp.Color with get, set
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string
 
-type DefaultBackgroundColorRule =
-    interface IRule
+type DefaultForegroundRuleColor =
+    inherit RuleColor
 
-    new : Color -> DefaultBackgroundColorRule
+    new : color : Sharp.Color -> DefaultForegroundRuleColor
 
-    member Color : Color with get, set
+type DefaultBackgroundRuleColor =
+    inherit RuleColor
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    new : color : Sharp.Color -> DefaultBackgroundRuleColor
 
-type DefaultCursorColorRule =
-    interface IRule
+type DefaultCursorRuleColor =
+    inherit RuleColor
 
-    new : Color -> DefaultCursorColorRule
-
-    member Color : Color with get, set
-
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    new : color : Sharp.Color -> DefaultCursorRuleColor
 
 
 
@@ -188,67 +171,54 @@ type Rules =
     member NewLine : bool   with get, set
     member Rules   : IRules with get
 
-    new : rules : IRules * newLine : bool -> Rules
-    new : newLine : bool                  -> Rules
+    new : rules   : IRules * newLine : bool -> Rules
+    new : newLine : bool                    -> Rules
 
     member Item : int -> IRule with get
 
     member AddRule  : rule  : IRule  -> Rules
     member AddRules : rules : IRules -> Rules
 
-    member AddTitleRule : title : string -> Rules
-
-    member AddShowCursorBlinkingRule : unit -> Rules
-    member AddHideCursorBlinkingRule : unit -> Rules
-
-    member AddShowCursorRule : unit -> Rules
-    member AddHideCursorRule : unit -> Rules
-
-    member AddEnableDesignateModeRule  : unit -> Rules
-    member AddDisableDesignateModeRule : unit -> Rules
-
-    member AddEnableAlternativeBufferRule  : unit -> Rules
-    member AddDisableAlternativeBufferRule : unit -> Rules
-
-    member AddCursorShapeRule : shape : Shape -> Rules
-
-    member AddDefaultForegroundColorRule : color : Color -> Rules
-    member AddDefaultBackgroundColorRule : color : Color -> Rules
-    member AddDefaultCursorColorRule     : color : Color -> Rules
+    member AddTitle                    : title : string -> Rules
+    member AddShowCursorBlinking       : unit           -> Rules
+    member AddHideCursorBlinking       : unit           -> Rules
+    member AddShowCursor               : unit           -> Rules
+    member AddHideCursor               : unit           -> Rules
+    member AddEnableDesignateMode      : unit           -> Rules
+    member AddDisableDesignateMode     : unit           -> Rules
+    member AddEnableAlternativeBuffer  : unit           -> Rules
+    member AddDisableAlternativeBuffer : unit           -> Rules
+    member AddCursorShape              : shape : Shape  -> Rules
+    member AddDefaultForegroundColor   : color : Color  -> Rules
+    member AddDefaultBackgroundColor   : color : Color  -> Rules
+    member AddDefaultCursorColor       : color : Color  -> Rules
 
     member Clear : unit -> Rules
     member View  : unit -> unit
 
-    member Apply : rule : IRule * newLine : bool -> unit
-    member Apply : rule : IRule                  -> unit
-
-    member ApplyAll : newLine : bool -> unit
-    member ApplyAll : unit           -> unit
+    member Apply    : rule    : IRule * newLine : bool -> unit
+    member Apply    : rule    : IRule                  -> unit
+    member ApplyAll : newLine : bool                   -> unit
+    member ApplyAll : unit                             -> unit
 
     member Reset : unit -> unit
 
-    static member DoTitleRule : title : string -> unit
-
-    static member DoShowCursorBlinkingRule : unit -> unit
-    static member DoHideCursorBlinkingRule : unit -> unit
-
-    static member DoShowCursorRule : unit -> unit
-    static member DoHideCursorRule : unit -> unit
-
-    static member DoEnableDesignateModeRule  : unit -> unit
-    static member DoDisableDesignateModeRule : unit -> unit
-
-    static member DoEnableAlternativeBufferRule  : unit -> unit
-    static member DoDisableAlternativeBufferRule : unit -> unit
-
-    static member DoCursorShapeRule : shape : Shape -> unit
-
-    static member DoDefaultForegroundColorRule : color : Color -> unit
-    static member DoDefaultBackgroundColorRule : color : Color -> unit
-    static member DoDefaultCursorColorRule     : color : Color -> unit
+    static member DoTitle                    : title : string -> unit
+    static member DoShowCursorBlinking       : unit           -> unit
+    static member DoHideCursorBlinking       : unit           -> unit
+    static member DoShowCursor               : unit           -> unit
+    static member DoHideCursor               : unit           -> unit
+    static member DoEnableDesignateMode      : unit           -> unit
+    static member DoDisableDesignateMode     : unit           -> unit
+    static member DoEnableAlternativeBuffer  : unit           -> unit
+    static member DoDisableAlternativeBuffer : unit           -> unit
+    static member DoCursorShape              : shape : Shape  -> unit
+    static member DoDefaultForegroundColor   : color : Color  -> unit
+    static member DoDefaultBackgroundColor   : color : Color  -> unit
+    static member DoDefaultCursorColor       : color : Color  -> unit
 
     static member DoReset : unit -> unit
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string
