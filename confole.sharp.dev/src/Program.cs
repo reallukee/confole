@@ -1,3 +1,6 @@
+// Program.cs ** Confole.Sharp.Dev
+//   Confole: https://github.com/reallukee/confole/
+
 using System;
 
 using Reallukee.Confole.Sharp;
@@ -8,24 +11,16 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Rules rules = new Rules(false);
+        Formats formats = new Formats();
 
-        rules.AddTitleRule("Confole")
-             .AddShowCursorBlinkingRule()
-             .AddShowCursorRule()
-             .AddDisableDesignateModeRule()
-             .AddDisableAlternativeBufferRule()
-             .AddCursorShapeRule(Shape.User)
-             .AddDefaultForegroundColorRule(new RGBColor(255, 0, 0))
-             .AddDefaultBackgroundColorRule(new RGBColor(0, 0, 0))
-             .AddDefaultCursorColorRule(new RGBColor(255, 255, 0));
+        formats.AddItalic(true)
+               .AddForegroundColor(new RGBColor(255, 0, 0))
+               .AddBackgroundColor(new RGBColor(0, 0, 255));
 
-        rules.ApplyAll();
-
-        Console.WriteLine("Hello, World!");
+        formats.ApplyAll("Hello, World!", true);
 
         Console.ReadKey(true);
 
-        rules.Reset();
+        formats.Reset("");
     }
 }

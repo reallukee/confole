@@ -8,6 +8,7 @@ open System
 open Reallukee.Confole
 
 module Program =
+
     [<EntryPoint>]
     let main args =
         #if (mode == "functional")
@@ -44,7 +45,6 @@ module Program =
         |> ignore
 
         Format.reset ""
-
         #endif
         #if (mode == "imperative")
         Format.doUnderline "https://github.com/reallukee/confole/" true

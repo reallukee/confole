@@ -1,3 +1,6 @@
+// Program.fs ** Confole.Dev
+//   Confole: https://github.com/reallukee/confole/
+
 namespace Reallukee.Confole
 
 open System
@@ -5,27 +8,20 @@ open System
 open Reallukee.Confole
 
 module Program =
+
     [<EntryPoint>]
-    let main _ =
-        let rules =
-            Rule.init ()
-            |> Rule.title                    "Confole"
-            |> Rule.showCursorBlinking
-            |> Rule.showCursor
-            |> Rule.disableDesignateMode
-            |> Rule.disableAlternativeBuffer
-            |> Rule.cursorShape              (Some Rule.Shape.User)
-            |> Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
-            |> Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
-            |> Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
+    let main args =
+        let formats =
+            Format.init ()
+            |> Format.italic          true
+            |> Format.foregroundColor (Color.RGB (255, 0, 0))
+            |> Format.backgroundColor (Color.RGB (0, 0, 255))
 
-        Rule.applyAll rules
-
-        printfn "Hello, World!"
+        Format.applyAllNewLine "Hello, World!" formats
 
         do Console.ReadKey(true)
         |> ignore
 
-        Rule.reset ()
+        Format.reset ""
 
         0
