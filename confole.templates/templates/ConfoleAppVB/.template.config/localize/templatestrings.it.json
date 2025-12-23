@@ -1,0 +1,16 @@
+{
+  "name": "App Console Confole",
+  "description": "Fornisce un template per la creazione di App Console VB con Confole",
+
+  "symbols.mode.displayName": "Modalità",
+  "symbols.mode.description": "Scegli stile",
+  "symbols.mode.choices.classic": "Classico",
+  "symbols.mode.choices.static": "Statico",
+
+  "symbols.restore.displayName": "Restore",
+  "symbols.restore.description": "Restore",
+
+  "postActions.84C0DA21-51C8-4541-9940-6CA19AF04EE6.description": "Apri",
+  "postActions.B17581D1-C5C9-4489-8F0A-004BE667B814.description": "DotNet Add",
+  "postActions.210D431B-A78B-4D2F-B762-4ED3E3EA9025.description": "DotNet Restore"
+}

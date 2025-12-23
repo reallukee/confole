@@ -1,7 +1,10 @@
-<Solution>
+﻿<Solution>
   <Folder Name="/sharp/">
     <Project Path="confole.sharp.dev/confole.sharp.dev.csproj" />
     <Project Path="confole.sharp/confole.sharp.fsproj" />
+  </Folder>
+  <Folder Name="/templates/">
+    <Project Path="confole.templates/confole.templates.csproj" />
   </Folder>
   <Project Path="confole.dev/confole.dev.fsproj" />
   <Project Path="confole/confole.fsproj" />

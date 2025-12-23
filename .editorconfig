@@ -1,32 +1,22 @@
+# All files
 [*]
-end_of_line = lf
 indent_style = space
 indent_size = 4
+charset = utf-8
+end_of_line = lf
 trim_trailing_whitespace = true
+insert_final_newline = true
 
+# Repository
+[*.{md,json,yml}]
+indent_size = 2
+
+# Visual Studio
 [*.sln]
 indent_style = tab
 
-[*.md]
+[*.{slnx,csproj,vbproj,fsproj,props,config}]
 indent_size = 2
 
-[*.json]
-indent_size = 2
-
-[*.yml]
-indent_size = 2
-
-[*.config]
-indent_size = 2
-
-[*.csproj]
-indent_size = 2
-
-[*.vbproj]
-indent_size = 2
-
-[*.fsproj]
-indent_size = 2
-
-[*.slnx]
-indent_size = 2
+[*.{sln,slnx,csproj,vbproj,fsproj,props,config}]
+charset = utf-8-bom

@@ -9,10 +9,6 @@ open Reallukee.Confole
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 [
     Action.EraseDisplay (Some Action.Erase.FromBeginToEnd)
     Action.EraseLine    (Some Action.Erase.FromBeginToEnd)
@@ -32,10 +28,6 @@ open System
 open Reallukee.Confole
 
 printfn "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Action.builder {
     Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
@@ -57,10 +49,6 @@ open Reallukee.Confole
 
 printfn "Hello, World!"
 
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
-
 Action.configure (fun actions ->
     actions
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
@@ -80,10 +68,6 @@ open System
 open Reallukee.Confole
 
 printfn "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 let actions =
     Action.init ()
@@ -105,10 +89,6 @@ open System
 open Reallukee.Confole
 
 printfn "Hello, World!"
-
-if Environment.GetEnvironmentVariable("CI") <> "true" then
-    do Console.ReadKey(true)
-    |> ignore
 
 Action.init ()
 |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)

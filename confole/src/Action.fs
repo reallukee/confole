@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Action.fs
 
@@ -16,8 +16,8 @@
                   relative al viewport del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -27,20 +27,18 @@ open Color
 open Position
 
 module Action =
-    open Common
-
     type Erase =
         | FromCurrentToEnd
         | FromBeginToCurrent
         | FromBeginToEnd
 
     type Action =
-        | InsertCharacter of int
-        | DeleteCharacter of int
-        | InsertLine      of int
-        | DeleteLine      of int
-        | EraseDisplay    of Erase option
-        | EraseLine       of Erase option
+        | InsertCharacter of n    : int option
+        | DeleteCharacter of n    : int option
+        | InsertLine      of n    : int option
+        | DeleteLine      of n    : int option
+        | EraseDisplay    of mode : Erase option
+        | EraseLine       of mode : Erase option
 
     type Actions = Action list
 
@@ -59,6 +57,9 @@ module Action =
 
     let init () : Actions = []
 
+    let initPreset (actions : Actions) =
+        actions
+
     let clear (actions : Actions) : Actions = []
 
     let view (actions : Actions) =
@@ -72,11 +73,11 @@ module Action =
 
     let apply action =
         match action with
-        | InsertCharacter n -> printf "%s%d@" CSI n
-        | DeleteCharacter n -> printf "%s%dP" CSI n
+        | InsertCharacter n -> printf "%s%d@" CSI (Option.defaultValue 1 n)
+        | DeleteCharacter n -> printf "%s%dP" CSI (Option.defaultValue 1 n)
 
-        | InsertLine n -> printf "%s%dL" CSI n
-        | DeleteLine n -> printf "%s%dM" CSI n
+        | InsertLine n -> printf "%s%dL" CSI (Option.defaultValue 1 n)
+        | DeleteLine n -> printf "%s%dM" CSI (Option.defaultValue 1 n)
 
         | EraseDisplay erase ->
             let erase =

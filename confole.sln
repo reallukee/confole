@@ -1,17 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "confole", "confole\confole.fsproj", "{AD740823-01D7-480B-A55D-7E1D05334CD2}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "confole.dev", "confole.dev\confole.dev.fsproj", "{12279A7D-8DD0-4966-B7D3-6D6EDCB23499}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sharp", "sharp", "{6C83A596-D32D-B35F-00DD-F0C99B673980}"
+EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "confole.sharp", "confole.sharp\confole.sharp.fsproj", "{11EC7757-5F3C-4F09-9A45-91A42C080471}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "confole.sharp.dev", "confole.sharp.dev\confole.sharp.dev.csproj", "{5B68813F-23C2-8DF2-1B1F-9033A2893F62}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sharp", "sharp", "{6C83A596-D32D-B35F-00DD-F0C99B673980}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{B8456F70-4953-4444-BD11-C8066B181FD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "confole.templates", "confole.templates\confole.templates.csproj", "{A944733D-AC9E-4C8F-B3C4-565E9B561348}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{5B68813F-23C2-8DF2-1B1F-9033A2893F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B68813F-23C2-8DF2-1B1F-9033A2893F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B68813F-23C2-8DF2-1B1F-9033A2893F62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A944733D-AC9E-4C8F-B3C4-565E9B561348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A944733D-AC9E-4C8F-B3C4-565E9B561348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A944733D-AC9E-4C8F-B3C4-565E9B561348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A944733D-AC9E-4C8F-B3C4-565E9B561348}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +50,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{11EC7757-5F3C-4F09-9A45-91A42C080471} = {6C83A596-D32D-B35F-00DD-F0C99B673980}
 		{5B68813F-23C2-8DF2-1B1F-9033A2893F62} = {6C83A596-D32D-B35F-00DD-F0C99B673980}
+		{A944733D-AC9E-4C8F-B3C4-565E9B561348} = {B8456F70-4953-4444-BD11-C8066B181FD7}
 	EndGlobalSection
 EndGlobal

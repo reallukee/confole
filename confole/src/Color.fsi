@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Color.fsi
 
@@ -14,16 +14,14 @@
                   pubbliche del modulo Color.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
 module Color =
-    open Common
-
     type XTermColor = {
         id : int
     }
@@ -41,18 +39,18 @@ module Color =
     }
 
     type Color =
-        | XTerm      of int
-        | XTermColor of XTermColor
-        | RGB        of int * int * int
-        | RGBColor   of RGBColor
-        | HEX        of string * string * string
-        | HEXColor   of HEXColor
+        | XTerm      of code  : int
+        | XTermColor of color : XTermColor
+        | RGB        of red   : int        * green : int    * blue : int
+        | RGBColor   of color : RGBColor
+        | HEX        of red   : string     * green : string * blue : string
+        | HEXColor   of color : HEXColor
 
-    val rgbToHEX : rgb : int * int * int -> string * string * string
-    val hexToRGB : hex : string * string * string -> int * int * int
+    val rgbToHEX : rgb : int    * int    * int    -> string * string * string
+    val hexToRGB : hex : string * string * string -> int    * int    * int
 
     val rgbColorToHEXColor : rgbColor : RGBColor -> HEXColor
     val hexColorToRGBColor : hexColor : HEXColor -> RGBColor
 
-    val colorToRGB : color : Color -> int * int * int
+    val colorToRGB : color : Color -> int    * int    * int
     val colorToHEX : color : Color -> string * string * string

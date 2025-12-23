@@ -5,16 +5,21 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Format.fs
 
     Title       : FORMAT
-    Description : Format
+    Description : Contiene l'implementazione delle classi,
+                  delle interfacce e delle enumerazioni
+                  pubbliche (e non) del modulo Format.
+                  Il modulo Format si occupa di wrappare
+                  in modo OOP e C#-Friendly l'omonimo
+                  modulo funzionale!
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -29,280 +34,93 @@ type IFormats = IFormat list
 
 
 
+[<AbstractClass>]
+type FormatEmpty(format) =
+    interface IFormat with
+        member this.ToFunctional
+            with get() =
+                format
+
+    override this.Equals(obj) =
+        match obj with
+        | :? FormatEmpty as other ->
+            this.GetType() = other.GetType()
+        | _ -> false
+
+    override this.GetHashCode() =
+        this.GetType().GetHashCode()
+
+    override this.ToString() =
+        $"{(this :> IFormat).ToFunctional}"
+
 type RestoreFormat() =
-    interface IFormat with
-        member this.ToFunctional
-            with get () =
-                Format.Restore
-
-    override this.Equals(obj) =
-        match obj with
-        | :? RestoreFormat -> true
-        | _ -> false
-
-    override this.GetHashCode() =
-        0
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-
-
-type BoldFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get () =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get () =
-                Format.Bold this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? BoldFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type FaintFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.Faint this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? FaintFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type ItalicFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.Italic this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? ItalicFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type UnderlineFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.Underline this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? UnderlineFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type BlinkingFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.Blinking this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? BlinkingFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type ReverseFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.Reverse this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? ReverseFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type HiddenFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.Hidden this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? HiddenFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type StrikeoutFormat(flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.Strikeout this.Flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? StrikeoutFormat as other ->
-            this.Flag && other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-
+    inherit FormatEmpty(Format.Format.Restore)
 
 type RestoreForegroundColorFormat() =
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                Format.RestoreForegroundColor
-
-    override this.Equals(obj) =
-        match obj with
-        | :? RestoreForegroundColorFormat -> true
-        | _ -> false
-
-    override this.GetHashCode() =
-        0
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
+    inherit FormatEmpty(Format.Format.RestoreForegroundColor)
 
 type RestoreBackgroundColorFormat() =
+    inherit FormatEmpty(Format.Format.RestoreBackgroundColor)
+
+
+
+[<AbstractClass>]
+type FormatFlag(format, flag) =
+    let mutable flag_ = flag
+
+    member this.Flag
+        with get() =
+            flag_
+
+        and set(flag) =
+            flag_ <- flag
+
     interface IFormat with
         member this.ToFunctional
             with get() =
-                Format.RestoreBackgroundColor
+                format flag
 
     override this.Equals(obj) =
         match obj with
-        | :? RestoreBackgroundColorFormat -> true
+        | :? FormatFlag as other ->
+            this.GetType() = other.GetType() &&
+            this.Flag      = other.Flag
         | _ -> false
 
     override this.GetHashCode() =
-        0
+        hash(this.Flag)
 
     override this.ToString() =
         $"{(this :> IFormat).ToFunctional}"
 
+type BoldFormat(flag) =
+    inherit FormatFlag(Format.Format.Bold, flag)
+
+type FaintFormat(flag) =
+    inherit FormatFlag(Format.Format.Faint, flag)
+
+type ItalicFormat(flag) =
+    inherit FormatFlag(Format.Format.Italic, flag)
+
+type UnderlineFormat(flag) =
+    inherit FormatFlag(Format.Format.Underline, flag)
+
+type BlinkingFormat(flag) =
+    inherit FormatFlag(Format.Format.Blinking, flag)
+
+type ReverseFormat(flag) =
+    inherit FormatFlag(Format.Format.Reverse, flag)
+
+type HiddenFormat(flag) =
+    inherit FormatFlag(Format.Format.Hidden, flag)
+
+type StrikeoutFormat(flag) =
+    inherit FormatFlag(Format.Format.Strikeout, flag)
 
 
-type ForegroundColorFormat(color : Color) =
+
+[<AbstractClass>]
+type FormatColor(format, color : Sharp.Color) =
     let mutable color_ = color
 
     member this.Color
@@ -317,18 +135,21 @@ type ForegroundColorFormat(color : Color) =
             with get() =
                 let color =
                     match this.Color with
-                    | :? RGBColor as rgbColor ->
+                    | :? Sharp.XTermColor as xTermColor ->
+                        Color.XTerm (xTermColor.Id)
+                    | :? Sharp.RGBColor as rgbColor ->
                         Color.RGB (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
-                    | :? HEXColor as hexColor ->
+                    | :? Sharp.HEXColor as hexColor ->
                         Color.HEX (hexColor.Red, hexColor.Green, hexColor.Blue)
                     | _ -> failwith "Unsupported color format!"
 
-                Format.ForegroundColor color
+                format color
 
     override this.Equals(obj) =
         match obj with
-        | :? ForegroundColorFormat as other ->
-            this.Color = other.Color
+        | :? FormatColor as other ->
+            this.GetType() = other.GetType() &&
+            this.Color.Equals(other.Color)
         | _ -> false
 
     override this.GetHashCode() =
@@ -337,40 +158,11 @@ type ForegroundColorFormat(color : Color) =
     override this.ToString() =
         $"{(this :> IFormat).ToFunctional}"
 
-type BackgroundColorFormat(color : Color) =
-    let mutable color_ = color
+type ForegroundColorFormat(color) =
+    inherit FormatColor(Format.Format.ForegroundColor, color)
 
-    member this.Color
-        with get() =
-            color_
-
-        and set(color) =
-            color_ <- color
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                let color =
-                    match this.Color with
-                    | :? RGBColor as rgbColor ->
-                        Color.RGB (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
-                    | :? HEXColor as hexColor ->
-                        Color.HEX (hexColor.Red, hexColor.Green, hexColor.Blue)
-                    | _ -> failwith "Unsupported color format!"
-
-                Format.BackgroundColor color
-
-    override this.Equals(obj) =
-        match obj with
-        | :? BackgroundColorFormat as other ->
-            this.Color = other.Color
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Color)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
+type BackgroundColorFormat(color) =
+    inherit FormatColor(Format.Format.BackgroundColor, color)
 
 
 
@@ -392,21 +184,15 @@ type Formats() =
         and set(newLine) =
             newLine_ <- newLine
 
-
-
     new(formats, newLine) as this =
         Formats() then
-
-        this.Formats <- formats
-        this.NewLine <- newLine
+            this.Formats <- formats
+            this.NewLine <- newLine
 
     new(newLine) as this =
         Formats() then
-
-        this.Formats <- []
-        this.NewLine <- newLine
-
-
+            this.Formats <- []
+            this.NewLine <- newLine
 
     member this.Item
         with get(index) =
@@ -428,73 +214,67 @@ type Formats() =
 
 
 
-    member this.AddRestoreFormat() =
+    member this.AddRestore() =
         let restoreFormat = new RestoreFormat()
 
         this.AddFormat(restoreFormat)
 
-
-
-    member this.AddBoldFormat(flag) =
-        let boldFormat = new BoldFormat(flag)
-
-        this.AddFormat(boldFormat)
-
-    member this.AddFaintFormat(flag) =
-        let faintFormat = new FaintFormat(flag)
-
-        this.AddFormat(faintFormat)
-
-    member this.AddItalicFormat(flag) =
-        let italicFormat = new ItalicFormat(flag)
-
-        this.AddFormat(italicFormat)
-
-    member this.AddUnderlineFormat(flag) =
-        let underlineFormat = new UnderlineFormat(flag)
-
-        this.AddFormat(underlineFormat)
-
-    member this.AddBlinkingFormat(flag) =
-        let blinkingFormat = new BlinkingFormat(flag)
-
-        this.AddFormat(blinkingFormat)
-
-    member this.AddReverseFormat(flag) =
-        let reverseFormat = new ReverseFormat(flag)
-
-        this.AddFormat(reverseFormat)
-
-    member this.AddHiddenFormat(flag) =
-        let hiddenFormat = new HiddenFormat(flag)
-
-        this.AddFormat(hiddenFormat)
-
-    member this.AddStrikeoutFormat(flag) =
-        let strikeoutFormat = new StrikeoutFormat(flag)
-
-        this.AddFormat(strikeoutFormat)
-
-
-
-    member this.AddRestoreForegroundColorFormat() =
+    member this.AddRestoreForegroundColor() =
         let restoreForegroundColorFormat = new RestoreForegroundColorFormat()
 
         this.AddFormat(restoreForegroundColorFormat)
 
-    member this.AddRestoreBackgroundColorFormat() =
+    member this.AddRestoreBackgroundColor() =
         let restoreBackgroundColorFormat = new RestoreBackgroundColorFormat()
 
         this.AddFormat(restoreBackgroundColorFormat)
 
+    member this.AddBold(flag) =
+        let boldFormat = new BoldFormat(flag)
 
+        this.AddFormat(boldFormat)
 
-    member this.AddForegroundColorFormat(color) =
+    member this.AddFaint(flag) =
+        let faintFormat = new FaintFormat(flag)
+
+        this.AddFormat(faintFormat)
+
+    member this.AddItalic(flag) =
+        let italicFormat = new ItalicFormat(flag)
+
+        this.AddFormat(italicFormat)
+
+    member this.AddUnderline(flag) =
+        let underlineFormat = new UnderlineFormat(flag)
+
+        this.AddFormat(underlineFormat)
+
+    member this.AddBlinking(flag) =
+        let blinkingFormat = new BlinkingFormat(flag)
+
+        this.AddFormat(blinkingFormat)
+
+    member this.AddReverse(flag) =
+        let reverseFormat = new ReverseFormat(flag)
+
+        this.AddFormat(reverseFormat)
+
+    member this.AddHidden(flag) =
+        let hiddenFormat = new HiddenFormat(flag)
+
+        this.AddFormat(hiddenFormat)
+
+    member this.AddStrikeout(flag) =
+        let strikeoutFormat = new StrikeoutFormat(flag)
+
+        this.AddFormat(strikeoutFormat)
+
+    member this.AddForegroundColor(color) =
         let foregroundColorFormat = new ForegroundColorFormat(color)
 
         this.AddFormat(foregroundColorFormat)
 
-    member this.AddBackgroundColorFormat(color) =
+    member this.AddBackgroundColor(color) =
         let backgroundColorFormat = new BackgroundColorFormat(color)
 
         this.AddFormat(backgroundColorFormat)
@@ -515,24 +295,21 @@ type Formats() =
 
 
 
-    member private this.CallApply(format : IFormat, newLine, text) =
+    member private this.CallApply(format : IFormat, text, newLine) =
         if newLine then
             Format.applyNewLine text format.ToFunctional
         else
             Format.apply text format.ToFunctional
 
-    member this.Apply(format : IFormat, newLine, text) =
-        this.CallApply(format, newLine, text)
+    member this.Apply(format : IFormat, text, newLine) =
+        this.CallApply(format, text, newLine)
 
     member this.Apply(format : IFormat, text) =
-        this.CallApply(format, this.NewLine, text)
+        this.CallApply(format, text, this.NewLine)
 
-
-
-    member private this.CallApplyAll(newLine, text) =
+    member private this.CallApplyAll(text, newLine) =
         let formats =
             this.Formats
-            |> List.rev
             |> List.map (fun format ->
                 format.ToFunctional
             )
@@ -542,11 +319,11 @@ type Formats() =
         else
             Format.applyAll text formats
 
-    member this.ApplyAll(newLine, text) =
-        this.CallApplyAll(newLine, text)
+    member this.ApplyAll(text, newLine) =
+        this.CallApplyAll(text, newLine)
 
     member this.ApplyAll(text) =
-        this.CallApplyAll(this.NewLine, text)
+        this.CallApplyAll(text, this.NewLine)
 
 
 
@@ -562,7 +339,15 @@ type Formats() =
 
         Format.apply text restoreFormat.ToFunctional
 
+    static member DoRestoreForegroundColor(text) =
+        let restoreForegroundColorFormat = new RestoreForegroundColorFormat() :> IFormat
 
+        Format.apply text restoreForegroundColorFormat.ToFunctional
+
+    static member DoRestoreBackgroundColor(text) =
+        let restoreBackgroundColorFormat = new RestoreBackgroundColorFormat() :> IFormat
+
+        Format.apply text restoreBackgroundColorFormat.ToFunctional
 
     static member DoBold(text, flag) =
         let boldFormat = new BoldFormat(flag) :> IFormat
@@ -603,20 +388,6 @@ type Formats() =
         let strikeoutFormat = new StrikeoutFormat(flag) :> IFormat
 
         Format.apply text strikeoutFormat.ToFunctional
-
-
-
-    static member DoRestoreForegroundColor(text) =
-        let restoreForegroundColorFormat = new RestoreForegroundColorFormat() :> IFormat
-
-        Format.apply text restoreForegroundColorFormat.ToFunctional
-
-    static member DoRestoreBackgroundColor(text) =
-        let restoreBackgroundColorFormat = new RestoreBackgroundColorFormat() :> IFormat
-
-        Format.apply text restoreBackgroundColorFormat.ToFunctional
-
-
 
     static member DoForegroundColor(text, color) =
         let foregroundColorFormat = new ForegroundColorFormat(color) :> IFormat

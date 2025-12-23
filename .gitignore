@@ -2,6 +2,7 @@
 .idea/
 .run/
 
+# DotNet
 global.json
 
 # Visual Studio
@@ -16,6 +17,7 @@ global.json
 [Oo]bj/
 
 # Repository
+*.temp/
 *.temp.*
 
 # Windows

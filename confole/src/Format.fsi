@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Format.fsi
 
@@ -16,8 +16,8 @@
                   relative alla formattazione del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -27,26 +27,27 @@ open Color
 open Position
 
 module Format =
-    open Common
-
     type Format =
         | Restore
-        | Bold                   of bool
-        | Faint                  of bool
-        | Italic                 of bool
-        | Underline              of bool
-        | Blinking               of bool
-        | Reverse                of bool
-        | Hidden                 of bool
-        | Strikeout              of bool
         | RestoreForegroundColor
         | RestoreBackgroundColor
-        | ForegroundColor        of Color
-        | BackgroundColor        of Color
+        | Bold                   of flag  : bool
+        | Faint                  of flag  : bool
+        | Italic                 of flag  : bool
+        | Underline              of flag  : bool
+        | Blinking               of flag  : bool
+        | Reverse                of flag  : bool
+        | Hidden                 of flag  : bool
+        | Strikeout              of flag  : bool
+        | ForegroundColor        of color : Color
+        | BackgroundColor        of color : Color
 
     type Formats = Format list
 
     val restore : formats : Formats -> Formats
+
+    val restoreForegroundColor : formats : Formats -> Formats
+    val restoreBackgroundColor : formats : Formats -> Formats
 
     val bold      : flag : bool -> formats : Formats -> Formats
     val faint     : flag : bool -> formats : Formats -> Formats
@@ -57,15 +58,13 @@ module Format =
     val hidden    : flag : bool -> formats : Formats -> Formats
     val strikeout : flag : bool -> formats : Formats -> Formats
 
-    val restoreForegroundColor : formats : Formats -> Formats
-    val restoreBackgroundColor : formats : Formats -> Formats
-
     val foregroundColor : color : Color -> formats : Formats -> Formats
     val backgroundColor : color : Color -> formats : Formats -> Formats
 
-    val init  : unit              -> Formats
-    val clear : formats : Formats -> Formats
-    val view  : formats : Formats -> unit
+    val init       : unit              -> Formats
+    val initPreset : formats : Formats -> Formats
+    val clear      : formats : Formats -> Formats
+    val view       : formats : Formats -> unit
 
     val apply        : text : string -> format : Format -> unit
     val applyNewLine : text : string -> format : Format -> unit
@@ -101,6 +100,9 @@ module Format =
 
     val doRestore : text : string -> unit
 
+    val doRestoreForegroundColor : text : string -> unit
+    val doRestoreBackgroundColor : text : string -> unit
+
     val doBold      : text : string -> flag : bool -> unit
     val doFaint     : text : string -> flag : bool -> unit
     val doItalic    : text : string -> flag : bool -> unit
@@ -109,9 +111,6 @@ module Format =
     val doReverse   : text : string -> flag : bool -> unit
     val doHidden    : text : string -> flag : bool -> unit
     val doStrikeout : text : string -> flag : bool -> unit
-
-    val doRestoreForegroundColor : text : string -> unit
-    val doRestoreBackgroundColor : text : string -> unit
 
     val doForegroundColor : text : string -> color : Color -> unit
     val doBackgroundColor : text : string -> color : Color -> unit

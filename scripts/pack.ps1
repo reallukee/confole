@@ -2,17 +2,18 @@ param(
     [ValidateSet(
         "Confole",
         "Confole.Sharp",
+        "Confole.Templates",
         "All"
     )]
-    $Target = "All",
+    [string] $Target = "All",
 
     [ValidateSet(
         "Debug",
         "Release"
     )]
-    $Configuration = "Release",
+    [string] $Configuration = "Release",
 
-    $Output = "bin"
+    [string] $Output
 )
 
 try {
@@ -26,9 +27,9 @@ catch {
 
 Push-Location
 
-$root = Split-Path -Parent (Get-Location)
+$Root = Split-Path -Parent (Get-Location)
 
-if (-not (Test-Path -Path $root -PathType Container)) {
+if (-not (Test-Path -Path $Root -PathType Container)) {
     Write-Error -Message "Can't enter repository root directory!"
 
     Pop-Location
@@ -36,21 +37,26 @@ if (-not (Test-Path -Path $root -PathType Container)) {
     exit 1
 }
 
-Set-Location -Path $root
+Set-Location -Path $Root
 
 switch ($Target) {
-    "Confole"       { $projects = @("confole") }
-    "Confole.Sharp" { $projects = @("confole.sharp") }
-    "All"           { $projects = @("confole", "confole.sharp") }
-    default         { exit 1 }
+    "Confole"           { $Projects = @("./confole") }
+    "Confole.Sharp"     { $Projects = @("./confole.sharp") }
+    "Confole.Templates" { $Projects = @("./confole.templates")}
+    "All"               { $Projects = @("./confole.slnx") }
+    default             { exit 1 }
 }
 
-$projects | ForEach-Object {
+$Projects | ForEach-Object {
     & dotnet restore $_ --ignore-failed-sources
 
     & dotnet build $_ --no-restore --configuration ${Configuration}
 
-    & dotnet pack $_ --no-build --configuration ${Configuration} --output ${Output}
+    if ($null -ne $Output -and "" -ne $Output) {
+        & dotnet pack $_ --no-build --configuration ${Configuration} --output ${Output}
+    } else {
+        & dotnet pack $_ --no-build --configuration ${Configuration}
+    }
 }
 
 Pop-Location

@@ -5,16 +5,21 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Action.fsi
 
     Title       : ACTION
-    Description : Action
+    Description : Contiene le firme delle classi, delle
+                  interfacce e delle enumerazioni pubbliche
+                  del modulo Action.
+                  Il modulo Action si occupa di wrappare
+                  in modo OOP e C#-Friendly l'omonimo
+                  modulo funzionale!
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -36,81 +41,67 @@ type IActions = IAction list
 
 
 
-type InsertCharacterAction =
+[<AbstractClass>]
+type ActionN =
     interface IAction
 
-    new : unit    -> InsertCharacterAction
-    new : n : int -> InsertCharacterAction
+    new : action : (int option -> Action.Action) * n : int -> ActionN
 
     member N : int with get, set
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string
+
+type InsertCharacterAction =
+    inherit ActionN
+
+    new : unit       -> InsertCharacterAction
+    new : n    : int -> InsertCharacterAction
 
 type DeleteCharacterAction =
-    interface IAction
+    inherit ActionN
 
-    new : unit    -> DeleteCharacterAction
-    new : n : int -> DeleteCharacterAction
-
-    member N : int with get, set
-
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
-
+    new : unit       -> DeleteCharacterAction
+    new : n    : int -> DeleteCharacterAction
 
 type InsertLineAction =
-    interface IAction
+    inherit ActionN
 
-    new : unit    -> InsertLineAction
-    new : n : int -> InsertLineAction
-
-    member N : int with get, set
-
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    new : unit       -> InsertLineAction
+    new : n    : int -> InsertLineAction
 
 type DeleteLineAction =
+    inherit ActionN
+
+    new : unit       -> DeleteLineAction
+    new : n    : int -> DeleteLineAction
+
+
+
+[<AbstractClass>]
+type ActionErase =
     interface IAction
 
-    new : unit    -> DeleteLineAction
-    new : n : int -> DeleteLineAction
+    new : action : (Action.Erase option -> Action.Action) * erase : Erase -> ActionErase
 
-    member N : int with get, set
+    member Erase : Erase with get, set
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
-
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string
 
 type EraseDisplayAction =
-    interface IAction
+    inherit ActionErase
 
     new : unit          -> EraseDisplayAction
     new : erase : Erase -> EraseDisplayAction
 
-    member Erase : Erase with get, set
-
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
-
 type EraseLineAction =
-    interface IAction
+    inherit ActionErase
 
     new : unit          -> EraseLineAction
     new : erase : Erase -> EraseLineAction
-
-    member Erase : Erase with get, set
-
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
 
 
 
@@ -128,37 +119,32 @@ type Actions =
     member AddAction  : action  : IAction  -> Actions
     member AddActions : actions : IActions -> Actions
 
-    member AddInsertCharacterAction : n : int -> Actions
-    member AddDeleteCharacterAction : n : int -> Actions
-
-    member AddInsertLineAction : n : int -> Actions
-    member AddDeleteLineAction : n : int -> Actions
-
-    member AddEraseDisplayAction : erase : Erase -> Actions
-    member AddEraseLineAction    : erase : Erase -> Actions
+    member AddInsertCharacter : n     : int   -> Actions
+    member AddDeleteCharacter : n     : int   -> Actions
+    member AddInsertLine      : n     : int   -> Actions
+    member AddDeleteLine      : n     : int   -> Actions
+    member AddEraseDisplay    : erase : Erase -> Actions
+    member AddEraseLine       : erase : Erase -> Actions
 
     member Clear : unit -> Actions
     member View  : unit -> unit
 
-    member Apply : action : IAction * newLine : bool -> unit
-    member Apply : action : IAction                  -> unit
-
-    member ApplyAll : newLine : bool -> unit
-    member ApplyAll : unit           -> unit
+    member Apply    : action  : IAction * newLine : bool -> unit
+    member Apply    : action  : IAction                  -> unit
+    member ApplyAll : newLine : bool                     -> unit
+    member ApplyAll : unit                               -> unit
 
     member Reset : unit -> unit
 
-    static member DoInsertCharacter : n : int -> unit
-    static member DoDeleteCharacter : n : int -> unit
-
-    static member DoInsertLine : n : int -> unit
-    static member DoDeleteLine : n : int -> unit
-
-    static member DoEraseDisplay : erase : Erase -> unit
-    static member DoEraseLine    : erase : Erase -> unit
+    static member DoInsertCharacter : n     : int   -> unit
+    static member DoDeleteCharacter : n     : int   -> unit
+    static member DoInsertLine      : n     : int   -> unit
+    static member DoDeleteLine      : n     : int   -> unit
+    static member DoEraseDisplay    : erase : Erase -> unit
+    static member DoEraseLine       : erase : Erase -> unit
 
     static member DoReset : unit -> unit
 
-    override Equals      : obj : obj -> bool
-    override GetHashCode : unit      -> int
-    override ToString    : unit      -> string
+    override Equals      : obj  : obj -> bool
+    override GetHashCode : unit       -> int
+    override ToString    : unit       -> string

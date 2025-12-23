@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Rule.fsi
 
@@ -16,8 +16,8 @@
                   relative all'apparenza del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -27,8 +27,6 @@ open Color
 open Position
 
 module Rule =
-    open Common
-
     type Shape =
         | User
         | BlinkingBlock
@@ -39,7 +37,7 @@ module Rule =
         | SteadyBar
 
     type Rule =
-        | Title                    of string
+        | Title                    of title : string
         | ShowCursorBlinking
         | HideCursorBlinking
         | ShowCursor
@@ -48,10 +46,10 @@ module Rule =
         | DisableDesignateMode
         | EnableAlternativeBuffer
         | DisableAlternativeBuffer
-        | CursorShape              of Shape option
-        | DefaultForegroundColor   of Color
-        | DefaultBackgroundColor   of Color
-        | DefaultCursorColor       of Color
+        | CursorShape              of shape : Shape option
+        | DefaultForegroundColor   of color : Color
+        | DefaultBackgroundColor   of color : Color
+        | DefaultCursorColor       of color : Color
 
     type Rules = Rule list
 
@@ -75,9 +73,10 @@ module Rule =
     val defaultBackgroundColor : color : Color -> rules : Rules -> Rules
     val defaultCursorColor     : color : Color -> rules : Rules -> Rules
 
-    val init  : unit          -> Rules
-    val clear : rules : Rules -> Rules
-    val view  : rules : Rules -> unit
+    val init       : unit          -> Rules
+    val initPreset : rules : Rules -> Rules
+    val clear      : rules : Rules -> Rules
+    val view       : rules : Rules -> unit
 
     val apply        : rule : Rule -> unit
     val applyNewLine : rule : Rule -> unit

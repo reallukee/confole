@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Cursor.fs
 
@@ -16,8 +16,8 @@
                   relative al cursore del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -27,19 +27,17 @@ open Color
 open Position
 
 module Cursor =
-    open Common
-
     type Cursor =
         | Reverse
         | Save
         | Restore
-        | Up           of int option
-        | Down         of int option
-        | Next         of int option
-        | Previous     of int option
-        | NextLine     of int option
-        | PreviousLine of int option
-        | Move         of Position
+        | Up           of n        : int option
+        | Down         of n        : int option
+        | Next         of n        : int option
+        | Previous     of n        : int option
+        | NextLine     of n        : int option
+        | PreviousLine of n        : int option
+        | Move         of position : Position option
 
     type Cursors = Cursor list
 
@@ -62,6 +60,9 @@ module Cursor =
 
 
     let init () : Cursors = []
+
+    let initPreset (cursors : Cursors) =
+        cursors
 
     let clear (cursors : Cursors) : Cursors = []
 
@@ -90,7 +91,7 @@ module Cursor =
 
         | Move position ->
             let col, row =
-                match position with
+                match defaultArg position (ColRow (0, 0)) with
                 | ColRow (col, row) -> col + 1, row + 1
                 | Cell cell -> cell.col + 1, cell.row + 1
                 | _ -> failwith "Unsupported position format!"
@@ -120,7 +121,7 @@ module Cursor =
 
     let reset () =
         [
-            Move (ColRow (0, 0))
+            Move (Some (ColRow (0, 0)))
         ]
         |> applyAll
 

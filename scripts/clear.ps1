@@ -1,8 +1,8 @@
 Push-Location
 
-$root = Split-Path -Parent (Get-Location)
+$Root = Split-Path -Parent (Get-Location)
 
-if (-not (Test-Path -Path $root -PathType Container)) {
+if (-not (Test-Path -Path $Root -PathType Container)) {
     Write-Error -Message "Can't enter repository root directory!"
 
     Pop-Location
@@ -10,9 +10,9 @@ if (-not (Test-Path -Path $root -PathType Container)) {
     exit 1
 }
 
-Set-Location -Path $root
+Set-Location -Path $Root
 
-$targets = @(
+$Targets = @(
     ".vs",
     ".idea",
     "bin",
@@ -21,18 +21,18 @@ $targets = @(
     "api"
 )
 
-$exclusions = @(
+$Exclusions = @(
     ".git"
 ) | ForEach-Object {
-    Join-Path -Path $root -ChildPath $_
+    Join-Path -Path $Root -ChildPath $_
 }
 
-Get-ChildItem -Path $root -Directory -Recurse -Force | Where-Object {
-    if ($exclusions -contains $_.Parent.FullName) {
+Get-ChildItem -Path $Root -Directory -Recurse -Force | Where-Object {
+    if ($Exclusions -contains $_.Parent.FullName) {
         return $false
     }
 
-    $targets -contains $_.Name
+    $Targets -contains $_.Name
 } | ForEach-Object {
     try {
         Remove-Item -Path $_.FullName -Recurse -Force | Out-Null

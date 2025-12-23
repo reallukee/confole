@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Cursor.fsi
 
@@ -16,8 +16,8 @@
                   relative al cursore del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -27,19 +27,17 @@ open Color
 open Position
 
 module Cursor =
-    open Common
-
     type Cursor =
         | Reverse
         | Save
         | Restore
-        | Up           of int option
-        | Down         of int option
-        | Next         of int option
-        | Previous     of int option
-        | NextLine     of int option
-        | PreviousLine of int option
-        | Move         of Position
+        | Up           of n        : int option
+        | Down         of n        : int option
+        | Next         of n        : int option
+        | Previous     of n        : int option
+        | NextLine     of n        : int option
+        | PreviousLine of n        : int option
+        | Move         of position : Position option
 
     type Cursors = Cursor list
 
@@ -55,11 +53,12 @@ module Cursor =
     val nextLine     : n : int option -> cursors : Cursors -> Cursors
     val previousLine : n : int option -> cursors : Cursors -> Cursors
 
-    val move : position : Position -> cursors : Cursors -> Cursors
+    val move : position : Position option -> cursors : Cursors -> Cursors
 
-    val init  : unit              -> Cursors
-    val clear : cursors : Cursors -> Cursors
-    val view  : cursors : Cursors -> unit
+    val init       : unit              -> Cursors
+    val initPreset : cursors : Cursors -> Cursors
+    val clear      : cursors : Cursors -> Cursors
+    val view       : cursors : Cursors -> unit
 
     val apply        : cursor : Cursor -> unit
     val applyNewLine : cursor : Cursor -> unit
@@ -105,4 +104,4 @@ module Cursor =
     val doNextLine     : n : int option -> unit
     val doPreviousLine : n : int option -> unit
 
-    val doMove : position : Position -> unit
+    val doMove : position : Position option -> unit

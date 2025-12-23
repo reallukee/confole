@@ -1,8 +1,13 @@
-* text=auto
-* eol=lf
+# All files
+* text=auto eol=lf
 
-*.cs linguist-vendored=true
+# NO! NO! NO!
+confole.templates/**/* linguist-detectable=false
 
-*.sh linguist-vendored=true
-*.cmd linguist-vendored=true
-*.ps1 linguist-vendored=true
+*.cs linguist-detectable=false
+*.vb linguist-detectable=false
+
+# Scripts shouldn't be counted in the code base's statistics
+*.sh linguist-detectable=false
+*.cmd linguist-detectable=false
+*.ps1 linguist-detectable=false

@@ -5,20 +5,27 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Position.fs
 
     Title       : POSITION
-    Description : Position
+    Description : Contiene l'implementazione delle classi,
+                  delle interfacce e delle enumerazioni
+                  pubbliche (e non) del modulo Position.
+                  Il modulo Position si occupa di wrappare
+                  in modo OOP e C#-Friendly l'omonimo
+                  modulo funzionale!
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole.Sharp
+
+open Reallukee.Confole
 
 [<AbstractClass>]
 type Position() = class end
@@ -31,9 +38,8 @@ type Cell() =
 
     new(col, row) as this =
         Cell() then
-
-        this.Col <- col
-        this.Row <- row
+            this.Col <- col
+            this.Row <- row
 
     member this.Col
         with get() =
@@ -48,6 +54,9 @@ type Cell() =
 
         and set(row) =
             row_ <- row
+
+    static member fromColRow(col, row) =
+        new Cell(col, row)
 
     override this.Equals(obj) =
         match obj with

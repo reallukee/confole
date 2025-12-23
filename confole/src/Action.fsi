@@ -5,7 +5,7 @@
 
     Abbellisci la tua app console F# in modo funzionale
 
-    https://github.com/reallukee/confole
+    https://github.com/reallukee/confole/
 
     File name   : Action.fsi
 
@@ -16,8 +16,8 @@
                   relative al viewport del terminale.
 
     Author      : Luca Pollicino
-                  (https://github.com/reallukee)
-    Version     : 1.1.0
+                  (https://github.com/reallukee/)
+    Version     : 1.2.0
     License     : MIT
 *)
 
@@ -27,35 +27,34 @@ open Color
 open Position
 
 module Action =
-    open Common
-
     type Erase =
         | FromCurrentToEnd
         | FromBeginToCurrent
         | FromBeginToEnd
 
     type Action =
-        | InsertCharacter of int
-        | DeleteCharacter of int
-        | InsertLine      of int
-        | DeleteLine      of int
-        | EraseDisplay    of Erase option
-        | EraseLine       of Erase option
+        | InsertCharacter of n    : int option
+        | DeleteCharacter of n    : int option
+        | InsertLine      of n    : int option
+        | DeleteLine      of n    : int option
+        | EraseDisplay    of mode : Erase option
+        | EraseLine       of mode : Erase option
 
     type Actions = Action list
 
-    val insertCharacter : n : int -> actions : Actions -> Actions
-    val deleteCharacter : n : int -> actions : Actions -> Actions
+    val insertCharacter : n : int option -> actions : Actions -> Actions
+    val deleteCharacter : n : int option -> actions : Actions -> Actions
 
-    val insertLine : n : int -> actions : Actions -> Actions
-    val deleteLine : n : int -> actions : Actions -> Actions
+    val insertLine : n : int option -> actions : Actions -> Actions
+    val deleteLine : n : int option -> actions : Actions -> Actions
 
     val eraseDisplay : erase : Erase option -> actions : Actions -> Actions
     val eraseLine    : erase : Erase option -> actions : Actions -> Actions
 
-    val init  : unit              -> Actions
-    val clear : actions : Actions -> Actions
-    val view  : actions : Actions -> unit
+    val init       : unit              -> Actions
+    val initPreset : actions : Actions -> Actions
+    val clear      : actions : Actions -> Actions
+    val view       : actions : Actions -> unit
 
     val apply        : action : Action -> unit
     val applyNewLine : action : Action -> unit
@@ -89,11 +88,11 @@ module Action =
 
     val builder : Builder
 
-    val doInsertCharacter : n : int -> unit
-    val doDeleteCharacter : n : int -> unit
+    val doInsertCharacter : n : int option -> unit
+    val doDeleteCharacter : n : int option -> unit
 
-    val doInsertLine : n : int -> unit
-    val doDeleteLine : n : int -> unit
+    val doInsertLine : n : int option -> unit
+    val doDeleteLine : n : int option -> unit
 
     val doEraseDisplay : erase : Erase option -> unit
     val doEraseLine    : erase : Erase option -> unit
