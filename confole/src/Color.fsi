@@ -22,8 +22,6 @@
 namespace Reallukee.Confole
 
 module Color =
-    open Common
-
     type XTermColor = {
         id : int
     }
@@ -48,11 +46,11 @@ module Color =
         | HEX        of red   : string     * green : string * blue : string
         | HEXColor   of color : HEXColor
 
-    val rgbToHEX : rgb : int * int * int -> string * string * string
-    val hexToRGB : hex : string * string * string -> int * int * int
+    val rgbToHEX : rgb : int    * int    * int    -> string * string * string
+    val hexToRGB : hex : string * string * string -> int    * int    * int
 
     val rgbColorToHEXColor : rgbColor : RGBColor -> HEXColor
     val hexColorToRGBColor : hexColor : HEXColor -> RGBColor
 
-    val colorToRGB : color : Color -> int * int * int
+    val colorToRGB : color : Color -> int    * int    * int
     val colorToHEX : color : Color -> string * string * string

@@ -27,8 +27,6 @@ open Color
 open Position
 
 module Action =
-    open Common
-
     type Erase =
         | FromCurrentToEnd
         | FromBeginToCurrent

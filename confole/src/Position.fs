@@ -22,8 +22,6 @@
 namespace Reallukee.Confole
 
 module Position =
-    open Common
-
     type Cell = {
         col : int
         row : int

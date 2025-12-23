@@ -27,8 +27,6 @@ open Color
 open Position
 
 module Rule =
-    open Common
-
     type Shape =
         | User
         | BlinkingBlock

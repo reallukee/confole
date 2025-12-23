@@ -27,8 +27,6 @@ open Color
 open Position
 
 module Cursor =
-    open Common
-
     type Cursor =
         | Reverse
         | Save

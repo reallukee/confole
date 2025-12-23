@@ -27,8 +27,6 @@ open Color
 open Position
 
 module Format =
-    open Common
-
     type Format =
         | Restore
         | RestoreForegroundColor

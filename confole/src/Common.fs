@@ -21,6 +21,7 @@
 
 namespace Reallukee.Confole
 
+[<AutoOpen>]
 module Common =
     let ESC = "\u001B"
     let CSI = "\u001B["

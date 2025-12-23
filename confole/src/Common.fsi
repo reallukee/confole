@@ -21,6 +21,7 @@
 
 namespace Reallukee.Confole
 
+[<AutoOpen>]
 module Common =
     val ESC : string
     val CSI : string

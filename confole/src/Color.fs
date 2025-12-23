@@ -22,8 +22,6 @@
 namespace Reallukee.Confole
 
 module Color =
-    open Common
-
     type XTermColor = {
         id : int
     }
