@@ -17,6 +17,7 @@ global.json
 [Oo]bj/
 
 # Repository
+*.temp/
 *.temp.*
 
 # Windows

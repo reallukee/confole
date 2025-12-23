@@ -2,8 +2,6 @@
   <PropertyGroup>
     <ProjectFolderName>$(MSBuildProjectName)</ProjectFolderName>
 
-    <TargetFramework>net8.0</TargetFramework>
-
     <BaseOutputPath>$(SolutionDir)bin</BaseOutputPath>
     <BaseIntermediateOutputPath>$(SolutionDir)obj\$(ProjectFolderName)</BaseIntermediateOutputPath>
   </PropertyGroup>
