@@ -75,10 +75,18 @@ Solo compilazione:
 
 ```bash
 dotnet build confole.slnx --configuration Release
+
+dotnet build ./confole --configuration Release
+dotnet build ./confole.sharp --configuration Release
+dotnet build ./confole.templates --configuration Release
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```bash
 dotnet pack confole.slnx --configuration Release
+
+dotnet pack ./confole --configuration Release
+dotnet pack ./confole.sharp --configuration Release
+dotnet pack ./confole.templates --configuration Release
 ```

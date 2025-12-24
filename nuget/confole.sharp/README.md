@@ -16,7 +16,7 @@
 
 
 
-### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole)?
+### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole/)?
 
 
 
@@ -71,11 +71,11 @@
 
     Formats formats = new Formats();
 
-    formats.AddItalicFormat(true)
-           .AddForegroundColorFormat(new RGBColor(255, 0, 0))
-           .AddBackgroundColorFormat(new RGBColor(0, 0, 255));
+    formats.AddItalic(true)
+           .AddForegroundColor(new RGBColor(255, 0, 0))
+           .AddBackgroundColor(new RGBColor(0, 0, 255));
 
-    formats.ApplyAll(true, "Hello, World!");
+    formats.ApplyAll("Hello, World!", true);
 
     Console.ReadKey(true);
 
@@ -112,7 +112,7 @@
 
 ## Da GitHub
 
-> [Download da GitHub](https://github.com/reallukee/confole/releases/latest)
+> [Download da GitHub](https://github.com/reallukee/confole/releases/latest/)
 
 ## Da NuGet
 
@@ -199,22 +199,26 @@ Solo compilazione:
 
 ```bash
 dotnet build confole.slnx --configuration Release
+
+dotnet build ./confole.sharp --configuration Release
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```bash
 dotnet pack confole.slnx --configuration Release
+
+dotnet pack ./confole.sharp --configuration Release
 ```
 
 
 
 # Autore
 
-* [Luca Pollicino](https://github.com/reallukee)
+* [Luca Pollicino](https://github.com/reallukee/)
 
 
 
 # Licenza
 
-Licenza [MIT](./LICENSE)
+Licenza [MIT](https://github.com/reallukee/confole/blob/main/LICENSE)

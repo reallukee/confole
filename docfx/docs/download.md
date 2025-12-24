@@ -2,7 +2,7 @@
 
 ## Da GitHub
 
-> [Download da GitHub](https://github.com/reallukee/confole/releases/latest)
+> [Download da GitHub](https://github.com/reallukee/confole/releases/latest/)
 
 ## Da NuGet
 

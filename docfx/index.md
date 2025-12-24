@@ -4,7 +4,7 @@ _layout: landing
 
 <div align="center">
 
-<img src="confole.png" width="256px" height="256px" />
+<img src="confole.png" alt="confole.png" width="256px" height="256px" />
 
 # Confole
 

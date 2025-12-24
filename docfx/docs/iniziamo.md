@@ -140,11 +140,11 @@
 
     Formats formats = new Formats();
 
-    formats.AddItalicFormat(true)
-           .AddForegroundColorFormat(new RGBColor(255, 0, 0))
-           .AddBackgroundColorFormat(new RGBColor(0, 0, 255));
+    formats.AddItalic(true)
+           .AddForegroundColor(new RGBColor(255, 0, 0))
+           .AddBackgroundColor(new RGBColor(0, 0, 255));
 
-    formats.ApplyAll(true, "Hello, World!");
+    formats.ApplyAll("Hello, World!", true);
 
     Console.ReadKey(true);
 

@@ -16,7 +16,7 @@
 
 
 
-### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole)?
+### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole/)?
 
 
 
@@ -87,7 +87,7 @@
 
 ## Da GitHub
 
-> [Download da GitHub](https://github.com/reallukee/confole/releases/latest)
+> [Download da GitHub](https://github.com/reallukee/confole/releases/latest/)
 
 ## Da NuGet
 
@@ -174,22 +174,26 @@ Solo compilazione:
 
 ```bash
 dotnet build confole.slnx --configuration Release
+
+dotnet build ./confole.templates --configuration Release
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```bash
 dotnet pack confole.slnx --configuration Release
+
+dotnet pack ./confole.templates --configuration Release
 ```
 
 
 
 # Autore
 
-* [Luca Pollicino](https://github.com/reallukee)
+* [Luca Pollicino](https://github.com/reallukee/)
 
 
 
 # Licenza
 
-Licenza [MIT](./LICENSE)
+Licenza [MIT](https://github.com/reallukee/confole/blob/main/LICENSE)
