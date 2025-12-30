@@ -15,9 +15,17 @@
                   Il modulo Rule si occupa di sequenze VTS
                   relative all'apparenza del terminale.
 
+                  Il modulo Rule permette di ottenere gli
+                  stessi risultati con 4 approcci diversi:
+
+                  * Manuale
+                  * Funzionale
+                  * Imperativo
+                  * DSL
+
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.4.0
     License     : MIT
 *)
 
@@ -27,6 +35,7 @@ open Color
 open Position
 
 module Rule =
+
     type Shape =
         | User
         | BlinkingBlock
@@ -37,23 +46,196 @@ module Rule =
         | SteadyBar
 
     type Rule =
-        | Title                    of title : string
-        | ShowCursorBlinking
-        | HideCursorBlinking
-        | ShowCursor
-        | HideCursor
-        | EnableDesignateMode
-        | DisableDesignateMode
-        | EnableAlternativeBuffer
-        | DisableAlternativeBuffer
-        | CursorShape              of shape : Shape option
-        | DefaultForegroundColor   of color : Color
-        | DefaultBackgroundColor   of color : Color
-        | DefaultCursorColor       of color : Color
+        | Title                    of title : string       // TTL
+        | ShowCursorBlinking                               // SCB
+        | HideCursorBlinking                               // HCB
+        | ShowCursor                                       // SC
+        | HideCursor                                       // HC
+        | EnableDesignateMode                              // EDM
+        | DisableDesignateMode                             // DDM
+        | EnableAlternativeBuffer                          // EAB
+        | DisableAlternativeBuffer                         // DAB
+        | CursorShape              of shape : Shape option // CS
+        | DefaultForegroundColor   of color : Color option // DFGC
+        | DefaultBackgroundColor   of color : Color option // DBGC
+        | DefaultCursorColor       of color : Color option // DCC
+
+    let TTL  title = Title                    title
+    let SCB        = ShowCursorBlinking
+    let HCB        = HideCursorBlinking
+    let SC         = ShowCursor
+    let HC         = HideCursor
+    let EDM        = EnableDesignateMode
+    let DDM        = DisableDesignateMode
+    let EAB        = EnableAlternativeBuffer
+    let DAB        = DisableAlternativeBuffer
+    let CS   shape = CursorShape              shape
+    let DFGC color = DefaultForegroundColor   color
+    let DBGC color = DefaultBackgroundColor   color
+    let DCC  color = DefaultCursorColor       color
 
     type Rules = Rule list
 
+    let private defaultRules = [
+        ShowCursorBlinking
+        ShowCursor
 
+        DisableDesignateMode
+        DisableAlternativeBuffer
+
+        CursorShape              None
+
+        DefaultForegroundColor   None
+        DefaultBackgroundColor   None
+        DefaultCursorColor       None
+    ]
+
+
+
+    let getRule rule =
+        match rule with
+        | Title title -> sprintf "%s0;%s%s" OSC title Bell
+
+        | ShowCursorBlinking -> sprintf "%s?12h" CSI
+        | HideCursorBlinking -> sprintf "%s?12l" CSI
+
+        | ShowCursor -> sprintf "%s?25h" CSI
+        | HideCursor -> sprintf "%s?25l" CSI
+
+        | EnableDesignateMode  -> sprintf "%s(0" ESC
+        | DisableDesignateMode -> sprintf "%s(B" ESC
+
+        | EnableAlternativeBuffer  -> sprintf "%s?1049h" CSI
+        | DisableAlternativeBuffer -> sprintf "%s?1049l" CSI
+
+        | CursorShape shape ->
+            let shape =
+                match shape with
+                | Some User              -> 0
+                | Some BlinkingBlock     -> 1
+                | Some SteadyBlock       -> 2
+                | Some BlinkingUnderline -> 3
+                | Some SteadyUnderline   -> 4
+                | Some BlinkingBar       -> 5
+                | Some SteadyBar         -> 6
+                | None                   -> 0
+
+            sprintf "%s%d%sq" CSI shape SP
+
+        | DefaultForegroundColor color ->
+            let color = defaultArg color (Color.RGB (255, 255, 255))
+
+            let red, green, blue =
+                match color with
+                | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
+                | RGBColor color ->
+                    rgbColorToHEXColor color
+                    |> fun color -> color.red, color.green, color.blue
+
+                | HEX (red, green, blue) -> red, green, blue
+                | HEXColor color -> color.red, color.green, color.blue
+
+                | color -> failwithf "%A: Unsupported color format!" color
+
+            sprintf "%s10;rgb:%s/%s/%s%s\\" OSC red green blue ESC
+        | DefaultBackgroundColor color ->
+            let color = defaultArg color (Color.RGB (0, 0, 0))
+
+            let red, green, blue =
+                match color with
+                | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
+                | RGBColor color ->
+                    rgbColorToHEXColor color
+                    |> fun color -> color.red, color.green, color.blue
+
+                | HEX (red, green, blue) -> red, green, blue
+                | HEXColor color -> color.red, color.green, color.blue
+
+                | color -> failwithf "%A: Unsupported color format!" color
+
+            sprintf "%s11;rgb:%s/%s/%s%s\\" OSC red green blue ESC
+        | DefaultCursorColor color ->
+            let color = defaultArg color (Color.RGB (255, 255, 255))
+
+            let red, green, blue =
+                match color with
+                | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
+                | RGBColor color ->
+                    rgbColorToHEXColor color
+                    |> fun color -> color.red, color.green, color.blue
+
+                | HEX (red, green, blue) -> red, green, blue
+                | HEXColor color -> color.red, color.green, color.blue
+
+                | color -> failwithf "%A: Unsupported color format!" color
+
+            sprintf "%s12;rgb:%s/%s/%s%s\\" OSC red green blue ESC
+
+        | rule -> failwithf "%A: Not yet implemented!" rule
+
+    let getRules rules =
+        rules
+        |> List.map (fun rule ->
+            getRule rule
+        )
+        |> String.concat ""
+
+    let getTitle title = getRule (Title title)
+
+    let getShowCursorBlinking () = getRule ShowCursorBlinking
+    let getHideCursorBlinking () = getRule HideCursorBlinking
+
+    let getShowCursor () = getRule ShowCursor
+    let getHideCursor () = getRule HideCursor
+
+    let getEnableDesignateMode ()  = getRule EnableDesignateMode
+    let getDisableDesignateMode () = getRule DisableDesignateMode
+
+    let getEnableAlternativeBuffer  () = getRule EnableAlternativeBuffer
+    let getDisableAlternativeBuffer () = getRule DisableAlternativeBuffer
+
+    let getCursorShape shape = getRule (CursorShape shape)
+
+    let getDefaultForegroundColor color = getRule (DefaultForegroundColor color)
+    let getDefaultBackgroundColor color = getRule (DefaultBackgroundColor color)
+    let getDefaultCursorColor     color = getRule (DefaultCursorColor     color)
+
+    let getReset () = getRules defaultRules
+
+    let getTTL = getTitle
+
+    let getSCB = getShowCursorBlinking
+    let getHCB = getHideCursorBlinking
+
+    let getSC = getShowCursor
+    let getHC = getHideCursor
+
+    let getEDM = getEnableDesignateMode
+    let getDDM = getDisableDesignateMode
+
+    let getEAB = getEnableAlternativeBuffer
+    let getDAB = getDisableAlternativeBuffer
+
+    let getCS = getCursorShape
+
+    let getDFGC = getDefaultForegroundColor
+    let getDBGC = getDefaultBackgroundColor
+    let getDCC  = getDefaultCursorColor
+
+
+
+    let init () : Rules = []
+
+    let initPreset (rules : Rules) = rules
+
+    let clear (rules : Rules) : Rules = []
+
+    let view (rules : Rules) =
+        rules
+        |> List.rev
+        |> List.iter (fun rule ->
+            printfn "%A" rule
+        )
 
     let title title rules = Title title :: rules
 
@@ -75,68 +257,8 @@ module Rule =
     let defaultBackgroundColor color rules = DefaultBackgroundColor color :: rules
     let defaultCursorColor     color rules = DefaultCursorColor     color :: rules
 
-
-
-    let init () : Rules = []
-
-    let initPreset (rules : Rules) =
-        rules
-
-    let clear (rules : Rules) : Rules = []
-
-    let view (rules : Rules) =
-        rules
-        |> List.rev
-        |> List.iter (fun rule ->
-            printfn "%A" rule
-        )
-
-
-
     let apply rule =
-        match rule with
-        | Title title -> printf "%s0;%s%s" OSC title Bell
-
-        | ShowCursorBlinking -> printf "%s?12h" CSI
-        | HideCursorBlinking -> printf "%s?12l" CSI
-
-        | ShowCursor -> printf "%s?25h" CSI
-        | HideCursor -> printf "%s?25l" CSI
-
-        | EnableDesignateMode  -> printf "%s(0" ESC
-        | DisableDesignateMode -> printf "%s(B" ESC
-
-        | EnableAlternativeBuffer  -> printf "%s?1049h" CSI
-        | DisableAlternativeBuffer -> printf "%s?1049l" CSI
-
-        | CursorShape shape ->
-            let shape =
-                match shape with
-                | Some User              -> 0
-                | Some BlinkingBlock     -> 1
-                | Some SteadyBlock       -> 2
-                | Some BlinkingUnderline -> 3
-                | Some SteadyUnderline   -> 4
-                | Some BlinkingBar       -> 5
-                | Some SteadyBar         -> 6
-                | None                   -> 0
-
-            printf "%s%d%sq" CSI shape SP
-
-        | DefaultForegroundColor color ->
-            colorToHEX color
-            |> fun (red, green, blue) ->
-                printf "%s10;rgb:%s/%s/%s%s\\" OSC red green blue ESC
-        | DefaultBackgroundColor color ->
-            colorToHEX color
-            |> fun (red, green, blue) ->
-                printf "%s11;rgb:%s/%s/%s%s\\" OSC red green blue ESC
-        | DefaultCursorColor color ->
-            colorToHEX color
-            |> fun (red, green, blue) ->
-                printf "%s12;rgb:%s/%s/%s%s\\" OSC red green blue ESC
-
-        | _ -> failwith "Not yet implemented!"
+        printf "%s" (getRule rule)
 
     let applyNewLine rule =
         apply rule
@@ -146,8 +268,8 @@ module Rule =
     let applyAll rules =
         rules
         |> List.rev
-        |> List.iter (fun item ->
-            apply item
+        |> List.iter (fun rule ->
+            apply rule
         )
 
     let applyAllNewLine rules =
@@ -155,25 +277,9 @@ module Rule =
 
         printfn ""
 
-
-
     let reset () =
-        [
-            ShowCursorBlinking
-            ShowCursor
-
-            DisableDesignateMode
-            DisableAlternativeBuffer
-
-            CursorShape              (Some User)
-
-            DefaultForegroundColor   (RGB (255, 255, 255))
-            DefaultBackgroundColor   (RGB (0, 0, 0))
-            DefaultCursorColor       (RGB (255, 255, 255))
-        ]
+        defaultRules
         |> applyAll
-
-
 
     let configure config =
         init ()
@@ -184,6 +290,26 @@ module Rule =
         configure config
 
         printfn ""
+
+    let ttl = title
+
+    let scb = showCursorBlinking
+    let hcb = hideCursorBlinking
+
+    let sc = showCursor
+    let hc = hideCursor
+
+    let edm = enableDesignateMode
+    let ddm = disableDesignateMode
+
+    let eab = enableAlternativeBuffer
+    let dab = disableAlternativeBuffer
+
+    let cs = cursorShape
+
+    let dfgc = defaultForegroundColor
+    let dbgc = defaultBackgroundColor
+    let dcc  = defaultCursorColor
 
 
 
@@ -222,4 +348,26 @@ module Rule =
 
     let doDefaultForegroundColor color = apply (DefaultForegroundColor color)
     let doDefaultBackgroundColor color = apply (DefaultBackgroundColor color)
-    let doDefaultCursorColor     color = apply (DefaultCursorColor color)
+    let doDefaultCursorColor     color = apply (DefaultCursorColor     color)
+
+    let doReset () = reset ()
+
+    let doTTL = doTitle
+
+    let doSCB = doShowCursorBlinking
+    let doHCB = doHideCursorBlinking
+
+    let doSC = doShowCursor
+    let doHC = doHideCursor
+
+    let doEDM = doEnableDesignateMode
+    let doDDM = doDisableDesignateMode
+
+    let doEAB = doEnableAlternativeBuffer
+    let doDAB = doDisableAlternativeBuffer
+
+    let doCS = doCursorShape
+
+    let doDFGC = doDefaultForegroundColor
+    let doDBGC = doDefaultBackgroundColor
+    let doDCC  = doDefaultCursorColor

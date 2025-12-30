@@ -15,9 +15,17 @@
                   Il modulo Cursor si occupa di sequenze VTS
                   relative al cursore del terminale.
 
+                  Il modulo Cursor permette di ottenere gli
+                  stessi risultati con 4 approcci diversi:
+
+                  * Manuale
+                  * Funzionale
+                  * Imperativo
+                  * DSL
+
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.4.0
     License     : MIT
 *)
 
@@ -27,21 +35,116 @@ open Color
 open Position
 
 module Cursor =
+
     type Cursor =
-        | Reverse
-        | Save
-        | Restore
-        | Up           of n        : int option
-        | Down         of n        : int option
-        | Next         of n        : int option
-        | Previous     of n        : int option
-        | NextLine     of n        : int option
-        | PreviousLine of n        : int option
-        | Move         of position : Position option
+        | Reverse                                    // RVS
+        | Save                                       // SV
+        | Restore                                    // RST
+        | Up           of n        : int option      // U
+        | Down         of n        : int option      // D
+        | Next         of n        : int option      // NX
+        | Previous     of n        : int option      // PV
+        | NextLine     of n        : int option      // NXL
+        | PreviousLine of n        : int option      // PVL
+        | Move         of position : Position option // MV
+
+    let RVS          = Reverse
+    let SV           = Save
+    let RST          = Restore
+    let U   n        = Up           n
+    let D   n        = Down         n
+    let NX  n        = Next         n
+    let PV  n        = Previous     n
+    let NXL n        = NextLine     n
+    let PVL n        = PreviousLine n
+    let MV  position = Move         position
 
     type Cursors = Cursor list
 
+    let private defaultCursors = [
+        Move None
+    ]
 
+
+
+    let getCursor cursor =
+        match cursor with
+        | Reverse -> sprintf "%sM" ESC
+        | Save    -> sprintf "%s7" ESC
+        | Restore -> sprintf "%s8" ESC
+
+        | Up       n -> sprintf "%sA%d" CSI (defaultArg n 1)
+        | Down     n -> sprintf "%sB%d" CSI (defaultArg n 1)
+        | Next     n -> sprintf "%sC%d" CSI (defaultArg n 1)
+        | Previous n -> sprintf "%sD%d" CSI (defaultArg n 1)
+
+        | NextLine     n -> sprintf "%sE%d" CSI (defaultArg n 1)
+        | PreviousLine n -> sprintf "%sF%d" CSI (defaultArg n 1)
+
+        | Move position ->
+            let position = defaultArg position (ColRow (0, 0))
+
+            let col, row =
+                match position with
+                | ColRow (col, row) -> col + 1, row + 1
+                | Cell cell -> cell.col + 1, cell.row + 1
+                | position -> failwithf "%A: Unsupported position format!" position
+
+            sprintf "%s%d;%dH" CSI row col
+
+        | cursor -> failwithf "%A: Not yet implemented!" cursor
+
+    let getCursors cursors =
+        cursors
+        |> List.map (fun cursor ->
+            getCursor cursor
+        )
+        |> String.concat ""
+
+    let getReverse () = getCursor Reverse
+    let getSave    () = getCursor Save
+    let getRestore () = getCursor Restore
+
+    let getUp       n = getCursor (Up       n)
+    let getDown     n = getCursor (Down     n)
+    let getNext     n = getCursor (Next     n)
+    let getPrevious n = getCursor (Previous n)
+
+    let getNextLine     n = getCursor (NextLine     n)
+    let getPreviousLine n = getCursor (PreviousLine n)
+
+    let getMove position = getCursor (Move position)
+
+    let getReset () = getCursors defaultCursors
+
+    let getRVS = getReverse
+    let getSV  = getSave
+    let getRST = getRestore
+
+    let getU  = getUp
+    let getD  = getDown
+    let getNX = getNext
+    let getPV = getPrevious
+
+    let getNXL = getNextLine
+    let getPVL = getPreviousLine
+
+    let getMV = getMove
+
+
+
+    let init () : Cursors = []
+
+    let initPreset (cursors : Cursors) = cursors
+
+    let clear (cursors : Cursors) : Cursors = []
+
+    let view (cursors : Cursors) =
+        cursors
+        |> List.rev
+        |> List.iter (fun cursor ->
+            printfn "%A" cursor
+        )
 
     let reverse cursors = Reverse :: cursors
     let save    cursors = Save    :: cursors
@@ -57,48 +160,8 @@ module Cursor =
 
     let move position cursors = Move position :: cursors
 
-
-
-    let init () : Cursors = []
-
-    let initPreset (cursors : Cursors) =
-        cursors
-
-    let clear (cursors : Cursors) : Cursors = []
-
-    let view (cursors : Cursors) =
-        cursors
-        |> List.rev
-        |> List.iter (fun cursor ->
-            printfn "%A" cursor
-        )
-
-
-
     let apply cursor =
-        match cursor with
-        | Reverse -> printf "%sM" ESC
-        | Save    -> printf "%s7" ESC
-        | Restore -> printf "%s8" ESC
-
-        | Up       n -> printf "%sA%d" CSI (defaultArg n 1)
-        | Down     n -> printf "%sB%d" CSI (defaultArg n 1)
-        | Next     n -> printf "%sC%d" CSI (defaultArg n 1)
-        | Previous n -> printf "%sD%d" CSI (defaultArg n 1)
-
-        | NextLine     n -> printf "%sE%d" CSI (defaultArg n 1)
-        | PreviousLine n -> printf "%sF%d" CSI (defaultArg n 1)
-
-        | Move position ->
-            let col, row =
-                match defaultArg position (ColRow (0, 0)) with
-                | ColRow (col, row) -> col + 1, row + 1
-                | Cell cell -> cell.col + 1, cell.row + 1
-                | _ -> failwith "Unsupported position format!"
-
-            printf "%s%d;%dH" CSI row col
-
-        | _ -> failwith "Not yet implemented!"
+        printfn "%s" (getCursor cursor)
 
     let applyNewLine cursor =
         apply cursor
@@ -117,15 +180,9 @@ module Cursor =
 
         printfn ""
 
-
-
     let reset () =
-        [
-            Move (Some (ColRow (0, 0)))
-        ]
+        defaultCursors
         |> applyAll
-
-
 
     let configure config =
         init ()
@@ -136,6 +193,20 @@ module Cursor =
         configure config
 
         printfn ""
+
+    let rvs = reverse
+    let sv  = save
+    let rst = restore
+
+    let u  = up
+    let d  = down
+    let nx = next
+    let pv = previous
+
+    let nxl = nextLine
+    let pvl = previousLine
+
+    let mv = move
 
 
 
@@ -160,12 +231,28 @@ module Cursor =
     let doSave    () = apply Save
     let doRestore () = apply Restore
 
-    let doUp       n = apply (Up n)
-    let doDown     n = apply (Down n)
-    let doNext     n = apply (Next n)
+    let doUp       n = apply (Up       n)
+    let doDown     n = apply (Down     n)
+    let doNext     n = apply (Next     n)
     let doPrevious n = apply (Previous n)
 
-    let doNextLine     n = apply (NextLine n)
+    let doNextLine     n = apply (NextLine     n)
     let doPreviousLine n = apply (PreviousLine n)
 
     let doMove position = apply (Move position)
+
+    let doReset () = reset ()
+
+    let doRVS = doReverse
+    let doSV  = doSave
+    let doRST = doRestore
+
+    let doU  = doUp
+    let doD  = doDown
+    let doNX = doNext
+    let doPV = doPrevious
+
+    let doNXL = doNextLine
+    let doPVL = doPreviousLine
+
+    let doMV = doMove
