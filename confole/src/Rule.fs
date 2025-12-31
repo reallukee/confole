@@ -25,14 +25,16 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.4.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
 open Color
+open ColorConversion
 open Position
+open PositionConversion
 
 module Rule =
 
@@ -127,6 +129,11 @@ module Rule =
 
             let red, green, blue =
                 match color with
+                | XTerm id -> xTermToHEX id
+                | XTermColor color ->
+                    xTermColorToHEXColor color
+                    |> fun color -> color.red, color.green, color.blue
+
                 | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
                 | RGBColor color ->
                     rgbColorToHEXColor color
@@ -143,6 +150,11 @@ module Rule =
 
             let red, green, blue =
                 match color with
+                | XTerm id -> xTermToHEX id
+                | XTermColor color ->
+                    xTermColorToHEXColor color
+                    |> fun color -> color.red, color.green, color.blue
+
                 | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
                 | RGBColor color ->
                     rgbColorToHEXColor color
@@ -159,6 +171,11 @@ module Rule =
 
             let red, green, blue =
                 match color with
+                | XTerm id -> xTermToHEX id
+                | XTermColor color ->
+                    xTermColorToHEXColor color
+                    |> fun color -> color.red, color.green, color.blue
+
                 | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
                 | RGBColor color ->
                     rgbColorToHEXColor color
@@ -188,7 +205,7 @@ module Rule =
     let getShowCursor () = getRule ShowCursor
     let getHideCursor () = getRule HideCursor
 
-    let getEnableDesignateMode ()  = getRule EnableDesignateMode
+    let getEnableDesignateMode  () = getRule EnableDesignateMode
     let getDisableDesignateMode () = getRule DisableDesignateMode
 
     let getEnableAlternativeBuffer  () = getRule EnableAlternativeBuffer

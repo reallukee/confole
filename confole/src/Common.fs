@@ -15,7 +15,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -23,6 +23,7 @@ namespace Reallukee.Confole
 
 [<AutoOpen>]
 module Common =
+
     let ESC = "\u001B"
     let CSI = "\u001B["
     let OSC = "\u001B]"

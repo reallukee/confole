@@ -25,14 +25,16 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.4.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
 open Color
+open ColorConversion
 open Position
+open PositionConversion
 
 module Format =
 

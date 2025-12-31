@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -65,7 +65,7 @@ type RestoreBackgroundColorFormat =
 type FormatFlag =
     interface IFormat
 
-    new : format : (bool -> Format.Format) * flag : bool -> FormatFlag
+    new : format : (bool option -> Format.Format) * flag : bool -> FormatFlag
 
     member Flag : bool with get, set
 
@@ -119,7 +119,7 @@ type StrikeoutFormat =
 type FormatColor =
     interface IFormat
 
-    new : format : (Color.Color -> Format.Format) * color : Sharp.Color -> FormatColor
+    new : format : (Color.Color option -> Format.Format) * color : Sharp.Color -> FormatColor
 
     member Color : Sharp.Color with get, set
 

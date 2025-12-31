@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -78,7 +78,7 @@ type FormatFlag(format, flag) =
     interface IFormat with
         member this.ToFunctional
             with get() =
-                format flag
+                format (Some flag)
 
     override this.Equals(obj) =
         match obj with
@@ -143,7 +143,7 @@ type FormatColor(format, color : Sharp.Color) =
                         Color.HEX (hexColor.Red, hexColor.Green, hexColor.Blue)
                     | _ -> failwith "Unsupported color format!"
 
-                format color
+                format (Some color)
 
     override this.Equals(obj) =
         match obj with

@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -140,7 +140,7 @@ type CursorShapeRule =
 type RuleColor =
     interface IRule
 
-    new : rule : (Color.Color -> Rule.Rule) * color : Sharp.Color -> RuleColor
+    new : rule : (Color.Color option -> Rule.Rule) * color : Sharp.Color -> RuleColor
 
     member Color : Sharp.Color with get, set
 

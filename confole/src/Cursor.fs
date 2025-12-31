@@ -25,14 +25,16 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.4.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
 open Color
+open ColorConversion
 open Position
+open PositionConversion
 
 module Cursor =
 
@@ -88,6 +90,10 @@ module Cursor =
                 match position with
                 | ColRow (col, row) -> col + 1, row + 1
                 | Cell cell -> cell.col + 1, cell.row + 1
+
+                | XY (x, y) -> x + 1, y + 1
+                | Coord coord -> coord.x + 1, coord.y + 1
+
                 | position -> failwithf "%A: Unsupported position format!" position
 
             sprintf "%s%d;%dH" CSI row col
