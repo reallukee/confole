@@ -22,7 +22,7 @@
 namespace Reallukee.Confole
 
 [<AutoOpen>]
-module Common =
+module internal Common =
 
     let ESC = "\u001B"
     let CSI = "\u001B["
@@ -30,3 +30,4 @@ module Common =
 
     let Bell = "\u0007"
     let SP   = "\u0020"
+    let ST   = "\u001B\\"

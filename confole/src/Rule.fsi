@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Rul
 module Rule =
 
     type Shape =
@@ -100,6 +101,8 @@ module Rule =
 
     type Rules = Rule list
 
+    val defaultRules : Rules
+
 
 
     // Modalità manuale
@@ -152,10 +155,10 @@ module Rule =
 
 
     // Modalità funzionale
-    val init       : unit          -> Rules
-    val initPreset : rules : Rules -> Rules
-    val clear      : rules : Rules -> Rules
-    val view       : rules : Rules -> unit
+    val init  : unit          -> Rules
+    val initp : rules : Rules -> Rules
+    val clear : rules : Rules -> Rules
+    val view  : rules : Rules -> Rules
 
     val title : title : string -> rules : Rules -> Rules
 

@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Act
 module Action =
 
     type Erase =
@@ -60,7 +61,7 @@ module Action =
 
     type Actions = Action list
 
-    let private defaultActions : Actions = []
+    let defaultActions : Actions = []
 
 
 
@@ -95,6 +96,7 @@ module Action =
 
     let getActions actions =
         actions
+        |> List.rev
         |> List.map (fun action ->
             getAction action
         )
@@ -124,7 +126,7 @@ module Action =
 
     let init () : Actions = []
 
-    let initPreset (actions : Actions) = actions
+    let initp (actions : Actions) = actions
 
     let clear (actions : Actions) : Actions = []
 
@@ -134,6 +136,8 @@ module Action =
         |> List.iter (fun action ->
             printfn "%A" action
         )
+
+        actions
 
     let insertCharacter n actions = InsertCharacter n :: actions
     let deleteCharacter n actions = DeleteCharacter n :: actions

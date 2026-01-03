@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Rul
 module Rule =
 
     type Shape =
@@ -78,7 +79,7 @@ module Rule =
 
     type Rules = Rule list
 
-    let private defaultRules = [
+    let defaultRules = [
         ShowCursorBlinking
         ShowCursor
 
@@ -133,15 +134,12 @@ module Rule =
                 | XTermColor color ->
                     xTermColorToHEXColor color
                     |> fun color -> color.red, color.green, color.blue
-
                 | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
                 | RGBColor color ->
                     rgbColorToHEXColor color
                     |> fun color -> color.red, color.green, color.blue
-
                 | HEX (red, green, blue) -> red, green, blue
                 | HEXColor color -> color.red, color.green, color.blue
-
                 | color -> failwithf "%A: Unsupported color format!" color
 
             sprintf "%s10;rgb:%s/%s/%s%s\\" OSC red green blue ESC
@@ -154,15 +152,12 @@ module Rule =
                 | XTermColor color ->
                     xTermColorToHEXColor color
                     |> fun color -> color.red, color.green, color.blue
-
                 | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
                 | RGBColor color ->
                     rgbColorToHEXColor color
                     |> fun color -> color.red, color.green, color.blue
-
                 | HEX (red, green, blue) -> red, green, blue
                 | HEXColor color -> color.red, color.green, color.blue
-
                 | color -> failwithf "%A: Unsupported color format!" color
 
             sprintf "%s11;rgb:%s/%s/%s%s\\" OSC red green blue ESC
@@ -175,15 +170,12 @@ module Rule =
                 | XTermColor color ->
                     xTermColorToHEXColor color
                     |> fun color -> color.red, color.green, color.blue
-
                 | RGB (red, green, blue) -> rgbToHEX (red, green, blue)
                 | RGBColor color ->
                     rgbColorToHEXColor color
                     |> fun color -> color.red, color.green, color.blue
-
                 | HEX (red, green, blue) -> red, green, blue
                 | HEXColor color -> color.red, color.green, color.blue
-
                 | color -> failwithf "%A: Unsupported color format!" color
 
             sprintf "%s12;rgb:%s/%s/%s%s\\" OSC red green blue ESC
@@ -192,6 +184,7 @@ module Rule =
 
     let getRules rules =
         rules
+        |> List.rev
         |> List.map (fun rule ->
             getRule rule
         )
@@ -243,7 +236,7 @@ module Rule =
 
     let init () : Rules = []
 
-    let initPreset (rules : Rules) = rules
+    let initp (rules : Rules) = rules
 
     let clear (rules : Rules) : Rules = []
 
@@ -253,6 +246,8 @@ module Rule =
         |> List.iter (fun rule ->
             printfn "%A" rule
         )
+
+        rules
 
     let title title rules = Title title :: rules
 

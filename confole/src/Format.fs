@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Fmt
 module Format =
 
     type Format =
@@ -69,7 +70,7 @@ module Format =
 
     type Formats = Format list
 
-    let private defaultFormats = [
+    let defaultFormats = [
         Restore
     ]
 
@@ -104,12 +105,10 @@ module Format =
                     match color with
                     | RGB (red, green, blue) -> red, green, blue
                     | RGBColor color -> color.red, color.green, color.blue
-
                     | HEX (red, green, blue) -> hexToRGB (red, green, blue)
                     | HEXColor color ->
                         hexColorToRGBColor color
                         |> fun color -> color.red, color.green, color.blue
-
                     | color -> failwithf "%A: Unsupported color format!" color
 
                 sprintf "%s38;2;%d;%d;%dm%s" CSI red green blue text
@@ -126,12 +125,10 @@ module Format =
                     match color with
                     | RGB (red, green, blue) -> red, green, blue
                     | RGBColor color -> color.red, color.green, color.blue
-
                     | HEX (red, green, blue) -> hexToRGB (red, green, blue)
                     | HEXColor color ->
                         hexColorToRGBColor color
                         |> fun color -> color.red, color.green, color.blue
-
                     | color -> failwithf "%A: Unsupported color format!" color
 
                 sprintf "%s48;2;%d;%d;%dm%s" CSI red green blue text
@@ -141,6 +138,7 @@ module Format =
     let getFormats text formats =
         sprintf "%s%s" (
             formats
+            |> List.rev
             |> List.map (fun format ->
                 getFormat "" format
             )
@@ -187,7 +185,7 @@ module Format =
 
     let init () : Formats = []
 
-    let initPreset (formats : Formats) = formats
+    let initp (formats : Formats) = formats
 
     let clear (formats : Formats) : Formats = []
 
@@ -197,6 +195,8 @@ module Format =
         |> List.iter (fun format ->
             printfn "%A" format
         )
+
+        formats
 
     let restore formats = Restore :: formats
 

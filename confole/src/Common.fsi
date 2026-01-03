@@ -22,7 +22,7 @@
 namespace Reallukee.Confole
 
 [<AutoOpen>]
-module Common =
+module internal Common =
 
     val ESC : string
     val CSI : string
@@ -30,3 +30,4 @@ module Common =
 
     val Bell : string
     val SP   : string
+    val ST   : string

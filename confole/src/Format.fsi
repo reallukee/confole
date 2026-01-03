@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Fmt
 module Format =
 
     (*
@@ -91,6 +92,8 @@ module Format =
 
     type Formats = Format list
 
+    val defaultFormats : Formats
+
 
 
     // Modalità manuale
@@ -137,10 +140,10 @@ module Format =
 
 
     // Modalità funzionale
-    val init       : unit              -> Formats
-    val initPreset : formats : Formats -> Formats
-    val clear      : formats : Formats -> Formats
-    val view       : formats : Formats -> unit
+    val init  : unit              -> Formats
+    val initp : formats : Formats -> Formats
+    val clear : formats : Formats -> Formats
+    val view  : formats : Formats -> Formats
 
     val restore : formats : Formats -> Formats
 

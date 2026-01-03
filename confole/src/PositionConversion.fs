@@ -72,24 +72,24 @@ module PositionConversion =
         L'autore pigro di codesta libreria.
     *)
 
-    let colRowToXY (colRow : ColRow) =
-        let col, row = colRow
+    let rowColToXY (rowCol : RowCol) =
+        let row, col = rowCol
 
         let x = col
         let y = row
 
         x, y
 
-    let xYToColRow (xY : XY) =
+    let xYToRowCol (xY : XY) =
         let x, y = xY
 
-        let col = x
         let row = y
+        let col = x
 
-        col, row
+        row, col
 
     let cellToCoord cell =
-        let col, row = cellToColRow cell
+        let row, col = cellToRowCol cell
 
         let x = col
         let y = row
@@ -102,10 +102,10 @@ module PositionConversion =
     let coordToCell coord =
         let x, y = coordToXY coord
 
-        let col = x
         let row = y
+        let col = x
 
         {
-            col = col
             row = row
+            col = col
         }

@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Cur
 module Cursor =
 
     type Cursor =
@@ -63,7 +64,7 @@ module Cursor =
 
     type Cursors = Cursor list
 
-    let private defaultCursors = [
+    let defaultCursors = [
         Move None
     ]
 
@@ -84,16 +85,14 @@ module Cursor =
         | PreviousLine n -> sprintf "%sF%d" CSI (defaultArg n 1)
 
         | Move position ->
-            let position = defaultArg position (ColRow (0, 0))
+            let position = defaultArg position (RowCol (0, 0))
 
-            let col, row =
+            let row, col =
                 match position with
-                | ColRow (col, row) -> col + 1, row + 1
-                | Cell cell -> cell.col + 1, cell.row + 1
-
-                | XY (x, y) -> x + 1, y + 1
-                | Coord coord -> coord.x + 1, coord.y + 1
-
+                | RowCol (row, col) -> row + 1, col + 1
+                | Cell cell -> cell.row + 1, cell.col + 1
+                | XY (x, y) -> y + 1, x + 1
+                | Coord coord -> coord.y + 1, coord.x + 1
                 | position -> failwithf "%A: Unsupported position format!" position
 
             sprintf "%s%d;%dH" CSI row col
@@ -102,6 +101,7 @@ module Cursor =
 
     let getCursors cursors =
         cursors
+        |> List.rev
         |> List.map (fun cursor ->
             getCursor cursor
         )
@@ -141,7 +141,7 @@ module Cursor =
 
     let init () : Cursors = []
 
-    let initPreset (cursors : Cursors) = cursors
+    let initp (cursors : Cursors) = cursors
 
     let clear (cursors : Cursors) : Cursors = []
 
@@ -151,6 +151,8 @@ module Cursor =
         |> List.iter (fun cursor ->
             printfn "%A" cursor
         )
+
+        cursors
 
     let reverse cursors = Reverse :: cursors
     let save    cursors = Save    :: cursors
@@ -167,7 +169,7 @@ module Cursor =
     let move position cursors = Move position :: cursors
 
     let apply cursor =
-        printfn "%s" (getCursor cursor)
+        printf "%s" (getCursor cursor)
 
     let applyNewLine cursor =
         apply cursor

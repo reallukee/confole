@@ -27,10 +27,10 @@ module Positions =
 
     open Position
 
-    module ColRow =
+    module RowCol =
 
         type Format =
-            | ColRow
+            | RowCol
             | Cell
 
         val tryGet : position : string -> format : Format -> Position option

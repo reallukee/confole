@@ -26,11 +26,11 @@ namespace Reallukee.Confole
 module Position =
 
     type Cell = {
-        col : int
         row : int
+        col : int
     }
 
-    type ColRow = int * int
+    type RowCol = int * int
 
     type Coord = {
         x : int
@@ -40,13 +40,13 @@ module Position =
     type XY = int * int
 
     type Position =
-        | ColRow of colRow : ColRow
+        | RowCol of rowCol : RowCol
         | Cell   of cell   : Cell
         | XY     of xY     : XY
         | Coord  of coord  : Coord
 
-    val colRowToCell : colRow : ColRow -> Cell
+    val rowColToCell : rowCol : RowCol -> Cell
     val xYToCoord    : xY     : XY     -> Coord
 
-    val cellToColRow : cell  : Cell  -> ColRow
+    val cellToRowCol : cell  : Cell  -> RowCol
     val coordToXY    : coord : Coord -> XY

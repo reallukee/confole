@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Cur
 module Cursor =
 
     (*
@@ -85,6 +86,8 @@ module Cursor =
 
     type Cursors = Cursor list
 
+    val defaultCursors : Cursors
+
 
 
     // Modalità manuale
@@ -125,10 +128,10 @@ module Cursor =
 
 
     // Modalità funzionale
-    val init       : unit              -> Cursors
-    val initPreset : cursors : Cursors -> Cursors
-    val clear      : cursors : Cursors -> Cursors
-    val view       : cursors : Cursors -> unit
+    val init  : unit              -> Cursors
+    val initp : cursors : Cursors -> Cursors
+    val clear : cursors : Cursors -> Cursors
+    val view  : cursors : Cursors -> Cursors
 
     val reverse : cursors : Cursors -> Cursors
     val save    : cursors : Cursors -> Cursors

@@ -26,11 +26,11 @@ namespace Reallukee.Confole
 module Position =
 
     type Cell = {
-        col : int
         row : int
+        col : int
     }
 
-    type ColRow = int * int
+    type RowCol = int * int
 
     type Coord = {
         x : int
@@ -40,19 +40,19 @@ module Position =
     type XY = int * int
 
     type Position =
-        | ColRow of colRow : ColRow
+        | RowCol of rowCol : RowCol
         | Cell   of cell   : Cell
         | XY     of xY     : XY
         | Coord  of coord  : Coord
 
 
 
-    let colRowToCell colRow : Cell =
-        let col, row = colRow
+    let rowColToCell rowCol : Cell =
+        let row, col = rowCol
 
         {
-            col = col
             row = row
+            col = col
         }
 
     let xYToCoord xY : Coord =
@@ -63,8 +63,8 @@ module Position =
             y = y
         }
 
-    let cellToColRow (cell : Cell) =
-        cell.col, cell.row
+    let cellToRowCol (cell : Cell) =
+        cell.row, cell.col
 
     let coordToXY (coord : Coord) =
         coord.x, coord.y

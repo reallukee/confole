@@ -30,8 +30,8 @@ module PositionConversion =
 
     open Position
 
-    val colRowToXY : colRow : ColRow -> XY
-    val xYToColRow : xY     : XY     -> ColRow
+    val rowColToXY : rowCol : RowCol -> XY
+    val xYToRowCol : xY     : XY     -> RowCol
 
     val cellToCoord : cell  : Cell  -> Coord
     val coordToCell : coord : Coord -> Cell

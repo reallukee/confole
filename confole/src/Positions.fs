@@ -31,10 +31,10 @@ module Positions =
         "HOME", (0, 0), (0, 0)
     |]
 
-    module ColRow =
+    module RowCol =
 
         type Format =
-            | ColRow
+            | RowCol
             | Cell
 
         let tryGet (position : string) format =
@@ -44,15 +44,15 @@ module Positions =
             |> Array.tryFind (fun (name, _, _) ->
                 name = position
             )
-            |> Option.map (fun (_, colRow, _) ->
-                let col, row = colRow
+            |> Option.map (fun (_, rowCol, _) ->
+                let row, col = rowCol
 
                 match format with
-                | ColRow -> Position.ColRow (col, row)
+                | RowCol -> Position.RowCol (row, col)
                 | Cell ->
                     Position.Cell ({
-                        col = col
                         row = row
+                        col = col
                     })
                 | format -> failwithf "%A: Not yet implemented!" format
             )
@@ -63,7 +63,7 @@ module Positions =
             | None -> failwithf "%s: Not found!" position
 
         let exists position =
-            match tryGet position ColRow with
+            match tryGet position RowCol with
             | Some _ -> true
             | None -> false
 

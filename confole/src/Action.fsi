@@ -36,6 +36,7 @@ open ColorConversion
 open Position
 open PositionConversion
 
+// Act
 module Action =
 
     type Erase =
@@ -82,6 +83,8 @@ module Action =
 
     type Actions = Action list
 
+    val defaultActions : Actions
+
 
 
     // Modalità manuale
@@ -112,10 +115,10 @@ module Action =
 
 
     // Modalità funzionale
-    val init       : unit              -> Actions
-    val initPreset : actions : Actions -> Actions
-    val clear      : actions : Actions -> Actions
-    val view       : actions : Actions -> unit
+    val init  : unit              -> Actions
+    val initp : actions : Actions -> Actions
+    val clear : actions : Actions -> Actions
+    val view  : actions : Actions -> Actions
 
     val insertCharacter : n : int option -> actions : Actions -> Actions
     val deleteCharacter : n : int option -> actions : Actions -> Actions
