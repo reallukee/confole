@@ -1,4 +1,4 @@
-name: Examples
+name: Test
 
 on:
   push:
@@ -12,16 +12,14 @@ on:
       - "**/*.csproj"
       - "**/*.sln"
       - "**/*.slnx"
-      - "**/examples/**/*.fsx"
-      - "**/examples/**/*.fsscript"
 
+      - "!**/dev/**"
       - "!**/templates/**"
-      - "!**/test/**"
       - "!**/examples/**"
   workflow_dispatch:
 
 jobs:
-  examples:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,18 +34,17 @@ jobs:
         run: |
           dotnet restore confole --ignore-failed-sources
           dotnet restore confole.sharp --ignore-failed-sources
+          dotnet restore test/confole.test --ignore-failed-sources
+          dotnet restore test/confole.sharp.test --ignore-failed-sources
 
       - name: Build projects
         run: |
           dotnet build confole --no-restore --configuration Release
           dotnet build confole.sharp --no-restore --configuration Release
+          dotnet build test/confole.test --no-restore --configuration Release
+          dotnet build test/confole.sharp.test --no-restore --configuration Release
 
-      - name: Run examples
+      - name: Test projects
         run: |
-          for example in examples/fsi/*.fsx; do
-            if [[ -f "$example" ]]; then
-              dotnet fsi "$example"
-            fi
-          done
-        env:
-          CI: true
+          dotnet test test/confole.test
+          dotnet test test/confole.sharp.test

@@ -5,15 +5,17 @@ on:
     branches:
       - "**"
     paths:
-      - "**/*.fsi"    # F# header file
-      - "**/*.fs"     # F# source file
-      - "**/*.fsproj" # F# project file
-      - "**/*.sln"    # Visual Studio solution file
-      - "**/*.slnx"   # Visual Studio XML solution file
-      # ESCLUSIONI
-      - "!**/templates/**"  # Escludo i template dai trigger
-      - "!**/test/**"       # Escludo i test dai trigger
-      - "!**/examples/**"   # Escludo gli esempi dai trigger
+      - "**/*.fsi"
+      - "**/*.fs"
+      - "**/*.fsproj"
+      - "**/*.cs"
+      - "**/*.csproj"
+      - "**/*.sln"
+      - "**/*.slnx"
+
+      - "!**/templates/**"
+      - "!**/test/**"
+      - "!**/examples/**"
   workflow_dispatch:
 
 jobs:
@@ -21,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
