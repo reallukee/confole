@@ -76,7 +76,7 @@ module Format =
 
 
 
-    let getFormat text format =
+    let render text format =
         match format with
         | Restore -> sprintf "%s0m%s" CSI text
 
@@ -135,51 +135,51 @@ module Format =
 
         | format -> failwithf "%A: Not yet implemented!" format
 
-    let getFormats text formats =
+    let renders text formats =
         sprintf "%s%s" (
             formats
             |> List.rev
             |> List.map (fun format ->
-                getFormat "" format
+                render "" format
             )
             |> String.concat ""
         ) text
 
-    let getRestore text = getFormat text Restore
+    let renderRestore text = render text Restore
 
-    let getRestoreForegroundColor text = getFormat text RestoreForegroundColor
-    let getRestoreBackgroundColor text = getFormat text RestoreBackgroundColor
+    let renderRestoreForegroundColor text = render text RestoreForegroundColor
+    let renderRestoreBackgroundColor text = render text RestoreBackgroundColor
 
-    let getBold      text flag = getFormat text (Bold      flag)
-    let getFaint     text flag = getFormat text (Faint     flag)
-    let getItalic    text flag = getFormat text (Italic    flag)
-    let getUnderline text flag = getFormat text (Underline flag)
-    let getBlinking  text flag = getFormat text (Blinking  flag)
-    let getReverse   text flag = getFormat text (Reverse   flag)
-    let getHidden    text flag = getFormat text (Hidden    flag)
-    let getStrikeout text flag = getFormat text (Strikeout flag)
+    let renderBold      text flag = render text (Bold      flag)
+    let renderFaint     text flag = render text (Faint     flag)
+    let renderItalic    text flag = render text (Italic    flag)
+    let renderUnderline text flag = render text (Underline flag)
+    let renderBlinking  text flag = render text (Blinking  flag)
+    let renderReverse   text flag = render text (Reverse   flag)
+    let renderHidden    text flag = render text (Hidden    flag)
+    let renderStrikeout text flag = render text (Strikeout flag)
 
-    let getForegroundColor text color = getFormat text (ForegroundColor color)
-    let getBackgroundColor text color = getFormat text (BackgroundColor color)
+    let renderForegroundColor text color = render text (ForegroundColor color)
+    let renderBackgroundColor text color = render text (BackgroundColor color)
 
-    let getReset text = getFormats text defaultFormats
+    let renderReset text = renders text defaultFormats
 
-    let getRST = getRestore
+    let renderRST = renderRestore
 
-    let getRFGC = getRestoreForegroundColor
-    let getRBGC = getRestoreBackgroundColor
+    let renderRFGC = renderRestoreForegroundColor
+    let renderRBGC = renderRestoreBackgroundColor
 
-    let getBLD = getBold
-    let getFNT = getFaint
-    let getITC = getItalic
-    let getUND = getUnderline
-    let getBKG = getBlinking
-    let getRVS = getReverse
-    let getHDN = getHidden
-    let getSKT = getStrikeout
+    let renderBLD = renderBold
+    let renderFNT = renderFaint
+    let renderITC = renderItalic
+    let renderUND = renderUnderline
+    let renderBKG = renderBlinking
+    let renderRVS = renderReverse
+    let renderHDN = renderHidden
+    let renderSKT = renderStrikeout
 
-    let getFGC = getForegroundColor
-    let getBGC = getBackgroundColor
+    let renderFGC = renderForegroundColor
+    let renderBGC = renderBackgroundColor
 
 
 
@@ -216,7 +216,7 @@ module Format =
     let backgroundColor color formats = BackgroundColor color :: formats
 
     let apply text format =
-        printf "%s" (getFormat text format)
+        printf "%s" (render text format)
 
     let applyNewLine text format =
         apply text format

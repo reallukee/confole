@@ -65,7 +65,7 @@ module Action =
 
 
 
-    let getAction action =
+    let render action =
         match action with
         | InsertCharacter n -> sprintf "%s%d@" CSI (Option.defaultValue 1 n)
         | DeleteCharacter n -> sprintf "%s%dP" CSI (Option.defaultValue 1 n)
@@ -94,33 +94,33 @@ module Action =
 
         | action -> failwithf "%A: Not yet implemented!" action
 
-    let getActions actions =
+    let renders actions =
         actions
         |> List.rev
         |> List.map (fun action ->
-            getAction action
+            render action
         )
         |> String.concat ""
 
-    let getInsertCharacter n = getAction (InsertCharacter n)
-    let getDeleteCharacter n = getAction (DeleteCharacter n)
+    let renderInsertCharacter n = render (InsertCharacter n)
+    let renderDeleteCharacter n = render (DeleteCharacter n)
 
-    let getInsertLine n = getAction (InsertLine n)
-    let getDeleteLine n = getAction (DeleteLine n)
+    let renderInsertLine n = render (InsertLine n)
+    let renderDeleteLine n = render (DeleteLine n)
 
-    let getEraseDisplay erase = getAction (EraseDisplay erase)
-    let getEraseLine    erase = getAction (EraseLine    erase)
+    let renderEraseDisplay erase = render (EraseDisplay erase)
+    let renderEraseLine    erase = render (EraseLine    erase)
 
-    let getReset () = getActions defaultActions
+    let renderReset () = renders defaultActions
 
-    let getIC = getInsertCharacter
-    let getDC = getDeleteCharacter
+    let renderIC = renderInsertCharacter
+    let renderDC = renderDeleteCharacter
 
-    let getIL  = getInsertLine
-    let getDL  = getDeleteLine
+    let renderIL  = renderInsertLine
+    let renderDL  = renderDeleteLine
 
-    let getED  = getEraseDisplay
-    let getEL  = getEraseLine
+    let renderED  = renderEraseDisplay
+    let renderEL  = renderEraseLine
 
 
 
@@ -149,7 +149,7 @@ module Action =
     let eraseLine    erase actions = EraseLine    erase :: actions
 
     let apply action =
-        printf "%s" (getAction action)
+        printf "%s" (render action)
 
     let applyNewLine action =
         apply action

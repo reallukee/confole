@@ -91,39 +91,39 @@ module Cursor =
 
 
     // Modalità manuale
-    val getCursor  : cursor  : Cursor  -> string
-    val getCursors : cursors : Cursors -> string
+    val render  : cursor  : Cursor  -> string
+    val renders : cursors : Cursors -> string
 
-    val getReverse : unit -> string
-    val getSave    : unit -> string
-    val getRestore : unit -> string
+    val renderReverse : unit -> string
+    val renderSave    : unit -> string
+    val renderRestore : unit -> string
 
-    val getUp       : n : int option -> string
-    val getDown     : n : int option -> string
-    val getNext     : n : int option -> string
-    val getPrevious : n : int option -> string
+    val renderUp       : n : int option -> string
+    val renderDown     : n : int option -> string
+    val renderNext     : n : int option -> string
+    val renderPrevious : n : int option -> string
 
-    val getNextLine     : n : int option -> string
-    val getPreviousLine : n : int option -> string
+    val renderNextLine     : n : int option -> string
+    val renderPreviousLine : n : int option -> string
 
-    val getMove : position : Position option -> string
+    val renderMove : position : Position option -> string
 
-    val getReset : unit -> string
+    val renderReset : unit -> string
 
     // Alias modalità manuale
-    val getRVS : (unit -> string)
-    val getSV  : (unit -> string)
-    val getRST : (unit -> string)
+    val renderRVS : (unit -> string)
+    val renderSV  : (unit -> string)
+    val renderRST : (unit -> string)
 
-    val getU  : (int option -> string)
-    val getD  : (int option -> string)
-    val getNX : (int option -> string)
-    val getPV : (int option -> string)
+    val renderU  : (int option -> string)
+    val renderD  : (int option -> string)
+    val renderNX : (int option -> string)
+    val renderPV : (int option -> string)
 
-    val getNXL : (int option -> string)
-    val getPVL : (int option -> string)
+    val renderNXL : (int option -> string)
+    val renderPVL : (int option -> string)
 
-    val getMV : (Position option -> string)
+    val renderMV : (Position option -> string)
 
 
 

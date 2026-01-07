@@ -97,45 +97,45 @@ module Format =
 
 
     // Modalità manuale
-    val getFormat  : text : string -> format  : Format  -> string
-    val getFormats : text : string -> formats : Formats -> string
+    val render  : text : string -> format  : Format  -> string
+    val renders : text : string -> formats : Formats -> string
 
-    val getRestore : text : string -> string
+    val renderRestore : text : string -> string
 
-    val getRestoreForegroundColor : text : string -> string
-    val getRestoreBackgroundColor : text : string -> string
+    val renderRestoreForegroundColor : text : string -> string
+    val renderRestoreBackgroundColor : text : string -> string
 
-    val getBold      : text : string -> flag : bool option -> string
-    val getFaint     : text : string -> flag : bool option -> string
-    val getItalic    : text : string -> flag : bool option -> string
-    val getUnderline : text : string -> flag : bool option -> string
-    val getBlinking  : text : string -> flag : bool option -> string
-    val getReverse   : text : string -> flag : bool option -> string
-    val getHidden    : text : string -> flag : bool option -> string
-    val getStrikeout : text : string -> flag : bool option -> string
+    val renderBold      : text : string -> flag : bool option -> string
+    val renderFaint     : text : string -> flag : bool option -> string
+    val renderItalic    : text : string -> flag : bool option -> string
+    val renderUnderline : text : string -> flag : bool option -> string
+    val renderBlinking  : text : string -> flag : bool option -> string
+    val renderReverse   : text : string -> flag : bool option -> string
+    val renderHidden    : text : string -> flag : bool option -> string
+    val renderStrikeout : text : string -> flag : bool option -> string
 
-    val getForegroundColor : text : string -> color : Color option -> string
-    val getBackgroundColor : text : string -> color : Color option -> string
+    val renderForegroundColor : text : string -> color : Color option -> string
+    val renderBackgroundColor : text : string -> color : Color option -> string
 
-    val getReset : text : string -> string
+    val renderReset : text : string -> string
 
     // Alias modalità manuale
-    val getRST : (string -> string)
+    val renderRST : (string -> string)
 
-    val getRFGC : (string -> string)
-    val getRBGC : (string -> string)
+    val renderRFGC : (string -> string)
+    val renderRBGC : (string -> string)
 
-    val getBLD : (string -> bool option -> string)
-    val getFNT : (string -> bool option -> string)
-    val getITC : (string -> bool option -> string)
-    val getUND : (string -> bool option -> string)
-    val getBKG : (string -> bool option -> string)
-    val getRVS : (string -> bool option -> string)
-    val getHDN : (string -> bool option -> string)
-    val getSKT : (string -> bool option -> string)
+    val renderBLD : (string -> bool option -> string)
+    val renderFNT : (string -> bool option -> string)
+    val renderITC : (string -> bool option -> string)
+    val renderUND : (string -> bool option -> string)
+    val renderBKG : (string -> bool option -> string)
+    val renderRVS : (string -> bool option -> string)
+    val renderHDN : (string -> bool option -> string)
+    val renderSKT : (string -> bool option -> string)
 
-    val getFGC : (string -> Color option -> string)
-    val getBGC : (string -> Color option -> string)
+    val renderFGC : (string -> Color option -> string)
+    val renderBGC : (string -> Color option -> string)
 
 
 

@@ -189,6 +189,8 @@ type RuleColor(rule, color : Sharp.Color) =
             with get() =
                 let color =
                     match this.Color with
+                    | :? XTermColor as xTermColor ->
+                        Color.XTerm xTermColor.Id
                     | :? RGBColor as rgbColor ->
                         Color.RGB (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
                     | :? HEXColor as hexColor ->
@@ -386,6 +388,78 @@ type Rules() =
         this.Rules <- []
 
         Rule.reset ()
+
+
+
+    static member RenderTitle(title) =
+        let titleRule = new TitleRule(title) :> IRule
+
+        Rule.render titleRule.ToFunctional
+
+    static member RenderShowCursorBlinking() =
+        let showCursorBlinkingRule = new ShowCursorBlinkingRule() :> IRule
+
+        Rule.render showCursorBlinkingRule.ToFunctional
+
+    static member RenderHideCursorBlinking() =
+        let hideCursorBlinkingRule = new HideCursorBlinkingRule() :> IRule
+
+        Rule.render hideCursorBlinkingRule.ToFunctional
+
+    static member RenderShowCursor() =
+        let showCursorRule = new ShowCursorRule() :> IRule
+
+        Rule.render showCursorRule.ToFunctional
+
+    static member RenderHideCursor() =
+        let hideCursorRule = new HideCursorRule() :> IRule
+
+        Rule.render hideCursorRule.ToFunctional
+
+    static member RenderEnableDesignateMode() =
+        let enableDesignateModeRule = new EnableDesignateModeRule() :> IRule
+
+        Rule.render enableDesignateModeRule.ToFunctional
+
+    static member RenderDisableDesignateMode() =
+        let disableDesignateModeRule = new DisableDesignateModeRule() :> IRule
+
+        Rule.render disableDesignateModeRule.ToFunctional
+
+    static member RenderEnableAlternativeBuffer() =
+        let enableAlternativeBufferRule = new EnableAlternativeBufferRule() :> IRule
+
+        Rule.render enableAlternativeBufferRule.ToFunctional
+
+    static member RenderDisableAlternativeBuffer() =
+        let disableAlternativeBufferRule = new DisableAlternativeBufferRule() :> IRule
+
+        Rule.render disableAlternativeBufferRule.ToFunctional
+
+    static member RenderCursorShape(shape) =
+        let cursorShapeRule = new CursorShapeRule(shape) :> IRule
+
+        Rule.render cursorShapeRule.ToFunctional
+
+    static member RenderDefaultForegroundColor(color) =
+        let defaultForegroundRuleColor = new DefaultForegroundRuleColor(color) :> IRule
+
+        Rule.render defaultForegroundRuleColor.ToFunctional
+
+    static member RenderDefaultBackgroundColor(color) =
+        let defaultBackgroundRuleColor = new DefaultBackgroundRuleColor(color) :> IRule
+
+        Rule.render defaultBackgroundRuleColor.ToFunctional
+
+    static member RenderDefaultCursorColor(color) =
+        let defaultCursorRuleColor = new DefaultCursorRuleColor(color) :> IRule
+
+        Rule.render defaultCursorRuleColor.ToFunctional
+
+
+
+    static member RenderReset() =
+        Rule.renderReset ()
 
 
 

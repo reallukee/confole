@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -154,7 +154,9 @@ type CursorPosition(cursor, position : Sharp.Position) =
                 let position =
                     match this.Position with
                     | :? Cell as cell ->
-                        Position.ColRow (cell.Col, cell.Row)
+                        Position.RowCol (cell.Row, cell.Col)
+                    | :? Coord as coord ->
+                        Position.XY (coord.X, coord.Y)
                     | _ -> failwith "Unsupported position format!"
 
                 cursor (Some position)
@@ -331,6 +333,63 @@ type Cursors() =
         this.Cursors <- []
 
         Cursor.reset ()
+
+
+
+    static member RenderReverse() =
+        let reverseCursor = new ReverseCursor() :> ICursor
+
+        Cursor.render reverseCursor.ToFunctional
+
+    static member RenderSave() =
+        let saveCursor = new SaveCursor() :> ICursor
+
+        Cursor.render saveCursor.ToFunctional
+
+    static member RenderRestore() =
+        let restoreCursor = new RestoreCursor() :> ICursor
+
+        Cursor.render restoreCursor.ToFunctional
+
+    static member RenderUp(n) =
+        let upCursor = new UpCursor(n) :> ICursor
+
+        Cursor.render upCursor.ToFunctional
+
+    static member RenderDown(n) =
+        let downCursor = new DownCursor(n) :> ICursor
+
+        Cursor.render downCursor.ToFunctional
+
+    static member RenderNext(n) =
+        let nextCursor = new NextCursor(n) :> ICursor
+
+        Cursor.render nextCursor.ToFunctional
+
+    static member RenderPrevious(n) =
+        let previousCursor = new PreviousCursor(n) :> ICursor
+
+        Cursor.render previousCursor.ToFunctional
+
+    static member RenderNextLine(n) =
+        let nextLineCursor = new NextLineCursor(n) :> ICursor
+
+        Cursor.render nextLineCursor.ToFunctional
+
+    static member RenderPreviousLine(n) =
+        let previousLineCursor = new PreviousLineCursor(n) :> ICursor
+
+        Cursor.render previousLineCursor.ToFunctional
+
+    static member RenderMove(position) =
+        let moveCursor = new MoveCursor(position) :> ICursor
+
+        Cursor.render moveCursor.ToFunctional
+
+
+
+    static member RenderReset() =
+        Cursor.renderReset ()
 
 
 

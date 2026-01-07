@@ -334,6 +334,78 @@ type Formats() =
 
 
 
+    static member RenderRestore(text) =
+        let restoreFormat = new RestoreFormat() :> IFormat
+
+        Format.render text restoreFormat.ToFunctional
+
+    static member RenderRestoreForegroundColor(text) =
+        let restoreForegroundColorFormat = new RestoreForegroundColorFormat() :> IFormat
+
+        Format.render text restoreForegroundColorFormat.ToFunctional
+
+    static member RenderRestoreBackgroundColor(text) =
+        let restoreBackgroundColorFormat = new RestoreBackgroundColorFormat() :> IFormat
+
+        Format.render text restoreBackgroundColorFormat.ToFunctional
+
+    static member RenderBold(text, flag) =
+        let boldFormat = new BoldFormat(flag) :> IFormat
+
+        Format.render text boldFormat.ToFunctional
+
+    static member RenderFaint(text, flag) =
+        let faintFormat = new FaintFormat(flag) :> IFormat
+
+        Format.render text faintFormat.ToFunctional
+
+    static member RenderItalic(text, flag) =
+        let italicFormat = new ItalicFormat(flag) :> IFormat
+
+        Format.render text italicFormat.ToFunctional
+
+    static member RenderUnderline(text, flag) =
+        let underlineFormat = new UnderlineFormat(flag) :> IFormat
+
+        Format.render text underlineFormat.ToFunctional
+
+    static member RenderBlinking(text, flag) =
+        let blinkingFormat = new BlinkingFormat(flag) :> IFormat
+
+        Format.render text blinkingFormat.ToFunctional
+
+    static member RenderReverse(text, flag) =
+        let reverseFormat = new ReverseFormat(flag) :> IFormat
+
+        Format.render text reverseFormat.ToFunctional
+
+    static member RenderHidden(text, flag) =
+        let hiddenFormat = new HiddenFormat(flag) :> IFormat
+
+        Format.render text hiddenFormat.ToFunctional
+
+    static member RenderStrikeout(text, flag) =
+        let strikeoutFormat = new StrikeoutFormat(flag) :> IFormat
+
+        Format.render text strikeoutFormat.ToFunctional
+
+    static member RenderForegroundColor(text, color) =
+        let foregroundColorFormat = new ForegroundColorFormat(color) :> IFormat
+
+        Format.render text foregroundColorFormat.ToFunctional
+
+    static member RenderBackgroundColor(text, color) =
+        let backgroundColorFormat = new BackgroundColorFormat(color) :> IFormat
+
+        Format.render text backgroundColorFormat.ToFunctional
+
+
+
+    static member RenderReset(text) =
+        Format.renderReset text
+
+
+
     static member DoRestore(text) =
         let restoreFormat = new RestoreFormat() :> IFormat
 

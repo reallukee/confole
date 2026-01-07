@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -116,6 +116,8 @@ type Actions =
 
     member Item : int -> IAction with get
 
+
+
     member AddAction  : action  : IAction  -> Actions
     member AddActions : actions : IActions -> Actions
 
@@ -136,6 +138,19 @@ type Actions =
 
     member Reset : unit -> unit
 
+
+
+    static member RenderInsertCharacter : n     : int   -> string
+    static member RenderDeleteCharacter : n     : int   -> string
+    static member RenderInsertLine      : n     : int   -> string
+    static member RenderDeleteLine      : n     : int   -> string
+    static member RenderEraseDisplay    : erase : Erase -> string
+    static member RenderEraseLine       : erase : Erase -> string
+
+    static member RenderReset : unit -> string
+
+
+
     static member DoInsertCharacter : n     : int   -> unit
     static member DoDeleteCharacter : n     : int   -> unit
     static member DoInsertLine      : n     : int   -> unit
@@ -144,6 +159,8 @@ type Actions =
     static member DoEraseLine       : erase : Erase -> unit
 
     static member DoReset : unit -> unit
+
+
 
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int

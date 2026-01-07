@@ -106,51 +106,51 @@ module Rule =
 
 
     // Modalità manuale
-    val getRule  : rule  : Rule  -> string
-    val getRules : rules : Rules -> string
+    val render  : rule  : Rule  -> string
+    val renders : rules : Rules -> string
 
-    val getTitle : title : string -> string
+    val renderTitle : title : string -> string
 
-    val getShowCursorBlinking : unit -> string
-    val getHideCursorBlinking : unit -> string
+    val renderShowCursorBlinking : unit -> string
+    val renderHideCursorBlinking : unit -> string
 
-    val getShowCursor : unit -> string
-    val getHideCursor : unit -> string
+    val renderShowCursor : unit -> string
+    val renderHideCursor : unit -> string
 
-    val getEnableDesignateMode  : unit -> string
-    val getDisableDesignateMode : unit -> string
+    val renderEnableDesignateMode  : unit -> string
+    val renderDisableDesignateMode : unit -> string
 
-    val getEnableAlternativeBuffer  : unit -> string
-    val getDisableAlternativeBuffer : unit -> string
+    val renderEnableAlternativeBuffer  : unit -> string
+    val renderDisableAlternativeBuffer : unit -> string
 
-    val getCursorShape : shape : Shape option -> string
+    val renderCursorShape : shape : Shape option -> string
 
-    val getDefaultForegroundColor : color : Color option -> string
-    val getDefaultBackgroundColor : color : Color option -> string
-    val getDefaultCursorColor     : color : Color option -> string
+    val renderDefaultForegroundColor : color : Color option -> string
+    val renderDefaultBackgroundColor : color : Color option -> string
+    val renderDefaultCursorColor     : color : Color option -> string
 
-    val getReset : unit -> string
+    val renderReset : unit -> string
 
     // Alias modalità manuale
-    val getTTL : (string -> string)
+    val renderTTL : (string -> string)
 
-    val getSCB : (unit -> string)
-    val getHCB : (unit -> string)
+    val renderSCB : (unit -> string)
+    val renderHCB : (unit -> string)
 
-    val getSC : (unit -> string)
-    val getHC : (unit -> string)
+    val renderSC : (unit -> string)
+    val renderHC : (unit -> string)
 
-    val getEDM : (unit -> string)
-    val getDDM : (unit -> string)
+    val renderEDM : (unit -> string)
+    val renderDDM : (unit -> string)
 
-    val getEAB : (unit -> string)
-    val getDAB : (unit -> string)
+    val renderEAB : (unit -> string)
+    val renderDAB : (unit -> string)
 
-    val getCS : (Shape option -> string)
+    val renderCS : (Shape option -> string)
 
-    val getDFGC : (Color option -> string)
-    val getDBGC : (Color option -> string)
-    val getDCC  : (Color option -> string)
+    val renderDFGC : (Color option -> string)
+    val renderDBGC : (Color option -> string)
+    val renderDCC  : (Color option -> string)
 
 
 

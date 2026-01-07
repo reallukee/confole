@@ -70,7 +70,7 @@ module Cursor =
 
 
 
-    let getCursor cursor =
+    let render cursor =
         match cursor with
         | Reverse -> sprintf "%sM" ESC
         | Save    -> sprintf "%s7" ESC
@@ -99,43 +99,43 @@ module Cursor =
 
         | cursor -> failwithf "%A: Not yet implemented!" cursor
 
-    let getCursors cursors =
+    let renders cursors =
         cursors
         |> List.rev
         |> List.map (fun cursor ->
-            getCursor cursor
+            render cursor
         )
         |> String.concat ""
 
-    let getReverse () = getCursor Reverse
-    let getSave    () = getCursor Save
-    let getRestore () = getCursor Restore
+    let renderReverse () = render Reverse
+    let renderSave    () = render Save
+    let renderRestore () = render Restore
 
-    let getUp       n = getCursor (Up       n)
-    let getDown     n = getCursor (Down     n)
-    let getNext     n = getCursor (Next     n)
-    let getPrevious n = getCursor (Previous n)
+    let renderUp       n = render (Up       n)
+    let renderDown     n = render (Down     n)
+    let renderNext     n = render (Next     n)
+    let renderPrevious n = render (Previous n)
 
-    let getNextLine     n = getCursor (NextLine     n)
-    let getPreviousLine n = getCursor (PreviousLine n)
+    let renderNextLine     n = render (NextLine     n)
+    let renderPreviousLine n = render (PreviousLine n)
 
-    let getMove position = getCursor (Move position)
+    let renderMove position = render (Move position)
 
-    let getReset () = getCursors defaultCursors
+    let renderReset () = renders defaultCursors
 
-    let getRVS = getReverse
-    let getSV  = getSave
-    let getRST = getRestore
+    let renderRVS = renderReverse
+    let renderSV  = renderSave
+    let renderRST = renderRestore
 
-    let getU  = getUp
-    let getD  = getDown
-    let getNX = getNext
-    let getPV = getPrevious
+    let renderU  = renderUp
+    let renderD  = renderDown
+    let renderNX = renderNext
+    let renderPV = renderPrevious
 
-    let getNXL = getNextLine
-    let getPVL = getPreviousLine
+    let renderNXL = renderNextLine
+    let renderPVL = renderPreviousLine
 
-    let getMV = getMove
+    let renderMV = renderMove
 
 
 
@@ -169,7 +169,7 @@ module Cursor =
     let move position cursors = Move position :: cursors
 
     let apply cursor =
-        printf "%s" (getCursor cursor)
+        printf "%s" (render cursor)
 
     let applyNewLine cursor =
         apply cursor

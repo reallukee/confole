@@ -176,6 +176,8 @@ type Rules =
 
     member Item : int -> IRule with get
 
+
+
     member AddRule  : rule  : IRule  -> Rules
     member AddRules : rules : IRules -> Rules
 
@@ -203,6 +205,26 @@ type Rules =
 
     member Reset : unit -> unit
 
+
+
+    static member RenderTitle                    : title : string -> string
+    static member RenderShowCursorBlinking       : unit           -> string
+    static member RenderHideCursorBlinking       : unit           -> string
+    static member RenderShowCursor               : unit           -> string
+    static member RenderHideCursor               : unit           -> string
+    static member RenderEnableDesignateMode      : unit           -> string
+    static member RenderDisableDesignateMode     : unit           -> string
+    static member RenderEnableAlternativeBuffer  : unit           -> string
+    static member RenderDisableAlternativeBuffer : unit           -> string
+    static member RenderCursorShape              : shape : Shape  -> string
+    static member RenderDefaultForegroundColor   : color : Color  -> string
+    static member RenderDefaultBackgroundColor   : color : Color  -> string
+    static member RenderDefaultCursorColor       : color : Color  -> string
+
+    static member RenderReset : unit -> string
+
+
+
     static member DoTitle                    : title : string -> unit
     static member DoShowCursorBlinking       : unit           -> unit
     static member DoHideCursorBlinking       : unit           -> unit
@@ -218,6 +240,8 @@ type Rules =
     static member DoDefaultCursorColor       : color : Color  -> unit
 
     static member DoReset : unit -> unit
+
+
 
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int

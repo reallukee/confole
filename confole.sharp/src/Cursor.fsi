@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -142,6 +142,8 @@ type Cursors =
 
     member Item : int -> ICursor with get
 
+
+
     member AddCursor  : cursor  : ICursor  -> Cursors
     member AddCursors : cursors : ICursors -> Cursors
 
@@ -166,6 +168,23 @@ type Cursors =
 
     member Reset : unit -> unit
 
+
+
+    static member RenderReverse      : unit                -> string
+    static member RenderSave         : unit                -> string
+    static member RenderRestore      : unit                -> string
+    static member RenderUp           : n        : int      -> string
+    static member RenderDown         : n        : int      -> string
+    static member RenderNext         : n        : int      -> string
+    static member RenderPrevious     : n        : int      -> string
+    static member RenderNextLine     : n        : int      -> string
+    static member RenderPreviousLine : n        : int      -> string
+    static member RenderMove         : position : Position -> string
+
+    static member RenderReset : unit -> string
+
+
+
     static member DoReverse      : unit                -> unit
     static member DoSave         : unit                -> unit
     static member DoRestore      : unit                -> unit
@@ -176,6 +195,8 @@ type Cursors =
     static member DoNextLine     : n        : int      -> unit
     static member DoPreviousLine : n        : int      -> unit
     static member DoMove         : position : Position -> unit
+
+
 
     static member DoReset : unit -> unit
 

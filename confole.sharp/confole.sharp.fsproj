@@ -15,17 +15,18 @@
     <NoWarn>0026</NoWarn>
 
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <!--<DefineConstants>Experimental</DefineConstants>-->
 
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageId>Reallukee.Confole.Sharp</PackageId>
     <Title>Confole.Sharp</Title>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <Authors>Luca Pollicino</Authors>
     <Company>Luca Pollicino</Company>
     <Product>Confole#</Product>
     <Description>Abbellisci la tua app console F# in modo funzionale</Description>
     <Copyright>Luca Pollicino</Copyright>
-    <PackageProjectUrl>https://www.nuget.org/packages/Reallukee.Confole.Sharp</PackageProjectUrl>
+    <PackageProjectUrl>https://reallukee.github.io/confole/</PackageProjectUrl>
     <PackageIcon>confole.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/reallukee/confole/</RepositoryUrl>
@@ -36,20 +37,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\confole\src\Common.fsi"   Link="src\core\Common.fsi" />
-    <Compile Include="..\confole\src\Common.fs"    Link="src\core\Common.fs" />
-    <Compile Include="..\confole\src\Color.fsi"    Link="src\core\Color.fsi" />
-    <Compile Include="..\confole\src\Color.fs"     Link="src\core\Color.fs" />
-    <Compile Include="..\confole\src\Position.fsi" Link="src\core\Position.fsi" />
-    <Compile Include="..\confole\src\Position.fs"  Link="src\core\Position.fs" />
-    <Compile Include="..\confole\src\Rule.fsi"     Link="src\core\Rule.fsi" />
-    <Compile Include="..\confole\src\Rule.fs"      Link="src\core\Rule.fs" />
-    <Compile Include="..\confole\src\Cursor.fsi"   Link="src\core\Cursor.fsi" />
-    <Compile Include="..\confole\src\Cursor.fs"    Link="src\core\Cursor.fs" />
-    <Compile Include="..\confole\src\Action.fsi"   Link="src\core\Action.fsi" />
-    <Compile Include="..\confole\src\Action.fs"    Link="src\core\Action.fs" />
-    <Compile Include="..\confole\src\Format.fsi"   Link="src\core\Format.fsi" />
-    <Compile Include="..\confole\src\Format.fs"    Link="src\core\Format.fs" />
+    <Compile Include="..\confole\src\Common.fsi"             Link="src\core\Common.fsi" />
+    <Compile Include="..\confole\src\Common.fs"              Link="src\core\Common.fs" />
+    <Compile Include="..\confole\src\Color.fsi"              Link="src\core\Color.fsi" />
+    <Compile Include="..\confole\src\Color.fs"               Link="src\core\Color.fs" />
+    <Compile Include="..\confole\src\ColorConversion.fsi"    Link="src\core\ColorConversion.fsi" />
+    <Compile Include="..\confole\src\ColorConversion.fs"     Link="src\core\ColorConversion.fs" />
+    <Compile Include="..\confole\src\Colors.fsi"             Link="src\core\Colors.fsi" />
+    <Compile Include="..\confole\src\Colors.fs"              Link="src\core\Colors.fs" />
+    <Compile Include="..\confole\src\Position.fsi"           Link="src\core\Position.fsi" />
+    <Compile Include="..\confole\src\Position.fs"            Link="src\core\Position.fs" />
+    <Compile Include="..\confole\src\PositionConversion.fsi" Link="src\core\PositionConversion.fsi" />
+    <Compile Include="..\confole\src\PositionConversion.fs"  Link="src\core\PositionConversion.fs" />
+    <Compile Include="..\confole\src\Positions.fsi"          Link="src\core\Positions.fsi" />
+    <Compile Include="..\confole\src\Positions.fs"           Link="src\core\Positions.fs" />
+    <Compile Include="..\confole\src\Rule.fsi"               Link="src\core\Rule.fsi" />
+    <Compile Include="..\confole\src\Rule.fs"                Link="src\core\Rule.fs" />
+    <Compile Include="..\confole\src\Cursor.fsi"             Link="src\core\Cursor.fsi" />
+    <Compile Include="..\confole\src\Cursor.fs"              Link="src\core\Cursor.fs" />
+    <Compile Include="..\confole\src\Action.fsi"             Link="src\core\Action.fsi" />
+    <Compile Include="..\confole\src\Action.fs"              Link="src\core\Action.fs" />
+    <Compile Include="..\confole\src\Format.fsi"             Link="src\core\Format.fsi" />
+    <Compile Include="..\confole\src\Format.fs"              Link="src\core\Format.fs" />
   </ItemGroup>
 
   <ItemGroup>

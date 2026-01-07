@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -282,6 +282,43 @@ type Actions() =
         this.Actions <- []
 
         Action.reset ()
+
+
+
+    static member RenderInsertCharacter(n) =
+        let insertCharacterAction = new InsertCharacterAction(n) :> IAction
+
+        Action.render insertCharacterAction.ToFunctional
+
+    static member RenderDeleteCharacter(n) =
+        let deleteCharacterAction = new DeleteCharacterAction(n) :> IAction
+
+        Action.render deleteCharacterAction.ToFunctional
+
+    static member RenderInsertLine(n) =
+        let insertLineAction = new InsertCharacterAction(n) :> IAction
+
+        Action.render insertLineAction.ToFunctional
+
+    static member RenderDeleteLine(n) =
+        let deleteLineAction = new DeleteLineAction(n) :> IAction
+
+        Action.render deleteLineAction.ToFunctional
+
+    static member RenderEraseDisplay(erase) =
+        let eraseDisplayAction = new EraseDisplayAction(erase) :> IAction
+
+        Action.render eraseDisplayAction.ToFunctional
+
+    static member RenderEraseLine(erase) =
+        let eraseLineAction = new EraseLineAction(erase) :> IAction
+
+        Action.render eraseLineAction.ToFunctional
+
+
+
+    static member RenderReset() =
+        Action.renderReset ()
 
 
 

@@ -95,7 +95,7 @@ module Rule =
 
 
 
-    let getRule rule =
+    let render rule =
         match rule with
         | Title title -> sprintf "%s0;%s%s" OSC title Bell
 
@@ -182,55 +182,55 @@ module Rule =
 
         | rule -> failwithf "%A: Not yet implemented!" rule
 
-    let getRules rules =
+    let renders rules =
         rules
         |> List.rev
         |> List.map (fun rule ->
-            getRule rule
+            render rule
         )
         |> String.concat ""
 
-    let getTitle title = getRule (Title title)
+    let renderTitle title = render (Title title)
 
-    let getShowCursorBlinking () = getRule ShowCursorBlinking
-    let getHideCursorBlinking () = getRule HideCursorBlinking
+    let renderShowCursorBlinking () = render ShowCursorBlinking
+    let renderHideCursorBlinking () = render HideCursorBlinking
 
-    let getShowCursor () = getRule ShowCursor
-    let getHideCursor () = getRule HideCursor
+    let renderShowCursor () = render ShowCursor
+    let renderHideCursor () = render HideCursor
 
-    let getEnableDesignateMode  () = getRule EnableDesignateMode
-    let getDisableDesignateMode () = getRule DisableDesignateMode
+    let renderEnableDesignateMode  () = render EnableDesignateMode
+    let renderDisableDesignateMode () = render DisableDesignateMode
 
-    let getEnableAlternativeBuffer  () = getRule EnableAlternativeBuffer
-    let getDisableAlternativeBuffer () = getRule DisableAlternativeBuffer
+    let renderEnableAlternativeBuffer  () = render EnableAlternativeBuffer
+    let renderDisableAlternativeBuffer () = render DisableAlternativeBuffer
 
-    let getCursorShape shape = getRule (CursorShape shape)
+    let renderCursorShape shape = render (CursorShape shape)
 
-    let getDefaultForegroundColor color = getRule (DefaultForegroundColor color)
-    let getDefaultBackgroundColor color = getRule (DefaultBackgroundColor color)
-    let getDefaultCursorColor     color = getRule (DefaultCursorColor     color)
+    let renderDefaultForegroundColor color = render (DefaultForegroundColor color)
+    let renderDefaultBackgroundColor color = render (DefaultBackgroundColor color)
+    let renderDefaultCursorColor     color = render (DefaultCursorColor     color)
 
-    let getReset () = getRules defaultRules
+    let renderReset () = renders defaultRules
 
-    let getTTL = getTitle
+    let renderTTL = renderTitle
 
-    let getSCB = getShowCursorBlinking
-    let getHCB = getHideCursorBlinking
+    let renderSCB = renderShowCursorBlinking
+    let renderHCB = renderHideCursorBlinking
 
-    let getSC = getShowCursor
-    let getHC = getHideCursor
+    let renderSC = renderShowCursor
+    let renderHC = renderHideCursor
 
-    let getEDM = getEnableDesignateMode
-    let getDDM = getDisableDesignateMode
+    let renderEDM = renderEnableDesignateMode
+    let renderDDM = renderDisableDesignateMode
 
-    let getEAB = getEnableAlternativeBuffer
-    let getDAB = getDisableAlternativeBuffer
+    let renderEAB = renderEnableAlternativeBuffer
+    let renderDAB = renderDisableAlternativeBuffer
 
-    let getCS = getCursorShape
+    let renderCS = renderCursorShape
 
-    let getDFGC = getDefaultForegroundColor
-    let getDBGC = getDefaultBackgroundColor
-    let getDCC  = getDefaultCursorColor
+    let renderDFGC = renderDefaultForegroundColor
+    let renderDBGC = renderDefaultBackgroundColor
+    let renderDCC  = renderDefaultCursorColor
 
 
 
@@ -270,7 +270,7 @@ module Rule =
     let defaultCursorColor     color rules = DefaultCursorColor     color :: rules
 
     let apply rule =
-        printf "%s" (getRule rule)
+        printf "%s" (render rule)
 
     let applyNewLine rule =
         apply rule

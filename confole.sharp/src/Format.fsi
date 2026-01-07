@@ -150,6 +150,8 @@ type Formats =
 
     member Item : int -> IFormat with get
 
+
+
     member AddFormat  : format  : IFormat  -> Formats
     member AddFormats : formats : IFormats -> Formats
 
@@ -177,6 +179,26 @@ type Formats =
 
     member Reset : text : string -> unit
 
+
+
+    static member RenderRestore                : text : string                 -> string
+    static member RenderRestoreForegroundColor : text : string                 -> string
+    static member RenderRestoreBackgroundColor : text : string                 -> string
+    static member RenderBold                   : text : string * flag  : bool  -> string
+    static member RenderFaint                  : text : string * flag  : bool  -> string
+    static member RenderItalic                 : text : string * flag  : bool  -> string
+    static member RenderUnderline              : text : string * flag  : bool  -> string
+    static member RenderBlinking               : text : string * flag  : bool  -> string
+    static member RenderReverse                : text : string * flag  : bool  -> string
+    static member RenderHidden                 : text : string * flag  : bool  -> string
+    static member RenderStrikeout              : text : string * flag  : bool  -> string
+    static member RenderForegroundColor        : text : string * color : Color -> string
+    static member RenderBackgroundColor        : text : string * color : Color -> string
+
+    static member RenderReset : text : string -> string
+
+
+
     static member DoRestore                : text : string                 -> unit
     static member DoRestoreForegroundColor : text : string                 -> unit
     static member DoRestoreBackgroundColor : text : string                 -> unit
@@ -192,6 +214,8 @@ type Formats =
     static member DoBackgroundColor        : text : string * color : Color -> unit
 
     static member DoReset : text : string -> unit
+
+
 
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int

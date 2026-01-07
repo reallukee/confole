@@ -88,29 +88,29 @@ module Action =
 
 
     // Modalità manuale
-    val getAction  : action  : Action  -> string
-    val getActions : actions : Actions -> string
+    val render  : action  : Action  -> string
+    val renders : actions : Actions -> string
 
-    val getInsertCharacter : n : int option -> string
-    val getDeleteCharacter : n : int option -> string
+    val renderInsertCharacter : n : int option -> string
+    val renderDeleteCharacter : n : int option -> string
 
-    val getInsertLine : n : int option -> string
-    val getDeleteLine : n : int option -> string
+    val renderInsertLine : n : int option -> string
+    val renderDeleteLine : n : int option -> string
 
-    val getEraseDisplay : erase : Erase option -> string
-    val getEraseLine    : erase : Erase option -> string
+    val renderEraseDisplay : erase : Erase option -> string
+    val renderEraseLine    : erase : Erase option -> string
 
-    val getReset : unit -> string
+    val renderReset : unit -> string
 
     // Alias modalità manuale
-    val getIC : (int option -> string)
-    val getDC : (int option -> string)
+    val renderIC : (int option -> string)
+    val renderDC : (int option -> string)
 
-    val getIL : (int option -> string)
-    val getDL : (int option -> string)
+    val renderIL : (int option -> string)
+    val renderDL : (int option -> string)
 
-    val getED : (Erase option -> string)
-    val getEL : (Erase option -> string)
+    val renderED : (Erase option -> string)
+    val renderEL : (Erase option -> string)
 
 
 
