@@ -19,7 +19,7 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
@@ -30,14 +30,20 @@ open Reallukee.Confole
 [<AbstractClass>]
 type Color() = class end
 
+
+
 and XTermColor() =
     inherit Color()
 
     let mutable id_ = 0
 
+
+
     new(id) as this =
         XTermColor() then
             this.Id <- id
+
+
 
     member this.Id
         with get() =
@@ -46,8 +52,34 @@ and XTermColor() =
         and set(id) =
             id_ <- id
 
+
+
     static member fromId(id) =
         new XTermColor(id)
+
+    static member fromRGB(red, green, blue) =
+        let id = ColorConversion.rgbToXTerm (red, green, blue)
+
+        new XTermColor(id)
+
+    static member fromHEX(red, green, blue) =
+        let id = ColorConversion.hexToXTerm (red, green, blue)
+
+        new XTermColor(id)
+
+
+
+    static member fromRGBColor(rgbColor : RGBColor) =
+        let id = ColorConversion.rgbToXTerm (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+
+        new XTermColor(id)
+
+    static member fromHEXColor(hexColor : HEXColor) =
+        let id = ColorConversion.hexToXTerm (hexColor.Red, hexColor.Green, hexColor.Blue)
+
+        new XTermColor(id)
+
+
 
     override this.Equals(obj) =
         match obj with
@@ -61,6 +93,8 @@ and XTermColor() =
     override this.ToString() =
         $"XTermColor({this.Id})"
 
+
+
 and RGBColor() =
     inherit Color()
 
@@ -68,11 +102,15 @@ and RGBColor() =
     let mutable green_ = 0
     let mutable blue_  = 0
 
+
+
     new(red, green, blue) as this =
         RGBColor() then
             this.Red   <- red
             this.Green <- green
             this.Blue  <- blue
+
+
 
     member this.Red
         with get() =
@@ -95,18 +133,34 @@ and RGBColor() =
         and set(blue) =
             blue_ <- blue
 
+
+
     static member fromRGB(red, green, blue) =
         new RGBColor(red, green, blue)
 
     static member fromHEX(red, green, blue) =
-        let red, green, blue = Reallukee.Confole.Color.hexToRGB (red, green, blue)
+        let red, green, blue = ColorConversion.hexToRGB (red, green, blue)
 
         new RGBColor(red, green, blue)
+
+    static member fromId(id) =
+        let red, green, blue = ColorConversion.xTermToRGB id
+
+        new RGBColor(red, green, blue)
+
+
 
     static member fromHEXColor(hexColor : HEXColor) =
-        let red, green, blue = Reallukee.Confole.Color.hexToRGB (hexColor.Red, hexColor.Green, hexColor.Blue)
+        let red, green, blue = ColorConversion.hexToRGB (hexColor.Red, hexColor.Green, hexColor.Blue)
 
         new RGBColor(red, green, blue)
+
+    static member fromXTermColor(xTermColor : XTermColor) =
+        let red, green, blue = ColorConversion.xTermToRGB xTermColor.Id
+
+        new RGBColor(red, green, blue)
+
+
 
     override this.Equals(obj) =
         match obj with
@@ -122,6 +176,8 @@ and RGBColor() =
     override this.ToString() =
         $"RGBColor({this.Red}, {this.Green}, {this.Blue})"
 
+
+
 and HEXColor() =
     inherit Color()
 
@@ -129,11 +185,15 @@ and HEXColor() =
     let mutable green_ = "00"
     let mutable blue_  = "00"
 
+
+
     new(red, green, blue) as this =
         HEXColor() then
             this.Red   <- red
             this.Green <- green
             this.Blue  <- blue
+
+
 
     member this.Red
         with get() =
@@ -156,18 +216,34 @@ and HEXColor() =
         and set(blue) =
             blue_ <- blue
 
+
+
     static member fromHEX(red, green, blue) =
         new HEXColor(red, green, blue)
 
     static member fromRGB(red, green, blue) =
-        let red, green, blue = Reallukee.Confole.Color.rgbToHEX (red, green, blue)
+        let red, green, blue = ColorConversion.rgbToHEX (red, green, blue)
 
         new HEXColor(red, green, blue)
 
-    static member fromHEXColor(rgbColor : RGBColor) =
-        let red, green, blue = Reallukee.Confole.Color.rgbToHEX (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+    static member fromId(id) =
+        let red, green, blue = ColorConversion.xTermToHEX id
 
         new HEXColor(red, green, blue)
+
+
+
+    static member fromRGBColor(rgbColor : RGBColor) =
+        let red, green, blue = ColorConversion.rgbToHEX (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+
+        new HEXColor(red, green, blue)
+
+    static member fromXTermColor(xTermColor : XTermColor) =
+        let red, green, blue = ColorConversion.xTermToHEX xTermColor.Id
+
+        new HEXColor(red, green, blue)
+
+
 
     override this.Equals(obj) =
         match obj with
