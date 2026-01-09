@@ -13,13 +13,13 @@ module Program =
     let main args =
         let formats =
             Format.init ()
-            |> Format.italic          true
-            |> Format.foregroundColor (Color.RGB (255, 0, 0))
-            |> Format.backgroundColor (Color.RGB (0, 0, 255))
+            |> Format.italic          (Some true)
+            |> Format.foregroundColor (Some (Color.RGB (255, 0, 0)))
+            |> Format.backgroundColor (Some (Color.RGB (0, 0, 255)))
 
         Format.applyAllNewLine "Hello, World!" formats
 
-        do Console.ReadKey(true)
+        do Console.ReadKey (true)
         |> ignore
 
         Format.reset ""

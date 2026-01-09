@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\confole\confole.fsproj" />
+    <ProjectReference Include="..\..\confole\confole.fsproj" />
   </ItemGroup>
 
 </Project>
