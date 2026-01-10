@@ -24,13 +24,14 @@ namespace Reallukee.Confole.Test
 open Xunit
 open FsUnit.Xunit
 
+open Reallukee.Confole.Color
 open Reallukee.Confole.ColorConversion
 
-module ColorConversion =
+type ColorConversion () =
 
     [<Fact>]
-    [<Trait("Category", "Color")>]
-    let ``hexToRGB funziona?`` () =
+    [<Trait("Category", "ColorConversion")>]
+    member _.``hexToRGB funziona?`` () =
         let hex = "FF", "FA", "86"
 
         let rgb = 255, 250, 134
@@ -39,8 +40,8 @@ module ColorConversion =
         |> should equal rgb
 
     [<Fact>]
-    [<Trait("Category", "Color")>]
-    let ``rgbToHEX funziona?`` () =
+    [<Trait("Category", "ColorConversion")>]
+    member _.``rgbToHEX funziona?`` () =
         let rgb = 255, 250, 134
 
         let hex = "FF", "FA", "86"
@@ -48,11 +49,47 @@ module ColorConversion =
         rgbToHEX rgb
         |> should equal hex
 
+    [<Fact>]
+    [<Trait("Category", "ColorConversion")>]
+    member _.``hexColorToRGBColor funziona?`` () =
+        let hexColor : HEXColor = {
+            red   = "FF"
+            green = "FA"
+            blue  = "86"
+        }
+
+        let rgbColor : RGBColor = {
+            red   = 255
+            green = 250
+            blue  = 134
+        }
+
+        hexColorToRGBColor hexColor
+        |> should equal rgbColor
+
+    [<Fact>]
+    [<Trait("Category", "ColorConversion")>]
+    member _.``rgbColorToHEXColor funziona?`` () =
+        let rgbColor : RGBColor = {
+            red   = 255
+            green = 250
+            blue  = 134
+        }
+
+        let hexColor : HEXColor = {
+            red   = "FF"
+            green = "FA"
+            blue  = "86"
+        }
+
+        rgbColorToHEXColor rgbColor
+        |> should equal hexColor
+
 
 
     [<Fact>]
-    [<Trait("Category", "Color")>]
-    let ``xTermToRGB funziona?`` () =
+    [<Trait("Category", "ColorConversion")>]
+    member _.``xTermToRGB funziona?`` () =
         let rgb = Array.concat [
             [|
                 let levels = [|
@@ -86,8 +123,8 @@ module ColorConversion =
         )
 
     [<Fact>]
-    [<Trait("Category", "Color")>]
-    let ``xTermToHEX funziona?`` () =
+    [<Trait("Category", "ColorConversion")>]
+    member _.``xTermToHEX funziona?`` () =
         let hex = Array.concat [
             [|
                 let levels = [|
@@ -123,8 +160,8 @@ module ColorConversion =
 
 
     [<Fact>]
-    [<Trait("Category", "Color")>]
-    let ``rgbToXTerm funziona?`` () =
+    [<Trait("Category", "ColorConversion")>]
+    member _.``rgbToXTerm funziona?`` () =
         Array.concat [
             [|
                 let levels = [|
@@ -149,8 +186,8 @@ module ColorConversion =
         )
 
     [<Fact>]
-    [<Trait("Category", "Color")>]
-    let ``hexToXTerm funziona?`` () =
+    [<Trait("Category", "ColorConversion")>]
+    member _.``hexToXTerm funziona?`` () =
         Array.concat [
             [|
                 let levels = [|

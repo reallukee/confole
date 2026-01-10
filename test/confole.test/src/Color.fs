@@ -26,11 +26,11 @@ open FsUnit.Xunit
 
 open Reallukee.Confole.Color
 
-module Color =
+type Color () =
 
     [<Fact>]
     [<Trait("Category", "Color")>]
-    let ``xTermToXTermColor funziona?`` () =
+    member _.``xTermToXTermColor funziona?`` () =
         let id = 120
 
         let xTermColor = xTermToXTermColor id
@@ -40,7 +40,7 @@ module Color =
 
     [<Fact>]
     [<Trait("Category", "Color")>]
-    let ``rgbToRGBColor funziona?`` () =
+    member _.``rgbToRGBColor funziona?`` () =
         let red   = 255
         let green = 255
         let blue  = 255
@@ -60,7 +60,7 @@ module Color =
 
     [<Fact>]
     [<Trait("Category", "Color")>]
-    let ``hexToHEXColor funziona?`` () =
+    member _.``hexToHEXColor funziona?`` () =
         let red   = "FF"
         let green = "FF"
         let blue  = "FF"
@@ -80,7 +80,7 @@ module Color =
 
     [<Fact>]
     [<Trait("Category", "Color")>]
-    let ``xTermColorToXTerm funziona?`` () =
+    member _.``xTermColorToXTerm funziona?`` () =
         let xTermColor = {
             id = 120
         }
@@ -92,7 +92,7 @@ module Color =
 
     [<Fact>]
     [<Trait("Category", "Color")>]
-    let ``rgbColorToRGB funziona?`` () =
+    member _.``rgbColorToRGB funziona?`` () =
         let rgbColor : RGBColor = {
             red   = 255
             green = 255
@@ -112,7 +112,7 @@ module Color =
 
     [<Fact>]
     [<Trait("Category", "Color")>]
-    let ``hexColorToHEX funziona?`` () =
+    member _.``hexColorToHEX funziona?`` () =
         let hexColor : HEXColor = {
             red   = "FF"
             green = "FF"

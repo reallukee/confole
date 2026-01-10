@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Include="src\Color.fs" />
     <Compile Include="src\ColorConversion.fs" />
+    <Compile Include="src\Position.fs" />
+    <Compile Include="src\PositionConversion.fs" />
   </ItemGroup>
 
   <ItemGroup>
