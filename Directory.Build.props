@@ -2,7 +2,10 @@
   <PropertyGroup>
     <ProjectFolderName>$(MSBuildProjectName)</ProjectFolderName>
 
-    <BaseOutputPath>$(SolutionDir)bin</BaseOutputPath>
-    <BaseIntermediateOutputPath>$(SolutionDir)obj\$(ProjectFolderName)</BaseIntermediateOutputPath>
+    <RepositoryRoot Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</RepositoryRoot>
+    <RepositoryRoot Condition="'$(SolutionDir)' != ''">$(SolutionDir)</RepositoryRoot>
+
+    <BaseOutputPath>$(RepositoryRoot)bin\$(MSBuildProjectName)</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(RepositoryRoot)obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
   </PropertyGroup>
 </Project>
