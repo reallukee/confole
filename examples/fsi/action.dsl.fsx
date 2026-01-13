@@ -1,17 +1,14 @@
 (*
     F# Script
 
-    Type "dotnet fsi action.builder.fsx" to run!
+    Type "dotnet fsi action.dsl.fsx" to run!
 
     To run in F# Interactive:
 
-    * dotnet build confole --configuration Release
-    * dotnet pack confole --configuration Release
+        dotnet build confole --configuration Release
 *)
 
-#r @"../../confole/bin/Release/netstandard2.0/confole.dll"
-
-// #r @"nuget: Reallukee.Confole, 1.2.0"
+#r @"../../bin/confole/Release/netstandard2.0/confole.dll"
 
 open System
 

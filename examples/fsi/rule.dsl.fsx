@@ -1,17 +1,14 @@
 (*
     F# Script
 
-    Type "dotnet fsi rule.builder.fsx" to run!
+    Type "dotnet fsi rule.dsl.fsx" to run!
 
     To run in F# Interactive:
 
-    * dotnet build confole --configuration Release
-    * dotnet pack confole --configuration Release
+        dotnet build confole --configuration Release
 *)
 
-#r @"../../confole/bin/Release/netstandard2.0/confole.dll"
-
-// #r @"nuget: Reallukee.Confole, 1.2.0"
+#r @"../../bin/confole/Release/netstandard2.0/confole.dll"
 
 open System
 
@@ -24,9 +21,9 @@ Rule.builder {
     Rule.disableDesignateMode
     Rule.disableAlternativeBuffer
     Rule.cursorShape              (Some Rule.Shape.User)
-    Rule.defaultForegroundColor   (Color.RGB (255, 255, 255))
-    Rule.defaultBackgroundColor   (Color.RGB (0, 0, 0))
-    Rule.defaultCursorColor       (Color.RGB (255, 255, 255))
+    Rule.defaultForegroundColor   (Some (Color.RGB (255, 255, 255)))
+    Rule.defaultBackgroundColor   (Some (Color.RGB (0, 0, 0)))
+    Rule.defaultCursorColor       (Some (Color.RGB (255, 255, 255)))
 }
 |> Rule.applyAll
 
