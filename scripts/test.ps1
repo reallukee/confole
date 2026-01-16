@@ -2,7 +2,6 @@ param(
     [ValidateSet(
         "Confole",
         "Confole.Sharp",
-        "Confole.Templates",
         "All"
     )]
     [string] $Target = "All",
@@ -40,9 +39,8 @@ if (-not (Test-Path -Path $Root -PathType Container)) {
 Set-Location -Path $Root
 
 switch ($Target) {
-    "Confole"           { $Projects = @("./confole") }
-    "Confole.Sharp"     { $Projects = @("./confole.sharp") }
-    "Confole.Templates" { $Projects = @("./confole.templates")}
+    "Confole"           { $Projects = @("./test/confole.test") }
+    "Confole.Sharp"     { $Projects = @("./test/confole.test.sharp") }
     "All"               { $Projects = @("./confole.slnx") }
     default             { exit 1 }
 }
@@ -63,6 +61,8 @@ $Projects | ForEach-Object {
     }
 
     & dotnet build $_ @dotnetArgs
+
+    & dotnet test $_ --no-build --configuration $Configuration
 }
 
 Pop-Location
