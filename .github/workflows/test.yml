@@ -14,8 +14,8 @@ on:
       - "**/*.slnx"
 
       - "!**/dev/**"
-      - "!**/templates/**"
       - "!**/examples/**"
+      - "!**/templates/**"
   workflow_dispatch:
 
 jobs:
@@ -32,15 +32,11 @@ jobs:
 
       - name: Restore projects
         run: |
-          dotnet restore confole --ignore-failed-sources
-          dotnet restore confole.sharp --ignore-failed-sources
           dotnet restore test/confole.test --ignore-failed-sources
           dotnet restore test/confole.sharp.test --ignore-failed-sources
 
       - name: Build projects
         run: |
-          dotnet build confole --no-restore --configuration Release
-          dotnet build confole.sharp --no-restore --configuration Release
           dotnet build test/confole.test --no-restore --configuration Release
           dotnet build test/confole.sharp.test --no-restore --configuration Release
 

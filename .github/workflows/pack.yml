@@ -13,9 +13,10 @@ on:
       - "**/*.sln"
       - "**/*.slnx"
 
+      - "!**/dev/**"
+      - "!**/examples/**"
       - "!**/templates/**"
       - "!**/test/**"
-      - "!**/examples/**"
   workflow_dispatch:
 
 jobs:

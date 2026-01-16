@@ -15,9 +15,9 @@ on:
       - "**/examples/**/*.fsx"
       - "**/examples/**/*.fsscript"
 
+      - "!**/dev/**"
       - "!**/templates/**"
       - "!**/test/**"
-      - "!**/examples/**"
   workflow_dispatch:
 
 jobs:
