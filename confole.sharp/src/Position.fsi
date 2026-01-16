@@ -28,11 +28,20 @@ namespace Reallukee.Confole.Sharp
 open Reallukee.Confole
 
 [<AbstractClass>]
-type Position = class end
+type Position =
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFPosition : position : Position -> Position.Position
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPPosition : position : Position.Position -> Position
 
 
 
 and Cell =
+
     inherit Position
 
     new : unit                   -> Cell
@@ -46,6 +55,16 @@ and Cell =
 
     static member fromCoord : coord : Coord -> Cell
 
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFRowCol : cell : Cell -> Position.RowCol
+    static member internal toFCell   : cell : Cell -> Position.Cell
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPCell : rowCol : Position.RowCol -> Cell
+    static member internal toOOPCell : cell   : Position.Cell   -> Cell
+
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int
     override ToString    : unit       -> string
@@ -53,6 +72,7 @@ and Cell =
 
 
 and Coord =
+
     inherit Position
 
     new : unit                 -> Coord
@@ -65,6 +85,16 @@ and Coord =
     static member fromRowCol : row : int * col : int -> Coord
 
     static member fromCell : cell : Cell -> Coord
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFXY    : coord : Coord -> Position.XY
+    static member internal toFCoord : coord : Coord -> Position.Coord
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPCoord : xY    : Position.XY    -> Coord
+    static member internal toOOPCoord : coord : Position.Coord -> Coord
 
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int

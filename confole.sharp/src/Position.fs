@@ -28,122 +28,184 @@ namespace Reallukee.Confole.Sharp
 open Reallukee.Confole
 
 [<AbstractClass>]
-type Position() = class end
+type Position () =
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFPosition (position : Position) =
+        match position with
+        // RowCol
+        | :? Cell  as cell  -> Position.RowCol (cell.Row, cell.Col)
+        // XY
+        | :? Coord as coord -> Position.XY     (coord.X, coord.Y)
+        | position -> failwithf "%A: Unsupported position format!" position
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPPosition (position : Position.Position) : Position =
+        match position with
+        | Position.RowCol rowCol -> Cell.toOOPCell   (rowCol)
+        | Position.Cell   cell   -> Cell.toOOPCell   (cell)
+        | Position.XY     xY     -> Coord.toOOPCoord (xY)
+        | Position.Coord  coord  -> Coord.toOOPCoord (coord)
+        | position -> failwithf "%A: Unsupported position format!" position
 
 
 
-and Cell() =
-    inherit Position()
+and Cell () =
 
-    let mutable row_ = 0
-    let mutable col_ = 0
+    inherit Position ()
+
+    let mutable row = 0
+    let mutable col = 0
 
 
 
-    new(row, col) as this =
-        Cell() then
+    new (row, col) as this =
+        Cell () then
             this.Row <- row
             this.Col <- col
 
 
 
     member this.Row
-        with get() =
-            row_
+        with get () =
+            row
 
-        and set(row) =
-            row_ <- row
+        and set value =
+            row <- value
 
     member this.Col
-        with get() =
-            col_
+        with get () =
+            col
 
-        and set(col) =
-            col_ <- col
-
-
-
-    static member fromRowCol(row, col) =
-        new Cell(row, col)
-
-    static member fromXY(x, y) =
-        new Cell(y, x)
+        and set value =
+            col <- value
 
 
 
-    static member fromCoord(coord : Coord) =
-        new Cell(coord.Y, coord.X)
+    static member fromRowCol (row, col) =
+        new Cell (row, col)
+
+    static member fromXY (x, y) =
+        new Cell (y, x)
 
 
 
-    override this.Equals(obj) =
+    static member fromCoord (coord : Coord) =
+        new Cell (coord.Y, coord.X)
+
+
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFRowCol (cell : Cell) =
+        cell.Row, cell.Col
+
+    static member internal toFCell (cell : Cell) =
+        Position.rowColToCell (cell.Row, cell.Col)
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPCell (rowCol : Position.RowCol) =
+        let row, col = rowCol
+
+        new Cell (row, col)
+
+    static member internal toOOPCell (cell : Position.Cell) =
+        new Cell (cell.row, cell.col)
+
+
+
+    override this.Equals obj =
         match obj with
         | :? Cell as other ->
             this.Row = other.Row &&
             this.Col = other.Col
         | _ -> false
 
-    override this.GetHashCode() =
-        hash(this.Row, this.Col)
+    override this.GetHashCode () =
+        hash (this.Row, this.Col)
 
-    override this.ToString() =
+    override this.ToString () =
         $"Cell({this.Row}, {this.Col})"
 
 
 
-and Coord() =
-    inherit Position()
+and Coord () =
 
-    let mutable x_ = 0
-    let mutable y_ = 0
+    inherit Position ()
+
+    let mutable x = 0
+    let mutable y = 0
 
 
 
-    new(x, y) as this =
-        Coord() then
+    new (x, y) as this =
+        Coord () then
             this.X <- x
             this.Y <- y
 
 
 
     member this.X
-        with get() =
-            x_
+        with get () =
+            x
 
-        and set(x) =
-            x_ <- x
+        and set value =
+            x <- value
 
     member this.Y
-        with get() =
-            y_
+        with get () =
+            y
 
-        and set(y) =
-            y_ <- y
-
-
-
-    static member fromXY(x, y) =
-        new Coord(x, y)
-
-    static member fromRowCol(row, col) =
-        new Coord(col, row)
+        and set value =
+            y <- value
 
 
 
-    static member fromCell(cell : Cell) =
-        new Coord(cell.Col, cell.Row)
+    static member fromXY (x, y) =
+        new Coord (x, y)
+
+    static member fromRowCol (row, col) =
+        new Coord (col, row)
 
 
 
-    override this.Equals(obj) =
+    static member fromCell (cell : Cell) =
+        new Coord (cell.Col, cell.Row)
+
+
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFXY (coord : Coord) =
+        coord.X, coord.Y
+
+    static member internal toFCoord (coord : Coord) =
+        Position.xYToCoord (coord.X, coord.Y)
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPCoord (xY : Position.XY) =
+        let x, y = xY
+
+        new Coord (x, y)
+
+    static member internal toOOPCoord (coord : Position.Coord) =
+        new Coord (coord.x, coord.y)
+
+
+
+    override this.Equals obj =
         match obj with
         | :? Coord as other ->
             this.X = other.X &&
             this.Y = other.Y
         | _ -> false
 
-    override this.GetHashCode() =
-        hash(this.X, this.Y)
+    override this.GetHashCode () =
+        hash (this.X, this.Y)
 
-    override this.ToString() =
+    override this.ToString () =
         $"Cell({this.X}, {this.Y})"

@@ -28,11 +28,20 @@ namespace Reallukee.Confole.Sharp
 open Reallukee.Confole
 
 [<AbstractClass>]
-type Color = class end
+type Color =
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFColor : color : Color -> Color.Color
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPColor : color : Color.Color -> Color
 
 
 
 and XTermColor =
+
     inherit Color
 
     new : unit       -> XTermColor
@@ -47,6 +56,16 @@ and XTermColor =
     static member fromRGBColor : rgbColor : RGBColor -> XTermColor
     static member fromHEXColor : hexColor : HEXColor -> XTermColor
 
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toFXTerm      : xTermColor : XTermColor -> Color.XTerm
+    static member internal toFXTermColor : xTermColor : XTermColor -> Color.XTermColor
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPXTermColor : xTerm      : Color.XTerm      -> XTermColor
+    static member internal toOOPXTermColor : xTermColor : Color.XTermColor -> XTermColor
+
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int
     override ToString    : unit       -> string
@@ -54,6 +73,7 @@ and XTermColor =
 
 
 and RGBColor =
+
     inherit Color
 
     new : unit                                  -> RGBColor
@@ -70,6 +90,16 @@ and RGBColor =
     static member fromHEXColor   : hexColor   : HEXColor   -> RGBColor
     static member fromXTermColor : xTermColor : XTermColor -> RGBColor
 
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toRGB      : rgbColor : RGBColor -> Color.RGB
+    static member internal toRGBColor : rgbColor : RGBColor -> Color.RGBColor
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPRGBColor : rgb      : Color.RGB      -> RGBColor
+    static member internal toOOPRGBColor : rgbColor : Color.RGBColor -> RGBColor
+
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int
     override ToString    : unit       -> string
@@ -77,6 +107,7 @@ and RGBColor =
 
 
 and HEXColor =
+
     inherit Color
 
     new : unit                                           -> HEXColor
@@ -92,6 +123,16 @@ and HEXColor =
 
     static member fromRGBColor   : rgbColor   : RGBColor   -> HEXColor
     static member fromXTermColor : xTermColor : XTermColor -> HEXColor
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal toHEX      : hexColor : HEXColor -> Color.HEX
+    static member internal toHEXColor : hexColor : HEXColor -> Color.HEXColor
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal toOOPHEXColor : hex      : Color.HEX      -> HEXColor
+    static member internal toOOPHEXColor : hexColor : Color.HEXColor -> HEXColor
 
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int

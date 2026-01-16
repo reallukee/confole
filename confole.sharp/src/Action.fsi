@@ -17,6 +17,8 @@
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
 
+                  Riscrittura v4!
+
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
     Version     : 1.3.0
@@ -25,6 +27,10 @@
 
 namespace Reallukee.Confole.Sharp
 
+open System
+open System.Collections
+open System.Collections.Generic
+
 open Reallukee.Confole
 
 type Erase =
@@ -32,136 +38,86 @@ type Erase =
     | FromBeginToCurrent = 1
     | FromBeginToEnd     = 2
 
-
-
-type IAction =
-    abstract member ToFunctional : Action.Action with get
-
-type IActions = IAction list
-
-
-
-[<AbstractClass>]
-type ActionN =
-    interface IAction
-
-    new : action : (int option -> Action.Action) * n : int -> ActionN
-
-    member N : int with get, set
-
-    override Equals      : obj  : obj -> bool
-    override GetHashCode : unit       -> int
-    override ToString    : unit       -> string
-
-type InsertCharacterAction =
-    inherit ActionN
-
-    new : unit       -> InsertCharacterAction
-    new : n    : int -> InsertCharacterAction
-
-type DeleteCharacterAction =
-    inherit ActionN
-
-    new : unit       -> DeleteCharacterAction
-    new : n    : int -> DeleteCharacterAction
-
-type InsertLineAction =
-    inherit ActionN
-
-    new : unit       -> InsertLineAction
-    new : n    : int -> InsertLineAction
-
-type DeleteLineAction =
-    inherit ActionN
-
-    new : unit       -> DeleteLineAction
-    new : n    : int -> DeleteLineAction
-
-
-
-[<AbstractClass>]
-type ActionErase =
-    interface IAction
-
-    new : action : (Action.Erase option -> Action.Action) * erase : Erase -> ActionErase
-
-    member Erase : Erase with get, set
-
-    override Equals      : obj  : obj -> bool
-    override GetHashCode : unit       -> int
-    override ToString    : unit       -> string
-
-type EraseDisplayAction =
-    inherit ActionErase
-
-    new : unit          -> EraseDisplayAction
-    new : erase : Erase -> EraseDisplayAction
-
-type EraseLineAction =
-    inherit ActionErase
-
-    new : unit          -> EraseLineAction
-    new : erase : Erase -> EraseLineAction
-
-
-
+[<Class>]
 type Actions =
-    new : unit -> Actions
 
-    member NewLine : bool     with get, set
-    member Actions : IActions with get
+    (*
+        Wrapper OOP modulo Action: v4
 
-    new : actions : IActions * newLine : bool -> Actions
-    new : newLine : bool                      -> Actions
+        Cosa manca?
 
-    member Item : int -> IAction with get
+        * render    : Perchè? Richiederebbe il wrapping della DU.
+        * apply     : Perchè? Richiederebbe il wrapping della DU.
+        * configure : Perchè? Richiederebbe il wrapping della DU.
+        * Builder   : I DSL in C# non esistono.
 
+        Detto questo buon uso!
 
+        MIAO a tutti!
+    *)
 
-    member AddAction  : action  : IAction  -> Actions
-    member AddActions : actions : IActions -> Actions
+    static member NewLine     : bool                with get,         set
+    member        ActionsList : List<Action.Action> with internal get
 
-    member AddInsertCharacter : n     : int   -> Actions
-    member AddDeleteCharacter : n     : int   -> Actions
-    member AddInsertLine      : n     : int   -> Actions
-    member AddDeleteLine      : n     : int   -> Actions
-    member AddEraseDisplay    : erase : Erase -> Actions
-    member AddEraseLine       : erase : Erase -> Actions
+    // Modalità manuale
+    member Renders : unit -> string
 
-    member Clear : unit -> Actions
-    member View  : unit -> unit
+    static member RenderInsertCharacter : unit    -> string
+    static member RenderInsertCharacter : n : int -> string
+    static member RenderDeleteCharacter : unit    -> string
+    static member RenderDeleteCharacter : n : int -> string
 
-    member Apply    : action  : IAction * newLine : bool -> unit
-    member Apply    : action  : IAction                  -> unit
-    member ApplyAll : newLine : bool                     -> unit
-    member ApplyAll : unit                               -> unit
+    static member RenderInsertLine : unit    -> string
+    static member RenderInsertLine : n : int -> string
+    static member RenderDeleteLine : unit    -> string
+    static member RenderDeleteLine : n : int -> string
 
-    member Reset : unit -> unit
-
-
-
-    static member RenderInsertCharacter : n     : int   -> string
-    static member RenderDeleteCharacter : n     : int   -> string
-    static member RenderInsertLine      : n     : int   -> string
-    static member RenderDeleteLine      : n     : int   -> string
-    static member RenderEraseDisplay    : erase : Erase -> string
-    static member RenderEraseLine       : erase : Erase -> string
+    static member RenderEraseDisplay : unit          -> string
+    static member RenderEraseDisplay : erase : Erase -> string
+    static member RenderEraseLine    : unit          -> string
+    static member RenderEraseLine    : erase : Erase -> string
 
     static member RenderReset : unit -> string
 
+    // Modalità "funzionale"
+    static member Init  : unit -> Actions
+    member        Clear : unit -> Actions
+    member        View  : unit -> Actions
 
+    member InsertCharacter : unit    -> Actions
+    member InsertCharacter : n : int -> Actions
+    member DeleteCharacter : unit    -> Actions
+    member DeleteCharacter : n : int -> Actions
 
-    static member DoInsertCharacter : n     : int   -> unit
-    static member DoDeleteCharacter : n     : int   -> unit
-    static member DoInsertLine      : n     : int   -> unit
-    static member DoDeleteLine      : n     : int   -> unit
-    static member DoEraseDisplay    : erase : Erase -> unit
-    static member DoEraseLine       : erase : Erase -> unit
+    member InsertLine : unit    -> Actions
+    member InsertLine : n : int -> Actions
+    member DeleteLine : unit    -> Actions
+    member DeleteLine : n : int -> Actions
+
+    member EraseDisplay : unit          -> Actions
+    member EraseDisplay : erase : Erase -> Actions
+    member EraseLine    : unit          -> Actions
+    member EraseLine    : erase : Erase -> Actions
+
+    member ApplyAll : unit           -> unit
+    member ApplyAll : newLine : bool -> unit
+
+    static member Reset : unit -> unit
+
+    // Modalità imperativa
+    static member DoInsertCharacter : unit    -> unit
+    static member DoInsertCharacter : n : int -> unit
+    static member DoDeleteCharacter : unit    -> unit
+    static member DoDeleteCharacter : n : int -> unit
+
+    static member DoInsertLine : unit    -> unit
+    static member DoInsertLine : n : int -> unit
+    static member DoDeleteLine : unit    -> unit
+    static member DoDeleteLine : n : int -> unit
+
+    static member DoEraseDisplay : unit          -> unit
+    static member DoEraseDisplay : erase : Erase -> unit
+    static member DoEraseLine    : unit          -> unit
+    static member DoEraseLine    : erase : Erase -> unit
 
     static member DoReset : unit -> unit
-
-
-
-    override Equals      : obj  : obj -> bool
-    override GetHashCode : unit       -> int
-    override ToString    : unit       -> string
