@@ -3,24 +3,34 @@
 
 using System;
 
-using Reallukee.Confole.Sharp;
-
 namespace Reallukee.Confole.Sharp;
 
 internal class Program
 {
     static void Main(string[] args)
     {
-        Formats formats = new Formats();
-
-        formats.AddItalic(true)
-               .AddForegroundColor(new RGBColor(255, 0, 0))
-               .AddBackgroundColor(new RGBColor(0, 0, 255));
+        Formats formats =
+            Formats.Init()
+                   .Italic(true)
+                   .ForegroundColor(new RGBColor(255, 0, 0))
+                   .BackgroundColor(new RGBColor(0, 0, 255));
 
         formats.ApplyAll("Hello, World!", true);
 
         Console.ReadKey(true);
 
-        formats.Reset("");
+        Formats.Reset("");
+
+        // Alias
+
+        /*
+        Fmt fmt =
+            Fmt.Init()
+               .ITC(true)
+               .FGC(new RGBColor(255, 0, 0))
+               .BGC(new RGBColor(0, 0, 255));
+
+        fmt.ApplyAll("Hello, World!", true);
+        */
     }
 }
