@@ -34,7 +34,7 @@ open System.Collections.Generic
 open Reallukee.Confole
 
 [<Class>]
-type Formats private () =
+type Formats internal () =
 
     let mutable formats = List<Format.Format>()
 
@@ -43,6 +43,9 @@ type Formats private () =
     member this.FormatsList
         with internal get () =
             formats
+
+        and internal set value =
+            formats <- value
 
     static member NewLine
         with get () =
@@ -82,30 +85,24 @@ type Formats private () =
     static member RenderStrikeout text         = Format.renderStrikeout text None
     static member RenderStrikeout (text, flag) = Format.renderStrikeout text (Some flag)
 
-
-
-    static member RenderForegroundColor text = Format.renderForegroundColor text None
-
-    static member RenderForegroundColor (text, color) =
-        let color = Color.toFColor color
-
-        Format.renderForegroundColor text (Some color)
-
-    static member RenderBackgroundColor text = Format.renderBackgroundColor text None
-
-    static member RenderBackgroundColor (text, color) =
-        let color = Color.toFColor color
-
-        Format.renderBackgroundColor text (Some color)
-
-
+    static member RenderForegroundColor text          = Format.renderForegroundColor text None
+    static member RenderForegroundColor (text, color) = Format.renderForegroundColor text (Some (Color.toFColor color))
+    static member RenderBackgroundColor text          = Format.renderBackgroundColor text None
+    static member RenderBackgroundColor (text, color) = Format.renderBackgroundColor text (Some (Color.toFColor color))
 
     static member RenderReset text = Format.renderReset text
 
 
 
     // Modalità "funzionale"
-    static member Init () = new Formats()
+    static member Init () = Formats ()
+
+    static member Initp (formats : Formats) =
+        let newFormats = Formats.Init ()
+
+        newFormats.FormatsList.AddRange(formats.FormatsList)
+
+        newFormats
 
     member this.Clear () = formats.Clear(); this
 
@@ -116,8 +113,6 @@ type Formats private () =
         |> ignore
 
         this
-
-
 
     member this.Restore () = formats.Add(Format.Restore); this
 
@@ -141,27 +136,10 @@ type Formats private () =
     member this.Strikeout ()   = formats.Add(Format.Strikeout None       ); this
     member this.Strikeout flag = formats.Add(Format.Strikeout (Some flag)); this
 
-
-
-    member this.ForegroundColor () = formats.Add(Format.ForegroundColor None); this
-
-    member this.ForegroundColor color =
-        let color = Color.toFColor color
-
-        formats.Add(Format.ForegroundColor (Some color))
-
-        this
-
-    member this.BackgroundColor () = formats.Add(Format.BackgroundColor None); this
-
-    member this.BackgroundColor color =
-        let color = Color.toFColor color
-
-        formats.Add(Format.BackgroundColor (Some color))
-
-        this
-
-
+    member this.ForegroundColor ()    = formats.Add(Format.ForegroundColor None                         ); this
+    member this.ForegroundColor color = formats.Add(Format.ForegroundColor (Some (Color.toFColor color))); this
+    member this.BackgroundColor ()    = formats.Add(Format.BackgroundColor None                         ); this
+    member this.BackgroundColor color = formats.Add(Format.BackgroundColor (Some (Color.toFColor color))); this
 
     member this.ApplyAll text =
         formats
@@ -208,22 +186,102 @@ type Formats private () =
     static member DoStrikeout text         = Format.doStrikeout text None
     static member DoStrikeout (text, flag) = Format.doStrikeout text (Some flag)
 
-
-
-    static member DoForegroundColor text = Format.doForegroundColor text None
-
-    static member DoForegroundColor (text, color) =
-        let color = Color.toFColor color
-
-        Format.doForegroundColor text (Some color)
-
-    static member DoBackgroundColor text = Format.doBackgroundColor text None
-
-    static member DoBackgroundColor (text, color) =
-        let color = Color.toFColor color
-
-        Format.doBackgroundColor text (Some color)
-
-
+    static member DoForegroundColor text          = Format.doForegroundColor text None
+    static member DoForegroundColor (text, color) = Format.doForegroundColor text (Some (Color.toFColor color))
+    static member DoBackgroundColor text          = Format.doBackgroundColor text None
+    static member DoBackgroundColor (text, color) = Format.doBackgroundColor text (Some (Color.toFColor color))
 
     static member DoReset text = Format.doReset text
+
+
+
+[<Class>]
+type Fmt internal () =
+
+    inherit Formats ()
+
+    // Alias modalità manuale
+    static member RenderRST text = Formats.RenderRestore text
+
+    static member RenderRFGC text = Formats.RenderRestoreForegroundColor text
+    static member RenderRBGC text = Formats.RenderRestoreBackgroundColor text
+
+    static member RenderBLD text         = Formats.RenderBold      text
+    static member RenderBLD (text, flag) = Formats.RenderBold      (text, flag)
+    static member RenderFNT text         = Formats.RenderFaint     text
+    static member RenderFNT (text, flag) = Formats.RenderFaint     (text, flag)
+    static member RenderITC text         = Formats.RenderItalic    text
+    static member RenderITC (text, flag) = Formats.RenderItalic    (text, flag)
+    static member RenderUND text         = Formats.RenderUnderline text
+    static member RenderUND (text, flag) = Formats.RenderUnderline (text, flag)
+    static member RenderBKG text         = Formats.RenderBlinking  text
+    static member RenderBKG (text, flag) = Formats.RenderBlinking  (text, flag)
+    static member RenderRVS text         = Formats.RenderReverse   text
+    static member RenderRVS (text, flag) = Formats.RenderReverse   (text, flag)
+    static member RenderHDN text         = Formats.RenderHidden    text
+    static member RenderHDN (text, flag) = Formats.RenderHidden    (text, flag)
+    static member RenderSKT text         = Formats.RenderStrikeout text
+    static member RenderSKT (text, flag) = Formats.RenderStrikeout (text, flag)
+
+    static member RenderFGC text          = Formats.RenderForegroundColor text
+    static member RenderFGC (text, color) = Formats.RenderForegroundColor (text, color)
+    static member RenderBGC text          = Formats.RenderBackgroundColor text
+    static member RenderBGC (text, color) = Formats.RenderBackgroundColor (text, color)
+
+    // Alias modalità "funzionale"
+    static member Init () = Fmt ()
+
+    member this.RST () = base.Restore () :?> Fmt
+
+    member this.RFGC () = base.RestoreForegroundColor () :?> Fmt
+    member this.RBGC () = base.RestoreBackgroundColor () :?> Fmt
+
+    member this.BLD ()   = base.Bold      ()   :?> Fmt
+    member this.BLD flag = base.Bold      flag :?> Fmt
+    member this.FNT ()   = base.Faint     ()   :?> Fmt
+    member this.FNT flag = base.Faint     flag :?> Fmt
+    member this.ITC ()   = base.Italic    ()   :?> Fmt
+    member this.ITC flag = base.Italic    flag :?> Fmt
+    member this.UND ()   = base.Underline ()   :?> Fmt
+    member this.UND flag = base.Underline flag :?> Fmt
+    member this.BKG ()   = base.Blinking  ()   :?> Fmt
+    member this.BKG flag = base.Blinking  flag :?> Fmt
+    member this.RVS ()   = base.Reverse   ()   :?> Fmt
+    member this.RVS flag = base.Reverse   flag :?> Fmt
+    member this.HDN ()   = base.Hidden    ()   :?> Fmt
+    member this.HDN flag = base.Hidden    flag :?> Fmt
+    member this.SKT ()   = base.Strikeout ()   :?> Fmt
+    member this.SKT flag = base.Strikeout flag :?> Fmt
+
+    member this.FGC ()    = base.ForegroundColor ()    :?> Fmt
+    member this.FGC color = base.ForegroundColor color :?> Fmt
+    member this.BGC ()    = base.BackgroundColor ()    :?> Fmt
+    member this.BGC color = base.BackgroundColor color :?> Fmt
+
+    // Alias modalità imperativa
+    static member DoRST text = Formats.DoRestore text
+
+    static member DoRFGC text = Formats.DoRestoreForegroundColor text
+    static member DoRBGC text = Formats.DoRestoreBackgroundColor text
+
+    static member DoBLD text         = Formats.DoBold      text
+    static member DoBLD (text, flag) = Formats.DoBold      (text, flag)
+    static member DoFNT text         = Formats.DoFaint     text
+    static member DoFNT (text, flag) = Formats.DoFaint     (text, flag)
+    static member DoITC text         = Formats.DoItalic    text
+    static member DoITC (text, flag) = Formats.DoItalic    (text, flag)
+    static member DoUND text         = Formats.DoUnderline text
+    static member DoUND (text, flag) = Formats.DoUnderline (text, flag)
+    static member DoBKG text         = Formats.DoBlinking  text
+    static member DoBKG (text, flag) = Formats.DoBlinking  (text, flag)
+    static member DoRVS text         = Formats.DoReverse   text
+    static member DoRVS (text, flag) = Formats.DoReverse   (text, flag)
+    static member DoHDN text         = Formats.DoHidden    text
+    static member DoHDN (text, flag) = Formats.DoHidden    (text, flag)
+    static member DoSKT text         = Formats.DoStrikeout text
+    static member DoSKT (text, flag) = Formats.DoStrikeout (text, flag)
+
+    static member DoFGC text          = Formats.DoForegroundColor text
+    static member DoFGC (text, color) = Formats.DoForegroundColor (text, color)
+    static member DoBGC text          = Formats.DoBackgroundColor text
+    static member DoBGC (text, color) = Formats.DoBackgroundColor (text, color)

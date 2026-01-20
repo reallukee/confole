@@ -51,8 +51,8 @@ type Cursors =
         MIAO a tutti!
     *)
 
-    static member NewLine     : bool                with get,         set
-    member        CursorsList : List<Cursor.Cursor> with internal get
+    static member NewLine     : bool                with get,          set
+    member        CursorsList : List<Cursor.Cursor> with internal get, internal set
 
     // Modalità manuale
     member Renders : unit -> string
@@ -81,9 +81,10 @@ type Cursors =
     static member RenderReset : unit -> string
 
     // Modalità "funzionale"
-    static member Init  : unit -> Cursors
-    member        Clear : unit -> Cursors
-    member        View  : unit -> Cursors
+    static member Init  : unit              -> Cursors
+    static member Initp : cursors : Cursors -> Cursors
+    member        Clear : unit              -> Cursors
+    member        View  : unit              -> Cursors
 
     member Reverse : unit -> Cursors
     member Save    : unit -> Cursors
@@ -134,3 +135,76 @@ type Cursors =
     static member DoMove : position : Position -> unit
 
     static member DoReset : unit -> unit
+
+[<Class>]
+type Cur =
+
+    inherit Cursors
+
+    // Alias modalità manuale
+    static member RenderRVS : unit -> string
+    static member RenderSV  : unit -> string
+    static member RenderRST : unit -> string
+
+    static member RenderU  : unit    -> string
+    static member RenderU  : n : int -> string
+    static member RenderD  : unit    -> string
+    static member RenderD  : n : int -> string
+    static member RenderNX : unit    -> string
+    static member RenderNX : n : int -> string
+    static member RenderPV : unit    -> string
+    static member RenderPV : n : int -> string
+
+    static member RenderNXL : unit    -> string
+    static member RenderNXL : n : int -> string
+    static member RenderPVL : unit    -> string
+    static member RenderPVL : n : int -> string
+
+    static member RenderMV : unit                -> string
+    static member RenderMV : position : Position -> string
+
+    // Alias modalità "funzionale"
+    static member Init : unit -> Cur
+
+    member RVS : unit -> Cur
+    member SV  : unit -> Cur
+    member RST : unit -> Cur
+
+    member U  : unit    -> Cur
+    member U  : n : int -> Cur
+    member D  : unit    -> Cur
+    member D  : n : int -> Cur
+    member NX : unit    -> Cur
+    member NX : n : int -> Cur
+    member PV : unit    -> Cur
+    member PV : n : int -> Cur
+
+    member NXL : unit    -> Cur
+    member NXL : n : int -> Cur
+    member PVL : unit    -> Cur
+    member PVL : n : int -> Cur
+
+    member MV : unit                -> Cur
+    member MV : position : Position -> Cur
+
+    // Alias modalità imperativa
+    static member DoRVS : unit -> unit
+    static member DoSV  : unit -> unit
+    static member DoRST : unit -> unit
+
+    static member DoU  : unit    -> unit
+    static member DoU  : n : int -> unit
+    static member DoD  : unit    -> unit
+    static member DoD  : n : int -> unit
+    static member DoNX : unit    -> unit
+    static member DoNX : n : int -> unit
+    static member DoPV : unit    -> unit
+    static member DoPV : n : int -> unit
+
+    static member DoNXL : unit    -> unit
+    static member DoNXL : n : int -> unit
+    static member DoPVL : unit    -> unit
+    static member DoPVL : n : int -> unit
+
+    static member DoMV : unit                -> unit
+    static member DoMV : position : Position -> unit

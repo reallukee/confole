@@ -56,8 +56,8 @@ type Actions =
         MIAO a tutti!
     *)
 
-    static member NewLine     : bool                with get,         set
-    member        ActionsList : List<Action.Action> with internal get
+    static member NewLine     : bool                with get,          set
+    member        ActionsList : List<Action.Action> with internal get, internal set
 
     // Modalità manuale
     member Renders : unit -> string
@@ -80,9 +80,10 @@ type Actions =
     static member RenderReset : unit -> string
 
     // Modalità "funzionale"
-    static member Init  : unit -> Actions
-    member        Clear : unit -> Actions
-    member        View  : unit -> Actions
+    static member Init  : unit              -> Actions
+    static member Initp : actions : Actions -> Actions
+    member        Clear : unit              -> Actions
+    member        View  : unit              -> Actions
 
     member InsertCharacter : unit    -> Actions
     member InsertCharacter : n : int -> Actions
@@ -121,3 +122,58 @@ type Actions =
     static member DoEraseLine    : erase : Erase -> unit
 
     static member DoReset : unit -> unit
+
+[<Class>]
+type Act =
+
+    inherit Actions
+
+    // Alias modalità manuale
+    static member RenderIC : unit    -> string
+    static member RenderIC : n : int -> string
+    static member RenderDC : unit    -> string
+    static member RenderDC : n : int -> string
+
+    static member RenderIL : unit    -> string
+    static member RenderIL : n : int -> string
+    static member RenderDL : unit    -> string
+    static member RenderDL : n : int -> string
+
+    static member RenderED : unit          -> string
+    static member RenderED : erase : Erase -> string
+    static member RenderEL : unit          -> string
+    static member RenderEL : erase : Erase -> string
+
+    // Alias modalità "funzionale"
+    static member Init : unit -> Act
+
+    member IC : unit    -> Act
+    member IC : n : int -> Act
+    member DC : unit    -> Act
+    member DC : n : int -> Act
+
+    member IL : unit    -> Act
+    member IL : n : int -> Act
+    member DL : unit    -> Act
+    member DL : n : int -> Act
+
+    member ED : unit          -> Act
+    member ED : erase : Erase -> Act
+    member EL : unit          -> Act
+    member EL : erase : Erase -> Act
+
+    // Alias modalità imperativa
+    static member DoIC : unit    -> unit
+    static member DoIC : n : int -> unit
+    static member DoDC : unit    -> unit
+    static member DoDC : n : int -> unit
+
+    static member DoIL : unit    -> unit
+    static member DoIL : n : int -> unit
+    static member DoDL : unit    -> unit
+    static member DoDL : n : int -> unit
+
+    static member DoED : unit          -> unit
+    static member DoED : erase : Erase -> unit
+    static member DoEL : unit          -> unit
+    static member DoEL : erase : Erase -> unit
