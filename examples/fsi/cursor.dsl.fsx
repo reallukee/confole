@@ -14,7 +14,7 @@ open System
 
 open Reallukee.Confole
 
-Cursor.builder {
+Cursor.Builder () {
     Cursor.move (Some (Position.RowCol (2, 4)))
 }
 |> Cursor.applyAll

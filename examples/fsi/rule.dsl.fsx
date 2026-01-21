@@ -14,7 +14,7 @@ open System
 
 open Reallukee.Confole
 
-Rule.builder {
+Rule.Builder () {
     Rule.title                    "Confole"
     Rule.showCursorBlinking
     Rule.showCursor
