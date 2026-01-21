@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Fmt
 module Format =
 
     (*
@@ -76,20 +77,6 @@ module Format =
         | ForegroundColor        of color : Color option // FGC
         | BackgroundColor        of color : Color option // BGC
 
-    val RST  : Format
-    val RFGC : Format
-    val RBGC : Format
-    val BLD  : bool option  -> Format
-    val FNT  : bool option  -> Format
-    val ITC  : bool option  -> Format
-    val UND  : bool option  -> Format
-    val BKG  : bool option  -> Format
-    val RVS  : bool option  -> Format
-    val HDN  : bool option  -> Format
-    val SKT  : bool option  -> Format
-    val FGC  : Color option -> Format
-    val BGC  : Color option -> Format
-
     type Formats = Format list
 
     val defaultFormats : Formats
@@ -119,31 +106,17 @@ module Format =
 
     val renderReset : text : string -> string
 
-    // Alias modalità manuale
-    val renderRST : (string -> string)
-
-    val renderRFGC : (string -> string)
-    val renderRBGC : (string -> string)
-
-    val renderBLD : (string -> bool option -> string)
-    val renderFNT : (string -> bool option -> string)
-    val renderITC : (string -> bool option -> string)
-    val renderUND : (string -> bool option -> string)
-    val renderBKG : (string -> bool option -> string)
-    val renderRVS : (string -> bool option -> string)
-    val renderHDN : (string -> bool option -> string)
-    val renderSKT : (string -> bool option -> string)
-
-    val renderFGC : (string -> Color option -> string)
-    val renderBGC : (string -> Color option -> string)
-
 
 
     // Modalità funzionale
-    val init  : unit              -> Formats
-    val initp : formats : Formats -> Formats
+    val init     : unit              -> Formats
+    val initWith : formats : Formats -> Formats
+
+    val trunk : formats : Formats -> Formats
     val clear : formats : Formats -> Formats
-    val view  : formats : Formats -> Formats
+
+    val view    : formats : Formats -> Formats
+    val preview : formats : Formats -> Formats
 
     val restore : formats : Formats -> Formats
 
@@ -172,28 +145,11 @@ module Format =
     val configure        : text : string -> config : (Formats -> Formats) -> unit
     val configureNewLine : text : string -> config : (Formats -> Formats) -> unit
 
-    // Alias modalità funzionale
-    val rst : (Formats -> Formats)
-
-    val rfgc : (Formats -> Formats)
-    val rbgc : (Formats -> Formats)
-
-    val bld : (bool option -> Formats -> Formats)
-    val fnt : (bool option -> Formats -> Formats)
-    val itc : (bool option -> Formats -> Formats)
-    val und : (bool option -> Formats -> Formats)
-    val bkg : (bool option -> Formats -> Formats)
-    val rvs : (bool option -> Formats -> Formats)
-    val hdn : (bool option -> Formats -> Formats)
-    val skt : (bool option -> Formats -> Formats)
-
-    val fgc : (Color option -> Formats -> Formats)
-    val bgc : (Color option -> Formats -> Formats)
-
 
 
     // Modalità DSL
     type Builder =
+
         new : unit -> Builder
 
         member Yield :
@@ -211,9 +167,6 @@ module Format =
         member Run :
             formatsFunction : (Formats -> Formats) ->
             Formats
-
-    // Alias modalità DSL
-    val builder : Builder
 
 
 
@@ -236,21 +189,3 @@ module Format =
     val doBackgroundColor : text : string -> color : Color option -> unit
 
     val doReset : text : string -> unit
-
-    // Alias modalità imperativa
-    val doRST : (string -> unit)
-
-    val doRFGC : (string -> unit)
-    val doRBGC : (string -> unit)
-
-    val doBLD : (string -> bool option -> unit)
-    val doFNT : (string -> bool option -> unit)
-    val doITC : (string -> bool option -> unit)
-    val doUND : (string -> bool option -> unit)
-    val doBKG : (string -> bool option -> unit)
-    val doRVS : (string -> bool option -> unit)
-    val doHDN : (string -> bool option -> unit)
-    val doSKT : (string -> bool option -> unit)
-
-    val doFGC : (string -> Color option -> unit)
-    val doBGC : (string -> Color option -> unit)

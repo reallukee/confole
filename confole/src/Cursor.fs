@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Cur
 module Cursor =
 
     type Cursor =
@@ -51,17 +52,6 @@ module Cursor =
         | PreviousLine of n        : int option      // PVL
         | Move         of position : Position option // MV
 
-    let RVS          = Reverse
-    let SV           = Save
-    let RST          = Restore
-    let U   n        = Up           n
-    let D   n        = Down         n
-    let NX  n        = Next         n
-    let PV  n        = Previous     n
-    let NXL n        = NextLine     n
-    let PVL n        = PreviousLine n
-    let MV  position = Move         position
-
     type Cursors = Cursor list
 
     let defaultCursors = [
@@ -70,6 +60,7 @@ module Cursor =
 
 
 
+    // Modalità manuale
     let render cursor =
         match cursor with
         | Reverse -> sprintf "%sM" ESC
@@ -123,36 +114,38 @@ module Cursor =
 
     let renderReset () = renders defaultCursors
 
-    let renderRVS = renderReverse
-    let renderSV  = renderSave
-    let renderRST = renderRestore
-
-    let renderU  = renderUp
-    let renderD  = renderDown
-    let renderNX = renderNext
-    let renderPV = renderPrevious
-
-    let renderNXL = renderNextLine
-    let renderPVL = renderPreviousLine
-
-    let renderMV = renderMove
 
 
-
+    // Modalità funzionale
     let init () : Cursors = []
 
-    let initp (cursors : Cursors) = cursors
+    let initWith (cursors : Cursors) = cursors
+
+    let trunk (cursors : Cursors) =
+        cursors
+        |> List.rev
+        |> List.distinctBy (fun item ->
+            let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Cursor>)
+
+            caseInfo.Tag
+        )
+        |> List.rev
 
     let clear (cursors : Cursors) : Cursors = []
 
     let view (cursors : Cursors) =
         cursors
         |> List.rev
-        |> List.iter (fun cursor ->
-            printfn "%A" cursor
+        |> List.iteri (fun index cursor ->
+            printfn "%010d : %A" index cursor
         )
 
         cursors
+
+    let preview cursors =
+        cursors
+        |> trunk
+        |> view
 
     let reverse cursors = Reverse :: cursors
     let save    cursors = Save    :: cursors
@@ -202,23 +195,11 @@ module Cursor =
 
         printfn ""
 
-    let rvs = reverse
-    let sv  = save
-    let rst = restore
-
-    let u  = up
-    let d  = down
-    let nx = next
-    let pv = previous
-
-    let nxl = nextLine
-    let pvl = previousLine
-
-    let mv = move
 
 
-
+    // Modalità DSL
     type Builder () =
+
         member _.Yield cursorFunction : Cursors -> Cursors =
             cursorFunction
 
@@ -231,10 +212,9 @@ module Cursor =
         member _.Run cursorsFunction : Cursors =
             cursorsFunction (init ())
 
-    let builder = Builder ()
 
 
-
+    // Modalità imperativa
     let doReverse () = apply Reverse
     let doSave    () = apply Save
     let doRestore () = apply Restore
@@ -250,17 +230,3 @@ module Cursor =
     let doMove position = apply (Move position)
 
     let doReset () = reset ()
-
-    let doRVS = doReverse
-    let doSV  = doSave
-    let doRST = doRestore
-
-    let doU  = doUp
-    let doD  = doDown
-    let doNX = doNext
-    let doPV = doPrevious
-
-    let doNXL = doNextLine
-    let doPVL = doPreviousLine
-
-    let doMV = doMove

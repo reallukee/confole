@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Fmt
 module Format =
 
     type Format =
@@ -54,20 +55,6 @@ module Format =
         | ForegroundColor        of color : Color option // FGC
         | BackgroundColor        of color : Color option // BGC
 
-    let RST        = Restore
-    let RFGC       = RestoreForegroundColor
-    let RBGC       = RestoreBackgroundColor
-    let BLD  flag  = Bold                   flag
-    let FNT  flag  = Faint                  flag
-    let ITC  flag  = Italic                 flag
-    let UND  flag  = Underline              flag
-    let BKG  flag  = Blinking               flag
-    let RVS  flag  = Reverse                flag
-    let HDN  flag  = Hidden                 flag
-    let SKT  flag  = Strikeout              flag
-    let FGC  color = ForegroundColor        color
-    let BGC  color = BackgroundColor        color
-
     type Formats = Format list
 
     let defaultFormats = [
@@ -76,6 +63,7 @@ module Format =
 
 
 
+    // Modalità manuale
     let render text format =
         match format with
         | Restore -> sprintf "%s0m%s" CSI text
@@ -164,39 +152,38 @@ module Format =
 
     let renderReset text = renders text defaultFormats
 
-    let renderRST = renderRestore
-
-    let renderRFGC = renderRestoreForegroundColor
-    let renderRBGC = renderRestoreBackgroundColor
-
-    let renderBLD = renderBold
-    let renderFNT = renderFaint
-    let renderITC = renderItalic
-    let renderUND = renderUnderline
-    let renderBKG = renderBlinking
-    let renderRVS = renderReverse
-    let renderHDN = renderHidden
-    let renderSKT = renderStrikeout
-
-    let renderFGC = renderForegroundColor
-    let renderBGC = renderBackgroundColor
 
 
-
+    // Modalità funzionale
     let init () : Formats = []
 
-    let initp (formats : Formats) = formats
+    let initWith (formats : Formats) = formats
+
+    let trunk (formats : Formats) =
+        formats
+        |> List.rev
+        |> List.distinctBy (fun item ->
+            let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Format>)
+
+            caseInfo.Tag
+        )
+        |> List.rev
 
     let clear (formats : Formats) : Formats = []
 
     let view (formats : Formats) =
         formats
         |> List.rev
-        |> List.iter (fun format ->
-            printfn "%A" format
+        |> List.iteri (fun index format ->
+            printfn "%010d : %A" index format
         )
 
         formats
+
+    let preview formats =
+        formats
+        |> trunk
+        |> view
 
     let restore formats = Restore :: formats
 
@@ -251,26 +238,11 @@ module Format =
 
         printfn ""
 
-    let rst = restore
-
-    let rfgc = restoreForegroundColor
-    let rbgc = restoreBackgroundColor
-
-    let bld = bold
-    let fnt = faint
-    let itc = italic
-    let und = underline
-    let bkg = blinking
-    let rvs = reverse
-    let hdn = hidden
-    let skt = strikeout
-
-    let fgc = foregroundColor
-    let bgc = backgroundColor
 
 
-
+    // Modalità DSL
     type Builder () =
+
         member _.Yield formatFunction : Formats -> Formats =
             formatFunction
 
@@ -283,10 +255,9 @@ module Format =
         member _.Run formatsFunction : Formats =
             formatsFunction (init ())
 
-    let builder = Builder ()
 
 
-
+    // Modalità imperativa
     let doRestore text = apply text Restore
 
     let doRestoreForegroundColor text = apply text RestoreForegroundColor
@@ -305,20 +276,3 @@ module Format =
     let doBackgroundColor text color = apply text (BackgroundColor color)
 
     let doReset text = reset text
-
-    let doRST = doRestore
-
-    let doRFGC = doRestoreForegroundColor
-    let doRBGC = doRestoreBackgroundColor
-
-    let doBLD = doBold
-    let doFNT = doFaint
-    let doITC = doItalic
-    let doUND = doUnderline
-    let doBKG = doBlinking
-    let doRVS = doReverse
-    let doHDN = doHidden
-    let doSKT = doStrikeout
-
-    let doFGC = doForegroundColor
-    let doBGC = doBackgroundColor

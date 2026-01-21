@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Rul
 module Rule =
 
     type Shape =
@@ -63,20 +64,6 @@ module Rule =
         | DefaultBackgroundColor   of color : Color option // DBGC
         | DefaultCursorColor       of color : Color option // DCC
 
-    let TTL  title = Title                    title
-    let SCB        = ShowCursorBlinking
-    let HCB        = HideCursorBlinking
-    let SC         = ShowCursor
-    let HC         = HideCursor
-    let EDM        = EnableDesignateMode
-    let DDM        = DisableDesignateMode
-    let EAB        = EnableAlternativeBuffer
-    let DAB        = DisableAlternativeBuffer
-    let CS   shape = CursorShape              shape
-    let DFGC color = DefaultForegroundColor   color
-    let DBGC color = DefaultBackgroundColor   color
-    let DCC  color = DefaultCursorColor       color
-
     type Rules = Rule list
 
     let defaultRules = [
@@ -95,6 +82,7 @@ module Rule =
 
 
 
+    // Modalità manuale
     let render rule =
         match rule with
         | Title title -> sprintf "%s0;%s%s" OSC title Bell
@@ -212,42 +200,38 @@ module Rule =
 
     let renderReset () = renders defaultRules
 
-    let renderTTL = renderTitle
-
-    let renderSCB = renderShowCursorBlinking
-    let renderHCB = renderHideCursorBlinking
-
-    let renderSC = renderShowCursor
-    let renderHC = renderHideCursor
-
-    let renderEDM = renderEnableDesignateMode
-    let renderDDM = renderDisableDesignateMode
-
-    let renderEAB = renderEnableAlternativeBuffer
-    let renderDAB = renderDisableAlternativeBuffer
-
-    let renderCS = renderCursorShape
-
-    let renderDFGC = renderDefaultForegroundColor
-    let renderDBGC = renderDefaultBackgroundColor
-    let renderDCC  = renderDefaultCursorColor
 
 
-
+    // Modalità funzionale
     let init () : Rules = []
 
-    let initp (rules : Rules) = rules
+    let initWith (rules : Rules) = rules
+
+    let trunk (rules : Rules) =
+        rules
+        |> List.rev
+        |> List.distinctBy (fun item ->
+            let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Rule>)
+
+            caseInfo.Tag
+        )
+        |> List.rev
 
     let clear (rules : Rules) : Rules = []
 
     let view (rules : Rules) =
         rules
         |> List.rev
-        |> List.iter (fun rule ->
-            printfn "%A" rule
+        |> List.iteri (fun index rule ->
+            printfn "%010d : %A" index rule
         )
 
         rules
+
+    let preview rules =
+        rules
+        |> trunk
+        |> view
 
     let title title rules = Title title :: rules
 
@@ -303,29 +287,11 @@ module Rule =
 
         printfn ""
 
-    let ttl = title
-
-    let scb = showCursorBlinking
-    let hcb = hideCursorBlinking
-
-    let sc = showCursor
-    let hc = hideCursor
-
-    let edm = enableDesignateMode
-    let ddm = disableDesignateMode
-
-    let eab = enableAlternativeBuffer
-    let dab = disableAlternativeBuffer
-
-    let cs = cursorShape
-
-    let dfgc = defaultForegroundColor
-    let dbgc = defaultBackgroundColor
-    let dcc  = defaultCursorColor
 
 
-
+    // Modalità DSL
     type Builder () =
+
         member _.Yield ruleFunction : Rules -> Rules =
             ruleFunction
 
@@ -338,10 +304,9 @@ module Rule =
         member _.Run rulesFunction : Rules =
             rulesFunction (init ())
 
-    let builder = Builder ()
 
 
-
+    // Modalità imperativa
     let doTitle title = apply (Title title)
 
     let doShowCursorBlinking () = apply ShowCursorBlinking
@@ -363,23 +328,3 @@ module Rule =
     let doDefaultCursorColor     color = apply (DefaultCursorColor     color)
 
     let doReset () = reset ()
-
-    let doTTL = doTitle
-
-    let doSCB = doShowCursorBlinking
-    let doHCB = doHideCursorBlinking
-
-    let doSC = doShowCursor
-    let doHC = doHideCursor
-
-    let doEDM = doEnableDesignateMode
-    let doDDM = doDisableDesignateMode
-
-    let doEAB = doEnableAlternativeBuffer
-    let doDAB = doDisableAlternativeBuffer
-
-    let doCS = doCursorShape
-
-    let doDFGC = doDefaultForegroundColor
-    let doDBGC = doDefaultBackgroundColor
-    let doDCC  = doDefaultCursorColor

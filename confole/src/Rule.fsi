@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Rul
 module Rule =
 
     type Shape =
@@ -85,20 +86,6 @@ module Rule =
         | DefaultBackgroundColor   of color : Color option // DBGC
         | DefaultCursorColor       of color : Color option // DCC
 
-    val TTL  : string       -> Rule
-    val SCB  : Rule
-    val HCB  : Rule
-    val SC   : Rule
-    val HC   : Rule
-    val EDM  : Rule
-    val DDM  : Rule
-    val EAB  : Rule
-    val DAB  : Rule
-    val CS   : Shape option -> Rule
-    val DFGC : Color option -> Rule
-    val DBGC : Color option -> Rule
-    val DCC  : Color option -> Rule
-
     type Rules = Rule list
 
     val defaultRules : Rules
@@ -131,34 +118,17 @@ module Rule =
 
     val renderReset : unit -> string
 
-    // Alias modalità manuale
-    val renderTTL : (string -> string)
-
-    val renderSCB : (unit -> string)
-    val renderHCB : (unit -> string)
-
-    val renderSC : (unit -> string)
-    val renderHC : (unit -> string)
-
-    val renderEDM : (unit -> string)
-    val renderDDM : (unit -> string)
-
-    val renderEAB : (unit -> string)
-    val renderDAB : (unit -> string)
-
-    val renderCS : (Shape option -> string)
-
-    val renderDFGC : (Color option -> string)
-    val renderDBGC : (Color option -> string)
-    val renderDCC  : (Color option -> string)
-
 
 
     // Modalità funzionale
-    val init  : unit          -> Rules
-    val initp : rules : Rules -> Rules
+    val init     : unit          -> Rules
+    val initWith : rules : Rules -> Rules
+
+    val trunk : rules : Rules -> Rules
     val clear : rules : Rules -> Rules
-    val view  : rules : Rules -> Rules
+
+    val view    : rules : Rules -> Rules
+    val preview : rules : Rules -> Rules
 
     val title : title : string -> rules : Rules -> Rules
 
@@ -190,31 +160,11 @@ module Rule =
     val configure        : config : (Rules -> Rules) -> unit
     val configureNewLine : config : (Rules -> Rules) -> unit
 
-    // Alias modalità funzionale
-    val ttl : (string -> Rules -> Rules)
-
-    val scb : (Rules -> Rules)
-    val hcb : (Rules -> Rules)
-
-    val sc : (Rules -> Rules)
-    val hc : (Rules -> Rules)
-
-    val edm : (Rules -> Rules)
-    val ddm : (Rules -> Rules)
-
-    val eab : (Rules -> Rules)
-    val dab : (Rules -> Rules)
-
-    val cs : (Shape option -> Rules -> Rules)
-
-    val dfgc : (Color option -> Rules -> Rules)
-    val dbgc : (Color option -> Rules -> Rules)
-    val dcc  : (Color option -> Rules -> Rules)
-
 
 
     // Modalità DSL
     type Builder =
+
         new : unit -> Builder
 
         member Yield :
@@ -232,9 +182,6 @@ module Rule =
         member Run :
             rulesFunction : (Rules -> Rules) ->
             Rules
-
-    // Alias modalità DSL
-    val builder : Builder
 
 
 
@@ -260,24 +207,3 @@ module Rule =
     val doDefaultCursorColor     : color : Color option -> unit
 
     val doReset : unit -> unit
-
-    // Alias modalità imperativa
-    val doTTL : (string -> unit)
-
-    val doSCB : (unit -> unit)
-    val doHCB : (unit -> unit)
-
-    val doSC : (unit -> unit)
-    val doHC : (unit -> unit)
-
-    val doEDM : (unit -> unit)
-    val doDDM : (unit -> unit)
-
-    val doEAB : (unit -> unit)
-    val doDAB : (unit -> unit)
-
-    val doCS : (Shape option -> unit)
-
-    val doDFGC : (Color option -> unit)
-    val doDBGC : (Color option -> unit)
-    val doDCC  : (Color option -> unit)

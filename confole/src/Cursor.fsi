@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Cur
 module Cursor =
 
     (*
@@ -73,17 +74,6 @@ module Cursor =
         | PreviousLine of n        : int option      // PVL
         | Move         of position : Position option // MV
 
-    val RVS : Cursor
-    val SV  : Cursor
-    val RST : Cursor
-    val U   : int option      -> Cursor
-    val D   : int option      -> Cursor
-    val NX  : int option      -> Cursor
-    val PV  : int option      -> Cursor
-    val NXL : int option      -> Cursor
-    val PVL : int option      -> Cursor
-    val MV  : Position option -> Cursor
-
     type Cursors = Cursor list
 
     val defaultCursors : Cursors
@@ -110,28 +100,17 @@ module Cursor =
 
     val renderReset : unit -> string
 
-    // Alias modalità manuale
-    val renderRVS : (unit -> string)
-    val renderSV  : (unit -> string)
-    val renderRST : (unit -> string)
-
-    val renderU  : (int option -> string)
-    val renderD  : (int option -> string)
-    val renderNX : (int option -> string)
-    val renderPV : (int option -> string)
-
-    val renderNXL : (int option -> string)
-    val renderPVL : (int option -> string)
-
-    val renderMV : (Position option -> string)
-
 
 
     // Modalità funzionale
-    val init  : unit              -> Cursors
-    val initp : cursors : Cursors -> Cursors
+    val init     : unit              -> Cursors
+    val initWith : cursors : Cursors -> Cursors
+
+    val trunk : cursors : Cursors -> Cursors
     val clear : cursors : Cursors -> Cursors
-    val view  : cursors : Cursors -> Cursors
+
+    val view    : cursors : Cursors -> Cursors
+    val preview : cursors : Cursors -> Cursors
 
     val reverse : cursors : Cursors -> Cursors
     val save    : cursors : Cursors -> Cursors
@@ -157,25 +136,11 @@ module Cursor =
     val configure        : config : (Cursors -> Cursors) -> unit
     val configureNewLine : config : (Cursors -> Cursors) -> unit
 
-    // Alias modalità funzionale
-    val rvs : (Cursors -> Cursors)
-    val sv  : (Cursors -> Cursors)
-    val rst : (Cursors -> Cursors)
-
-    val u  : (int option -> Cursors -> Cursors)
-    val d  : (int option -> Cursors -> Cursors)
-    val nx : (int option -> Cursors -> Cursors)
-    val pv : (int option -> Cursors -> Cursors)
-
-    val nxl : (int option -> Cursors -> Cursors)
-    val pvl : (int option -> Cursors -> Cursors)
-
-    val mv : (Position option -> Cursors -> Cursors)
-
 
 
     // Modalità DSL
     type Builder =
+
         new : unit -> Builder
 
         member Yield :
@@ -193,9 +158,6 @@ module Cursor =
         member Run :
             cursorsFunction : (Cursors -> Cursors) ->
             Cursors
-
-    // Alias modalità DSL
-    val builder : Builder
 
 
 
@@ -215,18 +177,3 @@ module Cursor =
     val doMove : position : Position option -> unit
 
     val doReset : unit -> unit
-
-    // Alias modalità imperativa
-    val doRVS : (unit -> unit)
-    val doSV  : (unit -> unit)
-    val doRST : (unit -> unit)
-
-    val doU  : (int option -> unit)
-    val doD  : (int option -> unit)
-    val doNX : (int option -> unit)
-    val doPV : (int option -> unit)
-
-    val doNXL : (int option -> unit)
-    val doPVL : (int option -> unit)
-
-    val doMV : (Position option -> unit)

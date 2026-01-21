@@ -59,6 +59,14 @@
     <Compile Include="src\Action.fs" />
     <Compile Include="src\Format.fsi" />
     <Compile Include="src\Format.fs" />
+    <Compile Include="src\aliases\Rul.fsi" />
+    <Compile Include="src\aliases\Rul.fs" />
+    <Compile Include="src\aliases\Cur.fsi" />
+    <Compile Include="src\aliases\Cur.fs" />
+    <Compile Include="src\aliases\Act.fsi" />
+    <Compile Include="src\aliases\Act.fs" />
+    <Compile Include="src\aliases\Fmt.fsi" />
+    <Compile Include="src\aliases\Fmt.fs" />
   </ItemGroup>
 
   <ItemGroup>

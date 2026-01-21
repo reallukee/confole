@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Act
 module Action =
 
     type Erase =
@@ -52,19 +53,13 @@ module Action =
         | EraseDisplay    of mode : Erase option // ED
         | EraseLine       of mode : Erase option // EL
 
-    let IC n     = InsertCharacter n
-    let DC n     = DeleteCharacter n
-    let IL n     = InsertLine      n
-    let DL n     = DeleteLine      n
-    let ED erase = EraseDisplay    erase
-    let EL erase = EraseLine       erase
-
     type Actions = Action list
 
     let defaultActions : Actions = []
 
 
 
+    // Modalità manuale
     let render action =
         match action with
         | InsertCharacter n -> sprintf "%s%d@" CSI (Option.defaultValue 1 n)
@@ -113,31 +108,38 @@ module Action =
 
     let renderReset () = renders defaultActions
 
-    let renderIC = renderInsertCharacter
-    let renderDC = renderDeleteCharacter
-
-    let renderIL  = renderInsertLine
-    let renderDL  = renderDeleteLine
-
-    let renderED  = renderEraseDisplay
-    let renderEL  = renderEraseLine
 
 
-
+    // Modalità funzionale
     let init () : Actions = []
 
-    let initp (actions : Actions) = actions
+    let initWith (actions : Actions) = actions
+
+    let trunk (actions : Actions) =
+        actions
+        |> List.rev
+        |> List.distinctBy (fun item ->
+            let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Action>)
+
+            caseInfo.Tag
+        )
+        |> List.rev
 
     let clear (actions : Actions) : Actions = []
 
     let view (actions : Actions) =
         actions
         |> List.rev
-        |> List.iter (fun action ->
-            printfn "%A" action
+        |> List.iteri (fun index action ->
+            printfn "%010d : %A" index action
         )
 
         actions
+
+    let preview actions =
+        actions
+        |> trunk
+        |> view
 
     let insertCharacter n actions = InsertCharacter n :: actions
     let deleteCharacter n actions = DeleteCharacter n :: actions
@@ -182,18 +184,11 @@ module Action =
 
         printfn ""
 
-    let ic = insertCharacter
-    let dc = deleteCharacter
-
-    let il = insertLine
-    let dl = deleteLine
-
-    let ed = eraseDisplay
-    let el = eraseLine
 
 
-
+    // Modalità DSL
     type Builder () =
+
         member _.Yield actionFunction : Actions -> Actions =
             actionFunction
 
@@ -206,10 +201,9 @@ module Action =
         member _.Run actionsFunction : Actions =
             actionsFunction (init ())
 
-    let builder = Builder ()
 
 
-
+    // Modalità imperativa
     let doInsertCharacter n = apply (InsertCharacter n)
     let doDeleteCharacter n = apply (DeleteCharacter n)
 
@@ -220,12 +214,3 @@ module Action =
     let doEraseLine    erase = apply (EraseLine    erase)
 
     let doReset () = reset ()
-
-    let doIC = doInsertCharacter
-    let doDC = doDeleteCharacter
-
-    let doIL = doInsertLine
-    let doDL = doDeleteLine
-
-    let doED = doEraseDisplay
-    let doEL = doEraseLine

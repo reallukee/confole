@@ -31,12 +31,13 @@
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
 open ColorConversion
 open Position
 open PositionConversion
 
-// Act
 module Action =
 
     type Erase =
@@ -74,13 +75,6 @@ module Action =
         | EraseDisplay    of mode : Erase option // ED
         | EraseLine       of mode : Erase option // EL
 
-    val IC : int option   -> Action
-    val DC : int option   -> Action
-    val IL : int option   -> Action
-    val DL : int option   -> Action
-    val ED : Erase option -> Action
-    val EL : Erase option -> Action
-
     type Actions = Action list
 
     val defaultActions : Actions
@@ -102,23 +96,17 @@ module Action =
 
     val renderReset : unit -> string
 
-    // Alias modalità manuale
-    val renderIC : (int option -> string)
-    val renderDC : (int option -> string)
-
-    val renderIL : (int option -> string)
-    val renderDL : (int option -> string)
-
-    val renderED : (Erase option -> string)
-    val renderEL : (Erase option -> string)
-
 
 
     // Modalità funzionale
-    val init  : unit              -> Actions
-    val initp : actions : Actions -> Actions
+    val init     : unit              -> Actions
+    val initWith : actions : Actions -> Actions
+
+    val trunk : actions : Actions -> Actions
     val clear : actions : Actions -> Actions
-    val view  : actions : Actions -> Actions
+
+    val view    : actions : Actions -> Actions
+    val preview : actions : Actions -> Actions
 
     val insertCharacter : n : int option -> actions : Actions -> Actions
     val deleteCharacter : n : int option -> actions : Actions -> Actions
@@ -139,20 +127,11 @@ module Action =
     val configure        : config : (Actions -> Actions) -> unit
     val configureNewLine : config : (Actions -> Actions) -> unit
 
-    // Alias modalità funzionale
-    val ic : (int option -> Actions -> Actions)
-    val dc : (int option -> Actions -> Actions)
-
-    val il : (int option -> Actions -> Actions)
-    val dl : (int option -> Actions -> Actions)
-
-    val ed : (Erase option -> Actions -> Actions)
-    val el : (Erase option -> Actions -> Actions)
-
 
 
     // Modalità DSL
     type Builder =
+
         new : unit -> Builder
 
         member Yield :
@@ -171,9 +150,6 @@ module Action =
             actionsFunction : (Actions -> Actions) ->
             Actions
 
-    // Alias modalità DSL
-    val builder : Builder
-
 
 
     // Modalità imperativa
@@ -187,13 +163,3 @@ module Action =
     val doEraseLine    : erase : Erase option -> unit
 
     val doReset : unit -> unit
-
-    // Alias modalità imperativa
-    val doIC : (int option -> unit)
-    val doDC : (int option -> unit)
-
-    val doIL : (int option -> unit)
-    val doDL : (int option -> unit)
-
-    val doED : (Erase option -> unit)
-    val doEL : (Erase option -> unit)
