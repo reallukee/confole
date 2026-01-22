@@ -14,17 +14,17 @@ open System
 
 open Reallukee.Confole
 
-let rules = [
-    Rule.Title                    "Confole"
-    Rule.ShowCursorBlinking
-    Rule.ShowCursor
-    Rule.DisableDesignateMode
-    Rule.DisableAlternativeBuffer
-    Rule.CursorShape              (Some Rule.Shape.User)
-    Rule.DefaultForegroundColor   (Some (Color.RGB (255, 255, 255)))
-    Rule.DefaultBackgroundColor   (Some (Color.RGB (0, 0, 0)))
-    Rule.DefaultCursorColor       (Some (Color.RGB (255, 255, 255)))
-]
+let rules =
+    Rule.init ()
+    |> Rule.title                    "Confole"
+    |> Rule.showCursorBlinking
+    |> Rule.showCursor
+    |> Rule.disableDesignateMode
+    |> Rule.disableAlternativeBuffer
+    |> Rule.cursorShape              (Some Rule.Shape.User)
+    |> Rule.defaultForegroundColor   (Some (Color.RGB (255, 255, 255)))
+    |> Rule.defaultBackgroundColor   (Some (Color.RGB (0, 0, 0)))
+    |> Rule.defaultCursorColor       (Some (Color.RGB (255, 255, 255)))
 
 printf "%s" (Rule.renders rules)
 

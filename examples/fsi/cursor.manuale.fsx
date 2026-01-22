@@ -14,9 +14,9 @@ open System
 
 open Reallukee.Confole
 
-let cursors = [
-    Cursor.Move (Some (Position.RowCol (2, 4)))
-]
+let cursors =
+    Cursor.init ()
+    |> Cursor.move (Some (Position.RowCol (2, 4)))
 
 printf "%s" (Cursor.renders cursors)
 

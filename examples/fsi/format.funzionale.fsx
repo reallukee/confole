@@ -14,14 +14,14 @@ open System
 
 open Reallukee.Confole
 
-// VARIANTE 1 -- Pipeline
+// Variante 1 -- Pipeline
 Format.init ()
 |> Format.italic          (Some true)
 |> Format.foregroundColor (Some (Color.RGB (255, 0, 0)))
 |> Format.backgroundColor (Some (Color.RGB (0, 0, 255)))
 |> Format.applyAllNewLine "Hello, World!"
 
-// VARIANTE 2 -- Pipeline ritardata
+// Variante 2 -- Pipeline ritardata
 let formats =
     Format.init ()
     |> Format.italic          (Some true)
@@ -30,7 +30,7 @@ let formats =
 
 Format.applyAllNewLine "Hello, World!" formats
 
-// VARIANTE 3 -- Pipeline + DSL
+// Variante 3 -- Pipeline + DSL
 Format.configureNewLine "Hello, World!" (fun formats ->
     formats
     |> Format.italic          (Some true)

@@ -14,11 +14,11 @@ open System
 
 open Reallukee.Confole
 
-let formats = [
-    Format.Italic          (Some true)
-    Format.ForegroundColor (Some (Color.RGB (255, 0, 0)))
-    Format.BackgroundColor (Some (Color.RGB (0, 0, 255)))
-]
+let formats =
+    Format.init ()
+    |> Format.italic          (Some true)
+    |> Format.foregroundColor (Some (Color.RGB (255, 0, 0)))
+    |> Format.backgroundColor (Some (Color.RGB (0, 0, 255)))
 
 printf "%s" (Format.renders "" formats)
 

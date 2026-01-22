@@ -21,13 +21,13 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
     |> ignore
 
-// VARIANTE 1 -- Pipeline
+// Variante 1 -- Pipeline
 Action.init ()
 |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
 |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 |> Action.applyAll
 
-// VARIANTE 2 -- Pipeline ritardata
+// Variante 2 -- Pipeline ritardata
 let actions =
     Action.init ()
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
@@ -35,7 +35,7 @@ let actions =
 
 Action.applyAll actions
 
-// VARIANTE 3 -- Pipeline + DSL
+// Variante 3 -- Pipeline + DSL
 Action.configure (fun actions ->
     actions
     |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)

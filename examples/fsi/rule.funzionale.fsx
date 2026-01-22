@@ -14,7 +14,7 @@ open System
 
 open Reallukee.Confole
 
-// VARIANTE 1 -- Pipeline
+// Variante 1 -- Pipeline
 Rule.init ()
 |> Rule.title                    "Confole"
 |> Rule.showCursorBlinking
@@ -27,7 +27,7 @@ Rule.init ()
 |> Rule.defaultCursorColor       (Some (Color.RGB (255, 255, 255)))
 |> Rule.applyAll
 
-// VARIANTE 2 -- Pipeline ritardata
+// Variante 2 -- Pipeline ritardata
 let rules =
     Rule.init ()
     |> Rule.title                    "Confole"
@@ -42,7 +42,7 @@ let rules =
 
 Rule.applyAll rules
 
-// VARIANTE 3 -- Pipeline + DSL
+// Variante 3 -- Pipeline + DSL
 Rule.configure (fun rules ->
     rules
     |> Rule.title                    "Confole"

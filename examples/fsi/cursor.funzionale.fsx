@@ -14,19 +14,19 @@ open System
 
 open Reallukee.Confole
 
-// VARIANTE 1 -- Pipeline
+// Variante 1 -- Pipeline
 Cursor.init ()
 |> Cursor.move (Some (Position.RowCol (2, 4)))
 |> Cursor.applyAll
 
-// VARIANTE 2 -- Pipeline ritardata
+// Variante 2 -- Pipeline ritardata
 let cursors =
     Cursor.init ()
     |> Cursor.move (Some (Position.RowCol (2, 4)))
 
 Cursor.applyAll cursors
 
-// VARIANTE 3 -- Pipeline + DSL
+// Variante 3 -- Pipeline + DSL
 Cursor.configure (fun cursors ->
     cursors
     |> Cursor.move (Some (Position.RowCol (2, 4)))

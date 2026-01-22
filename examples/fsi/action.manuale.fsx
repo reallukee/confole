@@ -21,10 +21,10 @@ if Environment.GetEnvironmentVariable("CI") <> "true" then
     do Console.ReadKey(true)
     |> ignore
 
-let actions = [
-    Action.EraseDisplay (Some Action.Erase.FromBeginToEnd)
-    Action.EraseLine    (Some Action.Erase.FromBeginToEnd)
-]
+let actions =
+    Action.init ()
+    |> Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
+    |> Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 
 printf "%s" (Action.renders actions)
 
