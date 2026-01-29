@@ -5,12 +5,12 @@ namespace Reallukee.Confole
 
 open System
 
-module Fmt = Format
-
 module Program =
 
     [<EntryPoint>]
     let main args =
+        Rule.doTitle "Confole"
+
         let formats =
             Format.init ()
             |> Format.italic          (Some true)
@@ -19,7 +19,7 @@ module Program =
 
         Format.applyAllNewLine "Hello, World!" formats
 
-        do Console.ReadKey (true)
+        do Console.ReadKey(true)
         |> ignore
 
         Format.reset ""
@@ -28,12 +28,12 @@ module Program =
 
         (*
         let fmt =
-            Fmt.init ()
-            |> Fmt.itc    (Some true)
-            |> Format.fgc (Some (Color.RGB (255, 0, 0)))
-            |> Format.bgc (Some (Color.RGB (0, 0, 255)))
+            Format.init ()
+            |> Fmt.itc (Some true)
+            |> Fmt.fgc (Some (Color.RGB (255, 0, 0)))
+            |> Fmt.bgc (Some (Color.RGB (0, 0, 255)))
 
-        Format.applyAllNewLine "Hello, World!" fmt
+        Fmt.applyallnl "Hello, World!" fmt
         *)
 
         0

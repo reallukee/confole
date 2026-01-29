@@ -9,6 +9,8 @@ internal class Program
 {
     static void Main(string[] args)
     {
+        Rule.doTitle("Confole#");
+
         Formats formats =
             Formats.Init()
                    .Italic(true)
