@@ -13,6 +13,7 @@
     Description : Contiene l'implementazione delle classi,
                   delle interfacce e delle enumerazioni
                   pubbliche (e non) del modulo Position.
+
                   Il modulo Position si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -28,7 +29,7 @@ namespace Reallukee.Confole.Sharp
 open Reallukee.Confole
 
 [<AbstractClass>]
-type Position () =
+type Position internal () =
 
     // Conversioni a tipi funzionali
     //   Usati internamente!

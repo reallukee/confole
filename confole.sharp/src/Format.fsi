@@ -13,6 +13,9 @@
     Description : Contiene le firme delle classi, delle
                   interfacce e delle enumerazioni pubbliche
                   del modulo Format.
+                  Il modulo Format si occupa di sequenze VTS
+                  relative alla formattazione del terminale.
+
                   Il modulo Format si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -42,6 +45,7 @@ type Formats =
         Cosa manca?
 
         * render    : Perchè? Richiederebbe il wrapping della DU.
+        * trunk     : Non lo so...
         * apply     : Perchè? Richiederebbe il wrapping della DU.
         * configure : Perchè? Richiederebbe il wrapping della DU.
         * Builder   : I DSL in C# non esistono.
@@ -50,6 +54,8 @@ type Formats =
 
         MIAO a tutti!
     *)
+
+    internal new : unit -> Formats
 
     static member NewLine     : bool                with get,          set
     member        FormatsList : List<Format.Format> with internal get, internal set
@@ -87,10 +93,13 @@ type Formats =
     static member RenderReset : text : string -> string
 
     // Modalità "funzionale"
-    static member Init  : unit              -> Formats
-    static member Initp : formats : Formats -> Formats
-    member        Clear : unit              -> Formats
-    member        View  : unit              -> Formats
+    static member Init     : unit              -> Formats
+    static member InitWith : formats : Formats -> Formats
+
+    member Clear   : unit -> Formats
+
+    member View    : unit -> Formats
+    member Preview : unit -> Formats
 
     member Restore : unit -> Formats
 
@@ -153,94 +162,3 @@ type Formats =
     static member DoBackgroundColor : text : string * color : Color -> unit
 
     static member DoReset : text : string -> unit
-
-[<Class>]
-type Fmt =
-
-    inherit Formats
-
-    // Alias modalità manuale
-    static member RenderRST : text : string -> string
-
-    static member RenderRFGC : text : string -> string
-    static member RenderRBGC : text : string -> string
-
-    static member RenderBLD : text : string               -> string
-    static member RenderBLD : text : string * flag : bool -> string
-    static member RenderFNT : text : string               -> string
-    static member RenderFNT : text : string * flag : bool -> string
-    static member RenderITC : text : string               -> string
-    static member RenderITC : text : string * flag : bool -> string
-    static member RenderUND : text : string               -> string
-    static member RenderUND : text : string * flag : bool -> string
-    static member RenderBKG : text : string               -> string
-    static member RenderBKG : text : string * flag : bool -> string
-    static member RenderRVS : text : string               -> string
-    static member RenderRVS : text : string * flag : bool -> string
-    static member RenderHDN : text : string               -> string
-    static member RenderHDN : text : string * flag : bool -> string
-    static member RenderSKT : text : string               -> string
-    static member RenderSKT : text : string * flag : bool -> string
-
-    static member RenderFGC : text : string                 -> string
-    static member RenderFGC : text : string * color : Color -> string
-    static member RenderBGC : text : string                 -> string
-    static member RenderBGC : text : string * color : Color -> string
-
-    // Alias modalità "funzionale"
-    static member Init : unit -> Fmt
-
-    member RST : unit -> Fmt
-
-    member RFGC : unit -> Fmt
-    member RBGC : unit -> Fmt
-
-    member BLD : unit        -> Fmt
-    member BLD : flag : bool -> Fmt
-    member FNT : unit        -> Fmt
-    member FNT : flag : bool -> Fmt
-    member ITC : unit        -> Fmt
-    member ITC : flag : bool -> Fmt
-    member UND : unit        -> Fmt
-    member UND : flag : bool -> Fmt
-    member BKG : unit        -> Fmt
-    member BKG : flag : bool -> Fmt
-    member RVS : unit        -> Fmt
-    member RVS : flag : bool -> Fmt
-    member HDN : unit        -> Fmt
-    member HDN : flag : bool -> Fmt
-    member SKT : unit        -> Fmt
-    member SKT : flag : bool -> Fmt
-
-    member FGC : unit          -> Fmt
-    member FGC : color : Color -> Fmt
-    member BGC : unit          -> Fmt
-    member BGC : color : Color -> Fmt
-
-    // Alias modalità imperativa
-    static member DoRST : text : string -> unit
-
-    static member DoRFGC : text : string -> unit
-    static member DoRBGC : text : string -> unit
-
-    static member DoBLD : text : string               -> unit
-    static member DoBLD : text : string * flag : bool -> unit
-    static member DoFNT : text : string               -> unit
-    static member DoFNT : text : string * flag : bool -> unit
-    static member DoITC : text : string               -> unit
-    static member DoITC : text : string * flag : bool -> unit
-    static member DoUND : text : string               -> unit
-    static member DoUND : text : string * flag : bool -> unit
-    static member DoBKG : text : string               -> unit
-    static member DoBKG : text : string * flag : bool -> unit
-    static member DoRVS : text : string               -> unit
-    static member DoRVS : text : string * flag : bool -> unit
-    static member DoHDN : text : string               -> unit
-    static member DoHDN : text : string * flag : bool -> unit
-    static member DoSKT : text : string               -> unit
-    static member DoSKT : text : string * flag : bool -> unit
-
-    static member DoFGC : text : string                 -> unit
-    static member DoFGC : text : string * color : Color -> unit
-    static member DoBGC : text : string                 -> unit
-    static member DoBGC : text : string * color : Color -> unit

@@ -13,6 +13,7 @@
     Description : Contiene le firme delle classi, delle
                   interfacce e delle enumerazioni pubbliche
                   del modulo Position.
+
                   Il modulo Position si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -29,6 +30,8 @@ open Reallukee.Confole
 
 [<AbstractClass>]
 type Position =
+
+    internal new : unit -> Position
 
     // Conversioni a tipi funzionali
     //   Usati internamente!

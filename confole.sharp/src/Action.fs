@@ -13,6 +13,9 @@
     Description : Contiene l'implementazione delle classi,
                   delle interfacce e delle enumerazioni
                   pubbliche (e non) del modulo Action.
+                  Il modulo Action si occupa di sequenze VTS
+                  relative al viewport del terminale.
+
                   Il modulo Action si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -40,6 +43,25 @@ type Erase =
 
 [<Class>]
 type Actions internal () =
+
+    (*
+        Per ottenere qualcosa di simile alle pipeline
+        funzionali di F#, utilizziamo un design pattern di
+        tipo Fluent.
+
+        La lista mutabile deve essere esposta solo in un
+        contesto sicuro e può essere modificata solamente
+        dalle istanze della classe Fluent stessa.
+
+        NOTA BENE: l’API funzionale di F# utilizza il tipo
+        "T' option"; per motivi di idiomaticità, questa API
+        wrapper sceglie di non esporre il tipo "T' option" e
+        ricorre di conseguenza all’overloading.
+        Penso sia la roba più simile in un contesto
+        fortemente OOP.
+
+        Detto questo, CIAONE!
+    *)
 
     let mutable actions = List<Action.Action>()
 
@@ -90,19 +112,27 @@ type Actions internal () =
     // Modalità "funzionale"
     static member Init () = Actions ()
 
-    static member Initp (actions : Actions) =
+    static member InitWith (actions : Actions) =
         let newActions = Actions.Init ()
 
         newActions.ActionsList.AddRange(actions.ActionsList)
 
         newActions
 
-    member this.Clear () = actions.Clear(); this
+    member this.Clear () = this.ActionsList.Clear(); this
 
     member this.View () =
-        actions
+        this.ActionsList
         |> Seq.toList
         |> Action.view
+        |> ignore
+
+        this
+
+    member this.Preview () =
+        this.ActionsList
+        |> Seq.toList
+        |> Action.preview
         |> ignore
 
         this
@@ -179,60 +209,3 @@ type Actions internal () =
         | Action.Erase.FromBeginToCurrent -> Erase.FromBeginToCurrent
         | Action.Erase.FromBeginToEnd     -> Erase.FromBeginToEnd
         | erase -> failwithf "%A: Unsupported erase format!" erase
-
-
-
-[<Class>]
-type Act internal () =
-
-    inherit Actions ()
-
-    // Alias modalità manuale
-    static member RenderIC () = Actions.RenderInsertCharacter ()
-    static member RenderIC n  = Actions.RenderInsertCharacter n
-    static member RenderDC () = Actions.RenderDeleteCharacter ()
-    static member RenderDC n  = Actions.RenderDeleteCharacter n
-
-    static member RenderIL () = Actions.RenderInsertLine ()
-    static member RenderIL n  = Actions.RenderInsertLine n
-    static member RenderDL () = Actions.RenderDeleteLine ()
-    static member RenderDL n  = Actions.RenderDeleteLine n
-
-    static member RenderED ()    = Actions.RenderEraseDisplay ()
-    static member RenderED erase = Actions.RenderEraseDisplay erase
-    static member RenderEL ()    = Actions.RenderEraseLine    ()
-    static member RenderEL erase = Actions.RenderEraseLine    erase
-
-    // Alias modalità "funzionale"
-    static member Init () = Act ()
-
-    member this.IC () = base.InsertCharacter () :?> Act
-    member this.IC n  = base.InsertCharacter n  :?> Act
-    member this.DC () = base.DeleteCharacter () :?> Act
-    member this.DC n  = base.DeleteCharacter n  :?> Act
-
-    member this.IL () = base.InsertLine () :?> Act
-    member this.IL n  = base.InsertLine n  :?> Act
-    member this.DL () = base.DeleteLine () :?> Act
-    member this.DL n  = base.DeleteLine n  :?> Act
-
-    member this.ED ()    = base.EraseDisplay ()    :?> Act
-    member this.ED erase = base.EraseDisplay erase :?> Act
-    member this.EL ()    = base.EraseLine    ()    :?> Act
-    member this.EL erase = base.EraseLine    erase :?> Act
-
-    // Alias modalità imperativa
-    static member DoIC () = Actions.DoInsertCharacter ()
-    static member DoIC n  = Actions.DoInsertCharacter n
-    static member DoDC () = Actions.DoDeleteCharacter ()
-    static member DoDC n  = Actions.DoDeleteCharacter n
-
-    static member DoIL () = Actions.DoInsertLine ()
-    static member DoIL n  = Actions.DoInsertLine n
-    static member DoDL () = Actions.DoDeleteLine ()
-    static member DoDL n  = Actions.DoDeleteLine n
-
-    static member DoED ()    = Actions.DoEraseDisplay ()
-    static member DoED erase = Actions.DoEraseDisplay erase
-    static member DoEL ()    = Actions.DoEraseLine    ()
-    static member DoEL erase = Actions.DoEraseLine    erase

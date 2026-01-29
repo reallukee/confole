@@ -13,6 +13,7 @@
     Description : Contiene le firme delle classi, delle
                   interfacce e delle enumerazioni pubbliche
                   del modulo Color.
+
                   Il modulo Color si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -29,6 +30,8 @@ open Reallukee.Confole
 
 [<AbstractClass>]
 type Color =
+
+    internal new : unit -> Color
 
     // Conversioni a tipi funzionali
     //   Usati internamente!

@@ -13,6 +13,9 @@
     Description : Contiene le firme delle classi, delle
                   interfacce e delle enumerazioni pubbliche
                   del modulo Action.
+                  Il modulo Action si occupa di sequenze VTS
+                  relative al viewport del terminale.
+
                   Il modulo Action si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -47,6 +50,7 @@ type Actions =
         Cosa manca?
 
         * render    : Perchè? Richiederebbe il wrapping della DU.
+        * trunk     : Non lo so...
         * apply     : Perchè? Richiederebbe il wrapping della DU.
         * configure : Perchè? Richiederebbe il wrapping della DU.
         * Builder   : I DSL in C# non esistono.
@@ -56,21 +60,23 @@ type Actions =
         MIAO a tutti!
     *)
 
+    internal new : unit -> Actions
+
     static member NewLine     : bool                with get,          set
     member        ActionsList : List<Action.Action> with internal get, internal set
 
     // Modalità manuale
     member Renders : unit -> string
 
-    static member RenderInsertCharacter : unit    -> string
-    static member RenderInsertCharacter : n : int -> string
-    static member RenderDeleteCharacter : unit    -> string
-    static member RenderDeleteCharacter : n : int -> string
+    static member RenderInsertCharacter : unit       -> string
+    static member RenderInsertCharacter : n    : int -> string
+    static member RenderDeleteCharacter : unit       -> string
+    static member RenderDeleteCharacter : n    : int -> string
 
-    static member RenderInsertLine : unit    -> string
-    static member RenderInsertLine : n : int -> string
-    static member RenderDeleteLine : unit    -> string
-    static member RenderDeleteLine : n : int -> string
+    static member RenderInsertLine : unit       -> string
+    static member RenderInsertLine : n    : int -> string
+    static member RenderDeleteLine : unit       -> string
+    static member RenderDeleteLine : n    : int -> string
 
     static member RenderEraseDisplay : unit          -> string
     static member RenderEraseDisplay : erase : Erase -> string
@@ -80,20 +86,23 @@ type Actions =
     static member RenderReset : unit -> string
 
     // Modalità "funzionale"
-    static member Init  : unit              -> Actions
-    static member Initp : actions : Actions -> Actions
-    member        Clear : unit              -> Actions
-    member        View  : unit              -> Actions
+    static member Init     : unit              -> Actions
+    static member InitWith : actions : Actions -> Actions
 
-    member InsertCharacter : unit    -> Actions
-    member InsertCharacter : n : int -> Actions
-    member DeleteCharacter : unit    -> Actions
-    member DeleteCharacter : n : int -> Actions
+    member Clear : unit -> Actions
 
-    member InsertLine : unit    -> Actions
-    member InsertLine : n : int -> Actions
-    member DeleteLine : unit    -> Actions
-    member DeleteLine : n : int -> Actions
+    member View    : unit -> Actions
+    member Preview : unit -> Actions
+
+    member InsertCharacter : unit       -> Actions
+    member InsertCharacter : n    : int -> Actions
+    member DeleteCharacter : unit       -> Actions
+    member DeleteCharacter : n    : int -> Actions
+
+    member InsertLine : unit        -> Actions
+    member InsertLine : n    : int -> Actions
+    member DeleteLine : unit       -> Actions
+    member DeleteLine : n    : int -> Actions
 
     member EraseDisplay : unit          -> Actions
     member EraseDisplay : erase : Erase -> Actions
@@ -106,15 +115,15 @@ type Actions =
     static member Reset : unit -> unit
 
     // Modalità imperativa
-    static member DoInsertCharacter : unit    -> unit
-    static member DoInsertCharacter : n : int -> unit
-    static member DoDeleteCharacter : unit    -> unit
-    static member DoDeleteCharacter : n : int -> unit
+    static member DoInsertCharacter : unit       -> unit
+    static member DoInsertCharacter : n    : int -> unit
+    static member DoDeleteCharacter : unit       -> unit
+    static member DoDeleteCharacter : n    : int -> unit
 
-    static member DoInsertLine : unit    -> unit
-    static member DoInsertLine : n : int -> unit
-    static member DoDeleteLine : unit    -> unit
-    static member DoDeleteLine : n : int -> unit
+    static member DoInsertLine : unit       -> unit
+    static member DoInsertLine : n    : int -> unit
+    static member DoDeleteLine : unit       -> unit
+    static member DoDeleteLine : n    : int -> unit
 
     static member DoEraseDisplay : unit          -> unit
     static member DoEraseDisplay : erase : Erase -> unit
@@ -122,58 +131,3 @@ type Actions =
     static member DoEraseLine    : erase : Erase -> unit
 
     static member DoReset : unit -> unit
-
-[<Class>]
-type Act =
-
-    inherit Actions
-
-    // Alias modalità manuale
-    static member RenderIC : unit    -> string
-    static member RenderIC : n : int -> string
-    static member RenderDC : unit    -> string
-    static member RenderDC : n : int -> string
-
-    static member RenderIL : unit    -> string
-    static member RenderIL : n : int -> string
-    static member RenderDL : unit    -> string
-    static member RenderDL : n : int -> string
-
-    static member RenderED : unit          -> string
-    static member RenderED : erase : Erase -> string
-    static member RenderEL : unit          -> string
-    static member RenderEL : erase : Erase -> string
-
-    // Alias modalità "funzionale"
-    static member Init : unit -> Act
-
-    member IC : unit    -> Act
-    member IC : n : int -> Act
-    member DC : unit    -> Act
-    member DC : n : int -> Act
-
-    member IL : unit    -> Act
-    member IL : n : int -> Act
-    member DL : unit    -> Act
-    member DL : n : int -> Act
-
-    member ED : unit          -> Act
-    member ED : erase : Erase -> Act
-    member EL : unit          -> Act
-    member EL : erase : Erase -> Act
-
-    // Alias modalità imperativa
-    static member DoIC : unit    -> unit
-    static member DoIC : n : int -> unit
-    static member DoDC : unit    -> unit
-    static member DoDC : n : int -> unit
-
-    static member DoIL : unit    -> unit
-    static member DoIL : n : int -> unit
-    static member DoDL : unit    -> unit
-    static member DoDL : n : int -> unit
-
-    static member DoED : unit          -> unit
-    static member DoED : erase : Erase -> unit
-    static member DoEL : unit          -> unit
-    static member DoEL : erase : Erase -> unit

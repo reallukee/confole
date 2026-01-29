@@ -13,6 +13,9 @@
     Description : Contiene le firme delle classi, delle
                   interfacce e delle enumerazioni pubbliche
                   del modulo Rule.
+                  Il modulo Rule si occupa di sequenze VTS
+                  relative all'apparenza del terminale.
+
                   Il modulo Rule si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -51,6 +54,7 @@ type Rules =
         Cosa manca?
 
         * render    : Perchè? Richiederebbe il wrapping della DU.
+        * trunk     : Non lo so...
         * apply     : Perchè? Richiederebbe il wrapping della DU.
         * configure : Perchè? Richiederebbe il wrapping della DU.
         * Builder   : I DSL in C# non esistono.
@@ -59,6 +63,8 @@ type Rules =
 
         MIAO a tutti!
     *)
+
+    internal new : unit -> Rules
 
     static member NewLine   : bool            with get,          set
     member        RulesList : List<Rule.Rule> with internal get, internal set
@@ -93,10 +99,13 @@ type Rules =
     static member RenderReset : unit -> string
 
     // Modalità "funzionale"
-    static member Init  : unit          -> Rules
-    static member Initp : rules : Rules -> Rules
-    member        Clear : unit          -> Rules
-    member        View  : unit          -> Rules
+    static member Init     : unit          -> Rules
+    static member InitWith : rules : Rules -> Rules
+
+    member Clear : unit -> Rules
+
+    member View    : unit -> Rules
+    member Preview : unit -> Rules
 
     member Title : title : string -> Rules
 
@@ -153,85 +162,3 @@ type Rules =
     static member DoDefaultCursorColor     : color : Color -> unit
 
     static member DoReset : unit -> unit
-
-[<Class>]
-type Rul =
-
-    inherit Rules
-
-    // Alias modalità manuale
-    static member RenderTTL : title : string -> string
-
-    static member RenderSCB : unit -> string
-    static member RenderHCB : unit -> string
-
-    static member RenderSC : unit -> string
-    static member RenderHC : unit -> string
-
-    static member RenderEDM : unit -> string
-    static member RenderDDM : unit -> string
-
-    static member RenderEAB : unit -> string
-    static member RenderDAB : unit -> string
-
-    static member RenderCS : unit          -> string
-    static member RenderCS : shape : Shape -> string
-
-    static member RenderDFGC : unit          -> string
-    static member RenderDFGC : color : Color -> string
-    static member RenderDBGC : unit          -> string
-    static member RenderDBGC : color : Color -> string
-    static member RenderDCC  : unit          -> string
-    static member RenderDCC  : color : Color -> string
-
-    // Alias modalità "funzionale"
-    static member Init : unit -> Rul
-
-    member TTL : title : string -> Rul
-
-    member SCB : unit -> Rul
-    member HCB : unit -> Rul
-
-    member SC : unit -> Rul
-    member HC : unit -> Rul
-
-    member EDM : unit -> Rul
-    member DDM : unit -> Rul
-
-    member EAB : unit -> Rul
-    member DAB : unit -> Rul
-
-    member CS : unit          -> Rul
-    member CS : shape : Shape -> Rul
-
-    member DFGC : unit          -> Rul
-    member DFGC : color : Color -> Rul
-    member DBGC : unit          -> Rul
-    member DBGC : color : Color -> Rul
-    member DCC  : unit          -> Rul
-    member DCC  : color : Color -> Rul
-
-    // Alias modalità imperativa
-    static member DoTTL : title : string -> unit
-
-    static member DoSCB : unit -> unit
-    static member DoHCB : unit -> unit
-
-    static member DoSC : unit -> unit
-    static member DoHC : unit -> unit
-
-    static member DoEDM : unit -> unit
-    static member DoDDM : unit -> unit
-
-    static member DoEAB : unit -> unit
-    static member DoDAB : unit -> unit
-
-    static member DoCS : unit          -> unit
-    static member DoCS : shape : Shape -> unit
-
-    static member DoDFGC : unit          -> unit
-    static member DoDFGC : color : Color -> unit
-    static member DoDBGC : unit          -> unit
-    static member DoDBGC : color : Color -> unit
-    static member DoDCC  : unit          -> unit
-    static member DoDCC  : color : Color -> unit

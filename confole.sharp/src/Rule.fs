@@ -13,6 +13,9 @@
     Description : Contiene l'implementazione delle classi,
                   delle interfacce e delle enumerazioni
                   pubbliche (e non) del modulo Rule.
+                  Il modulo Rule si occupa di sequenze VTS
+                  relative all'apparenza del terminale.
+
                   Il modulo Rule si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
@@ -44,6 +47,25 @@ type Shape =
 
 [<Class>]
 type Rules internal () =
+
+    (*
+        Per ottenere qualcosa di simile alle pipeline
+        funzionali di F#, utilizziamo un design pattern di
+        tipo Fluent.
+
+        La lista mutabile deve essere esposta solo in un
+        contesto sicuro e può essere modificata solamente
+        dalle istanze della classe Fluent stessa.
+
+        NOTA BENE: l’API funzionale di F# utilizza il tipo
+        "T' option"; per motivi di idiomaticità, questa API
+        wrapper sceglie di non esporre il tipo "T' option" e
+        ricorre di conseguenza all’overloading.
+        Penso sia la roba più simile in un contesto
+        fortemente OOP.
+
+        Detto questo, CIAONE!
+    *)
 
     let mutable rules = List<Rule.Rule>()
 
@@ -103,19 +125,27 @@ type Rules internal () =
     // Modalità "funzionale"
     static member Init () = Rules ()
 
-    static member Initp (rules : Rules) =
+    static member InitWith (rules : Rules) =
         let newRules = Rules.Init ()
 
         newRules.RulesList.AddRange(rules.RulesList)
 
         newRules
 
-    member this.Clear () = rules.Clear(); this
+    member this.Clear () = this.RulesList.Clear(); this
 
     member this.View () =
-        rules
+        this.RulesList
         |> Seq.toList
         |> Rule.view
+        |> ignore
+
+        this
+
+    member this.Preview () =
+        this.RulesList
+        |> Seq.toList
+        |> Rule.preview
         |> ignore
 
         this
@@ -218,87 +248,3 @@ type Rules internal () =
         | Rule.Shape.BlinkingBar       -> Shape.BlinkingBar
         | Rule.Shape.SteadyBar         -> Shape.SteadyBar
         | shape -> failwithf "%A: Unsupported shape format!" shape
-
-
-
-[<Class>]
-type Rul internal () =
-
-    inherit Rules ()
-
-    // Alias modalità manuale
-    static member RenderTTL title = Rules.RenderTitle title
-
-    static member RenderSCB () = Rules.RenderShowCursorBlinking ()
-    static member RenderHCB () = Rules.RenderHideCursorBlinking ()
-
-    static member RenderSC () = Rules.RenderShowCursor ()
-    static member RenderHC () = Rules.RenderHideCursor ()
-
-    static member RenderEDM () = Rules.RenderEnableDesignateMode  ()
-    static member RenderDDM () = Rules.RenderDisableDesignateMode ()
-
-    static member RenderEAB () = Rules.RenderEnableAlternativeBuffer  ()
-    static member RenderDAB () = Rules.RenderDisableAlternativeBuffer ()
-
-    static member RenderCS ()    = Rules.RenderCursorShape ()
-    static member RenderCS shape = Rules.RenderCursorShape shape
-
-    static member RenderDFGC ()    = Rules.RenderDefaultForegroundColor ()
-    static member RenderDFGC color = Rules.RenderDefaultForegroundColor color
-    static member RenderDBGC ()    = Rules.RenderDefaultBackgroundColor ()
-    static member RenderDBGC color = Rules.RenderDefaultBackgroundColor color
-    static member RenderDCC  ()    = Rules.RenderDefaultCursorColor     ()
-    static member RenderDCC  color = Rules.RenderDefaultCursorColor     color
-
-    // Alias modalità "funzionale"
-    static member Init () = Rul ()
-
-    member this.TTL title = base.Title title :?> Rul
-
-    member this.SCB () = base.ShowCursorBlinking () :?> Rul
-    member this.HCB () = base.HideCursorBlinking () :?> Rul
-
-    member this.SC () = base.ShowCursor () :?> Rul
-    member this.HC () = base.HideCursor () :?> Rul
-
-    member this.EDM () = base.EnableDesignateMode  () :?> Rul
-    member this.DDM () = base.DisableDesignateMode () :?> Rul
-
-    member this.EAB () = base.EnableAlternativeBuffer  () :?> Rul
-    member this.DAB () = base.DisableAlternativeBuffer () :?> Rul
-
-    member this.CS ()    = base.CursorShape ()    :?> Rul
-    member this.CS shape = base.CursorShape shape :?> Rul
-
-    member this.DFGC ()    = base.DefaultForegroundColor ()    :?> Rul
-    member this.DFGC color = base.DefaultForegroundColor color :?> Rul
-    member this.DBGC ()    = base.DefaultBackgroundColor ()    :?> Rul
-    member this.DBGC color = base.DefaultBackgroundColor color :?> Rul
-    member this.DCC  ()    = base.DefaultCursorColor     ()    :?> Rul
-    member this.DCC  color = base.DefaultCursorColor     color :?> Rul
-
-    // Alias modalità imperativa
-    static member DoTTL title = Rules.DoTitle title
-
-    static member DoSCB () = Rules.DoShowCursorBlinking ()
-    static member DoHCB () = Rules.DoHideCursorBlinking ()
-
-    static member DoSC () = Rules.DoShowCursor ()
-    static member DoHC () = Rules.DoHideCursor ()
-
-    static member DoEDM () = Rules.DoEnableDesignateMode  ()
-    static member DoDDM () = Rules.DoDisableDesignateMode ()
-
-    static member DoEAB () = Rules.DoEnableAlternativeBuffer  ()
-    static member DoDAB () = Rules.DoDisableAlternativeBuffer ()
-
-    static member DoCS ()    = Rules.DoCursorShape ()
-    static member DoCS shape = Rules.DoCursorShape shape
-
-    static member DoDFGC ()    = Rules.DoDefaultForegroundColor ()
-    static member DoDFGC color = Rules.DoDefaultForegroundColor color
-    static member DoDBGC ()    = Rules.DoDefaultBackgroundColor ()
-    static member DoDBGC color = Rules.DoDefaultBackgroundColor color
-    static member DoDCC  ()    = Rules.DoDefaultCursorColor     ()
-    static member DoDCC  color = Rules.DoDefaultCursorColor     color
