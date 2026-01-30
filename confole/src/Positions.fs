@@ -28,7 +28,7 @@ module Positions =
     open Position
 
     let private positions = [|
-        "HOME", (0, 0), (0, 0)
+        "HOME", (1, 1), (0, 0)
     |]
 
     module RowCol =

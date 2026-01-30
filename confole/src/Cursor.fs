@@ -80,10 +80,10 @@ module Cursor =
 
             let row, col =
                 match position with
-                | RowCol (row, col) -> row + 1, col + 1
-                | Cell cell -> cell.row + 1, cell.col + 1
-                | XY (x, y) -> y + 1, x + 1
-                | Coord coord -> coord.y + 1, coord.x + 1
+                | RowCol (row, col) -> row     ,    col
+                | Cell   cell       -> cell.row,    cell.col
+                | XY     (x, y)     -> y       + 1, x        + 1
+                | Coord  coord      -> coord.y + 1, coord.x  + 1
                 | position -> failwithf "%A: Unsupported position format!" position
 
             sprintf "%s%d;%dH" CSI row col

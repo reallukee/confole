@@ -75,16 +75,16 @@ module PositionConversion =
     let rowColToXY (rowCol : RowCol) =
         let row, col = rowCol
 
-        let x = col
-        let y = row
+        let x = col - 1
+        let y = row - 1
 
         x, y
 
     let xYToRowCol (xY : XY) =
         let x, y = xY
 
-        let row = y
-        let col = x
+        let row = y + 1
+        let col = x + 1
 
         row, col
 

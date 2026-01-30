@@ -91,9 +91,9 @@ module Format =
             | _ ->
                 let red, green, blue =
                     match color with
-                    | RGB (red, green, blue) -> red, green, blue
-                    | RGBColor color -> color.red, color.green, color.blue
-                    | HEX (red, green, blue) -> hexToRGB (red, green, blue)
+                    | RGB      (red, green, blue) -> red,       green,       blue
+                    | RGBColor color              -> color.red, color.green, color.blue
+                    | HEX      (red, green, blue) -> hexToRGB (red, green, blue)
                     | HEXColor color ->
                         hexColorToRGBColor color
                         |> fun color -> color.red, color.green, color.blue
@@ -111,9 +111,9 @@ module Format =
             | _ ->
                 let red, green, blue =
                     match color with
-                    | RGB (red, green, blue) -> red, green, blue
-                    | RGBColor color -> color.red, color.green, color.blue
-                    | HEX (red, green, blue) -> hexToRGB (red, green, blue)
+                    | RGB      (red, green, blue) -> red,       green,       blue
+                    | RGBColor color              -> color.red, color.green, color.blue
+                    | HEX      (red, green, blue) -> hexToRGB (red, green, blue)
                     | HEXColor color ->
                         hexColorToRGBColor color
                         |> fun color -> color.red, color.green, color.blue

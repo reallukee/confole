@@ -89,7 +89,7 @@ and Cell () =
         new Cell (row, col)
 
     static member fromXY (x, y) =
-        new Cell (y, x)
+        new Cell (y + 1, x + 1)
 
 
 
@@ -169,7 +169,7 @@ and Coord () =
         new Coord (x, y)
 
     static member fromRowCol (row, col) =
-        new Coord (col, row)
+        new Coord (col - 1, row - 1)
 
 
 
