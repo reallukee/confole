@@ -26,6 +26,7 @@ open FsUnit.Xunit
 
 open Reallukee.Confole.Position
 
+[<Class>]
 type Position () =
 
     [<Fact>]

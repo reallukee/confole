@@ -27,6 +27,7 @@ open FsUnit.Xunit
 open Reallukee.Confole.Position
 open Reallukee.Confole.PositionConversion
 
+[<Class>]
 type PositionConversion () =
 
     [<Fact>]
@@ -34,7 +35,7 @@ type PositionConversion () =
     member _.``rowColToXY funziona?`` () =
         let rowCol = 4, 2
 
-        let xY = 2, 4
+        let xY = 1, 3
 
         rowColToXY rowCol
         |> should equal xY
@@ -44,10 +45,12 @@ type PositionConversion () =
     member _.``xYToRowCol funziona?`` () =
         let xY = 2, 4
 
-        let rowCol = 4, 2
+        let rowCol = 5, 3
 
         xYToRowCol xY
         |> should equal rowCol
+
+
 
     [<Fact>]
     [<Trait("Category", "PositionConversion")>]

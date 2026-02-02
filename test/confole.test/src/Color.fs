@@ -26,6 +26,7 @@ open FsUnit.Xunit
 
 open Reallukee.Confole.Color
 
+[<Class>]
 type Color () =
 
     [<Fact>]

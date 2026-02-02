@@ -27,6 +27,7 @@ open FsUnit.Xunit
 open Reallukee.Confole.Color
 open Reallukee.Confole.ColorConversion
 
+[<Class>]
 type ColorConversion () =
 
     [<Fact>]
@@ -48,6 +49,8 @@ type ColorConversion () =
 
         rgbToHEX rgb
         |> should equal hex
+
+
 
     [<Fact>]
     [<Trait("Category", "ColorConversion")>]

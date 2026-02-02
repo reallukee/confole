@@ -9,8 +9,14 @@
   <ItemGroup>
     <Compile Include="src\Color.fs" />
     <Compile Include="src\ColorConversion.fs" />
+    <Compile Include="src\Colors.fs" />
     <Compile Include="src\Position.fs" />
     <Compile Include="src\PositionConversion.fs" />
+    <Compile Include="src\Positions.fs" />
+    <Compile Include="src\Rule.fs" />
+    <Compile Include="src\Cursor.fs" />
+    <Compile Include="src\Action.fs" />
+    <Compile Include="src\Format.fs" />
   </ItemGroup>
 
   <ItemGroup>
