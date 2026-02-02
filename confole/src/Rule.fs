@@ -209,7 +209,6 @@ module Rule =
 
     let trunk (rules : Rules) =
         rules
-        |> List.rev
         |> List.distinctBy (fun item ->
             let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Rule>)
 

@@ -117,7 +117,6 @@ module Action =
 
     let trunk (actions : Actions) =
         actions
-        |> List.rev
         |> List.distinctBy (fun item ->
             let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Action>)
 

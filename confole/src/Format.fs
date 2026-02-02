@@ -161,7 +161,6 @@ module Format =
 
     let trunk (formats : Formats) =
         formats
-        |> List.rev
         |> List.distinctBy (fun item ->
             let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Format>)
 

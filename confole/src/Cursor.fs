@@ -76,7 +76,7 @@ module Cursor =
         | PreviousLine n -> sprintf "%sF%d" CSI (defaultArg n 1)
 
         | Move position ->
-            let position = defaultArg position (RowCol (0, 0))
+            let position = defaultArg position (Position.RowCol (1, 1))
 
             let row, col =
                 match position with
@@ -123,7 +123,6 @@ module Cursor =
 
     let trunk (cursors : Cursors) =
         cursors
-        |> List.rev
         |> List.distinctBy (fun item ->
             let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Cursor>)
 
