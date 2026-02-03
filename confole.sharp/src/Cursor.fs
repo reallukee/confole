@@ -104,7 +104,7 @@ type Cursors internal () =
     static member RenderPreviousLine n  = Cursor.renderPreviousLine (Some n)
 
     static member RenderMove ()       = Cursor.renderMove None
-    static member RenderMove position = Cursor.renderMove (Some (Position.toFPosition position))
+    static member RenderMove position = Cursor.renderMove (Some (Position.ToFPosition position))
 
     static member RenderReset () = Cursor.renderReset ()
 
@@ -157,7 +157,7 @@ type Cursors internal () =
     member this.PreviousLine n  = cursors.Add(Cursor.PreviousLine (Some n)); this
 
     member this.Move ()       = cursors.Add(Cursor.Move None                                  ); this
-    member this.Move position = cursors.Add(Cursor.Move (Some (Position.toFPosition position))); this
+    member this.Move position = cursors.Add(Cursor.Move (Some (Position.ToFPosition position))); this
 
     member this.ApplyAll () =
         cursors
@@ -201,6 +201,6 @@ type Cursors internal () =
     static member DoPreviousLine n  = Cursor.doPreviousLine (Some n)
 
     static member DoMove ()       = Cursor.doMove None
-    static member DoMove position = Cursor.doMove (Some (Position.toFPosition position))
+    static member DoMove position = Cursor.doMove (Some (Position.ToFPosition position))
 
     static member DoReset () = Cursor.doReset ()

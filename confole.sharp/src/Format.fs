@@ -108,9 +108,9 @@ type Formats internal () =
     static member RenderStrikeout (text, flag) = Format.renderStrikeout text (Some flag)
 
     static member RenderForegroundColor text          = Format.renderForegroundColor text None
-    static member RenderForegroundColor (text, color) = Format.renderForegroundColor text (Some (Color.toFColor color))
+    static member RenderForegroundColor (text, color) = Format.renderForegroundColor text (Some (Color.ToFColor color))
     static member RenderBackgroundColor text          = Format.renderBackgroundColor text None
-    static member RenderBackgroundColor (text, color) = Format.renderBackgroundColor text (Some (Color.toFColor color))
+    static member RenderBackgroundColor (text, color) = Format.renderBackgroundColor text (Some (Color.ToFColor color))
 
     static member RenderReset text = Format.renderReset text
 
@@ -167,9 +167,9 @@ type Formats internal () =
     member this.Strikeout flag = formats.Add(Format.Strikeout (Some flag)); this
 
     member this.ForegroundColor ()    = formats.Add(Format.ForegroundColor None                         ); this
-    member this.ForegroundColor color = formats.Add(Format.ForegroundColor (Some (Color.toFColor color))); this
+    member this.ForegroundColor color = formats.Add(Format.ForegroundColor (Some (Color.ToFColor color))); this
     member this.BackgroundColor ()    = formats.Add(Format.BackgroundColor None                         ); this
-    member this.BackgroundColor color = formats.Add(Format.BackgroundColor (Some (Color.toFColor color))); this
+    member this.BackgroundColor color = formats.Add(Format.BackgroundColor (Some (Color.ToFColor color))); this
 
     member this.ApplyAll text =
         formats
@@ -217,8 +217,8 @@ type Formats internal () =
     static member DoStrikeout (text, flag) = Format.doStrikeout text (Some flag)
 
     static member DoForegroundColor text          = Format.doForegroundColor text None
-    static member DoForegroundColor (text, color) = Format.doForegroundColor text (Some (Color.toFColor color))
+    static member DoForegroundColor (text, color) = Format.doForegroundColor text (Some (Color.ToFColor color))
     static member DoBackgroundColor text          = Format.doBackgroundColor text None
-    static member DoBackgroundColor (text, color) = Format.doBackgroundColor text (Some (Color.toFColor color))
+    static member DoBackgroundColor (text, color) = Format.doBackgroundColor text (Some (Color.ToFColor color))
 
     static member DoReset text = Format.doReset text

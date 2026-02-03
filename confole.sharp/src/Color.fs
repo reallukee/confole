@@ -17,6 +17,8 @@
                   Il modulo Color si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
+                  Questo modulo wrappa anche i moduli Colors
+                  e ColorConversion.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
@@ -33,10 +35,10 @@ type Color internal () =
 
     // Conversioni a tipi funzionali
     //   Usati internamente!
-    static member internal toFColor (color : Color) =
+    static member internal ToFColor (color : Color) =
         match color with
         // XTerm
-        | :? XTermColor as xTermColor -> Color.XTerm (xTermColor.Id)
+        | :? XTermColor as xTermColor -> Color.XTerm xTermColor.Id
         // RGB
         | :? RGBColor   as rgbColor   -> Color.RGB   (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
         // HEX
@@ -45,14 +47,14 @@ type Color internal () =
 
     // Conversioni a tipi OOP
     //   Usati internamente!
-    static member internal toOOPColor (color : Color.Color) : Color =
+    static member internal ToOOPColor (color : Color.Color) : Color =
         match color with
-        | Color.XTerm      xTerm      -> XTermColor.toOOPXTermColor (xTerm)
-        | Color.XTermColor xTermColor -> XTermColor.toOOPXTermColor (xTermColor)
-        | Color.RGB        rgb        -> RGBColor.toOOPRGBColor     (rgb)
-        | Color.RGBColor   rgbColor   -> RGBColor.toOOPRGBColor     (rgbColor)
-        | Color.HEX        hex        -> HEXColor.toOOPHEXColor     (hex)
-        | Color.HEXColor   hexColor   -> HEXColor.toOOPHEXColor     (hexColor)
+        | Color.XTerm      xTerm      -> XTermColor.ToOOPXTermColor xTerm
+        | Color.XTermColor xTermColor -> XTermColor.ToOOPXTermColor xTermColor
+        | Color.RGB        rgb        -> RGBColor.ToOOPRGBColor     rgb
+        | Color.RGBColor   rgbColor   -> RGBColor.ToOOPRGBColor     rgbColor
+        | Color.HEX        hex        -> HEXColor.ToOOPHEXColor     hex
+        | Color.HEXColor   hexColor   -> HEXColor.ToOOPHEXColor     hexColor
         | color -> failwithf "%A: Unsupported color format!" color
 
 
@@ -80,50 +82,30 @@ and XTermColor () =
 
 
 
-    static member fromId id =
+    static member FromId id =
         new XTermColor (id)
 
-    static member fromRGB (red, green, blue) =
+    static member FromRGB (red, green, blue) =
         let id = ColorConversion.rgbToXTerm (red, green, blue)
 
         new XTermColor (id)
 
-    static member fromHEX (red, green, blue) =
+    static member FromHEX (red, green, blue) =
         let id = ColorConversion.hexToXTerm (red, green, blue)
 
         new XTermColor (id)
 
 
 
-    static member fromRGBColor (rgbColor : RGBColor) =
+    static member FromRGBColor (rgbColor : RGBColor) =
         let id = ColorConversion.rgbToXTerm (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
 
         new XTermColor (id)
 
-    static member fromHEXColor (hexColor : HEXColor) =
+    static member FromHEXColor (hexColor : HEXColor) =
         let id = ColorConversion.hexToXTerm (hexColor.Red, hexColor.Green, hexColor.Blue)
 
         new XTermColor (id)
-
-
-
-    // Conversioni a tipi funzionali
-    //   Usati internamente!
-    static member internal toFXTerm (xTermColor : XTermColor) =
-        xTermColor.Id
-
-    static member internal toFXTermColor (xTermColor : XTermColor) =
-        Color.xTermToXTermColor xTermColor.Id
-
-    // Conversioni a tipi OOP
-    //   Usati internamente!
-    static member internal toOOPXTermColor (xTerm : Color.XTerm) =
-        let id = xTerm
-
-        new XTermColor (id)
-
-    static member internal toOOPXTermColor (xTermColor : Color.XTermColor) =
-        new XTermColor (xTermColor.id)
 
 
 
@@ -138,6 +120,26 @@ and XTermColor () =
 
     override this.ToString () =
         $"XTermColor({this.Id})"
+
+
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal ToFXTerm (xTermColor : XTermColor) =
+        xTermColor.Id
+
+    static member internal ToFXTermColor (xTermColor : XTermColor) =
+        Color.xTermToXTermColor xTermColor.Id
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal ToOOPXTermColor (xTerm : Color.XTerm) =
+        let id = xTerm
+
+        new XTermColor (id)
+
+    static member internal ToOOPXTermColor (xTermColor : Color.XTermColor) =
+        new XTermColor (xTermColor.id)
 
 
 
@@ -182,50 +184,61 @@ and RGBColor () =
 
 
 
-    static member fromRGB (red, green, blue) =
+    static member FromRGB (red, green, blue) =
         new RGBColor (red, green, blue)
 
-    static member fromHEX (red, green, blue) =
+    static member FromHEX (red, green, blue) =
         let red, green, blue = ColorConversion.hexToRGB (red, green, blue)
 
         new RGBColor (red, green, blue)
 
-    static member fromId id =
+    static member FromId id =
         let red, green, blue = ColorConversion.xTermToRGB id
 
         new RGBColor (red, green, blue)
 
 
 
-    static member fromHEXColor (hexColor : HEXColor) =
+    static member FromHEXColor (hexColor : HEXColor) =
         let red, green, blue = ColorConversion.hexToRGB (hexColor.Red, hexColor.Green, hexColor.Blue)
 
         new RGBColor (red, green, blue)
 
-    static member fromXTermColor (xTermColor : XTermColor) =
+    static member FromXTermColor (xTermColor : XTermColor) =
         let red, green, blue = ColorConversion.xTermToRGB xTermColor.Id
 
         new RGBColor (red, green, blue)
 
 
 
-    // Conversioni a tipi funzionali
-    //   Usati internamente!
-    static member internal toRGB (rgbColor : RGBColor) =
-        rgbColor.Red, rgbColor.Green, rgbColor.Blue
+    static member Get color =
+        let color = Colors.RGB.get color Colors.RGB.Format.RGB
 
-    static member internal toRGBColor (rgbColor : RGBColor) =
-        Color.rgbToRGBColor (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+        let red, green, blue =
+            match color with
+            | Color.Color.RGB (red, green, blue) -> red, green, blue
+            | _ -> failwith "It can't happen :)"
 
-    // Conversioni a tipi OOP
-    //   Usati internamente!
-    static member internal toOOPRGBColor (rgb : Color.RGB) =
-        let red, green, blue = rgb
+        RGBColor.FromRGB (red, green, blue)
 
-        new RGBColor (red, green, blue)
+    static member TryGet (color, outColor : byref<RGBColor>) =
+        let color = Colors.RGB.tryGet color Colors.RGB.Format.RGB
 
-    static member internal toOOPRGBColor (rgbColor : Color.RGBColor) =
-        new RGBColor (rgbColor.red, rgbColor.green, rgbColor.blue)
+        match color with
+        | Some color ->
+            let red, green, blue =
+                match color with
+                | Color.Color.RGB (red, green, blue) -> red, green, blue
+                | _ -> failwith "It can't happen :)"
+
+            outColor <- RGBColor.FromRGB (red, green, blue)
+
+            true
+
+        | None -> false
+
+    static member Exists color =
+        Colors.RGB.exists color
 
 
 
@@ -242,6 +255,26 @@ and RGBColor () =
 
     override this.ToString () =
         $"RGBColor({this.Red}, {this.Green}, {this.Blue})"
+
+
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal ToRGB (rgbColor : RGBColor) =
+        rgbColor.Red, rgbColor.Green, rgbColor.Blue
+
+    static member internal ToRGBColor (rgbColor : RGBColor) =
+        Color.rgbToRGBColor (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal ToOOPRGBColor (rgb : Color.RGB) =
+        let red, green, blue = rgb
+
+        new RGBColor (red, green, blue)
+
+    static member internal ToOOPRGBColor (rgbColor : Color.RGBColor) =
+        new RGBColor (rgbColor.red, rgbColor.green, rgbColor.blue)
 
 
 
@@ -286,50 +319,61 @@ and HEXColor () =
 
 
 
-    static member fromHEX (red, green, blue) =
+    static member FromHEX (red, green, blue) =
         new HEXColor (red, green, blue)
 
-    static member fromRGB (red, green, blue) =
+    static member FromRGB (red, green, blue) =
         let red, green, blue = ColorConversion.rgbToHEX (red, green, blue)
 
         new HEXColor (red, green, blue)
 
-    static member fromId id =
+    static member FromId id =
         let red, green, blue = ColorConversion.xTermToHEX id
 
         new HEXColor (red, green, blue)
 
 
 
-    static member fromRGBColor (rgbColor : RGBColor) =
+    static member FromRGBColor (rgbColor : RGBColor) =
         let red, green, blue = ColorConversion.rgbToHEX (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
 
         new HEXColor (red, green, blue)
 
-    static member fromXTermColor (xTermColor : XTermColor) =
+    static member FromXTermColor (xTermColor : XTermColor) =
         let red, green, blue = ColorConversion.xTermToHEX xTermColor.Id
 
         new HEXColor (red, green, blue)
 
 
 
-    // Conversioni a tipi funzionali
-    //   Usati internamente!
-    static member internal toHEX (hexColor : HEXColor) =
-        hexColor.Red, hexColor.Green, hexColor.Blue
+    static member Get color =
+        let color = Colors.HEX.get color Colors.HEX.Format.HEX
 
-    static member internal toHEXColor (hexColor : HEXColor) =
-        Color.hexToHEXColor (hexColor.Red, hexColor.Green, hexColor.Blue)
+        let red, green, blue =
+            match color with
+            | Color.Color.HEX (red, green, blue) -> red, green, blue
+            | _ -> failwith "It can't happen :)"
 
-    // Conversioni a tipi OOP
-    //   Usati internamente!
-    static member internal toOOPHEXColor (hex : Color.HEX) =
-        let red, green, blue = hex
+        HEXColor.FromHEX (red, green, blue)
 
-        new HEXColor (red, green, blue)
+    static member TryGet (color, outColor : byref<HEXColor>) =
+        let color = Colors.HEX.tryGet color Colors.HEX.Format.HEX
 
-    static member internal toOOPHEXColor (hexColor : Color.HEXColor) =
-        new HEXColor (hexColor.red, hexColor.green, hexColor.blue)
+        match color with
+        | Some color ->
+            let red, green, blue =
+                match color with
+                | Color.Color.HEX (red, green, blue) -> red, green, blue
+                | _ -> failwith "It can't happen :)"
+
+            outColor <- HEXColor.FromHEX (red, green, blue)
+
+            true
+
+        | None -> false
+
+    static member Exists color =
+        Colors.HEX.exists color
 
 
 
@@ -346,3 +390,23 @@ and HEXColor () =
 
     override this.ToString () =
         $"HEXColor({this.Red:X2}, {this.Green:X2}, {this.Blue:X2})"
+
+
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal ToHEX (hexColor : HEXColor) =
+        hexColor.Red, hexColor.Green, hexColor.Blue
+
+    static member internal ToHEXColor (hexColor : HEXColor) =
+        Color.hexToHEXColor (hexColor.Red, hexColor.Green, hexColor.Blue)
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal ToOOPHEXColor (hex : Color.HEX) =
+        let red, green, blue = hex
+
+        new HEXColor (red, green, blue)
+
+    static member internal ToOOPHEXColor (hexColor : Color.HEXColor) =
+        new HEXColor (hexColor.red, hexColor.green, hexColor.blue)

@@ -17,6 +17,8 @@
                   Il modulo Position si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
+                  Questo modulo wrappa anche i moduli Positions
+                  e PositionConversion.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
@@ -35,11 +37,11 @@ type Position =
 
     // Conversioni a tipi funzionali
     //   Usati internamente!
-    static member internal toFPosition : position : Position -> Position.Position
+    static member internal ToFPosition : position : Position -> Position.Position
 
     // Conversioni a tipi OOP
     //   Usati internamente!
-    static member internal toOOPPosition : position : Position.Position -> Position
+    static member internal ToOOPPosition : position : Position.Position -> Position
 
 
 
@@ -53,24 +55,28 @@ and Cell =
     member Row : int with get, set
     member Col : int with get, set
 
-    static member fromRowCol : row : int * col : int -> Cell
-    static member fromXY     : x   : int * y   : int -> Cell
+    static member FromRowCol : row : int * col : int -> Cell
+    static member FromXY     : x   : int * y   : int -> Cell
 
-    static member fromCoord : coord : Coord -> Cell
+    static member FromCoord : coord : Coord -> Cell
 
-    // Conversioni a tipi funzionali
-    //   Usati internamente!
-    static member internal toFRowCol : cell : Cell -> Position.RowCol
-    static member internal toFCell   : cell : Cell -> Position.Cell
-
-    // Conversioni a tipi OOP
-    //   Usati internamente!
-    static member internal toOOPCell : rowCol : Position.RowCol -> Cell
-    static member internal toOOPCell : cell   : Position.Cell   -> Cell
+    static member Get    : position : string                             -> Cell
+    static member TryGet : position : string * outPosition : byref<Cell> -> bool
+    static member Exists : position : string                             -> bool
 
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int
     override ToString    : unit       -> string
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal ToFRowCol : cell : Cell -> Position.RowCol
+    static member internal ToFCell   : cell : Cell -> Position.Cell
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal ToOOPCell : rowCol : Position.RowCol -> Cell
+    static member internal ToOOPCell : cell   : Position.Cell   -> Cell
 
 
 
@@ -84,21 +90,25 @@ and Coord =
     member X : int with get, set
     member Y : int with get, set
 
-    static member fromXY     : x   : int * y   : int -> Coord
-    static member fromRowCol : row : int * col : int -> Coord
+    static member FromXY     : x   : int * y   : int -> Coord
+    static member FromRowCol : row : int * col : int -> Coord
 
-    static member fromCell : cell : Cell -> Coord
+    static member FromCell : cell : Cell -> Coord
 
-    // Conversioni a tipi funzionali
-    //   Usati internamente!
-    static member internal toFXY    : coord : Coord -> Position.XY
-    static member internal toFCoord : coord : Coord -> Position.Coord
-
-    // Conversioni a tipi OOP
-    //   Usati internamente!
-    static member internal toOOPCoord : xY    : Position.XY    -> Coord
-    static member internal toOOPCoord : coord : Position.Coord -> Coord
+    static member Get    : position : string                              -> Coord
+    static member TryGet : position : string * outPosition : byref<Coord> -> bool
+    static member Exists : position : string                              -> bool
 
     override Equals      : obj  : obj -> bool
     override GetHashCode : unit       -> int
     override ToString    : unit       -> string
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal ToFXY    : coord : Coord -> Position.XY
+    static member internal ToFCoord : coord : Coord -> Position.Coord
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal ToOOPCoord : xY    : Position.XY    -> Coord
+    static member internal ToOOPCoord : coord : Position.Coord -> Coord

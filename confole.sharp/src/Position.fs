@@ -17,6 +17,8 @@
                   Il modulo Position si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
+                  Questo modulo wrappa anche i moduli Positions
+                  e PositionConversion.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
@@ -33,7 +35,7 @@ type Position internal () =
 
     // Conversioni a tipi funzionali
     //   Usati internamente!
-    static member internal toFPosition (position : Position) =
+    static member internal ToFPosition (position : Position) =
         match position with
         // RowCol
         | :? Cell  as cell  -> Position.RowCol (cell.Row, cell.Col)
@@ -43,12 +45,12 @@ type Position internal () =
 
     // Conversioni a tipi OOP
     //   Usati internamente!
-    static member internal toOOPPosition (position : Position.Position) : Position =
+    static member internal ToOOPPosition (position : Position.Position) : Position =
         match position with
-        | Position.RowCol rowCol -> Cell.toOOPCell   (rowCol)
-        | Position.Cell   cell   -> Cell.toOOPCell   (cell)
-        | Position.XY     xY     -> Coord.toOOPCoord (xY)
-        | Position.Coord  coord  -> Coord.toOOPCoord (coord)
+        | Position.RowCol rowCol -> Cell.ToOOPCell   rowCol
+        | Position.Cell   cell   -> Cell.ToOOPCell   cell
+        | Position.XY     xY     -> Coord.ToOOPCoord xY
+        | Position.Coord  coord  -> Coord.ToOOPCoord coord
         | position -> failwithf "%A: Unsupported position format!" position
 
 
@@ -85,36 +87,47 @@ and Cell () =
 
 
 
-    static member fromRowCol (row, col) =
+    static member FromRowCol (row, col) =
         new Cell (row, col)
 
-    static member fromXY (x, y) =
+    static member FromXY (x, y) =
         new Cell (y + 1, x + 1)
 
 
 
-    static member fromCoord (coord : Coord) =
+    static member FromCoord (coord : Coord) =
         new Cell (coord.Y, coord.X)
 
 
 
-    // Conversioni a tipi funzionali
-    //   Usati internamente!
-    static member internal toFRowCol (cell : Cell) =
-        cell.Row, cell.Col
+    static member Get position =
+        let position = Positions.RowCol.get position Positions.RowCol.Format.RowCol
 
-    static member internal toFCell (cell : Cell) =
-        Position.rowColToCell (cell.Row, cell.Col)
+        let row, col =
+            match position with
+            | Position.Position.RowCol (row, col) -> row, col
+            | _ -> failwith "It can't happen :)"
 
-    // Conversioni a tipi OOP
-    //   Usati internamente!
-    static member internal toOOPCell (rowCol : Position.RowCol) =
-        let row, col = rowCol
+        Cell.FromRowCol(row, col)
 
-        new Cell (row, col)
+    static member TryGet (position, outPosition : byref<Cell>) =
+        let position = Positions.RowCol.tryGet position Positions.RowCol.Format.RowCol
 
-    static member internal toOOPCell (cell : Position.Cell) =
-        new Cell (cell.row, cell.col)
+        match position with
+        | Some position ->
+            let row, col =
+                match position with
+                | Position.Position.RowCol (row, col) -> row, col
+                | _ -> failwith "It can't happen :)"
+
+            outPosition <- Cell.FromRowCol(row, col)
+
+            true
+
+        | None -> false
+
+    static member Exists position =
+        Positions.RowCol.exists position
 
 
 
@@ -130,6 +143,26 @@ and Cell () =
 
     override this.ToString () =
         $"Cell({this.Row}, {this.Col})"
+
+
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal ToFRowCol (cell : Cell) =
+        cell.Row, cell.Col
+
+    static member internal ToFCell (cell : Cell) =
+        Position.rowColToCell (cell.Row, cell.Col)
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal ToOOPCell (rowCol : Position.RowCol) =
+        let row, col = rowCol
+
+        new Cell (row, col)
+
+    static member internal ToOOPCell (cell : Position.Cell) =
+        new Cell (cell.row, cell.col)
 
 
 
@@ -165,36 +198,47 @@ and Coord () =
 
 
 
-    static member fromXY (x, y) =
+    static member FromXY (x, y) =
         new Coord (x, y)
 
-    static member fromRowCol (row, col) =
+    static member FromRowCol (row, col) =
         new Coord (col - 1, row - 1)
 
 
 
-    static member fromCell (cell : Cell) =
+    static member FromCell (cell : Cell) =
         new Coord (cell.Col, cell.Row)
 
 
 
-    // Conversioni a tipi funzionali
-    //   Usati internamente!
-    static member internal toFXY (coord : Coord) =
-        coord.X, coord.Y
+    static member Get position =
+        let position = Positions.XY.get position Positions.XY.Format.XY
 
-    static member internal toFCoord (coord : Coord) =
-        Position.xYToCoord (coord.X, coord.Y)
+        let x, y =
+            match position with
+            | Position.Position.XY (x, y) -> x, y
+            | _ -> failwith "It can't happen :)"
 
-    // Conversioni a tipi OOP
-    //   Usati internamente!
-    static member internal toOOPCoord (xY : Position.XY) =
-        let x, y = xY
+        Coord.FromXY(x, y)
 
-        new Coord (x, y)
+    static member TryGet (position, outPosition : byref<Coord>) =
+        let position = Positions.XY.tryGet position Positions.XY.Format.XY
 
-    static member internal toOOPCoord (coord : Position.Coord) =
-        new Coord (coord.x, coord.y)
+        match position with
+        | Some position ->
+            let x, y =
+                match position with
+                | Position.Position.XY (x, y) -> x, y
+                | _ -> failwith "It can't happen :)"
+
+            outPosition <- Coord.FromXY(x, y)
+
+            true
+
+        | None -> false
+
+    static member Exists position =
+        Positions.XY.exists position
 
 
 
@@ -210,3 +254,23 @@ and Coord () =
 
     override this.ToString () =
         $"Cell({this.X}, {this.Y})"
+
+
+
+    // Conversioni a tipi funzionali
+    //   Usati internamente!
+    static member internal ToFXY (coord : Coord) =
+        coord.X, coord.Y
+
+    static member internal ToFCoord (coord : Coord) =
+        Position.xYToCoord (coord.X, coord.Y)
+
+    // Conversioni a tipi OOP
+    //   Usati internamente!
+    static member internal ToOOPCoord (xY : Position.XY) =
+        let x, y = xY
+
+        new Coord (x, y)
+
+    static member internal ToOOPCoord (coord : Position.Coord) =
+        new Coord (coord.x, coord.y)

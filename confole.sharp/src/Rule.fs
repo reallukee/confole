@@ -112,11 +112,11 @@ type Rules internal () =
     static member RenderCursorShape shape = Rule.renderCursorShape (Some (Rules.OOPShapeToShape shape))
 
     static member RenderDefaultForegroundColor ()    = Rule.renderDefaultForegroundColor None
-    static member RenderDefaultForegroundColor color = Rule.renderDefaultForegroundColor (Some (Color.toFColor color))
+    static member RenderDefaultForegroundColor color = Rule.renderDefaultForegroundColor (Some (Color.ToFColor color))
     static member RenderDefaultBackgroundColor ()    = Rule.renderDefaultBackgroundColor None
-    static member RenderDefaultBackgroundColor color = Rule.renderDefaultBackgroundColor (Some (Color.toFColor color))
+    static member RenderDefaultBackgroundColor color = Rule.renderDefaultBackgroundColor (Some (Color.ToFColor color))
     static member RenderDefaultCursorColor     ()    = Rule.renderDefaultCursorColor     None
-    static member RenderDefaultCursorColor     color = Rule.renderDefaultCursorColor     (Some (Color.toFColor color))
+    static member RenderDefaultCursorColor     color = Rule.renderDefaultCursorColor     (Some (Color.ToFColor color))
 
     static member RenderReset () = Rule.renderReset ()
 
@@ -168,11 +168,11 @@ type Rules internal () =
     member this.CursorShape shape = rules.Add(Rule.CursorShape (Some (Rules.OOPShapeToShape shape))); this
 
     member this.DefaultForegroundColor ()    = rules.Add(Rule.DefaultForegroundColor None                         ); this
-    member this.DefaultForegroundColor color = rules.Add(Rule.DefaultForegroundColor (Some (Color.toFColor color))); this
+    member this.DefaultForegroundColor color = rules.Add(Rule.DefaultForegroundColor (Some (Color.ToFColor color))); this
     member this.DefaultBackgroundColor ()    = rules.Add(Rule.DefaultBackgroundColor None                         ); this
-    member this.DefaultBackgroundColor color = rules.Add(Rule.DefaultBackgroundColor (Some (Color.toFColor color))); this
+    member this.DefaultBackgroundColor color = rules.Add(Rule.DefaultBackgroundColor (Some (Color.ToFColor color))); this
     member this.DefaultCursorColor     ()    = rules.Add(Rule.DefaultCursorColor     None                         ); this
-    member this.DefaultCursorColor     color = rules.Add(Rule.DefaultCursorColor     (Some (Color.toFColor color))); this
+    member this.DefaultCursorColor     color = rules.Add(Rule.DefaultCursorColor     (Some (Color.ToFColor color))); this
 
     member this.ApplyAll () =
         rules
@@ -215,11 +215,11 @@ type Rules internal () =
     static member DoCursorShape shape = Rule.doCursorShape (Some (Rules.OOPShapeToShape shape))
 
     static member DoDefaultForegroundColor ()    = Rule.doDefaultForegroundColor None
-    static member DoDefaultForegroundColor color = Rule.doDefaultForegroundColor (Some (Color.toFColor color))
+    static member DoDefaultForegroundColor color = Rule.doDefaultForegroundColor (Some (Color.ToFColor color))
     static member DoDefaultBackgroundColor ()    = Rule.doDefaultBackgroundColor None
-    static member DoDefaultBackgroundColor color = Rule.doDefaultBackgroundColor (Some (Color.toFColor color))
+    static member DoDefaultBackgroundColor color = Rule.doDefaultBackgroundColor (Some (Color.ToFColor color))
     static member DoDefaultCursorColor     ()    = Rule.doDefaultCursorColor     None
-    static member DoDefaultCursorColor     color = Rule.doDefaultCursorColor     (Some (Color.toFColor color))
+    static member DoDefaultCursorColor     color = Rule.doDefaultCursorColor     (Some (Color.ToFColor color))
 
     static member DoReset () = Rule.doReset ()
 
