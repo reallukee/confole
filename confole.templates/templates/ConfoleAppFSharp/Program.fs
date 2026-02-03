@@ -23,3 +23,5 @@ module Program =
         |> ignore
 
         Format.reset ""
+
+        0

@@ -1,5 +1,5 @@
-// Program.vb ** ConfoleApp
-//   Confole: https://github.com/reallukee/confole/
+' Program.vb ** ConfoleApp
+'   Confole: https://github.com/reallukee/confole/
 
 Imports System
 
@@ -12,7 +12,7 @@ Namespace ConfoleApp
         Sub Main(args As String())
             Rules.DoTitle("ConfoleApp")
 
-            Dim formats = _
+            Dim formats As Formats = _
                 Formats.Init() _
                        .Italic(True) _
                        .ForegroundColor(New RGBColor(255, 0, 0)) _

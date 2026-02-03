@@ -1,13 +1,11 @@
 // Program.cs ** ConfoleApp
 //   Confole: https://github.com/reallukee/confole/
 
-namespace ConfoleApp
-
 using System;
 
 using Reallukee.Confole.Sharp;
 
-namespace Reallukee.Confole.Sharp;
+namespace ConfoleApp;
 
 internal class Program
 {
