@@ -13,8 +13,7 @@
     Description : Contiene le firme dei tipi e delle funzioni
                   pubbliche del modulo PositionConversion.
                   Questo modulo parla da solo! Dai si
-                  capisce cosa fa!!!
-                  MIAO! MIAO! MIAO!
+                  capisce cosa fa!
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)

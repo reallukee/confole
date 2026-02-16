@@ -32,16 +32,50 @@ open PositionConversion
 
 module Act =
 
+    (*
+        Hei! Come va, amico?
+
+        Questo è un modulo di ALIAS. L'idea è semplice:
+        sfruttare la potenza degli alias F# per poter
+        scrivere codice più corto (e anche più enigmatico).
+
+        Gli alias F# non rendono più grande la call stack!
+
+        Qui dentro fornisco, ove possibile, abbreviazioni,
+        e nel caso non lo fosse (immagina abbreviare "init"
+        con "i"?) nomi 1:1 con il modulo originale.
+
+        Perché?
+
+        Così puoi scrivere il tuo codice usando SOLO Act
+        e non Action. Figo, vero?
+        Cosa? Non è inutile!
+
+        Gli alias (dovrebbero) parlare da sè.
+
+        RIASSUNTO:
+
+            ACT ~= ACTION
+
+        Per delucidazioni sul funzionamento dell'API
+        guarda il modulo Action.
+    *)
+
     open Action
 
-    val IC : int option   -> Action
-    val DC : int option   -> Action
-    val IL : int option   -> Action
-    val DL : int option   -> Action
-    val ED : Erase option -> Action
-    val EL : Erase option -> Action
+    val IC : int option   -> Action // InsertCharacter
+    val DC : int option   -> Action // DeleteCharacter
+    val IL : int option   -> Action // InsertLine
+    val DL : int option   -> Action // DeleteLine
+    val ED : Erase option -> Action // EraseDisplay
+    val EL : Erase option -> Action // EraseLine
+
+
 
     // Alias modalità manuale
+    val render  : (Action  -> string)
+    val renders : (Actions -> string)
+
     val renderIC : (int option -> string)
     val renderDC : (int option -> string)
 
@@ -51,8 +85,19 @@ module Act =
     val renderED : (Erase option -> string)
     val renderEL : (Erase option -> string)
 
+    val renderReset : (unit -> string)
+
+
+
     // Alias modalità funzionale
+    val init  : (unit    -> Actions)
     val initw : (Actions -> Actions)
+
+    val trunk : (Actions -> Actions)
+    val clear : (Actions -> Actions)
+
+    val view    : (Actions -> Actions)
+    val preview : (Actions -> Actions)
 
     val ic : (int option -> Actions -> Actions)
     val dc : (int option -> Actions -> Actions)
@@ -63,14 +108,22 @@ module Act =
     val ed : (Erase option -> Actions -> Actions)
     val el : (Erase option -> Actions -> Actions)
 
+    val apply      : (Action  -> unit)
     val applynl    : (Action  -> unit)
+    val applyAll   : (Actions -> unit)
     val applyallnl : (Actions -> unit)
+
+    val reset : (unit -> unit)
 
     val config   : ((Actions -> Actions) -> unit)
     val confignl : ((Actions -> Actions) -> unit)
 
+
+
     // Alias modalità DSL
     val builder : Builder
+
+
 
     // Alias modalità imperativa
     val doIC : (int option -> unit)
@@ -81,3 +134,5 @@ module Act =
 
     val doED : (Erase option -> unit)
     val doEL : (Erase option -> unit)
+
+    val doReset : (unit -> unit)

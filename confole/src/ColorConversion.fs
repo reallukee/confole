@@ -14,8 +14,7 @@
                   funzioni pubbliche (e non) del modulo
                   ColorConversion.
                   Questo modulo parla da solo! Dai si
-                  capisce cosa fa!!!
-                  MIAO! MIAO! MIAO!
+                  capisce cosa fa!
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
@@ -132,29 +131,44 @@ module ColorConversion =
 
 
 
-    let private baseColors = [|
-        (000, 000, 000), ("00", "00", "00") // 00   Nero
-        (205, 000, 000), ("CD", "00", "00") // 01   Rosso
-        (000, 205, 000), ("00", "CD", "00") // 02   Verde
-        (205, 205, 000), ("CD", "CD", "00") // 03   Giallo
-        (000, 000, 238), ("00", "00", "EE") // 04   Blu
-        (205, 000, 205), ("CD", "00", "CD") // 05   Magenta
-        (000, 205, 205), ("00", "CD", "CD") // 06   Ciano
-        (229, 229, 229), ("E5", "E5", "E5") // 07   Bianco
-        (127, 127, 127), ("7F", "7F", "7F") // 08   Nero Brillante
-        (255, 000, 000), ("FF", "00", "00") // 09   Rosso Brillante
-        (000, 255, 000), ("00", "FF", "00") // 10   Verde Brillante
-        (255, 255, 000), ("FF", "FF", "00") // 11   Giallo Brillante
-        (092, 092, 255), ("5C", "5C", "FF") // 12   Blu Brillante
-        (255, 000, 255), ("FF", "00", "FF") // 13   Magenta Brillante
-        (000, 255, 255), ("00", "FF", "FF") // 14   Ciano Brillante
-        (255, 255, 255), ("FF", "FF", "FF") // 15   Bianco Brillante
+    let private bases = [|
+        (000, 000, 000), ("00", "00", "00") // 00 Nero
+        (205, 000, 000), ("CD", "00", "00") // 01 Rosso
+        (000, 205, 000), ("00", "CD", "00") // 02 Verde
+        (205, 205, 000), ("CD", "CD", "00") // 03 Giallo
+        (000, 000, 238), ("00", "00", "EE") // 04 Blu
+        (205, 000, 205), ("CD", "00", "CD") // 05 Magenta
+        (000, 205, 205), ("00", "CD", "CD") // 06 Ciano
+        (229, 229, 229), ("E5", "E5", "E5") // 07 Bianco
+
+        (127, 127, 127), ("7F", "7F", "7F") // 08 Nero Brillante
+        (255, 000, 000), ("FF", "00", "00") // 09 Rosso Brillante
+        (000, 255, 000), ("00", "FF", "00") // 10 Verde Brillante
+        (255, 255, 000), ("FF", "FF", "00") // 11 Giallo Brillante
+        (092, 092, 255), ("5C", "5C", "FF") // 12 Blu Brillante
+        (255, 000, 255), ("FF", "00", "FF") // 13 Magenta Brillante
+        (000, 255, 255), ("00", "FF", "FF") // 14 Ciano Brillante
+        (255, 255, 255), ("FF", "FF", "FF") // 15 Bianco Brillante
+    |]
+
+    let private cubes = [|
+        yield 0
+
+        yield 95
+
+        for i in 1 .. 4 do
+            yield 95 + i * 40
+    |]
+
+    let private grays = [|
+        for i in 0 .. 23 do
+            yield 8 + i * 10
     |]
 
     let xTermToRGB id =
         match id with
         | id when id >= 0 && id <= 15 ->
-            let (red, green, blue), _ = baseColors.[id]
+            let (red, green, blue), _ = bases.[id]
 
             red, green, blue
 
@@ -165,11 +179,7 @@ module ColorConversion =
             let green' = id / 6 % 6
             let blue'  = id % 6
 
-            let scale = [|
-                0; 95; 135; 175; 215; 255
-            |]
-
-            scale[red'], scale[green'], scale[blue']
+            cubes[red'], cubes[green'], cubes[blue']
 
         | id when id >= 232 && id <= 255 ->
             let gray = 8 + (id - 232) * 10
@@ -188,7 +198,7 @@ module ColorConversion =
 
         match id with
         | id when id >= 0 && id <= 15 ->
-            let (red, green, blue), _ = baseColors.[id]
+            let (red, green, blue), _ = bases.[id]
 
             {
                 red   = red
@@ -203,14 +213,10 @@ module ColorConversion =
             let green' = id / 6 % 6
             let blue'  = id % 6
 
-            let scale = [|
-                0; 95; 135; 175; 215; 255
-            |]
-
             {
-                red   = scale[red']
-                green = scale[green']
-                blue  = scale[blue']
+                red   = cubes[red']
+                green = cubes[green']
+                blue  = cubes[blue']
             }
 
         | id when id >= 232 && id <= 255 ->
@@ -245,17 +251,13 @@ module ColorConversion =
             redd * redd + greend * greend + blued * blued
 
         let basei, based =
-            baseColors
+            bases
             |> Array.mapi (fun index (color, _) ->
                 index, distance(red, green, blue) color
             )
             |> Array.minBy snd
 
         let cubei, cubed =
-            let cubes = [|
-                0; 95; 135; 175; 215; 255
-            |]
-
             let closest value =
                 cubes
                 |> Array.indexed
@@ -273,10 +275,6 @@ module ColorConversion =
             index, dist
 
         let grayi, grayd =
-            let grays = [|
-                for i in 0 .. 23 -> 8 + i * 10
-            |]
-
             let closest () =
                 grays
                 |> Array.indexed
@@ -293,13 +291,23 @@ module ColorConversion =
 
         let id, _ =
             [|
-                // Disabilito pk a causa di problemi nel trovare il colore
-                // RGB/HEX corrispondente.
-                // Sostanzialmente, essendo i primi 16 colori variabili,
-                // l'efficacia di questa funzione si riduce notevolmente.
-                // Da rivedere!
+                (*
+                    TODO
+                    ----
 
-                // basei, based
+                    Questa funzionalità è disabilitata. Sebbene
+                    abbia senso causa problemi nella conversione
+                    dei colori da XTerm a RGB/HEX.
+
+                    Sostanzialmente, essendo i primi 16 colori
+                    variabili, l'efficacia di questa funzione si
+                    riduce notevolmente.
+
+                    Cercare un workaround!
+
+                    // basei, based
+                *)
+
                 cubei, cubed
                 grayi, grayd
             |]
@@ -326,17 +334,13 @@ module ColorConversion =
             redd * redd + greend * greend + blued * blued
 
         let basei, based =
-            baseColors
+            bases
             |> Array.mapi (fun index (color, _) ->
                 index, distance(red, green, blue) color
             )
             |> Array.minBy snd
 
         let cubei, cubed =
-            let cubes = [|
-                0; 95; 135; 175; 215; 255
-            |]
-
             let closest value =
                 cubes
                 |> Array.indexed
@@ -354,10 +358,6 @@ module ColorConversion =
             index, dist
 
         let grayi, grayd =
-            let grays = [|
-                for i in 0 .. 23 -> 8 + i * 10
-            |]
-
             let closest () =
                 grays
                 |> Array.indexed
@@ -374,13 +374,23 @@ module ColorConversion =
 
         let id, _ =
             [|
-                // Disabilito pk a causa di problemi nel trovare il colore
-                // RGB/HEX corrispondente.
-                // Sostanzialmente, essendo i primi 16 colori variabili,
-                // l'efficacia di questa funzione si riduce notevolmente.
-                // Da rivedere!
+                (*
+                    TODO
+                    ----
 
-                // basei, based
+                    Questa funzionalità è disabilitata. Sebbene
+                    abbia senso causa problemi nella conversione
+                    dei colori da XTerm a RGB/HEX.
+
+                    Sostanzialmente, essendo i primi 16 colori
+                    variabili, l'efficacia di questa funzione si
+                    riduce notevolmente.
+
+                    Cercare un workaround!
+
+                    // basei, based
+                *)
+
                 cubei, cubed
                 grayi, grayd
             |]

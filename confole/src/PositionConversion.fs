@@ -14,8 +14,7 @@
                   funzioni pubbliche (e non) del modulo
                   PositionConversion.
                   Questo modulo parla da solo! Dai si
-                  capisce cosa fa!!!
-                  MIAO! MIAO! MIAO!
+                  capisce cosa fa!
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)

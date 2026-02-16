@@ -49,6 +49,9 @@ module Rul =
     let DCC  color = DefaultCursorColor       color
 
     // Alias modalità manuale
+    let render  = Rule.render
+    let renders = Rule.renders
+
     let renderTTL = renderTitle
 
     let renderSCB = renderShowCursorBlinking
@@ -69,8 +72,17 @@ module Rul =
     let renderDBGC = renderDefaultBackgroundColor
     let renderDCC  = renderDefaultCursorColor
 
+    let renderReset = Rule.renderReset
+
     // Alias modalità funzionale
+    let init  = Rule.init
     let initw = initWith
+
+    let trunk = Rule.trunk
+    let clear = Rule.clear
+
+    let view    = Rule.view
+    let preview = Rule.preview
 
     let ttl = title
 
@@ -92,8 +104,12 @@ module Rul =
     let dbgc = defaultBackgroundColor
     let dcc  = defaultCursorColor
 
+    let apply      = Rule.apply
     let applynl    = applyNewLine
+    let applyAll   = Rule.applyAll
     let applyallnl = applyAllNewLine
+
+    let reset = Rule.reset
 
     let config   = configure
     let confignl = configureNewLine
@@ -121,3 +137,5 @@ module Rul =
     let doDFGC = doDefaultForegroundColor
     let doDBGC = doDefaultBackgroundColor
     let doDCC  = doDefaultCursorColor
+
+    let doReset = Rule.doReset

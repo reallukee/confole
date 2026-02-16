@@ -49,6 +49,9 @@ module Fmt =
     let BGC  color = BackgroundColor        color
 
     // Alias modalità manuale
+    let render  = Format.render
+    let renders = Format.renders
+
     let renderRST = renderRestore
 
     let renderRFGC = renderRestoreForegroundColor
@@ -66,8 +69,17 @@ module Fmt =
     let renderFGC = renderForegroundColor
     let renderBGC = renderBackgroundColor
 
+    let renderReset = Format.renderReset
+
     // Alias modalità funzionale
+    let init  = Format.init
     let initw = initWith
+
+    let trunk = Format.trunk
+    let clear = Format.clear
+
+    let view    = Format.view
+    let preview = Format.preview
 
     let rst = restore
 
@@ -86,8 +98,12 @@ module Fmt =
     let fgc = foregroundColor
     let bgc = backgroundColor
 
+    let apply      = Format.apply
     let applynl    = applyNewLine
+    let applyAll   = Format.applyAll
     let applyallnl = applyAllNewLine
+
+    let reset = Format.reset
 
     let config   = configure
     let confignl = configureNewLine
@@ -112,3 +128,5 @@ module Fmt =
 
     let doFGC = doForegroundColor
     let doBGC = doBackgroundColor
+
+    let doReset = Format.doReset

@@ -63,6 +63,24 @@ module Format =
 
 
 
+    (*
+        NOTA IMPLEMENTATIVA
+        ===================
+
+        Per motivi prestazionali, la lista di Format viene
+        composta in ordine inverso. Prima di eseguire
+        qualsiasi operazione di valutazione o consumo, la
+        lista viene quindi riordinata correttamente.
+
+        Per questo motivo è FORTEMENTE sconsigliato creare la
+        lista manualmente senza usufruire delle funzioni
+        appositamente fornite.
+
+        Il core del modulo è DE FACTO "render" (la funzione
+        definita qui sotto :O). Render ottiene un Format e
+        lo converte in stringa.
+    *)
+
     // Modalità manuale
     let render text format =
         match format with

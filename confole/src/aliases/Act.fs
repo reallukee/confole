@@ -42,6 +42,9 @@ module Act =
     let EL erase = EraseLine       erase
 
     // Alias modalità manuale
+    let render  = Action.render
+    let renders = Action.renders
+
     let renderIC = renderInsertCharacter
     let renderDC = renderDeleteCharacter
 
@@ -51,8 +54,17 @@ module Act =
     let renderED = renderEraseDisplay
     let renderEL = renderEraseLine
 
+    let renderReset = Action.renderReset
+
     // Alias modalità funzionale
+    let init  = Action.init
     let initw = initWith
+
+    let trunk = Action.trunk
+    let clear = Action.clear
+
+    let view    = Action.view
+    let preview = Action.preview
 
     let ic = insertCharacter
     let dc = deleteCharacter
@@ -63,8 +75,12 @@ module Act =
     let ed = eraseDisplay
     let el = eraseLine
 
+    let apply      = Action.apply
     let applynl    = applyNewLine
+    let applyAll   = Action.applyAll
     let applyallnl = applyAllNewLine
+
+    let reset = Action.reset
 
     let config   = configure
     let confignl = configureNewLine
@@ -81,3 +97,5 @@ module Act =
 
     let doED = doEraseDisplay
     let doEL = doEraseLine
+
+    let doReset = Action.doReset

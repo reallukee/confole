@@ -46,6 +46,9 @@ module Cur =
     let MV  position = Move         position
 
     // Alias modalità manuale
+    let render  = Cursor.render
+    let renders = Cursor.renders
+
     let renderRVS = renderReverse
     let renderSV  = renderSave
     let renderRST = renderRestore
@@ -60,8 +63,17 @@ module Cur =
 
     let renderMV = renderMove
 
+    let renderReset = Cursor.renderReset
+
     // Alias modalità funzionale
+    let init  = Cursor.init
     let initw = initWith
+
+    let trunk = Cursor.trunk
+    let clear = Cursor.clear
+
+    let view    = Cursor.view
+    let preview = Cursor.preview
 
     let rvs = reverse
     let sv  = save
@@ -77,8 +89,12 @@ module Cur =
 
     let mv = move
 
+    let apply      = Cursor.apply
     let applynl    = applyNewLine
+    let applyAll   = Cursor.applyAll
     let applyallnl = applyAllNewLine
+
+    let reset = Cursor.reset
 
     let config   = configure
     let confignl = configureNewLine
@@ -100,3 +116,5 @@ module Cur =
     let doPVL = doPreviousLine
 
     let doMV = doMove
+
+    let doReset = Cursor.doReset

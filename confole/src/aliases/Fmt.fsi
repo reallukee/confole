@@ -32,23 +32,57 @@ open PositionConversion
 
 module Fmt =
 
+    (*
+        Hei! Come va, amico?
+
+        Questo è un modulo di ALIAS. L'idea è semplice:
+        sfruttare la potenza degli alias F# per poter
+        scrivere codice più corto (e anche più enigmatico).
+
+        Gli alias F# non rendono più grande la call stack!
+
+        Qui dentro fornisco, ove possibile, abbreviazioni,
+        e nel caso non lo fosse (immagina abbreviare "init"
+        con "i"?) nomi 1:1 con il modulo originale.
+
+        Perché?
+
+        Così puoi scrivere il tuo codice usando SOLO Fmt
+        e non Format. Figo, vero?
+        Cosa? Non è inutile!
+
+        Gli alias (dovrebbero) parlare da sè.
+
+        RIASSUNTO:
+
+            FMT ~= FORMAT
+
+        Per delucidazioni sul funzionamento dell'API
+        guarda il modulo Format.
+    *)
+
     open Format
 
-    val RST  : Format
-    val RFGC : Format
-    val RBGC : Format
-    val BLD  : bool option  -> Format
-    val FNT  : bool option  -> Format
-    val ITC  : bool option  -> Format
-    val UND  : bool option  -> Format
-    val BKG  : bool option  -> Format
-    val RVS  : bool option  -> Format
-    val HDN  : bool option  -> Format
-    val SKT  : bool option  -> Format
-    val FGC  : Color option -> Format
-    val BGC  : Color option -> Format
+    val RST  : Format                 // Restore
+    val RFGC : Format                 // RestoreForegroundColor
+    val RBGC : Format                 // RestoreBackgroundColor
+    val BLD  : bool option  -> Format // Bold
+    val FNT  : bool option  -> Format // Faint
+    val ITC  : bool option  -> Format // Italic
+    val UND  : bool option  -> Format // Underline
+    val BKG  : bool option  -> Format // Blinking
+    val RVS  : bool option  -> Format // Reverse
+    val HDN  : bool option  -> Format // Hidden
+    val SKT  : bool option  -> Format // Strikeout
+    val FGC  : Color option -> Format // ForegroundColor
+    val BGC  : Color option -> Format // BackgroundColor
+
+
 
     // Alias modalità manuale
+    val render  : (string -> Format  -> string)
+    val renders : (string -> Formats -> string)
+
     val renderRST : (string -> string)
 
     val renderRFGC : (string -> string)
@@ -66,8 +100,19 @@ module Fmt =
     val renderFGC : (string -> Color option -> string)
     val renderBGC : (string -> Color option -> string)
 
+    val renderReset : (string -> string)
+
+
+
     // Alias modalità funzionale
+    val init  : (unit    -> Formats)
     val initw : (Formats -> Formats)
+
+    val trunk : (Formats -> Formats)
+    val clear : (Formats -> Formats)
+
+    val view    : (Formats -> Formats)
+    val preview : (Formats -> Formats)
 
     val rst : (Formats -> Formats)
 
@@ -86,14 +131,22 @@ module Fmt =
     val fgc : (Color option -> Formats -> Formats)
     val bgc : (Color option -> Formats -> Formats)
 
+    val apply      : (string -> Format  -> unit)
     val applynl    : (string -> Format  -> unit)
+    val applyAll   : (string -> Formats -> unit)
     val applyallnl : (string -> Formats -> unit)
+
+    val reset : (string -> unit)
 
     val config   : (string -> (Formats -> Formats) -> unit)
     val confignl : (string -> (Formats -> Formats) -> unit)
 
+
+
     // Alias modalità DSL
     val builder : Builder
+
+
 
     // Alias modalità imperativa
     val doRST : (string -> unit)
@@ -112,3 +165,5 @@ module Fmt =
 
     val doFGC : (string -> Color option -> unit)
     val doBGC : (string -> Color option -> unit)
+
+    val doReset : (string -> unit)

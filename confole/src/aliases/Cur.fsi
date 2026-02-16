@@ -32,20 +32,54 @@ open PositionConversion
 
 module Cur =
 
+    (*
+        Hei! Come va, amico?
+
+        Questo è un modulo di ALIAS. L'idea è semplice:
+        sfruttare la potenza degli alias F# per poter
+        scrivere codice più corto (e anche più enigmatico).
+
+        Gli alias F# non rendono più grande la call stack!
+
+        Qui dentro fornisco, ove possibile, abbreviazioni,
+        e nel caso non lo fosse (immagina abbreviare "init"
+        con "i"?) nomi 1:1 con il modulo originale.
+
+        Perché?
+
+        Così puoi scrivere il tuo codice usando SOLO Cur
+        e non Cursor. Figo, vero?
+        Cosa? Non è inutile!
+
+        Gli alias (dovrebbero) parlare da sè.
+
+        RIASSUNTO:
+
+            CUR ~= CURSOR
+
+        Per delucidazioni sul funzionamento dell'API
+        guarda il modulo Cursor.
+    *)
+
     open Cursor
 
-    val RVS : Cursor
-    val SV  : Cursor
-    val RST : Cursor
-    val U   : int option      -> Cursor
-    val D   : int option      -> Cursor
-    val NX  : int option      -> Cursor
-    val PV  : int option      -> Cursor
-    val NXL : int option      -> Cursor
-    val PVL : int option      -> Cursor
-    val MV  : Position option -> Cursor
+    val RVS : Cursor                    // Reverse
+    val SV  : Cursor                    // Save
+    val RST : Cursor                    // Restore
+    val U   : int option      -> Cursor // Up
+    val D   : int option      -> Cursor // Down
+    val NX  : int option      -> Cursor // Next
+    val PV  : int option      -> Cursor // Previous
+    val NXL : int option      -> Cursor // NextLine
+    val PVL : int option      -> Cursor // PreviousLine
+    val MV  : Position option -> Cursor // Move
+
+
 
     // Alias modalità manuale
+    val render  : (Cursor  -> string)
+    val renders : (Cursors -> string)
+
     val renderRVS : (unit -> string)
     val renderSV  : (unit -> string)
     val renderRST : (unit -> string)
@@ -60,8 +94,19 @@ module Cur =
 
     val renderMV : (Position option -> string)
 
+    val renderReset : (unit -> string)
+
+
+
     // Alias modalità funzionale
+    val init  : (unit    -> Cursors)
     val initw : (Cursors -> Cursors)
+
+    val trunk : (Cursors -> Cursors)
+    val clear : (Cursors -> Cursors)
+
+    val view    : (Cursors -> Cursors)
+    val preview : (Cursors -> Cursors)
 
     val rvs : (Cursors -> Cursors)
     val sv  : (Cursors -> Cursors)
@@ -77,14 +122,22 @@ module Cur =
 
     val mv : (Position option -> Cursors -> Cursors)
 
+    val apply      : (Cursor  -> unit)
     val applynl    : (Cursor  -> unit)
+    val applyAll   : (Cursors -> unit)
     val applyallnl : (Cursors -> unit)
+
+    val reset : (unit -> unit)
 
     val config   : ((Cursors -> Cursors) -> unit)
     val confignl : ((Cursors -> Cursors) -> unit)
 
+
+
     // Alias modalità DSL
     val builder : Builder
+
+
 
     // Alias modalità imperativa
     val doRVS : (unit -> unit)
@@ -100,3 +153,5 @@ module Cur =
     val doPVL : (int option -> unit)
 
     val doMV : (Position option -> unit)
+
+    val doReset : (unit -> unit)
