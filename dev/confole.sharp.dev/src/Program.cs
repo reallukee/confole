@@ -9,7 +9,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Rule.doTitle("Confole#");
+        Rules.DoTitle("Confole#");
 
         Formats formats =
             Formats.Init()
@@ -25,7 +25,6 @@ internal class Program
 
         // Alias
 
-        /*
         Fmt fmt =
             Fmt.Init()
                .ITC(true)
@@ -33,6 +32,9 @@ internal class Program
                .BGC(new RGBColor(0, 0, 255));
 
         fmt.ApplyAll("Hello, World!", true);
-        */
+
+        Console.ReadKey(true);
+
+        Formats.Reset("");
     }
 }

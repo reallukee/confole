@@ -26,7 +26,6 @@ module Program =
 
         // Alias
 
-        (*
         let fmt =
             Format.init ()
             |> Fmt.itc (Some true)
@@ -34,6 +33,10 @@ module Program =
             |> Fmt.bgc (Some (Color.RGB (0, 0, 255)))
 
         Fmt.applyallnl "Hello, World!" fmt
-        *)
+
+        do Console.ReadKey(true)
+        |> ignore
+
+        Format.reset ""
 
         0
