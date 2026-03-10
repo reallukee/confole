@@ -2,7 +2,7 @@
 * text=auto eol=lf
 
 # NO! NO! NO!
-confole.templates/**/* linguist-detectable=false
+**/*.templates/**/* linguist-detectable=false
 
 *.cs linguist-detectable=false
 *.vb linguist-detectable=false
