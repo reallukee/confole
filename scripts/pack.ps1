@@ -48,6 +48,8 @@ switch ($Target) {
 }
 
 $Projects | ForEach-Object {
+    & dotnet clean $_ --configuration ${Configuration}
+
     & dotnet restore $_ --ignore-failed-sources
 
     & dotnet build $_ --no-restore --configuration ${Configuration}
