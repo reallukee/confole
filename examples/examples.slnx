@@ -1,0 +1,8 @@
+﻿<Solution>
+  <Folder Name="/common/">
+    <Project Path="../confole/confole.fsproj" />
+    <Project Path="../confole.sharp/confole.sharp.fsproj" />
+  </Folder>
+  <Project Path="ChangeOutputColor/ChangeOutputColor.fsproj" />
+  <Project Path="ChangeOutputColorSharp/ChangeOutputColorSharp.csproj" />
+</Solution>

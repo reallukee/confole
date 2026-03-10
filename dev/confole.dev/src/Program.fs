@@ -26,6 +26,8 @@ module Program =
 
         // Alias
 
+        Rul.doTTL "Confole"
+
         let fmt =
             Format.init ()
             |> Fmt.itc (Some true)
