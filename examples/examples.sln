@@ -13,6 +13,14 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ChangeOutputColor", "Change
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeOutputColorSharp", "ChangeOutputColorSharp\ChangeOutputColorSharp.csproj", "{D15F653E-693F-42BD-9C93-2AD8FAACAF50}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ConfoleApp", "ConfoleApp\ConfoleApp.fsproj", "{77066990-15B8-44C4-B422-4569BDE06585}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfoleAppSharp", "ConfoleAppSharp\ConfoleAppSharp.csproj", "{60839E9E-BD48-4880-8BA0-80015B5C81F1}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ConfoleEmptyApp", "ConfoleEmptyApp\ConfoleEmptyApp.fsproj", "{B414EDC7-6D86-4B43-9D19-29B4F6A4E899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfoleEmptyAppSharp", "ConfoleEmptyAppSharp\ConfoleEmptyAppSharp.csproj", "{562E3236-0223-40DE-A42A-9109DBB9B5E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +46,22 @@ Global
 		{D15F653E-693F-42BD-9C93-2AD8FAACAF50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D15F653E-693F-42BD-9C93-2AD8FAACAF50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D15F653E-693F-42BD-9C93-2AD8FAACAF50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77066990-15B8-44C4-B422-4569BDE06585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77066990-15B8-44C4-B422-4569BDE06585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77066990-15B8-44C4-B422-4569BDE06585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77066990-15B8-44C4-B422-4569BDE06585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60839E9E-BD48-4880-8BA0-80015B5C81F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60839E9E-BD48-4880-8BA0-80015B5C81F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60839E9E-BD48-4880-8BA0-80015B5C81F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60839E9E-BD48-4880-8BA0-80015B5C81F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B414EDC7-6D86-4B43-9D19-29B4F6A4E899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B414EDC7-6D86-4B43-9D19-29B4F6A4E899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B414EDC7-6D86-4B43-9D19-29B4F6A4E899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B414EDC7-6D86-4B43-9D19-29B4F6A4E899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{562E3236-0223-40DE-A42A-9109DBB9B5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{562E3236-0223-40DE-A42A-9109DBB9B5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{562E3236-0223-40DE-A42A-9109DBB9B5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{562E3236-0223-40DE-A42A-9109DBB9B5E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{65AE7BFB-6E8F-4825-9C98-EC93360E6130} = {D1A44319-2144-4B30-AD27-693D03A05C3D}
