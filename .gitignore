@@ -3,7 +3,7 @@
 .run/
 
 # DotNet
-global.json
+# global.json
 
 # Visual Studio
 .vs/
