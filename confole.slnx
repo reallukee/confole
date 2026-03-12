@@ -1,11 +1,20 @@
 ﻿<Solution>
-  <Folder Name="/sharp/">
-    <Project Path="confole.sharp.dev/confole.sharp.dev.csproj" />
-    <Project Path="confole.sharp/confole.sharp.fsproj" />
+  <Folder Name="/soluzione/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="NuGet.config" />
+  </Folder>
+  <Folder Name="/dev/">
+    <Project Path="dev/confole.dev/confole.dev.fsproj" />
+    <Project Path="dev/confole.sharp.dev/confole.sharp.dev.csproj" />
   </Folder>
   <Folder Name="/templates/">
     <Project Path="confole.templates/confole.templates.csproj" />
   </Folder>
-  <Project Path="confole.dev/confole.dev.fsproj" />
+  <Folder Name="/test/">
+    <Project Path="test/confole.test/confole.test.fsproj" />
+    <Project Path="test/confole.sharp.test/confole.sharp.test.csproj" />
+  </Folder>
   <Project Path="confole/confole.fsproj" />
+  <Project Path="confole.sharp/confole.sharp.fsproj" />
 </Solution>

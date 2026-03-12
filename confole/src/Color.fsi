@@ -12,19 +12,24 @@
     Title       : COLOR
     Description : Contiene le firme dei tipi e delle funzioni
                   pubbliche del modulo Color.
+                  Funzioni helper per fare wrapping e unwrapping
+                  di Color e tipi satellite.
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
 module Color =
+
     type XTermColor = {
         id : int
     }
+
+    type XTerm = int
 
     type RGBColor = {
         red   : int
@@ -32,25 +37,28 @@ module Color =
         blue  : int
     }
 
+    type RGB = int * int * int
+
     type HEXColor = {
         red   : string
         green : string
         blue  : string
     }
 
+    type HEX = string * string * string
+
     type Color =
-        | XTerm      of code  : int
+        | XTerm      of id    : XTerm
         | XTermColor of color : XTermColor
-        | RGB        of red   : int        * green : int    * blue : int
+        | RGB        of rgb   : RGB
         | RGBColor   of color : RGBColor
-        | HEX        of red   : string     * green : string * blue : string
+        | HEX        of hex   : HEX
         | HEXColor   of color : HEXColor
 
-    val rgbToHEX : rgb : int    * int    * int    -> string * string * string
-    val hexToRGB : hex : string * string * string -> int    * int    * int
+    val xTermToXTermColor : id  : XTerm -> XTermColor
+    val rgbToRGBColor     : rgb : RGB   -> RGBColor
+    val hexToHEXColor     : hex : HEX   -> HEXColor
 
-    val rgbColorToHEXColor : rgbColor : RGBColor -> HEXColor
-    val hexColorToRGBColor : hexColor : HEXColor -> RGBColor
-
-    val colorToRGB : color : Color -> int    * int    * int
-    val colorToHEX : color : Color -> string * string * string
+    val xTermColorToXTerm : xTermColor : XTermColor -> XTerm
+    val rgbColorToRGB     : rgbColor   : RGBColor   -> RGB
+    val hexColorToHEX     : hexColor   : HEXColor   -> HEX

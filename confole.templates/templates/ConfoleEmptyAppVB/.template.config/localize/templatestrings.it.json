@@ -1,0 +1,24 @@
+{
+  "name": "App Console Confole Vuota",
+  "description": "Fornisce un template per la creazione di un'App Console VB vuota con Confole.",
+  "author": "Luca Pollicino",
+
+  "symbols/TargetFrameworkOverride/description": "Ignora il framework di destinazione.",
+  "symbols/TargetFrameworkOverride/displayName": "Override del framework di destinazione",
+
+  "symbols/Framework/description": "Il framework di destinazione per il progetto.",
+  "symbols/Framework/choices/net8.0/description": "Destinazione net8.0.",
+  "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
+  "symbols/Framework/displayName": "Framework",
+
+  "symbols/skipRestore/description": "Se specificato, ignora il ripristino automatico del progetto durante la creazione.",
+  "symbols/skipRestore/displayName": "Salta ripristino",
+
+  "postActions/restore/description": "Ripristinare i pacchetti NuGet richiesti da questo progetto.",
+  "postActions/restore/manualInstructions/default/text": "Esegui 'dotnet restore'",
+
+  "postActions/add-confole-sharp/description": "Aggiunge il pacchetto NuGet Confole# in questo progetto.",
+  "postActions/add-confole-sharp/manualInstructions/default/test": "Esegui 'dotnet add package Reallukee.Confole.Sharp --version 1.3.0'",
+
+  "postActions/open-file/description": "Apre Program.vb nell'editor."
+}

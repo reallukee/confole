@@ -1,95 +1,112 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "name": "Confole Console App",
-  "description": "Fornisce un template per la creazione di App Console F# con Confole",
-  "icon": "icon.png",
-  "sourceName": "ConfoleApp",
-  "author": "Luca Pollicino (Reallukee)",
+  "name": "App Console Confole",
+  "author": "Luca Pollicino",
+  "description": "Fornisce un template per la creazione di un'App Console F# con Confole.",
+  "defaultName": "ConfoleApp",
   "language": [
     "F#"
   ],
-  "identity": "Reallukee.Confole.Templates.FSharp",
-  "groupIdentity": "Reallukee.Confole.Templates",
-  "shortName": [
-    "confole-app"
-  ],
-  "preferNameDirectory": true,
-  "shortcuts": [],
-  "tags": {
-    "language": "F#",
-    "type": "project",
-    "projectType": "console"
-  },
   "classifications": [
     "Console",
     "Reallukee",
     "Confole"
   ],
+  "tags": {
+    "language": "F#",
+    "type": "project",
+    "projectType": "console"
+  },
+  "sourceName": "ConfoleApp",
+  "identity": "Reallukee.Confole.Templates.App.FSharp",
+  "groupIdentity": "Reallukee.Confole.App.Templates",
+  "shortName": [
+    "confole-app"
+  ],
+  "preferNameDirectory": true,
+  "shortcuts": [],
   "symbols": {
-    "mode": {
-      "displayName": "Modalità",
-      "description": "Scegli stile",
+    "TargetFrameworkOverride": {
       "type": "parameter",
+      "description": "Ignora il framework di destinazione.",
+      "replaces": "TargetFrameworkOverride",
+      "datatype": "string",
+      "defaultValue": "",
+      "displayName": "Override del framework di destinazione"
+    },
+    "Framework": {
+      "type": "parameter",
+      "description": "Il framework di destinazione per il progetto.",
       "datatype": "choice",
       "choices": [
         {
-          "choice": "functional",
-          "description": "Stile funzionale",
-          "value": "Funzionale"
-        },
-        {
-          "choice": "imperative",
-          "description": "Stile imperativo",
-          "value": "Imperativo"
+          "choice": "net8.0",
+          "description": "Destinazione net8.0.",
+          "displayName": ".NET 8.0"
         }
       ],
-      "defaultValue": "functional"
+      "replaces": "net8.0",
+      "defaultValue": "net8.0",
+      "displayName": "Framework"
     },
-    "restore": {
-      "displayName": "Restore",
-      "description": "Restore",
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
+    },
+    "skipRestore": {
       "type": "parameter",
       "datatype": "bool",
-      "defaultValue": "true"
+      "description": "Se specificato, ignora il ripristino automatico del progetto durante la creazione.",
+      "defaultValue": "false",
+      "displayName": "Salta ripristino"
     }
   },
   "primaryOutputs": [
     {
       "path": "ConfoleApp.fsproj"
+    },
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "path": "Program.fs"
     }
   ],
   "postActions": [
     {
-      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
-      "description": "Apri",
-      "condition": "(HostIdentifier != 'dotnetcli')",
-      "manualInstructions": [],
-      "args": {
-        "files": "Program.fs"
-      },
+      "id": "restore",
+      "condition": "(!skipRestore)",
+      "description": "Ripristinare i pacchetti NuGet richiesti da questo progetto.",
+      "manualInstructions": [
+        {
+          "text": "Esegui 'dotnet restore'"
+        }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
       "continueOnError": true
     },
     {
+      "id": "add-confole",
       "actionId": "B17581D1-C5C9-4489-8F0A-004BE667B814",
-      "description": "DotNet Add",
+      "description": "Aggiunge il pacchetto NuGet Confole in questo progetto.",
       "manualInstructions": [{
-        "text": "Run 'dotnet add package Reallukee.Confole --version 1.2.0'"
+        "text": "Esegui 'dotnet add package Reallukee.Confole --version 1.3.0'"
       }],
       "args": {
         "referenceType": "package",
         "reference": "Reallukee.Confole",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "projectFileExtensions": ".fsproj"
       },
-      "continueOnError": false
+      "continueOnError": true
     },
     {
-      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
-      "description": "DotNet Restore",
-      "condition": "(restore)",
-      "manualInstructions": [{
-        "text": "Run 'dotnet restore'"
-      }],
+      "id": "open-file",
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "description": "Apre Program.fs nell'editor.",
+      "manualInstructions": [],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "1"
+      },
       "continueOnError": true
     }
   ]

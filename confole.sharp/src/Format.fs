@@ -13,415 +13,212 @@
     Description : Contiene l'implementazione delle classi,
                   delle interfacce e delle enumerazioni
                   pubbliche (e non) del modulo Format.
+                  Il modulo Format si occupa di sequenze VTS
+                  relative alla formattazione del terminale.
+
                   Il modulo Format si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
 
+                  Riscrittura v4!
+
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole.Sharp
 
+open System
+open System.Collections
+open System.Collections.Generic
+
 open Reallukee.Confole
 
-type IFormat =
-    abstract member ToFunctional : Format.Format with get
+[<Class>]
+type Formats internal () =
 
-type IFormats = IFormat list
+    (*
+        Per ottenere qualcosa di simile alle pipeline
+        funzionali di F#, utilizziamo un design pattern di
+        tipo Fluent.
 
+        La lista mutabile deve essere esposta solo in un
+        contesto sicuro e può essere modificata solamente
+        dalle istanze della classe Fluent stessa.
 
+        NOTA BENE: l’API funzionale di F# utilizza il tipo
+        "T' option"; per motivi di idiomaticità, questa API
+        wrapper sceglie di non esporre il tipo "T' option" e
+        ricorre di conseguenza all’overloading.
+        Penso sia la roba più simile in un contesto
+        fortemente OOP.
 
-[<AbstractClass>]
-type FormatEmpty(format) =
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                format
+        Detto questo, CIAONE!
+    *)
 
-    override this.Equals(obj) =
-        match obj with
-        | :? FormatEmpty as other ->
-            this.GetType() = other.GetType()
-        | _ -> false
+    let mutable formats = List<Format.Format>()
 
-    override this.GetHashCode() =
-        this.GetType().GetHashCode()
+    static let mutable newLine = false
 
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
+    member this.FormatsList
+        with internal get () =
+            formats
 
-type RestoreFormat() =
-    inherit FormatEmpty(Format.Format.Restore)
+        and internal set value =
+            formats <- value
 
-type RestoreForegroundColorFormat() =
-    inherit FormatEmpty(Format.Format.RestoreForegroundColor)
+    static member NewLine
+        with get () =
+            newLine
 
-type RestoreBackgroundColorFormat() =
-    inherit FormatEmpty(Format.Format.RestoreBackgroundColor)
+        and set value =
+            newLine <- value
 
 
 
-[<AbstractClass>]
-type FormatFlag(format, flag) =
-    let mutable flag_ = flag
-
-    member this.Flag
-        with get() =
-            flag_
-
-        and set(flag) =
-            flag_ <- flag
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                format flag
-
-    override this.Equals(obj) =
-        match obj with
-        | :? FormatFlag as other ->
-            this.GetType() = other.GetType() &&
-            this.Flag      = other.Flag
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Flag)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type BoldFormat(flag) =
-    inherit FormatFlag(Format.Format.Bold, flag)
-
-type FaintFormat(flag) =
-    inherit FormatFlag(Format.Format.Faint, flag)
-
-type ItalicFormat(flag) =
-    inherit FormatFlag(Format.Format.Italic, flag)
-
-type UnderlineFormat(flag) =
-    inherit FormatFlag(Format.Format.Underline, flag)
-
-type BlinkingFormat(flag) =
-    inherit FormatFlag(Format.Format.Blinking, flag)
-
-type ReverseFormat(flag) =
-    inherit FormatFlag(Format.Format.Reverse, flag)
-
-type HiddenFormat(flag) =
-    inherit FormatFlag(Format.Format.Hidden, flag)
-
-type StrikeoutFormat(flag) =
-    inherit FormatFlag(Format.Format.Strikeout, flag)
-
-
-
-[<AbstractClass>]
-type FormatColor(format, color : Sharp.Color) =
-    let mutable color_ = color
-
-    member this.Color
-        with get() =
-            color_
-
-        and set(color) =
-            color_ <- color
-
-    interface IFormat with
-        member this.ToFunctional
-            with get() =
-                let color =
-                    match this.Color with
-                    | :? Sharp.XTermColor as xTermColor ->
-                        Color.XTerm (xTermColor.Id)
-                    | :? Sharp.RGBColor as rgbColor ->
-                        Color.RGB (rgbColor.Red, rgbColor.Green, rgbColor.Blue)
-                    | :? Sharp.HEXColor as hexColor ->
-                        Color.HEX (hexColor.Red, hexColor.Green, hexColor.Blue)
-                    | _ -> failwith "Unsupported color format!"
-
-                format color
-
-    override this.Equals(obj) =
-        match obj with
-        | :? FormatColor as other ->
-            this.GetType() = other.GetType() &&
-            this.Color.Equals(other.Color)
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Color)
-
-    override this.ToString() =
-        $"{(this :> IFormat).ToFunctional}"
-
-type ForegroundColorFormat(color) =
-    inherit FormatColor(Format.Format.ForegroundColor, color)
-
-type BackgroundColorFormat(color) =
-    inherit FormatColor(Format.Format.BackgroundColor, color)
-
-
-
-type Formats() =
-    let mutable formats_ = []
-    let mutable newLine_ = false
-
-    member this.Formats
-        with get() =
-            formats_
-
-        and set(formats) =
-            formats_ <- formats
-
-    member this.NewLine
-        with get() =
-            newLine_
-
-        and set(newLine) =
-            newLine_ <- newLine
-
-    new(formats, newLine) as this =
-        Formats() then
-            this.Formats <- formats
-            this.NewLine <- newLine
-
-    new(newLine) as this =
-        Formats() then
-            this.Formats <- []
-            this.NewLine <- newLine
-
-    member this.Item
-        with get(index) =
-            this.Formats
-            |> List.rev
-            |> List.item index
-
-
-
-    member this.AddFormat(format : IFormat) =
-        this.Formats <- format :: this.Formats
-
-        this
-
-    member this.AddFormats(formats : IFormats) =
-        this.Formats <- formats @ this.Formats
-
-        this
-
-
-
-    member this.AddRestore() =
-        let restoreFormat = new RestoreFormat()
-
-        this.AddFormat(restoreFormat)
-
-    member this.AddRestoreForegroundColor() =
-        let restoreForegroundColorFormat = new RestoreForegroundColorFormat()
-
-        this.AddFormat(restoreForegroundColorFormat)
-
-    member this.AddRestoreBackgroundColor() =
-        let restoreBackgroundColorFormat = new RestoreBackgroundColorFormat()
-
-        this.AddFormat(restoreBackgroundColorFormat)
-
-    member this.AddBold(flag) =
-        let boldFormat = new BoldFormat(flag)
-
-        this.AddFormat(boldFormat)
-
-    member this.AddFaint(flag) =
-        let faintFormat = new FaintFormat(flag)
-
-        this.AddFormat(faintFormat)
-
-    member this.AddItalic(flag) =
-        let italicFormat = new ItalicFormat(flag)
-
-        this.AddFormat(italicFormat)
-
-    member this.AddUnderline(flag) =
-        let underlineFormat = new UnderlineFormat(flag)
-
-        this.AddFormat(underlineFormat)
-
-    member this.AddBlinking(flag) =
-        let blinkingFormat = new BlinkingFormat(flag)
-
-        this.AddFormat(blinkingFormat)
-
-    member this.AddReverse(flag) =
-        let reverseFormat = new ReverseFormat(flag)
-
-        this.AddFormat(reverseFormat)
-
-    member this.AddHidden(flag) =
-        let hiddenFormat = new HiddenFormat(flag)
-
-        this.AddFormat(hiddenFormat)
-
-    member this.AddStrikeout(flag) =
-        let strikeoutFormat = new StrikeoutFormat(flag)
-
-        this.AddFormat(strikeoutFormat)
-
-    member this.AddForegroundColor(color) =
-        let foregroundColorFormat = new ForegroundColorFormat(color)
-
-        this.AddFormat(foregroundColorFormat)
-
-    member this.AddBackgroundColor(color) =
-        let backgroundColorFormat = new BackgroundColorFormat(color)
-
-        this.AddFormat(backgroundColorFormat)
-
-
-
-    member this.Clear() =
-        this.Formats <- []
-
-        this
-
-    member this.View() =
-        this.Formats
+    // Modalità manuale
+    member this.Renders text =
+        formats
+        |> Seq.toList
         |> List.rev
-        |> List.iter (fun format ->
-            printfn "%A" format
-        )
+        |> Format.renders text
+
+    static member RenderRestore text = Format.renderRestore text
+
+    static member RenderRestoreForegroundColor text = Format.renderRestoreForegroundColor text
+    static member RenderRestoreBackgroundColor text = Format.renderRestoreBackgroundColor text
+
+    static member RenderBold      text         = Format.renderBold      text None
+    static member RenderBold      (text, flag) = Format.renderBold      text (Some flag)
+    static member RenderFaint     text         = Format.renderFaint     text None
+    static member RenderFaint     (text, flag) = Format.renderFaint     text (Some flag)
+    static member RenderItalic    text         = Format.renderItalic    text None
+    static member RenderItalic    (text, flag) = Format.renderItalic    text (Some flag)
+    static member RenderUnderline text         = Format.renderUnderline text None
+    static member RenderUnderline (text, flag) = Format.renderUnderline text (Some flag)
+    static member RenderBlinking  text         = Format.renderBlinking  text None
+    static member RenderBlinking  (text, flag) = Format.renderBlinking  text (Some flag)
+    static member RenderReverse   text         = Format.renderReverse   text None
+    static member RenderReverse   (text, flag) = Format.renderReverse   text (Some flag)
+    static member RenderHidden    text         = Format.renderHidden    text None
+    static member RenderHidden    (text, flag) = Format.renderHidden    text (Some flag)
+    static member RenderStrikeout text         = Format.renderStrikeout text None
+    static member RenderStrikeout (text, flag) = Format.renderStrikeout text (Some flag)
+
+    static member RenderForegroundColor text          = Format.renderForegroundColor text None
+    static member RenderForegroundColor (text, color) = Format.renderForegroundColor text (Some (Color.ToFColor color))
+    static member RenderBackgroundColor text          = Format.renderBackgroundColor text None
+    static member RenderBackgroundColor (text, color) = Format.renderBackgroundColor text (Some (Color.ToFColor color))
+
+    static member RenderReset text = Format.renderReset text
 
 
 
-    member private this.CallApply(format : IFormat, text, newLine) =
+    // Modalità "funzionale"
+    static member Init () = Formats ()
+
+    static member InitWith (formats : Formats) =
+        let newFormats = Formats.Init ()
+
+        newFormats.FormatsList.AddRange(formats.FormatsList)
+
+        newFormats
+
+    member this.Clear () = this.FormatsList.Clear(); this
+
+    member this.View () =
+        this.FormatsList
+        |> Seq.toList
+        |> Format.view
+        |> ignore
+
+        this
+
+    member this.Preview () =
+        this.FormatsList
+        |> Seq.toList
+        |> Format.preview
+        |> ignore
+
+        this
+
+    member this.Restore () = formats.Add(Format.Restore); this
+
+    member this.RestoreForegroundColor () = formats.Add(Format.RestoreForegroundColor); this
+    member this.RestoreBackgroundColor () = formats.Add(Format.RestoreBackgroundColor); this
+
+    member this.Bold      ()   = formats.Add(Format.Bold      None       ); this
+    member this.Bold      flag = formats.Add(Format.Bold      (Some flag)); this
+    member this.Faint     ()   = formats.Add(Format.Faint     None       ); this
+    member this.Faint     flag = formats.Add(Format.Faint     (Some flag)); this
+    member this.Italic    ()   = formats.Add(Format.Italic    None       ); this
+    member this.Italic    flag = formats.Add(Format.Italic    (Some flag)); this
+    member this.Underline ()   = formats.Add(Format.Underline None       ); this
+    member this.Underline flag = formats.Add(Format.Underline (Some flag)); this
+    member this.Blinking  ()   = formats.Add(Format.Blinking  None       ); this
+    member this.Blinking  flag = formats.Add(Format.Blinking  (Some flag)); this
+    member this.Reverse   ()   = formats.Add(Format.Reverse   None       ); this
+    member this.Reverse   flag = formats.Add(Format.Reverse   (Some flag)); this
+    member this.Hidden    ()   = formats.Add(Format.Hidden    None       ); this
+    member this.Hidden    flag = formats.Add(Format.Hidden    (Some flag)); this
+    member this.Strikeout ()   = formats.Add(Format.Strikeout None       ); this
+    member this.Strikeout flag = formats.Add(Format.Strikeout (Some flag)); this
+
+    member this.ForegroundColor ()    = formats.Add(Format.ForegroundColor None                         ); this
+    member this.ForegroundColor color = formats.Add(Format.ForegroundColor (Some (Color.ToFColor color))); this
+    member this.BackgroundColor ()    = formats.Add(Format.BackgroundColor None                         ); this
+    member this.BackgroundColor color = formats.Add(Format.BackgroundColor (Some (Color.ToFColor color))); this
+
+    member this.ApplyAll text =
+        formats
+        |> Seq.toList
+        |> List.rev
+        |> Format.applyAll text
+
+        if Formats.NewLine then
+            printfn ""
+
+    member this.ApplyAll (text, newLine) =
+        formats
+        |> Seq.toList
+        |> List.rev
+        |> Format.applyAll text
+
         if newLine then
-            Format.applyNewLine text format.ToFunctional
-        else
-            Format.apply text format.ToFunctional
+            printfn ""
 
-    member this.Apply(format : IFormat, text, newLine) =
-        this.CallApply(format, text, newLine)
-
-    member this.Apply(format : IFormat, text) =
-        this.CallApply(format, text, this.NewLine)
-
-    member private this.CallApplyAll(text, newLine) =
-        let formats =
-            this.Formats
-            |> List.map (fun format ->
-                format.ToFunctional
-            )
-
-        if newLine then
-            Format.applyAllNewLine text formats
-        else
-            Format.applyAll text formats
-
-    member this.ApplyAll(text, newLine) =
-        this.CallApplyAll(text, newLine)
-
-    member this.ApplyAll(text) =
-        this.CallApplyAll(text, this.NewLine)
+    static member Reset text = Format.reset text
 
 
 
-    member this.Reset(text) =
-        this.Formats <- []
+    // Modalità imperativa
+    static member DoRestore text = Format.doRestore text
 
-        Format.reset text
+    static member DoRestoreForegroundColor text = Format.doRestoreForegroundColor text
+    static member DoRestoreBackgroundColor text = Format.doRestoreBackgroundColor text
 
+    static member DoBold      text         = Format.doBold      text None
+    static member DoBold      (text, flag) = Format.doBold      text (Some flag)
+    static member DoFaint     text         = Format.doFaint     text None
+    static member DoFaint     (text, flag) = Format.doFaint     text (Some flag)
+    static member DoItalic    text         = Format.doItalic    text None
+    static member DoItalic    (text, flag) = Format.doItalic    text (Some flag)
+    static member DoUnderline text         = Format.doUnderline text None
+    static member DoUnderline (text, flag) = Format.doUnderline text (Some flag)
+    static member DoBlinking  text         = Format.doBlinking  text None
+    static member DoBlinking  (text, flag) = Format.doBlinking  text (Some flag)
+    static member DoReverse   text         = Format.doReverse   text None
+    static member DoReverse   (text, flag) = Format.doReverse   text (Some flag)
+    static member DoHidden    text         = Format.doHidden    text None
+    static member DoHidden    (text, flag) = Format.doHidden    text (Some flag)
+    static member DoStrikeout text         = Format.doStrikeout text None
+    static member DoStrikeout (text, flag) = Format.doStrikeout text (Some flag)
 
+    static member DoForegroundColor text          = Format.doForegroundColor text None
+    static member DoForegroundColor (text, color) = Format.doForegroundColor text (Some (Color.ToFColor color))
+    static member DoBackgroundColor text          = Format.doBackgroundColor text None
+    static member DoBackgroundColor (text, color) = Format.doBackgroundColor text (Some (Color.ToFColor color))
 
-    static member DoRestore(text) =
-        let restoreFormat = new RestoreFormat() :> IFormat
-
-        Format.apply text restoreFormat.ToFunctional
-
-    static member DoRestoreForegroundColor(text) =
-        let restoreForegroundColorFormat = new RestoreForegroundColorFormat() :> IFormat
-
-        Format.apply text restoreForegroundColorFormat.ToFunctional
-
-    static member DoRestoreBackgroundColor(text) =
-        let restoreBackgroundColorFormat = new RestoreBackgroundColorFormat() :> IFormat
-
-        Format.apply text restoreBackgroundColorFormat.ToFunctional
-
-    static member DoBold(text, flag) =
-        let boldFormat = new BoldFormat(flag) :> IFormat
-
-        Format.apply text boldFormat.ToFunctional
-
-    static member DoFaint(text, flag) =
-        let faintFormat = new FaintFormat(flag) :> IFormat
-
-        Format.apply text faintFormat.ToFunctional
-
-    static member DoItalic(text, flag) =
-        let italicFormat = new ItalicFormat(flag) :> IFormat
-
-        Format.apply text italicFormat.ToFunctional
-
-    static member DoUnderline(text, flag) =
-        let underlineFormat = new UnderlineFormat(flag) :> IFormat
-
-        Format.apply text underlineFormat.ToFunctional
-
-    static member DoBlinking(text, flag) =
-        let blinkingFormat = new BlinkingFormat(flag) :> IFormat
-
-        Format.apply text blinkingFormat.ToFunctional
-
-    static member DoReverse(text, flag) =
-        let reverseFormat = new ReverseFormat(flag) :> IFormat
-
-        Format.apply text reverseFormat.ToFunctional
-
-    static member DoHidden(text, flag) =
-        let hiddenFormat = new HiddenFormat(flag) :> IFormat
-
-        Format.apply text hiddenFormat.ToFunctional
-
-    static member DoStrikeout(text, flag) =
-        let strikeoutFormat = new StrikeoutFormat(flag) :> IFormat
-
-        Format.apply text strikeoutFormat.ToFunctional
-
-    static member DoForegroundColor(text, color) =
-        let foregroundColorFormat = new ForegroundColorFormat(color) :> IFormat
-
-        Format.apply text foregroundColorFormat.ToFunctional
-
-    static member DoBackgroundColor(text, color) =
-        let backgroundColorFormat = new BackgroundColorFormat(color) :> IFormat
-
-        Format.apply text backgroundColorFormat.ToFunctional
-
-
-
-    static member DoReset(text) =
-        Format.reset text
-
-
-
-    override this.Equals(obj) =
-        match obj with
-        | :? Formats as other ->
-            this.NewLine = other.NewLine &&
-            this.Formats.Equals(other.Formats)
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.NewLine, this.Formats)
-
-    override this.ToString() =
-        let formats =
-            this.Formats
-            |> Seq.map (fun format ->
-                format.ToString()
-            )
-            |> String.concat "; "
-
-        $"Formats(NewLine={this.NewLine}, Formats=[{formats}])"
+    static member DoReset text = Format.doReset text

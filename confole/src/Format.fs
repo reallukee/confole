@@ -15,36 +15,192 @@
                   Il modulo Format si occupa di sequenze VTS
                   relative alla formattazione del terminale.
 
+                  Il modulo Format permette di ottenere gli
+                  stessi risultati con 4 approcci diversi:
+
+                  * Manuale
+                  * Funzionale
+                  * Imperativo
+                  * DSL
+
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
+open Microsoft.FSharp.Reflection
+
 open Color
+open ColorConversion
 open Position
+open PositionConversion
 
 module Format =
+
     type Format =
-        | Restore
-        | RestoreForegroundColor
-        | RestoreBackgroundColor
-        | Bold                   of flag  : bool
-        | Faint                  of flag  : bool
-        | Italic                 of flag  : bool
-        | Underline              of flag  : bool
-        | Blinking               of flag  : bool
-        | Reverse                of flag  : bool
-        | Hidden                 of flag  : bool
-        | Strikeout              of flag  : bool
-        | ForegroundColor        of color : Color
-        | BackgroundColor        of color : Color
+        | Restore                                        // RST
+        | RestoreForegroundColor                         // RFGC
+        | RestoreBackgroundColor                         // RBGC
+        | Bold                   of flag  : bool option  // BLD
+        | Faint                  of flag  : bool option  // FNT
+        | Italic                 of flag  : bool option  // ITC
+        | Underline              of flag  : bool option  // UND
+        | Blinking               of flag  : bool option  // BKG
+        | Reverse                of flag  : bool option  // RVS
+        | Hidden                 of flag  : bool option  // HDN
+        | Strikeout              of flag  : bool option  // SKT
+        | ForegroundColor        of color : Color option // FGC
+        | BackgroundColor        of color : Color option // BGC
 
     type Formats = Format list
 
+    let defaultFormats = [
+        Restore
+    ]
 
+
+
+    (*
+        NOTA IMPLEMENTATIVA
+        ===================
+
+        Per motivi prestazionali, la lista di Format viene
+        composta in ordine inverso. Prima di eseguire
+        qualsiasi operazione di valutazione o consumo, la
+        lista viene quindi riordinata correttamente.
+
+        Per questo motivo è FORTEMENTE sconsigliato creare la
+        lista manualmente senza usufruire delle funzioni
+        appositamente fornite.
+
+        Il core del modulo è DE FACTO "render" (la funzione
+        definita qui sotto :O). Render ottiene un Format e
+        lo converte in stringa.
+    *)
+
+    // Modalità manuale
+    let render text format =
+        match format with
+        | Restore -> sprintf "%s0m%s" CSI text
+
+        | RestoreForegroundColor -> sprintf "%s39m%s" CSI text
+        | RestoreBackgroundColor -> sprintf "%s49m%s" CSI text
+
+        | Bold      flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 1 else 22) text
+        | Faint     flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 2 else 22) text
+        | Italic    flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 3 else 23) text
+        | Underline flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 4 else 24) text
+        | Blinking  flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 5 else 25) text
+        | Reverse   flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 7 else 27) text
+        | Hidden    flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 8 else 28) text
+        | Strikeout flag -> sprintf "%s%dm%s" CSI (if (defaultArg flag false) then 9 else 29) text
+
+        | ForegroundColor color ->
+            let color = defaultArg color (Color.RGB (255, 255, 255))
+
+            match color with
+            | XTerm id ->
+                sprintf "%s38;5;%dm%s" CSI id text
+            | XTermColor color ->
+                sprintf "%s38;5;%dm%s" CSI color.id text
+            | _ ->
+                let red, green, blue =
+                    match color with
+                    | RGB      (red, green, blue) -> red,       green,       blue
+                    | RGBColor color              -> color.red, color.green, color.blue
+                    | HEX      (red, green, blue) -> hexToRGB (red, green, blue)
+                    | HEXColor color ->
+                        hexColorToRGBColor color
+                        |> fun color -> color.red, color.green, color.blue
+                    | color -> failwithf "%A: Unsupported color format!" color
+
+                sprintf "%s38;2;%d;%d;%dm%s" CSI red green blue text
+        | BackgroundColor color ->
+            let color = defaultArg color (Color.RGB (0, 0, 0))
+
+            match color with
+            | XTerm id ->
+                sprintf "%s48;5;%dm%s" CSI id text
+            | XTermColor color ->
+                sprintf "%s48;5;%dm%s" CSI color.id text
+            | _ ->
+                let red, green, blue =
+                    match color with
+                    | RGB      (red, green, blue) -> red,       green,       blue
+                    | RGBColor color              -> color.red, color.green, color.blue
+                    | HEX      (red, green, blue) -> hexToRGB (red, green, blue)
+                    | HEXColor color ->
+                        hexColorToRGBColor color
+                        |> fun color -> color.red, color.green, color.blue
+                    | color -> failwithf "%A: Unsupported color format!" color
+
+                sprintf "%s48;2;%d;%d;%dm%s" CSI red green blue text
+
+        | format -> failwithf "%A: Not yet implemented!" format
+
+    let renders text formats =
+        sprintf "%s%s" (
+            formats
+            |> List.rev
+            |> List.map (fun format ->
+                render "" format
+            )
+            |> String.concat ""
+        ) text
+
+    let renderRestore text = render text Restore
+
+    let renderRestoreForegroundColor text = render text RestoreForegroundColor
+    let renderRestoreBackgroundColor text = render text RestoreBackgroundColor
+
+    let renderBold      text flag = render text (Bold      flag)
+    let renderFaint     text flag = render text (Faint     flag)
+    let renderItalic    text flag = render text (Italic    flag)
+    let renderUnderline text flag = render text (Underline flag)
+    let renderBlinking  text flag = render text (Blinking  flag)
+    let renderReverse   text flag = render text (Reverse   flag)
+    let renderHidden    text flag = render text (Hidden    flag)
+    let renderStrikeout text flag = render text (Strikeout flag)
+
+    let renderForegroundColor text color = render text (ForegroundColor color)
+    let renderBackgroundColor text color = render text (BackgroundColor color)
+
+    let renderReset text = renders text defaultFormats
+
+
+
+    // Modalità funzionale
+    let init () : Formats = []
+
+    let initWith (formats : Formats) = formats
+
+    let trunk (formats : Formats) =
+        formats
+        |> List.distinctBy (fun item ->
+            let caseInfo, _ = FSharpValue.GetUnionFields(item, typeof<Format>)
+
+            caseInfo.Tag
+        )
+        |> List.rev
+
+    let clear (formats : Formats) : Formats = []
+
+    let view (formats : Formats) =
+        formats
+        |> List.rev
+        |> List.iteri (fun index format ->
+            printfn "%010d : %A" index format
+        )
+
+        formats
+
+    let preview formats =
+        formats
+        |> trunk
+        |> view
 
     let restore formats = Restore :: formats
 
@@ -63,62 +219,8 @@ module Format =
     let foregroundColor color formats = ForegroundColor color :: formats
     let backgroundColor color formats = BackgroundColor color :: formats
 
-
-
-    let init () : Formats = []
-
-    let initPreset (formats : Formats) =
-        formats
-
-    let clear (formats : Formats) : Formats = []
-
-    let view (formats : Formats) =
-        formats
-        |> List.rev
-        |> List.iter (fun format ->
-            printfn "%A" format
-        )
-
-
-
     let apply text format =
-        match format with
-        | Restore -> printf "%s0m%s" CSI text
-
-        | RestoreForegroundColor -> printf "%s39m%s" CSI text
-        | RestoreBackgroundColor -> printf "%s49m%s" CSI text
-
-        | Bold      flag -> printf "%s%dm%s" CSI (if flag then 1 else 22) text
-        | Faint     flag -> printf "%s%dm%s" CSI (if flag then 2 else 22) text
-        | Italic    flag -> printf "%s%dm%s" CSI (if flag then 3 else 23) text
-        | Underline flag -> printf "%s%dm%s" CSI (if flag then 4 else 24) text
-        | Blinking  flag -> printf "%s%dm%s" CSI (if flag then 5 else 25) text
-        | Reverse   flag -> printf "%s%dm%s" CSI (if flag then 7 else 27) text
-        | Hidden    flag -> printf "%s%dm%s" CSI (if flag then 8 else 28) text
-        | Strikeout flag -> printf "%s%dm%s" CSI (if flag then 9 else 29) text
-
-        | ForegroundColor color ->
-            match color with
-            | XTerm id ->
-                printf "%s38;5;%dm%s" CSI id text
-            | XTermColor color ->
-                printf "%s38;5;%dm%s" CSI color.id text
-            | _ ->
-                colorToRGB color
-                |> fun (red, green, blue) ->
-                    printf "%s38;2;%d;%d;%dm%s" CSI red green blue text
-        | BackgroundColor color ->
-            match color with
-            | XTerm id ->
-                printf "%s48;5;%dm%s" CSI id text
-            | XTermColor color ->
-                printf "%s48;5;%dm%s" CSI color.id text
-            | _ ->
-                colorToRGB color
-                |> fun (red, green, blue) ->
-                    printf "%s48;2;%d;%d;%dm%s" CSI red green blue text
-
-        | _ -> failwith "Not yet implemented!"
+        printf "%s" (render text format)
 
     let applyNewLine text format =
         apply text format
@@ -128,8 +230,8 @@ module Format =
     let applyAll text formats =
         formats
         |> List.rev
-        |> List.iter (fun item ->
-            apply "" item
+        |> List.iter (fun format ->
+            apply "" format
         )
 
         printf "%s" text
@@ -139,15 +241,9 @@ module Format =
 
         printfn ""
 
-
-
     let reset text =
-        [
-            Restore
-        ]
+        defaultFormats
         |> applyAll text
-
-
 
     let configure text config =
         init ()
@@ -161,7 +257,9 @@ module Format =
 
 
 
+    // Modalità DSL
     type Builder () =
+
         member _.Yield formatFunction : Formats -> Formats =
             formatFunction
 
@@ -174,10 +272,9 @@ module Format =
         member _.Run formatsFunction : Formats =
             formatsFunction (init ())
 
-    let builder = Builder ()
 
 
-
+    // Modalità imperativa
     let doRestore text = apply text Restore
 
     let doRestoreForegroundColor text = apply text RestoreForegroundColor
@@ -194,3 +291,5 @@ module Format =
 
     let doForegroundColor text color = apply text (ForegroundColor color)
     let doBackgroundColor text color = apply text (BackgroundColor color)
+
+    let doReset text = reset text

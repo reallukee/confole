@@ -1,16 +1,24 @@
 {
   "name": "Confole Console App",
-  "description": "Provides a template for creating C# Console Apps with Confole",
+  "description": "Provides a template for creating C# Console Apps with Confole.",
+  "author": "Luca Pollicino",
 
-  "symbols.mode.displayName": "Mode",
-  "symbols.mode.description": "Choose style",
-  "symbols.mode.choices.classic": "Classic",
-  "symbols.mode.choices.static": "Static",
+  "symbols/TargetFrameworkOverride/description": "Overrides the target framework.",
+  "symbols/TargetFrameworkOverride/displayName": "Target framework override",
 
-  "symbols.restore.displayName": "Restore",
-  "symbols.restore.description": "Restore",
+  "symbols/Framework/description": "The target framework for the project.",
+  "symbols/Framework/choices/net8.0/description": "Target net8.0.",
+  "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
+  "symbols/Framework/displayName": "Framework",
 
-  "postActions.84C0DA21-51C8-4541-9940-6CA19AF04EE6.description": "Open",
-  "postActions.B17581D1-C5C9-4489-8F0A-004BE667B814.description": "DotNet Add",
-  "postActions.210D431B-A78B-4D2F-B762-4ED3E3EA9025.description": "DotNet Restore"
+  "symbols/skipRestore/description": "If specified, skips the automatic restore of the project on create.",
+  "symbols/skipRestore/displayName": "Skip restore",
+
+  "postActions/restore/description": "Restore NuGet packages required by this project.",
+  "postActions/restore/manualInstructions/default/text": "Run 'dotnet restore'",
+
+  "postActions/add-confole-sharp/description": "Adds the Confole# NuGet package to this project.",
+  "postActions/add-confole-sharp/manualInstructions/default/test": "Run 'dotnet add package Reallukee.Confole.Sharp --version 1.3.0'",
+
+  "postActions/open-file/description": "Opens Program.cs in the editor."
 }

@@ -13,400 +13,194 @@
     Description : Contiene l'implementazione delle classi,
                   delle interfacce e delle enumerazioni
                   pubbliche (e non) del modulo Cursor.
+                  Il modulo Cursor si occupa di sequenze VTS
+                  relative al cursore del terminale.
+
                   Il modulo Cursor si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
 
+                  Riscrittura v4!
+
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole.Sharp
 
+open System
+open System.Collections
+open System.Collections.Generic
+
 open Reallukee.Confole
 
-type ICursor =
-    abstract member ToFunctional : Cursor.Cursor with get
+[<Class>]
+type Cursors internal () =
 
-type ICursors = ICursor list
+    (*
+        Per ottenere qualcosa di simile alle pipeline
+        funzionali di F#, utilizziamo un design pattern di
+        tipo Fluent.
 
+        La lista mutabile deve essere esposta solo in un
+        contesto sicuro e può essere modificata solamente
+        dalle istanze della classe Fluent stessa.
 
+        NOTA BENE: l’API funzionale di F# utilizza il tipo
+        "T' option"; per motivi di idiomaticità, questa API
+        wrapper sceglie di non esporre il tipo "T' option" e
+        ricorre di conseguenza all’overloading.
+        Penso sia la roba più simile in un contesto
+        fortemente OOP.
 
-[<AbstractClass>]
-type CursorEmpty(cursor) =
-    interface ICursor with
-        member this.ToFunctional
-            with get() =
-                cursor
+        Detto questo, CIAONE!
+    *)
 
-    override this.Equals(obj) =
-        match obj with
-        | :? CursorEmpty as other ->
-            this.GetType() = other.GetType()
-        | _ -> false
+    let mutable cursors = List<Cursor.Cursor>()
 
-    override this.GetHashCode() =
-        this.GetType().GetHashCode()
+    static let mutable newLine = false
 
-    override this.ToString() =
-        $"{(this :> ICursor).ToFunctional}"
+    member this.CursorsList
+        with internal get () =
+            cursors
 
-type ReverseCursor() =
-    inherit CursorEmpty(Cursor.Cursor.Reverse)
+        and internal set value =
+            cursors <- value
 
-type SaveCursor() =
-    inherit CursorEmpty(Cursor.Cursor.Save)
+    static member NewLine
+        with get () =
+            newLine
 
-type RestoreCursor() =
-    inherit CursorEmpty(Cursor.Cursor.Restore)
+        and set value =
+            newLine <- value
 
 
 
-[<AbstractClass>]
-type CursorN(cursor, n) =
-    let mutable n_ = n
-
-    member this.N
-        with get() =
-            n_
-
-        and set(n) =
-           n_ <- n
-
-    interface ICursor with
-        member this.ToFunctional
-            with get() =
-                cursor (Some n)
-
-    override this.Equals(obj) =
-        match obj with
-        | :? CursorN as other ->
-            this.GetType() = other.GetType() &&
-            this.N         = other.N
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.N)
-
-    override this.ToString() =
-        $"{(this :> ICursor).ToFunctional}"
-
-type UpCursor() =
-    inherit CursorN(Cursor.Cursor.Up, 1)
-
-    new(n) as this =
-        UpCursor() then
-            this.N <- n
-
-type DownCursor() =
-    inherit CursorN(Cursor.Cursor.Down, 1)
-
-    new(n) as this =
-        DownCursor() then
-            this.N <- n
-
-type NextCursor() =
-    inherit CursorN(Cursor.Cursor.Next, 1)
-
-    new(n) as this =
-        NextCursor() then
-            this.N <- n
-
-type PreviousCursor() =
-    inherit CursorN(Cursor.Cursor.Previous, 1)
-
-    new(n) as this =
-        PreviousCursor() then
-            this.N <- n
-
-type NextLineCursor() =
-    inherit CursorN(Cursor.Cursor.NextLine, 1)
-
-    new(n) as this =
-        NextLineCursor() then
-            this.N <- n
-
-type PreviousLineCursor() =
-    inherit CursorN(Cursor.Cursor.PreviousLine, 1)
-
-    new(n) as this =
-        PreviousLineCursor() then
-            this.N <- n
-
-
-
-[<AbstractClass>]
-type CursorPosition(cursor, position : Sharp.Position) =
-    let mutable position_ = position
-
-    member this.Position
-        with get() =
-            position_
-
-        and set(position) =
-            position_ <- position
-
-    interface ICursor with
-        member this.ToFunctional
-            with get() =
-                let position =
-                    match this.Position with
-                    | :? Cell as cell ->
-                        Position.ColRow (cell.Col, cell.Row)
-                    | _ -> failwith "Unsupported position format!"
-
-                cursor (Some position)
-
-    override this.Equals(obj) =
-        match obj with
-        | :? CursorPosition as other ->
-            this.GetType() = other.GetType() &&
-            this.Position.Equals(other.Position)
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Position)
-
-    override this.ToString() =
-        $"{(this :> ICursor).ToFunctional}"
-
-type MoveCursor() =
-    inherit CursorPosition(Cursor.Cursor.Move, new Cell(0, 0))
-
-    new(position) as this =
-        MoveCursor() then
-            this.Position <- position
-
-
-
-type Cursors() =
-    let mutable cursors_ = []
-    let mutable newLine_ = false
-
-    member this.Cursors
-        with get() =
-            cursors_
-
-        and private set(cursors) =
-            cursors_ <- cursors
-
-    member this.NewLine
-        with get() =
-            newLine_
-
-        and set(newLine) =
-            newLine_ <- newLine
-
-    new(cursors, newLine) as this =
-        Cursors() then
-            this.Cursors <- cursors
-            this.NewLine <- newLine
-
-    new(newLine) as this =
-        Cursors() then
-            this.Cursors <- []
-            this.NewLine <- newLine
-
-    member this.Item
-        with get(index) =
-            this.Cursors
-            |> List.rev
-            |> List.item index
-
-
-
-    member this.AddCursor(cursor : ICursor) =
-        this.Cursors <- cursor :: this.Cursors
-
-        this
-
-    member this.AddCursors(cursors : ICursors) =
-        this.Cursors <- cursors @ this.Cursors
-
-        this
-
-
-
-    member this.AddReverse() =
-        let reverseCursor = new ReverseCursor()
-
-        this.AddCursor(reverseCursor)
-
-    member this.AddSave() =
-        let saveCursor = new SaveCursor()
-
-        this.AddCursor(saveCursor)
-
-    member this.AddRestore() =
-        let restoreCursor = new RestoreCursor()
-
-        this.AddCursor(restoreCursor)
-
-    member this.AddUp(n) =
-        let upCursor = new UpCursor(n)
-
-        this.AddCursor(upCursor)
-
-    member this.AddDown(n) =
-        let downCursor = new DownCursor(n)
-
-        this.AddCursor(downCursor)
-
-    member this.AddNext(n) =
-        let nextCursor = new NextCursor(n)
-
-        this.AddCursor(nextCursor)
-
-    member this.AddPrevious(n) =
-        let previousLine = new PreviousCursor(n)
-
-        this.AddCursor(previousLine)
-
-    member this.AddNextLine(n) =
-        let nextLineCursor = new NextLineCursor(n)
-
-        this.AddCursor(nextLineCursor)
-
-    member this.AddPreviousLine(n) =
-        let previousLineCursor = new PreviousLineCursor(n)
-
-        this.AddCursor(previousLineCursor)
-
-    member this.AddMove(position) =
-        let moveCursor = new MoveCursor(position)
-
-        this.AddCursor(moveCursor)
-
-
-
-    member this.Clear() =
-        this.Cursors <- []
-
-        this
-
-    member this.View() =
-        this.Cursors
+    // Modalità manuale
+    member this.Renders () =
+        cursors
+        |> Seq.toList
         |> List.rev
-        |> List.iter (fun cursor ->
-            printfn "%A" cursor
-        )
+        |> Cursor.renders
+
+    static member RenderReverse () = Cursor.renderReverse ()
+    static member RenderSave    () = Cursor.renderSave    ()
+    static member RenderRestore () = Cursor.renderRestore ()
+
+    static member RenderUp       () = Cursor.renderUp       None
+    static member RenderUp       n  = Cursor.renderUp       (Some n)
+    static member RenderDown     () = Cursor.renderDown     None
+    static member RenderDown     n  = Cursor.renderDown     (Some n)
+    static member RenderNext     () = Cursor.renderNext     None
+    static member RenderNext     n  = Cursor.renderNext     (Some n)
+    static member RenderPrevious () = Cursor.renderPrevious None
+    static member RenderPrevious n  = Cursor.renderPrevious (Some n)
+
+    static member RenderNextLine     () = Cursor.renderNextLine     None
+    static member RenderNextLine     n  = Cursor.renderNextLine     (Some n)
+    static member RenderPreviousLine () = Cursor.renderPreviousLine None
+    static member RenderPreviousLine n  = Cursor.renderPreviousLine (Some n)
+
+    static member RenderMove ()       = Cursor.renderMove None
+    static member RenderMove position = Cursor.renderMove (Some (Position.ToFPosition position))
+
+    static member RenderReset () = Cursor.renderReset ()
 
 
 
-    member private this.CallApply(cursor : ICursor, newLine) =
+    // Modalità "funzionale"
+    static member Init () = Cursors ()
+
+    static member InitWith (cursors : Cursors) =
+        let newCursors = Cursors.Init ()
+
+        newCursors.CursorsList.AddRange(cursors.CursorsList)
+
+        newCursors
+
+    member this.Clear () = this.CursorsList.Clear(); this
+
+    member this.View () =
+        this.CursorsList
+        |> Seq.toList
+        |> Cursor.view
+        |> ignore
+
+        this
+
+    member this.Preview () =
+        this.CursorsList
+        |> Seq.toList
+        |> Cursor.preview
+        |> ignore
+
+        this
+
+    member this.Reverse () = cursors.Add(Cursor.Reverse); this
+    member this.Save    () = cursors.Add(Cursor.Save   ); this
+    member this.Restore () = cursors.Add(Cursor.Restore); this
+
+    member this.Up       () = cursors.Add(Cursor.Up       None    ); this
+    member this.Up       n  = cursors.Add(Cursor.Up       (Some n)); this
+    member this.Down     () = cursors.Add(Cursor.Down     None    ); this
+    member this.Down     n  = cursors.Add(Cursor.Down     (Some n)); this
+    member this.Next     () = cursors.Add(Cursor.Next     None    ); this
+    member this.Next     n  = cursors.Add(Cursor.Next     (Some n)); this
+    member this.Previous () = cursors.Add(Cursor.Previous None    ); this
+    member this.Previous n  = cursors.Add(Cursor.Previous (Some n)); this
+
+    member this.NextLine     () = cursors.Add(Cursor.NextLine     None    ); this
+    member this.NextLine     n  = cursors.Add(Cursor.NextLine     (Some n)); this
+    member this.PreviousLine () = cursors.Add(Cursor.PreviousLine None    ); this
+    member this.PreviousLine n  = cursors.Add(Cursor.PreviousLine (Some n)); this
+
+    member this.Move ()       = cursors.Add(Cursor.Move None                                  ); this
+    member this.Move position = cursors.Add(Cursor.Move (Some (Position.ToFPosition position))); this
+
+    member this.ApplyAll () =
+        cursors
+        |> Seq.toList
+        |> List.rev
+        |> Cursor.applyAll
+
+        if Cursors.NewLine then
+            printfn ""
+
+    member this.ApplyAll newLine =
+        cursors
+        |> Seq.toList
+        |> List.rev
+        |> Cursor.applyAll
+
         if newLine then
-            Cursor.applyNewLine cursor.ToFunctional
-        else
-            Cursor.apply cursor.ToFunctional
+            printfn ""
 
-    member this.Apply(cursor : ICursor, newLine) =
-        this.CallApply(cursor, newLine)
-
-    member this.Apply(cursor : ICursor) =
-        this.CallApply(cursor, this.NewLine)
-
-    member private this.CallApplyAll(newLine) =
-        let cursors =
-            this.Cursors
-            |> List.map (fun cursor ->
-                cursor.ToFunctional
-            )
-
-        if newLine then
-            Cursor.applyAllNewLine cursors
-        else
-            Cursor.applyAll cursors
-
-    member this.ApplyAll(newLine) =
-        this.CallApplyAll newLine
-
-    member this.ApplyAll() =
-        this.CallApplyAll this.NewLine
+    static member Reset () = Cursor.reset ()
 
 
 
-    member this.Reset() =
-        this.Cursors <- []
+    // Modalità imperativa
+    static member DoReverse () = Cursor.doReverse ()
+    static member DoSave    () = Cursor.doSave    ()
+    static member DoRestore () = Cursor.doRestore ()
 
-        Cursor.reset ()
+    static member DoUp       () = Cursor.doUp       None
+    static member DoUp       n  = Cursor.doUp       (Some n)
+    static member DoDown     () = Cursor.doDown     None
+    static member DoDown     n  = Cursor.doDown     (Some n)
+    static member DoNext     () = Cursor.doNext     None
+    static member DoNext     n  = Cursor.doNext     (Some n)
+    static member DoPrevious () = Cursor.doPrevious None
+    static member DoPrevious n  = Cursor.doPrevious (Some n)
 
+    static member DoNextLine     () = Cursor.doNextLine     None
+    static member DoNextLine     n  = Cursor.doNextLine     (Some n)
+    static member DoPreviousLine () = Cursor.doPreviousLine None
+    static member DoPreviousLine n  = Cursor.doPreviousLine (Some n)
 
+    static member DoMove ()       = Cursor.doMove None
+    static member DoMove position = Cursor.doMove (Some (Position.ToFPosition position))
 
-    static member DoReverse() =
-        let reverseCursor = new ReverseCursor() :> ICursor
-
-        Cursor.apply reverseCursor.ToFunctional
-
-    static member DoSave() =
-        let saveCursor = new SaveCursor() :> ICursor
-
-        Cursor.apply saveCursor.ToFunctional
-
-    static member DoRestore() =
-        let restoreCursor = new RestoreCursor() :> ICursor
-
-        Cursor.apply restoreCursor.ToFunctional
-
-    static member DoUp(n) =
-        let upCursor = new UpCursor(n) :> ICursor
-
-        Cursor.apply upCursor.ToFunctional
-
-    static member DoDown(n) =
-        let downCursor = new DownCursor(n) :> ICursor
-
-        Cursor.apply downCursor.ToFunctional
-
-    static member DoNext(n) =
-        let nextCursor = new NextCursor(n) :> ICursor
-
-        Cursor.apply nextCursor.ToFunctional
-
-    static member DoPrevious(n) =
-        let previousCursor = new PreviousCursor(n) :> ICursor
-
-        Cursor.apply previousCursor.ToFunctional
-
-    static member DoNextLine(n) =
-        let nextLineCursor = new NextLineCursor(n) :> ICursor
-
-        Cursor.apply nextLineCursor.ToFunctional
-
-    static member DoPreviousLine(n) =
-        let previousLineCursor = new PreviousLineCursor(n) :> ICursor
-
-        Cursor.apply previousLineCursor.ToFunctional
-
-    static member DoMove(position) =
-        let moveCursor = new MoveCursor(position) :> ICursor
-
-        Cursor.apply moveCursor.ToFunctional
-
-
-
-    static member DoReset() =
-        Cursor.reset ()
-
-
-
-    override this.Equals(obj) =
-        match obj with
-        | :? Cursors as other ->
-            this.NewLine = other.NewLine &&
-            this.Cursors.Equals(other.Cursors)
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.NewLine, this.Cursors)
-
-    override this.ToString() =
-        let cursors =
-            this.Cursors
-            |> Seq.map (fun cursor ->
-                cursor.ToString()
-            )
-            |> String.concat "; "
-
-        $"Cursors(NewLine={this.NewLine}, Cursors=[{cursors}])"
+    static member DoReset () = Cursor.doReset ()

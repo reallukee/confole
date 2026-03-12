@@ -15,17 +15,19 @@
 
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole
 
 [<AutoOpen>]
-module Common =
+module internal Common =
+
     val ESC : string
     val CSI : string
     val OSC : string
 
     val Bell : string
     val SP   : string
+    val ST   : string

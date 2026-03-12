@@ -13,7 +13,7 @@ param(
     )]
     [string] $Configuration = "Release",
 
-    [string] $Output
+    [switch] $Experimental
 )
 
 try {
@@ -52,11 +52,19 @@ $Projects | ForEach-Object {
 
     & dotnet restore $_ --ignore-failed-sources
 
-    if ($null -ne $Output -and "" -ne $Output) {
-        & dotnet build $_ --no-restore --configuration ${Configuration} --output ${Output}
-    } else {
-        & dotnet build $_ --no-restore --configuration ${Configuration}
+    $dotnetArgs = @(
+        "--no-restore",
+        "--configuration",
+        $Configuration
+    )
+
+    if ($Experimental.IsPresent) {
+        $dotnetArgs += @(
+            "/p:DefineConstants=EXPERIMENTAL"
+        )
     }
+
+    & dotnet build $_ @dotnetArgs
 }
 
 Pop-Location

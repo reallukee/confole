@@ -11,50 +11,17 @@ module Program =
 
     [<EntryPoint>]
     let main args =
-        #if (mode == "functional")
-        let formats =
-            Format.init ()
-            |> Format.italic          true
-            |> Format.foregroundColor (Color.RGB (255, 0, 0))
-            |> Format.backgroundColor (Color.RGB (0, 0, 255))
+        Rule.doTitle "ConfoleApp"
 
-        Format.applyAllNewLine "Hello, World from ConfoleApp!" formats
-
-        Format.reset ""
-        #endif
-        #if (mode == "imperative")
-        Format.doForegroundColor "" (Color.RGB (255, 0, 0))
-        Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
-        Format.doBold "Hello, World! from ConfoleApp!" true
-
-        printfn ""
-
-        Format.reset ""
-        #endif
-
-        printf "More at: "
-
-        #if (mode == "functional")
-        let formats =
-            Format.init ()
-            |> Format.underline true
-
-        Format.applyAllNewLine "https://github.com/reallukee/confole/" formats
+        Format.init ()
+        |> Format.italic          (Some true)
+        |> Format.foregroundColor (Some (Color.RGB (255, 0, 0)))
+        |> Format.backgroundColor (Some (Color.RGB (0, 0, 255)))
+        |> Format.applyAllNewLine "Hello, World from ConfoleApp!"
 
         do Console.ReadKey(true)
         |> ignore
 
         Format.reset ""
-        #endif
-        #if (mode == "imperative")
-        Format.doUnderline "https://github.com/reallukee/confole/" true
-
-        printfn ""
-
-        do Console.ReadKey(true)
-        |> ignore
-
-        Format.reset ""
-        #endif
 
         0

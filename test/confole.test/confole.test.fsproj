@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\Color.fs" />
+    <Compile Include="src\ColorConversion.fs" />
+    <Compile Include="src\Colors.fs" />
+    <Compile Include="src\Position.fs" />
+    <Compile Include="src\PositionConversion.fs" />
+    <Compile Include="src\Positions.fs" />
+    <Compile Include="src\Rule.fs" />
+    <Compile Include="src\Cursor.fs" />
+    <Compile Include="src\Action.fs" />
+    <Compile Include="src\Format.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="FsUnit.xUnit" Version="7.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\confole\confole.fsproj" />
+  </ItemGroup>
+
+</Project>

@@ -7,7 +7,17 @@ on:
     paths:
       - "**/*.fsi"
       - "**/*.fs"
-      - "**/*.fsx"
+      - "**/*.fsproj"
+      - "**/*.cs"
+      - "**/*.csproj"
+      - "**/*.sln"
+      - "**/*.slnx"
+      - "**/examples/**/*.fsx"
+      - "**/examples/**/*.fsscript"
+
+      - "!**/dev/**"
+      - "!**/templates/**"
+      - "!**/test/**"
   workflow_dispatch:
 
 jobs:
@@ -15,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4

@@ -51,13 +51,13 @@
     dotnet new confole-app --language F# --name MyApp
     ```
 
-    È possibile anche usare le API in stile *imperativo*:
+    Oppure un progetto vuoto:
 
     ```
-    dotnet new confole-app --language F# --name MyApp --mode imperative
+    dotnet new confole-empty-app --language F# --name MyApp
     ```
 
-3. Esegui il template!
+3. Esegui il template.
 
     ```
     dotnet run MyApp
@@ -80,9 +80,9 @@
 
     let formats =
         Format.init ()
-        |> Format.italic          true
-        |> Format.foregroundColor (Color.RGB (255, 0, 0))
-        |> Format.backgroundColor (Color.RGB (0, 0, 255))
+        |> Format.italic          (Some true)
+        |> Format.foregroundColor (Some (Color.RGB (255, 0, 0)))
+        |> Format.backgroundColor (Some (Color.RGB (0, 0, 255)))
 
     Format.applyAllNewLine "Hello, World!" formats
 
@@ -92,18 +92,20 @@
     Format.reset ""
     ```
 
-    È possibile anche usare le API in stile *imperativo*:
+    Oppure il *nuovo* modulo di Alias:
 
     ```fsharp
     open System
 
     open Reallukee.Confole
 
-    Format.doForegroundColor "" (Color.RGB (255, 0, 0))
-    Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
-    Format.doBold "Hello, World!" true
+    let fmt =
+        Format.init ()
+        |> Fmt.itc (Some true)
+        |> Fmt.fgc (Some (Color.RGB (255, 0, 0)))
+        |> Fmt.bgc (Some (Color.RGB (0, 0, 255)))
 
-    printfn ""
+    Fmt.applyallnl "Hello, World!" fmt
 
     do Console.ReadKey(true)
     |> ignore
@@ -111,7 +113,10 @@
     Format.reset ""
     ```
 
-3. Esegui il progetto!
+    > [!NOTE]
+    > Altri esempi [qui](./examples/)!
+
+3. Esegui il progetto.
 
     ```
     dotnet run
@@ -141,13 +146,13 @@
     dotnet new confole-app --language C# --name MyApp
     ```
 
-    È possibile anche usare le API in modo *statico*:
+    Oppure un progetto vuoto:
 
     ```
-    dotnet new confole-app --language C# --name MyApp --mode static
+    dotnet new confole-empty-app --language C# --name MyApp
     ```
 
-3. Esegui il template!
+3. Esegui il template.
 
     ```
     dotnet run MyApp
@@ -168,38 +173,43 @@
 
     using Reallukee.Confole.Sharp;
 
-    Formats formats = new Formats();
-
-    formats.AddItalic(true)
-           .AddForegroundColor(new RGBColor(255, 0, 0))
-           .AddBackgroundColor(new RGBColor(0, 0, 255));
+    Formats formats =
+        Formats.Init()
+               .Italic(true)
+               .ForegroundColor(new RGBColor(255, 0, 0))
+               .BackgroundColor(new RGBColor(0, 0, 255));
 
     formats.ApplyAll("Hello, World!", true);
 
     Console.ReadKey(true);
 
-    formats.Reset("");
+    Formats.Reset("");
     ```
 
-    È possibile anche usare le API in modo *statico*:
+    Oppure il *nuovo* modulo di Alias:
 
     ```csharp
     using System;
 
     using Reallukee.Confole.Sharp;
 
-    Formats.DoForegroundColor("", new RGBColor(255, 0, 0));
-    Formats.DoBackgroundColor("", new RGBColor(0, 0, 255));
-    Formats.DoItalic("Hello, World!", true);
+    Fmt fmt =
+        Fmt.Init()
+            .ITC(true)
+            .FGC(new RGBColor(255, 0, 0))
+            .BGC(new RGBColor(0, 0, 255));
 
-    Console.WriteLine();
+    fmt.ApplyAll("Hello, World!", true);
 
     Console.ReadKey(true);
 
-    Formats.DoReset("");
+    Formats.Reset("");
     ```
 
-3. Esegui il progetto!
+    > [!NOTE]
+    > Altri esempi [qui](./examples/)!
+
+3. Esegui il progetto.
 
     ```
     dotnet run
@@ -282,12 +292,23 @@ Solo compilazione:
 
 ```pwsh
 .\build.ps1
+
+# Oppure...
+.\build.ps1 -Target Confole
+.\build.ps1 -Target Confole.Sharp
+.\build.ps1 -Target Confole.Templates
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```pwsh
 .\pack.ps1
+
+# Oppure...
+
+.\pack.ps1 -Target Confole
+.\pack.ps1 -Target Confole.Sharp
+.\pack.ps1 -Target Confole.Templates
 ```
 
 ### Usando le mani
@@ -301,6 +322,7 @@ Solo compilazione:
 ```bash
 dotnet build confole.slnx --configuration Release
 
+# Oppure...
 dotnet build ./confole --configuration Release
 dotnet build ./confole.sharp --configuration Release
 dotnet build ./confole.templates --configuration Release
@@ -311,6 +333,7 @@ Compilazione + Pacchettizzazione:
 ```bash
 dotnet pack confole.slnx --configuration Release
 
+# Oppure...
 dotnet pack ./confole --configuration Release
 dotnet pack ./confole.sharp --configuration Release
 dotnet pack ./confole.templates --configuration Release

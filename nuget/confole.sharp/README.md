@@ -16,7 +16,7 @@
 
 
 
-### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole/)?
+### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole/blob/main/DOCS.md)?
 
 
 
@@ -42,13 +42,13 @@
     dotnet new confole-app --language C# --name MyApp
     ```
 
-    È possibile anche usare le API in modo *statico*:
+    Oppure un progetto vuoto:
 
     ```
-    dotnet new confole-app --language C# --name MyApp --mode static
+    dotnet new confole-empty-app --language C# --name MyApp
     ```
 
-3. Esegui il template!
+3. Esegui il template.
 
     ```
     dotnet run MyApp
@@ -69,38 +69,43 @@
 
     using Reallukee.Confole.Sharp;
 
-    Formats formats = new Formats();
-
-    formats.AddItalic(true)
-           .AddForegroundColor(new RGBColor(255, 0, 0))
-           .AddBackgroundColor(new RGBColor(0, 0, 255));
+    Formats formats =
+        Formats.Init()
+               .Italic(true)
+               .ForegroundColor(new RGBColor(255, 0, 0))
+               .BackgroundColor(new RGBColor(0, 0, 255));
 
     formats.ApplyAll("Hello, World!", true);
 
     Console.ReadKey(true);
 
-    formats.Reset("");
+    Formats.Reset("");
     ```
 
-    È possibile anche usare le API in modo *statico*:
+    Oppure il *nuovo* modulo di Alias:
 
     ```csharp
     using System;
 
     using Reallukee.Confole.Sharp;
 
-    Formats.DoForegroundColor("", new RGBColor(255, 0, 0));
-    Formats.DoBackgroundColor("", new RGBColor(0, 0, 255));
-    Formats.DoItalic("Hello, World!", true);
+    Fmt fmt =
+        Fmt.Init()
+            .ITC(true)
+            .FGC(new RGBColor(255, 0, 0))
+            .BGC(new RGBColor(0, 0, 255));
 
-    Console.WriteLine();
+    fmt.ApplyAll("Hello, World!", true);
 
     Console.ReadKey(true);
 
-    Formats.DoReset("");
+    Formats.Reset("");
     ```
 
-3. Esegui il progetto!
+    > [!NOTE]
+    > Altri esempi [qui](https://github.com/reallukee/confole/tree/main/examples)!
+
+3. Esegui il progetto.
 
     ```
     dotnet run
@@ -180,13 +185,13 @@ cd .\confole\scripts\
 Solo compilazione:
 
 ```pwsh
-.\build.ps1
+.\build.ps1 -Target Confole.Sharp
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```pwsh
-.\pack.ps1
+.\pack.ps1 -Target Confole.Sharp
 ```
 
 ### Usando le mani
@@ -198,16 +203,12 @@ cd confole
 Solo compilazione:
 
 ```bash
-dotnet build confole.slnx --configuration Release
-
 dotnet build ./confole.sharp --configuration Release
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```bash
-dotnet pack confole.slnx --configuration Release
-
 dotnet pack ./confole.sharp --configuration Release
 ```
 

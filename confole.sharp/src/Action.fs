@@ -13,17 +13,26 @@
     Description : Contiene l'implementazione delle classi,
                   delle interfacce e delle enumerazioni
                   pubbliche (e non) del modulo Action.
+                  Il modulo Action si occupa di sequenze VTS
+                  relative al viewport del terminale.
+
                   Il modulo Action si occupa di wrappare
                   in modo OOP e C#-Friendly l'omonimo
                   modulo funzionale!
 
+                  Riscrittura v4!
+
     Author      : Luca Pollicino
                   (https://github.com/reallukee/)
-    Version     : 1.2.0
+    Version     : 1.3.0
     License     : MIT
 *)
 
 namespace Reallukee.Confole.Sharp
+
+open System
+open System.Collections
+open System.Collections.Generic
 
 open Reallukee.Confole
 
@@ -32,312 +41,171 @@ type Erase =
     | FromBeginToCurrent = 1
     | FromBeginToEnd     = 2
 
+[<Class>]
+type Actions internal () =
 
+    (*
+        Per ottenere qualcosa di simile alle pipeline
+        funzionali di F#, utilizziamo un design pattern di
+        tipo Fluent.
 
-type IAction =
-    abstract member ToFunctional : Action.Action with get
+        La lista mutabile deve essere esposta solo in un
+        contesto sicuro e può essere modificata solamente
+        dalle istanze della classe Fluent stessa.
 
-type IActions = IAction list
+        NOTA BENE: l’API funzionale di F# utilizza il tipo
+        "T' option"; per motivi di idiomaticità, questa API
+        wrapper sceglie di non esporre il tipo "T' option" e
+        ricorre di conseguenza all’overloading.
+        Penso sia la roba più simile in un contesto
+        fortemente OOP.
 
+        Detto questo, CIAONE!
+    *)
 
+    let mutable actions = List<Action.Action>()
 
-[<AbstractClass>]
-type ActionN(action, n) =
-    let mutable n_ = n
+    static let mutable newLine = false
 
-    member this.N
-        with get() =
-            n_
+    member this.ActionsList
+        with internal get () =
+            actions
 
-        and set(n) =
-           n_ <- n
+        and internal set value =
+            actions <- value
 
-    interface IAction with
-        member this.ToFunctional
-            with get() =
-                action (Some n)
+    static member NewLine
+        with get () =
+            newLine
 
-    override this.Equals(obj) =
-        match obj with
-        | :? ActionN as other ->
-            this.GetType() = other.GetType() &&
-            this.N         = other.N
-        | _ -> false
+        and set value =
+            newLine <- value
 
-    override this.GetHashCode() =
-        hash(this.N)
 
-    override this.ToString() =
-        $"{(this :> IAction).ToFunctional}"
 
-type InsertCharacterAction() =
-    inherit ActionN(Action.Action.InsertCharacter, 0)
-
-    new(n) as this =
-        InsertCharacterAction() then
-            this.N <- n
-
-type DeleteCharacterAction() =
-    inherit ActionN(Action.Action.DeleteCharacter, 0)
-
-    new(n) as this =
-        DeleteCharacterAction() then
-            this.N <- n
-
-type InsertLineAction() =
-    inherit ActionN(Action.Action.InsertLine, 0)
-
-    new(n) as this =
-        InsertLineAction() then
-            this.N <- n
-
-type DeleteLineAction() =
-    inherit ActionN(Action.Action.DeleteLine, 0)
-
-    new(n) as this =
-        DeleteLineAction() then
-            this.N <- n
-
-
-
-[<AbstractClass>]
-type ActionErase(action, erase) =
-    let mutable erase_ = erase
-
-    member this.Erase
-        with get() =
-            erase_
-
-        and set(erase) =
-            erase_ <- erase
-
-    interface IAction with
-        member this.ToFunctional
-            with get() =
-                let erase =
-                    match this.Erase with
-                    | Erase.FromCurrentToEnd   -> Action.Erase.FromCurrentToEnd
-                    | Erase.FromBeginToCurrent -> Action.Erase.FromBeginToCurrent
-                    | Erase.FromBeginToEnd     -> Action.Erase.FromBeginToEnd
-                    | _ -> failwith "Unknown value!"
-
-                action (Some erase)
-
-    override this.Equals(obj) =
-        match obj with
-        | :? ActionErase as other ->
-            this.GetType() = other.GetType() &&
-            this.Erase     = other.Erase
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.Erase)
-
-    override this.ToString() =
-        $"{(this :> IAction).ToFunctional}"
-
-type EraseDisplayAction() =
-    inherit ActionErase(Action.Action.EraseDisplay, Erase.FromBeginToEnd)
-
-    new(erase) as this =
-        EraseDisplayAction() then
-            this.Erase <- erase
-
-type EraseLineAction() =
-    inherit ActionErase(Action.Action.EraseLine, Erase.FromBeginToEnd)
-
-    new(erase) as this =
-        EraseLineAction() then
-            this.Erase <- erase
-
-
-
-type Actions() =
-    let mutable actions_ = []
-    let mutable newLine_ = false
-
-    member this.Actions
-        with get() =
-            actions_
-
-        and private set(actions) =
-            actions_ <- actions
-
-    member this.NewLine
-        with get() =
-            newLine_
-
-        and set(newLine) =
-            newLine_ <- newLine
-
-    new(actions, newLine) as this =
-        Actions() then
-            this.Actions <- actions
-            this.NewLine <- newLine
-
-    new(newLine) as this =
-        Actions() then
-            this.Actions <- []
-            this.NewLine <- newLine
-
-    member this.Item
-        with get(index) =
-            this.Actions
-            |> List.rev
-            |> List.item index
-
-
-
-    member this.AddAction(action : IAction) =
-        this.Actions <- action :: this.Actions
-
-        this
-
-    member this.AddActions(actions : IActions) =
-        this.Actions <- actions @ this.Actions
-
-        this
-
-
-
-    member this.AddInsertCharacter(n) =
-        let insertCharacterAction = new InsertCharacterAction(n)
-
-        this.AddAction(insertCharacterAction)
-
-    member this.AddDeleteCharacter(n) =
-        let deleteCharacterAction = new DeleteCharacterAction(n)
-
-        this.AddAction(deleteCharacterAction)
-
-    member this.AddInsertLine(n) =
-        let insertLineAction = new InsertLineAction(n)
-
-        this.AddAction(insertLineAction)
-
-    member this.AddDeleteLine(n) =
-        let deleteLineAction = new DeleteLineAction(n)
-
-        this.AddAction(deleteLineAction)
-
-    member this.AddEraseDisplay(erase) =
-        let eraseDisplayAction = new EraseDisplayAction(erase)
-
-        this.AddAction(eraseDisplayAction)
-
-    member this.AddEraseLine(erase) =
-        let eraseLineAction = new EraseLineAction(erase)
-
-        this.AddAction(eraseLineAction)
-
-
-
-    member this.Clear() =
-        this.Actions <- []
-
-        this
-
-    member this.View() =
-        this.Actions
+    // Modalità manuale
+    member this.Renders () =
+        actions
+        |> Seq.toList
         |> List.rev
-        |> List.iter (fun action ->
-            printfn "%A" action
-        )
+        |> Action.renders
+
+    static member RenderInsertCharacter () = Action.renderInsertCharacter None
+    static member RenderInsertCharacter n  = Action.renderInsertCharacter (Some n)
+    static member RenderDeleteCharacter () = Action.renderDeleteCharacter None
+    static member RenderDeleteCharacter n  = Action.renderDeleteCharacter (Some n)
+
+    static member RenderInsertLine () = Action.renderInsertLine None
+    static member RenderInsertLine n  = Action.renderInsertLine (Some n)
+    static member RenderDeleteLine () = Action.renderDeleteLine None
+    static member RenderDeleteLine n  = Action.renderDeleteLine (Some n)
+
+    static member RenderEraseDisplay ()    = Action.renderEraseDisplay None
+    static member RenderEraseDisplay erase = Action.renderEraseDisplay (Some (Actions.OOPEraseToErase erase))
+    static member RenderEraseLine    ()    = Action.renderEraseLine    None
+    static member RenderEraseLine    erase = Action.renderEraseLine    (Some (Actions.OOPEraseToErase erase))
+
+    static member RenderReset () = Action.renderReset ()
 
 
 
-    member private this.CallApply(action : IAction, newLine) =
+    // Modalità "funzionale"
+    static member Init () = Actions ()
+
+    static member InitWith (actions : Actions) =
+        let newActions = Actions.Init ()
+
+        newActions.ActionsList.AddRange(actions.ActionsList)
+
+        newActions
+
+    member this.Clear () = this.ActionsList.Clear(); this
+
+    member this.View () =
+        this.ActionsList
+        |> Seq.toList
+        |> Action.view
+        |> ignore
+
+        this
+
+    member this.Preview () =
+        this.ActionsList
+        |> Seq.toList
+        |> Action.preview
+        |> ignore
+
+        this
+
+    member this.InsertCharacter () = actions.Add(Action.InsertCharacter None    ); this
+    member this.InsertCharacter n  = actions.Add(Action.InsertCharacter (Some n)); this
+    member this.DeleteCharacter () = actions.Add(Action.DeleteCharacter None    ); this
+    member this.DeleteCharacter n  = actions.Add(Action.DeleteCharacter (Some n)); this
+
+    member this.InsertLine () = actions.Add(Action.InsertLine None    ); this
+    member this.InsertLine n  = actions.Add(Action.InsertLine (Some n)); this
+    member this.DeleteLine () = actions.Add(Action.DeleteLine None    ); this
+    member this.DeleteLine n  = actions.Add(Action.DeleteLine (Some n)); this
+
+    member this.EraseDisplay ()    = actions.Add(Action.EraseDisplay None                                  ); this
+    member this.EraseDisplay erase = actions.Add(Action.EraseDisplay (Some (Actions.OOPEraseToErase erase))); this
+    member this.EraseLine    ()    = actions.Add(Action.EraseLine    None                                  ); this
+    member this.EraseLine    erase = actions.Add(Action.EraseLine    (Some (Actions.OOPEraseToErase erase))); this
+
+    member this.ApplyAll () =
+        actions
+        |> Seq.toList
+        |> List.rev
+        |> Action.applyAll
+
+        if Actions.NewLine then
+            printfn ""
+
+    member this.ApplyAll newLine =
+        actions
+        |> Seq.toList
+        |> List.rev
+        |> Action.applyAll
+
         if newLine then
-            Action.applyNewLine action.ToFunctional
-        else
-            Action.apply action.ToFunctional
+            printfn ""
 
-    member this.Apply(action : IAction, newLine) =
-        this.CallApply(action, newLine)
-
-    member this.Apply(action : IAction) =
-        this.CallApply(action, this.NewLine)
-
-    member private this.CallApplyAll(newLine) =
-        let actions =
-            this.Actions
-            |> List.map (fun action ->
-                action.ToFunctional
-            )
-
-        if newLine then
-            Action.applyAllNewLine actions
-        else
-            Action.applyAll actions
-
-    member this.ApplyAll(newLine) =
-        this.CallApplyAll newLine
-
-    member this.ApplyAll() =
-        this.CallApplyAll this.NewLine
+    static member Reset () = Action.reset ()
 
 
 
-    member this.Reset() =
-        this.Actions <- []
+    // Modalità imperativa
+    static member DoInsertCharacter () = Action.doInsertCharacter None
+    static member DoInsertCharacter n  = Action.doInsertCharacter (Some n)
+    static member DoDeleteCharacter () = Action.doDeleteCharacter None
+    static member DoDeleteCharacter n  = Action.doDeleteCharacter (Some n)
 
-        Action.reset ()
+    static member DoInsertLine () = Action.doInsertLine None
+    static member DoInsertLine n  = Action.doInsertLine (Some n)
+    static member DoDeleteLine () = Action.doDeleteLine None
+    static member DoDeleteLine n  = Action.doDeleteLine (Some n)
 
+    static member DoEraseDisplay ()    = Action.doEraseDisplay None
+    static member DoEraseDisplay erase = Action.doEraseDisplay (Some (Actions.OOPEraseToErase erase))
+    static member DoEraseLine    ()    = Action.doEraseLine    None
+    static member DoEraseLine    erase = Action.doEraseLine    (Some (Actions.OOPEraseToErase erase))
 
-
-    static member DoInsertCharacter(n) =
-        let insertCharacterAction = new InsertCharacterAction(n) :> IAction
-
-        Action.apply insertCharacterAction.ToFunctional
-
-    static member DoDeleteCharacter(n) =
-        let deleteCharacterAction = new DeleteCharacterAction(n) :> IAction
-
-        Action.apply deleteCharacterAction.ToFunctional
-
-    static member DoInsertLine(n) =
-        let insertLineAction = new InsertCharacterAction(n) :> IAction
-
-        Action.apply insertLineAction.ToFunctional
-
-    static member DoDeleteLine(n) =
-        let deleteLineAction = new DeleteLineAction(n) :> IAction
-
-        Action.apply deleteLineAction.ToFunctional
-
-    static member DoEraseDisplay(erase) =
-        let eraseDisplayAction = new EraseDisplayAction(erase) :> IAction
-
-        Action.apply eraseDisplayAction.ToFunctional
-
-    static member DoEraseLine(erase) =
-        let eraseLineAction = new EraseLineAction(erase) :> IAction
-
-        Action.apply eraseLineAction.ToFunctional
+    static member DoReset () = Action.doReset ()
 
 
 
-    static member DoReset() =
-        Action.reset ()
+    // Compatibilità!
+    //   Converte DU in ENUM e ENUM in DU.
+    static member private OOPEraseToErase erase =
+        match erase with
+        | Erase.FromCurrentToEnd   -> Action.Erase.FromCurrentToEnd
+        | Erase.FromBeginToCurrent -> Action.Erase.FromBeginToCurrent
+        | Erase.FromBeginToEnd     -> Action.Erase.FromBeginToEnd
+        | erase -> failwithf "%A: Unsupported erase format!" erase
 
-
-
-    override this.Equals(obj) =
-        match obj with
-        | :? Actions as other ->
-            this.NewLine = other.NewLine &&
-            this.Actions.Equals(other.Actions)
-        | _ -> false
-
-    override this.GetHashCode() =
-        hash(this.NewLine, this.Actions)
-
-    override this.ToString() =
-        let actions =
-            this.Actions
-            |> Seq.map (fun action ->
-                action.ToString()
-            )
-            |> String.concat "; "
-
-        $"Actions(NewLine={this.NewLine}, Actions=[{actions}])"
+    static member private EraseToOOPErase erase =
+        match erase with
+        | Action.Erase.FromCurrentToEnd   -> Erase.FromCurrentToEnd
+        | Action.Erase.FromBeginToCurrent -> Erase.FromBeginToCurrent
+        | Action.Erase.FromBeginToEnd     -> Erase.FromBeginToEnd
+        | erase -> failwithf "%A: Unsupported erase format!" erase

@@ -8,8 +8,15 @@ on:
       - "**/*.fsi"
       - "**/*.fs"
       - "**/*.fsproj"
+      - "**/*.cs"
+      - "**/*.csproj"
       - "**/*.sln"
       - "**/*.slnx"
+
+      - "!**/dev/**"
+      - "!**/examples/**"
+      - "!**/templates/**"
+      - "!**/test/**"
   workflow_dispatch:
 
 jobs:
@@ -17,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -38,6 +45,6 @@ jobs:
 
       - name: Pack projects
         run: |
-          dotnet pack confole --no-build --configuration Release
-          dotnet pack confole.sharp --no-build --configuration Release
-          dotnet pack confole.templates --no-build --configuration Release
+          dotnet pack confole --configuration Release
+          dotnet pack confole.sharp --configuration Release
+          dotnet pack confole.templates --configuration Release
