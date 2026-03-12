@@ -16,7 +16,7 @@
 
 
 
-### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole/)?
+### Sì tutto ok, ma la [documentazione](https://github.com/reallukee/confole/blob/main/DOCS.md)?
 
 
 
@@ -36,13 +36,13 @@
     dotnet new confole-app --language F# --name MyApp
     ```
 
-    È possibile anche usare le API in stile *imperativo*:
+    Oppure un progetto vuoto:
 
     ```
-    dotnet new confole-app --language F# --name MyApp --mode imperative
+    dotnet new confole-empty-app --language F# --name MyApp
     ```
 
-3. Esegui il template!
+3. Esegui il template.
 
     ```
     dotnet run MyApp
@@ -65,9 +65,9 @@
 
     let formats =
         Format.init ()
-        |> Format.italic          true
-        |> Format.foregroundColor (Color.RGB (255, 0, 0))
-        |> Format.backgroundColor (Color.RGB (0, 0, 255))
+        |> Format.italic          (Some true)
+        |> Format.foregroundColor (Some (Color.RGB (255, 0, 0)))
+        |> Format.backgroundColor (Some (Color.RGB (0, 0, 255)))
 
     Format.applyAllNewLine "Hello, World!" formats
 
@@ -77,18 +77,20 @@
     Format.reset ""
     ```
 
-    È possibile anche usare le API in stile *imperativo*:
+    Oppure il *nuovo* modulo di Alias:
 
     ```fsharp
     open System
 
     open Reallukee.Confole
 
-    Format.doForegroundColor "" (Color.RGB (255, 0, 0))
-    Format.doBackgroundColor "" (Color.RGB (0, 0, 255))
-    Format.doBold "Hello, World!" true
+    let fmt =
+        Format.init ()
+        |> Fmt.itc (Some true)
+        |> Fmt.fgc (Some (Color.RGB (255, 0, 0)))
+        |> Fmt.bgc (Some (Color.RGB (0, 0, 255)))
 
-    printfn ""
+    Fmt.applyallnl "Hello, World!" fmt
 
     do Console.ReadKey(true)
     |> ignore
@@ -96,7 +98,10 @@
     Format.reset ""
     ```
 
-3. Esegui il progetto!
+    > [!NOTE]
+    > Altri esempi [qui](https://github.com/reallukee/confole/tree/main/examples)!
+
+3. Esegui il progetto.
 
     ```
     dotnet run
@@ -176,13 +181,13 @@ cd .\confole\scripts\
 Solo compilazione:
 
 ```pwsh
-.\build.ps1
+.\build.ps1 -Target Confole
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```pwsh
-.\pack.ps1
+.\pack.ps1 -Target Confole
 ```
 
 ### Usando le mani
@@ -194,16 +199,12 @@ cd confole
 Solo compilazione:
 
 ```bash
-dotnet build confole.slnx --configuration Release
-
 dotnet build ./confole --configuration Release
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```bash
-dotnet pack confole.slnx --configuration Release
-
 dotnet pack ./confole --configuration Release
 ```
 
