@@ -25,7 +25,7 @@ internal class Program
 
         // Alias
 
-        Rul.doTTL("Confole#");
+        Rul.DoTTL("Confole#");
 
         Fmt fmt =
             Fmt.Init()
