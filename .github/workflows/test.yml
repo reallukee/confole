@@ -42,5 +42,5 @@ jobs:
 
       - name: Test projects
         run: |
-          dotnet test test/confole.test
-          dotnet test test/confole.sharp.test
+          dotnet test test/confole.test --no-build
+          dotnet test test/confole.sharp.test --no-build
