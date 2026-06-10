@@ -26,7 +26,7 @@ open System
 
 open Reallukee.Confole
 
-Cursor.builder {
+Cursor.Builder () {
     Cursor.move (Some (Position.ColRow (4, 2)))
 }
 |> Cursor.applyAll

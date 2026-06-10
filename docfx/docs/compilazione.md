@@ -57,12 +57,23 @@ Solo compilazione:
 
 ```pwsh
 .\build.ps1
+
+# Oppure...
+.\build.ps1 -Target Confole
+.\build.ps1 -Target Confole.Sharp
+.\build.ps1 -Target Confole.Templates
 ```
 
 Compilazione + Pacchettizzazione:
 
 ```pwsh
 .\pack.ps1
+
+# Oppure...
+
+.\pack.ps1 -Target Confole
+.\pack.ps1 -Target Confole.Sharp
+.\pack.ps1 -Target Confole.Templates
 ```
 
 ### Usando le mani
@@ -76,6 +87,7 @@ Solo compilazione:
 ```bash
 dotnet build confole.slnx --configuration Release
 
+# Oppure...
 dotnet build ./confole --configuration Release
 dotnet build ./confole.sharp --configuration Release
 dotnet build ./confole.templates --configuration Release
@@ -86,6 +98,7 @@ Compilazione + Pacchettizzazione:
 ```bash
 dotnet pack confole.slnx --configuration Release
 
+# Oppure...
 dotnet pack ./confole --configuration Release
 dotnet pack ./confole.sharp --configuration Release
 dotnet pack ./confole.templates --configuration Release

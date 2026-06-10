@@ -29,7 +29,7 @@ open Reallukee.Confole
 
 printfn "Hello, World!"
 
-Action.builder {
+Action.Builder () {
     Action.eraseDisplay (Some Action.Erase.FromBeginToEnd)
     Action.eraseLine    (Some Action.Erase.FromBeginToEnd)
 }

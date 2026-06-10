@@ -26,7 +26,7 @@ open System
 
 open Reallukee.Confole
 
-Format.builder {
+Format.Builder () {
     Format.italic          true
     Format.foregroundColor (Color.RGB (255, 0, 0))
     Format.backgroundColor (Color.RGB (0, 0, 255))
