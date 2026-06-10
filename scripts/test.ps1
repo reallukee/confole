@@ -62,7 +62,7 @@ $Projects | ForEach-Object {
 
     & dotnet build $_ @dotnetArgs
 
-    & dotnet test $_ --no-build --configuration $Configuration
+    & dotnet test $_ --configuration $Configuration
 }
 
 Pop-Location

@@ -19,16 +19,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
 
       - name: Restore projects
         run: |
@@ -42,5 +42,5 @@ jobs:
 
       - name: Test projects
         run: |
-          dotnet test test/confole.test --no-build
-          dotnet test test/confole.sharp.test --no-build
+          dotnet test test/confole.test --no-build --configuration Release
+          dotnet test test/confole.sharp.test --no-build --configuration Release
